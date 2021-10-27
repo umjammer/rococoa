@@ -1,4 +1,4 @@
-[![Maven Package](https://github.com/umjammer/rococoa/actions/workflows/maven-publish.yml/badge.svg)](https://github.com/umjammer/rococoa/actions/workflows/maven-publish.yml)
+[![GitHub Packages](https://github.com/umjammer/rococoa/actions/workflows/maven-publish.yml/badge.svg)](https://github.com/umjammer/rococoa/actions/workflows/maven-publish.yml)
 
 #  Welcome to Rococoa
 
