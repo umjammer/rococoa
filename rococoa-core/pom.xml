@@ -9,7 +9,7 @@
   <parent>
     <groupId>org.rococoa</groupId>
     <artifactId>rococoa-parent</artifactId>
-    <version>0.8.4</version>
+    <version>0.8.5-SNAPSHOT</version>
   </parent>
 
   <name>Rococoa Core</name>
@@ -119,11 +119,6 @@
         <artifactId>maven-surefire-plugin</artifactId>
         <version>3.0.0-M7</version>
         <configuration>
-          <excludes>
-            <!-- Brain-dead plugin just looks for *Test* and so finds support 
-              classes -->
-            <exclude>**/TestStruct*.java</exclude>
-          </excludes>
           <forkMode>once</forkMode>
           <trimStackTrace>false</trimStackTrace>
           <redirectTestOutputToFile>true</redirectTestOutputToFile>
@@ -208,6 +203,13 @@
     </plugins>
   </build>
 
+  <repositories>
+    <repository>
+      <id>jitpack.io</id>
+      <url>https://jitpack.io</url>
+    </repository>
+  </repositories>
+
   <dependencies>
     <dependency>
       <groupId>net.java.dev.jna</groupId>
@@ -216,6 +218,13 @@
     <dependency>
       <groupId>cglib</groupId>
       <artifactId>cglib</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.github.umjammer</groupId>
+      <artifactId>vavi-commons</artifactId>
+      <version>1.1.6</version>
+      <scope>test</scope>
     </dependency>
   </dependencies>
 </project>

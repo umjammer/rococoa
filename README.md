@@ -31,7 +31,8 @@ implementation of Objective-C interfaces in Java.
 
 ## Limitation
 
-* float
+* obj-c class's method call with float argument don't work
+  * i found [the reason](https://github.com/java-native-access/jna/issues/463#issuecomment-1286015013) 
 * block
 
 ## TODO
