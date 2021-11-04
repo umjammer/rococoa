@@ -75,12 +75,15 @@ class MsgSendHandler implements InvocationHandler {
     public final static boolean PPC = System.getProperty("os.arch").trim().equalsIgnoreCase("ppc");
 
     private final static Method OBJC_MSGSEND;
+    private final static Method OBJC_MSGSEND_FPRET;
     private final static Method OBJC_MSGSEND_VAR_ARGS;
     private final static Method OBJC_MSGSEND_STRET;
 
     static {
         try {
             OBJC_MSGSEND = MsgSendLibrary.class.getDeclaredMethod("objc_msgSend",
+                    ID.class, Selector.class, Object[].class);
+            OBJC_MSGSEND_FPRET = MsgSendLibrary.class.getDeclaredMethod("objc_msgSend_fpret",
                     ID.class, Selector.class, Object[].class);
             OBJC_MSGSEND_VAR_ARGS = MsgSendLibrary.class.getDeclaredMethod("objc_msgSend",
                     ID.class, Selector.class, Object.class, Object[].class);
@@ -92,6 +95,7 @@ class MsgSendHandler implements InvocationHandler {
     }
 
     private final MethodFunctionPair objc_msgSend_stret_Pair;
+    private final Pair<Method, Function> objc_msgSend_fpret_Pair;
     private final MethodFunctionPair objc_msgSend_varArgs_Pair;
     private final MethodFunctionPair objc_msgSend_Pair;
 
@@ -100,6 +104,8 @@ class MsgSendHandler implements InvocationHandler {
     public MsgSendHandler(final NativeLibrary lib) {
         this.objc_msgSend_Pair = new MethodFunctionPair(AARCH64 ? null : OBJC_MSGSEND,
                 lib.getFunction("objc_msgSend"));
+        this.objc_msgSend_fpret_Pair = new MethodFunctionPair(OBJC_MSGSEND_FPRET,
+                lib.getFunction("objc_msgSend_fpret"));
         this.objc_msgSend_varArgs_Pair = new MethodFunctionPair(OBJC_MSGSEND_VAR_ARGS,
                 lib.getFunction("objc_msgSend"));
         this.objc_msgSend_stret_Pair = new MethodFunctionPair(OBJC_MSGSEND_STRET,
