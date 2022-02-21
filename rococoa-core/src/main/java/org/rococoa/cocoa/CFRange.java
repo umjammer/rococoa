@@ -39,6 +39,10 @@ public class CFRange extends Structure implements Structure.ByValue {
         this.length = length;
     }
 
+    public static CFRange make(final int location, final int length) {
+        return new CFRange(CFIndex.valueOf(location), CFIndex.valueOf(length));
+    }
+
     public long getLength() {
         return length.longValue();
     }
@@ -52,7 +56,7 @@ public class CFRange extends Structure implements Structure.ByValue {
     }
 
     @Override
-    protected List getFieldOrder() {
+    protected List<String> getFieldOrder() {
         return Arrays.asList("location", "length");
     }
 }

@@ -24,6 +24,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
+import org.rococoa.cocoa.CFIndex;
+import org.rococoa.cocoa.CFRange;
 import org.rococoa.internal.FoundationLibrary;
 import org.rococoa.internal.MainThreadUtils;
 import org.rococoa.internal.MsgSendInvocationMapper;
@@ -107,6 +109,30 @@ public abstract class Foundation {
         } catch (UnsupportedEncodingException x) {
             throw new RococoaException(x);
         }
+    }
+
+    public static ID cfLocaleCreateCanonicalLanguageIdentifierFromString(ID allocator, String localeIdentifier) {
+        return foundationLibrary.CFLocaleCreateCanonicalLanguageIdentifierFromString(allocator, cfString(localeIdentifier));
+    }
+
+    public static ID cfLocaleCreate(ID locator, ID localeIdentifier) {
+        return foundationLibrary.CFLocaleCreate(locator, localeIdentifier);
+    }
+
+    public static ID cfStringTokenizerCreate(ID alloc, String string, CFRange range, int options, ID locale) {
+        return foundationLibrary.CFStringTokenizerCreate(alloc, cfString(string), range, options, locale);
+    }
+
+    public static int cfStringTokenizerGoToTokenAtIndex(ID tokenizer, int index) {
+        return foundationLibrary.CFStringTokenizerGoToTokenAtIndex(tokenizer, CFIndex.valueOf(index));
+    }
+
+    public static ID cfStringTokenizerCopyCurrentTokenAttribute(ID tokenizer, int attribute) {
+        return foundationLibrary.CFStringTokenizerCopyCurrentTokenAttribute(tokenizer, attribute);
+    }
+
+    public static int cfStringTokenizerAdvanceToNextToken(ID tokenizer) {
+        return foundationLibrary.CFStringTokenizerAdvanceToNextToken(tokenizer);
     }
 
     /**
@@ -271,11 +297,11 @@ public abstract class Foundation {
         // you own using release or autorelease. Any other time you receive an
         // object, you must not release it.
 
-	// Note that this does not appear to be an infallible rule - see
-	// https://rococoa.dev.java.net/servlets/ReadMsg?list=dev&msgNo=71
+        // Note that this does not appear to be an infallible rule - see
+        // https://rococoa.dev.java.net/servlets/ReadMsg?list=dev&msgNo=71
         return selectorName.startsWith("alloc") ||
-        	selectorName.startsWith("new") ||
-        	selectorName.toLowerCase().contains("copy");
+                selectorName.startsWith("new") ||
+                selectorName.toLowerCase().contains("copy");
     }
 
 }

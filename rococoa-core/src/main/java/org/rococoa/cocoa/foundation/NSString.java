@@ -43,6 +43,8 @@ public abstract class NSString extends NSObject {
 
     public abstract NSString lowercaseString();
 
+    public abstract NSString stringByApplyingTransform(NSStringTransform transform, boolean reverse);
+
     @Override
     public String toString() {
         return Foundation.toString(id());
