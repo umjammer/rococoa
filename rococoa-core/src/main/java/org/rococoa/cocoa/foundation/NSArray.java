@@ -22,8 +22,8 @@ package org.rococoa.cocoa.foundation;
 import org.rococoa.ObjCClass;
 import org.rococoa.Rococoa;
 
-public abstract class NSArray extends NSObject {
-    
+public abstract class NSArray extends NSEnumerator {
+
     public static final _Class CLASS = Rococoa.createClass("NSArray", _Class.class);  //$NON-NLS-1$
     public interface _Class extends ObjCClass {
         /**
@@ -31,10 +31,15 @@ public abstract class NSArray extends NSObject {
          */
         NSArray arrayWithObjects(NSObject...objects);
     }
-    
+
+    public static NSArray arrayWithObjects(NSObject...objects) {
+        return CLASS.arrayWithObjects(objects);
+    }
+
     public abstract int count();
 
     public abstract NSObject lastObject();
     public abstract NSObject objectAtIndex(int zeroOffsetIndex);
-    
+
+    public abstract NSEnumerator objectEnumerator();
 }

@@ -16,26 +16,31 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Rococoa.  If not, see <http://www.gnu.org/licenses/>.
  */
- 
+
 package org.rococoa.cocoa.foundation;
 
 import org.rococoa.ObjCClass;
 import org.rococoa.Rococoa;
+import org.rococoa.internal.NSInvocationMapperLookup;
 
 import com.sun.jna.Structure;
 
 public abstract class NSValue extends NSObject {
-    
+
     public static final _Class CLASS = Rococoa.createClass("NSValue", _Class.class);  //$NON-NLS-1$
-    public interface _Class extends ObjCClass {        
-        NSValue valueWithSize(NSSize size);    
+    public interface _Class extends ObjCClass {
+        NSValue valueWithSize(NSSize size);
+        NSValue valueWithBytes_objCType(byte[] value, String type);
     }
-    
+
     public static NSValue valueWithSize(NSSize size) {
         return CLASS.valueWithSize(size);
     }
-    
+
+    public static NSValue valueWithBytes_objCType(byte[] value, Class<?> type) {
+        return CLASS.valueWithBytes_objCType(value, NSInvocationMapperLookup.stringForType(type));
+    }
+
     public abstract NSSize sizeValue();
     public abstract void getValue(Structure p);
-    
 }

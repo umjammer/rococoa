@@ -16,9 +16,12 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Rococoa.  If not, see <http://www.gnu.org/licenses/>.
  */
- 
+
 package org.rococoa.cocoa.foundation;
 
+import org.rococoa.ID;
+import org.rococoa.ObjCObjectByReference;
+import org.rococoa.Selector;
 
 import com.sun.jna.Memory;
 import com.sun.jna.Pointer;
@@ -27,5 +30,10 @@ public abstract class NSInvocation extends NSObject {
 
     public abstract NSMethodSignature methodSignature();
     public abstract void getArgument_atIndex(Pointer receiver, int index);
+    public abstract void setArgument_atIndex(Pointer receiver, int index);
     public abstract void setReturnValue(Memory buffer);
+    public abstract void invoke();
+    public abstract void getReturnValue(ObjCObjectByReference retLoc);
+    public abstract void setTarget(ID target);
+    public abstract void setSelector(Selector selector);
 }

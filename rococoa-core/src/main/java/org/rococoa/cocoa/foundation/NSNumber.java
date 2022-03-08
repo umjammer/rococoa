@@ -32,7 +32,11 @@ public abstract class NSNumber extends NSObject {
         public NSNumber numberWithLong(long value);
         public NSNumber numberWithFloat(float value);
     }
-    
+
+    public static NSNumber numberWithInt(int value) {
+        return CLASS.numberWithInt(value);
+    }
+
     public abstract short shortValue();
     public abstract int intValue();
     public abstract long longValue();

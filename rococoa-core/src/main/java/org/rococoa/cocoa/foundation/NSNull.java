@@ -22,20 +22,8 @@ package org.rococoa.cocoa.foundation;
 import org.rococoa.ObjCClass;
 import org.rococoa.Rococoa;
 
-
-public abstract class NSNotification extends NSObject {
-    public static final _Class CLASS = Rococoa.createClass("NSNotification",  _Class.class); //$NON-NLS-1$
+public abstract class NSNull extends NSObject {
+    public static final _Class CLASS = Rococoa.createClass("NSNull", _Class.class);
     public interface _Class extends ObjCClass {
-        NSNotification notificationWithName_object(String notificationName, NSObject object);
     }
-
-    public static NSNotification init(String name, String object) {
-        return CLASS.notificationWithName_object(name, NSString.stringWithString(object));
-    }
-
-    public abstract NSObject userInfo();
-
-    public abstract NSObject object();
-
-    public abstract String name();
 }
