@@ -40,7 +40,7 @@ import com.sun.jna.TypeConverter;
  * when receiving one from native code.
  */
 class ObjCObjectTypeConverter<T extends ObjCObject> implements TypeConverter {
-    
+
     private static final NativeMapped nativeLongConverter = new ID();
 
     private final Class<T> javaType;
@@ -69,7 +69,7 @@ class ObjCObjectTypeConverter<T extends ObjCObject> implements TypeConverter {
         boolean shouldRetain = shouldRetainFor(context);        
         return Rococoa.wrap(id, javaType, shouldRetain);
     }
-    
+
     // Takes an NSObject and returns its id as Integer or Long
     public Object toNative(Object value, ToNativeContext context) {
         if (value == null) {
@@ -79,12 +79,12 @@ class ObjCObjectTypeConverter<T extends ObjCObject> implements TypeConverter {
         ID idToReturn = valueAsNSObject.id();
         return idToReturn.toNative();
     }
-    
+
     // For tests only
     boolean convertsJavaType(Class<?> javaType) {
         return this.javaType == javaType;
     }
-    
+
     private boolean shouldRetainFor(FromNativeContext context) {
         // Generally we should default to retaining, as by default NSObjects that
         // are returned from methods are owned by the current autorelease pool and

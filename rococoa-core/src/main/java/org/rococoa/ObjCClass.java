@@ -20,7 +20,6 @@
 package org.rococoa;
 
 
-
 /**
  * Marker interface that an OCObject represents a Class.
  * 

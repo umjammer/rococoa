@@ -34,7 +34,7 @@ public class NSInvocationMapperTest {
     @Test public void testEncoding32() throws Exception {
         if (Native.LONG_SIZE != 4)
             return;
-        
+
         /* These from calling @encode
         bool: B
         BOOL: c
@@ -67,13 +67,13 @@ public class NSInvocationMapperTest {
         check("l", NativeLong.class);
         check("f", CGFloat.class);
         check("f", float.class);
-        check("d", double.class);        
+        check("d", double.class); 
     }
 
     @Test public void testEncoding64() throws Exception {
         if (Native.LONG_SIZE == 4)
             return;
-        
+
         /* These from calling @encode
         bool: B
         BOOL: c

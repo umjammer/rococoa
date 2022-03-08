@@ -16,25 +16,25 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Rococoa.  If not, see <http://www.gnu.org/licenses/>.
  */
- 
+
 package org.rococoa;
 
 import com.sun.jna.NativeLong;
 
 @SuppressWarnings("nls")
 public class Selector extends NativeLong {
-    
-    private  String name;
+
+    private String name;
 
     public Selector() {
         this("undefined selector", 0);
-    };
-    
+    }
+
     public Selector(String name, long value) {
         super(value);
         this.name = name;
     }
-    
+
     // used for setting name once we have got one from OC
     Selector initName(String name) {
         this.name = name;
@@ -44,10 +44,9 @@ public class Selector extends NativeLong {
     public String getName() {
         return name;
     }
-    
+
     @Override
     public String toString() {
         return String.format("[Selector %s]", name); 
     }
-    
 }

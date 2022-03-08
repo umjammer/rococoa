@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Rococoa.  If not, see <http://www.gnu.org/licenses/>.
  */
- 
+
 package org.rococoa;
 
 import com.sun.jna.NativeLong;
@@ -24,7 +24,7 @@ import com.sun.jna.ptr.ByReference;
 
 /**
  * Used to retrieve an NSObject as an out param.
- * 
+ *
  * @author duncan
  *
  */
@@ -35,11 +35,11 @@ public class ObjCObjectByReference extends ByReference {
     public ObjCObjectByReference() {
         super(NativeLong.SIZE);
     }
-    
+
     public <T extends ObjCObject> T getValueAs(Class<T> javaClass) {
         return Rococoa.cast(object, javaClass);
     }
-    
+
     public void setObject(ObjCObject object) {
         this.object = object;
     }

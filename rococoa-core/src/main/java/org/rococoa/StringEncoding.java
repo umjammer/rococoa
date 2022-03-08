@@ -166,9 +166,8 @@ public enum StringEncoding {
     kCFStringEncodingEBCDIC_CP037(0x0C0);
 
     public final int value;
-    
+
     private StringEncoding(int value) {
         this.value = value;
     }
-
 }
