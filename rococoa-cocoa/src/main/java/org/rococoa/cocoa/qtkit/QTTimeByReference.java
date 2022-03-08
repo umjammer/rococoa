@@ -25,6 +25,7 @@ import java.util.List;
 import com.sun.jna.NativeLong;
 import com.sun.jna.Structure;
 
+@Deprecated
 public class QTTimeByReference extends Structure {
 
     public long timeValue;
@@ -79,7 +80,7 @@ public class QTTimeByReference extends Structure {
     }
 
     @Override
-    protected List getFieldOrder() {
+    protected List<String> getFieldOrder() {
         return Arrays.asList("timeValue", "timeScale", "flags");
     }
 }

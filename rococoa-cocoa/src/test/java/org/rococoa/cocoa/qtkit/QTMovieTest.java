@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Rococoa.  If not, see <http://www.gnu.org/licenses/>.
  */
- 
+
 package org.rococoa.cocoa.qtkit;
 
 import com.sun.jna.Platform;
@@ -38,8 +38,8 @@ import org.rococoa.cocoa.foundation.NSString;
 import org.rococoa.test.RococoaTestCase;
 
 
-@SuppressWarnings("nls")
-@Disabled("by vavi")
+@SuppressWarnings("deprecation")
+@Disabled("deprecated")
 public class QTMovieTest extends RococoaTestCase {
 
     static String testMovieFile = "testdata/DrWho.mov";
@@ -100,7 +100,7 @@ public class QTMovieTest extends RococoaTestCase {
 //
 //                null);
 
-        NSMutableDictionary attributes = NSMutableDictionary.CLASS.dictionaryWithCapacity(2);
+        NSMutableDictionary attributes = NSMutableDictionary.dictionaryWithCapacity(2);
         attributes.setValue_forKey(NSString.CLASS.stringWithString(filename),
                 QTMovie.QTMovieFileNameAttribute);
         attributes.setValue_forKey(NSNumber.CLASS.numberWithBool(false),
