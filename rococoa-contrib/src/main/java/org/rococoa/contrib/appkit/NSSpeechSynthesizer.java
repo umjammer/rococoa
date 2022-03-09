@@ -103,11 +103,11 @@ public abstract class NSSpeechSynthesizer extends NSObject {
 
     /** Interface to be implemented by Java objects that want to be informed about events reported to the speech syntheszier's delegate*/
     public interface NSSpeechSynthesizerDelegate {
-        public void speechSynthesizer_didEncounterErrorAtIndex_ofString_message(NSSpeechSynthesizer sender, Integer characterIndex, String text, String errorMessage);
-        public void speechSynthesizer_didEncounterSyncMessage(NSSpeechSynthesizer sender, String syncFlag);
-        public void speechSynthesizer_didFinishSpeaking(NSSpeechSynthesizer sender, boolean success);
-        public void speechSynthesizer_willSpeakPhoneme(NSSpeechSynthesizer sender, short phonemeOpcode);
-        public void speechSynthesizer_willSpeakWord_ofString(NSSpeechSynthesizer sender, NSRange wordToSpeak, String text);
+        void speechSynthesizer_didEncounterErrorAtIndex_ofString_message(NSSpeechSynthesizer sender, Integer characterIndex, String text, String errorMessage);
+        void speechSynthesizer_didEncounterSyncMessage(NSSpeechSynthesizer sender, String syncFlag);
+        void speechSynthesizer_didFinishSpeaking(NSSpeechSynthesizer sender, boolean success);
+        void speechSynthesizer_willSpeakPhoneme(NSSpeechSynthesizer sender, short phonemeOpcode);
+        void speechSynthesizer_willSpeakWord_ofString(NSSpeechSynthesizer sender, NSRange wordToSpeak, String text);
     }
 
     /** Construct a new synthesizer that speaks with a specified voice.
@@ -140,7 +140,7 @@ public abstract class NSSpeechSynthesizer extends NSObject {
      */
     public static List<NSVoice> availableVoices() {
         NSArray availableVoices = CLASS.availableVoices();
-        List<NSVoice> result = new ArrayList<NSVoice>(availableVoices.count());
+        List<NSVoice> result = new ArrayList<>(availableVoices.count());
         for (int i=0; i < availableVoices.count(); i++) {
             result.add(new NSVoice(CLASS.attributesForVoice(availableVoices.objectAtIndex(i).toString())));
         }
@@ -462,7 +462,7 @@ public abstract class NSSpeechSynthesizer extends NSObject {
      */
     public List<NSSpeechPhonemeInfo> getPhonemeInfo() {
         NSArray infos = Rococoa.cast(getProperty(SpeechProperty.PhonemeSymbolsProperty), NSArray.class);
-        List<NSSpeechPhonemeInfo> result = new ArrayList<NSSpeechPhonemeInfo>(infos.count());
+        List<NSSpeechPhonemeInfo> result = new ArrayList<>(infos.count());
         for(int i=0; i < infos.count(); i++) {
             NSDictionary phonemeInfo = Rococoa.cast(infos.objectAtIndex(i), NSDictionary.class);
             result.add(new NSSpeechPhonemeInfo(NSMutableDictionary.dictionaryWithDictionary(phonemeInfo)));
@@ -602,7 +602,7 @@ public abstract class NSSpeechSynthesizer extends NSObject {
      *  @param uri a file URI to send output to, pass null to switch back to the computer speakers
      */
     public void setOutputToFileURL(URI uri) {
-        setProperty(SpeechProperty.OutputToFileURLProperty, uri != null ? NSURL.CLASS.URLWithString(uri.toString()) : null);
+        setProperty(SpeechProperty.OutputToFileURLProperty, uri != null ? NSURL.URLWithString(uri.toString()) : null);
     }
 
     /** Speak the given string to a file
@@ -611,7 +611,7 @@ public abstract class NSSpeechSynthesizer extends NSObject {
      *  @return true if the synthesis began successfully
      */
     public boolean startSpeakingStringToURL(String text, URI uri) {
-        return startSpeakingString_toURL(NSString.stringWithString(text), NSURL.CLASS.URLWithString(uri.toString()));
+        return startSpeakingString_toURL(NSString.stringWithString(text), NSURL.URLWithString(uri.toString()));
     }
 
     //Those methods that will simply be called directly are public, the rest are 'package' - wrapper methods can be found above.

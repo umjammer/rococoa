@@ -23,7 +23,7 @@ import org.rococoa.ID;
 import org.rococoa.ObjCClass;
 import org.rococoa.Rococoa;
 import org.rococoa.RunOnMainThread;
-import org.rococoa.cocoa.foundation.NSImage;
+import org.rococoa.cocoa.appkit.NSImage;
 import org.rococoa.cocoa.foundation.NSInteger;
 import org.rococoa.cocoa.foundation.NSObject;
 

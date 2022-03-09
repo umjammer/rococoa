@@ -63,7 +63,7 @@ public class NSRect extends Structure implements Structure.ByValue {
     }
 
     @Override
-    protected List getFieldOrder() {
+    protected List<String> getFieldOrder() {
         return Arrays.asList("origin", "size");
     }
 }

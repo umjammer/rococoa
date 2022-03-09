@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Rococoa.  If not, see <http://www.gnu.org/licenses/>.
  */
- 
+
 package org.rococoa;
 
 import com.sun.jna.NativeLong;
@@ -24,23 +24,23 @@ import com.sun.jna.ptr.ByReference;
 
 /**
  * Used when we need to pass an ID to be filled in by called code.
- * 
+ *
  */
 public class IDByReference extends ByReference {
 
     public IDByReference() {
         this(ID.fromLong(0));
     }
-    
+
     public IDByReference(ID value) {
         super(NativeLong.SIZE);
         setValue(value);
     }
-    
+
     public void setValue(ID value) {
         getPointer().setNativeLong(0, value);
     }
-    
+
     public ID getValue() {
         return ID.fromLong(getPointer().getNativeLong(0).longValue());
     }

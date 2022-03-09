@@ -19,14 +19,11 @@
  
 package org.rococoa.cocoa.foundation;
 
+import org.rococoa.ObjCClass;
+import org.rococoa.Rococoa;
 
-
-public abstract class NSImage extends NSObject {
-    
-    public abstract void setScalesWhenResized(boolean scaleWhenResizing);
-    
-    public abstract void setSize(NSSize size);
-    
-    public abstract NSData TIFFRepresentation();
-
+public abstract class NSNull extends NSObject {
+    public static final _Class CLASS = Rococoa.createClass("NSNull", _Class.class);
+    public interface _Class extends ObjCClass {
+    }
 }

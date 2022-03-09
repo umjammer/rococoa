@@ -19,11 +19,11 @@
 
 package org.rococoa.cocoa.foundation;
 
-import org.rococoa.cocoa.CGFloat;
-
 import java.awt.geom.Dimension2D;
 import java.util.Arrays;
 import java.util.List;
+
+import org.rococoa.cocoa.CGFloat;
 
 import com.sun.jna.Structure;
 
@@ -45,7 +45,7 @@ public class NSSize extends Structure implements Structure.ByValue {
     }
 
     @Override
-    protected List getFieldOrder() {
+    protected List<String> getFieldOrder() {
         return Arrays.asList("width", "height");
     }
 }

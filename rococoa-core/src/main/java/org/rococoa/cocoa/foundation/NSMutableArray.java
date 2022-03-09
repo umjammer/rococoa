@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Rococoa.  If not, see <http://www.gnu.org/licenses/>.
  */
- 
+
 package org.rococoa.cocoa.foundation;
 
 import org.rococoa.ObjCClass;
@@ -26,12 +26,17 @@ public abstract class NSMutableArray extends NSObject {
 
     public static final _Class CLASS = Rococoa.createClass("NSMutableArray", _Class.class);  //$NON-NLS-1$
     public interface _Class extends ObjCClass {
+        NSMutableArray array();
         NSMutableArray arrayWithCapacity(int numItems);
     }
-    
+
+    public static NSMutableArray array() {
+        return CLASS.array();
+    }
+
     public abstract int count();
     public abstract void addObject(NSObject anObject);
     public abstract void addObject(String string);
-    
+
     public abstract NSObject objectAtIndex(int index);
 }

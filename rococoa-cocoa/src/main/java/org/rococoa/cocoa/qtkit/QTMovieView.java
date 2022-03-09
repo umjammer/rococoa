@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Rococoa.  If not, see <http://www.gnu.org/licenses/>.
  */
- 
+
 package org.rococoa.cocoa.qtkit;
 
 import java.util.concurrent.Callable;
@@ -27,27 +27,27 @@ import org.rococoa.Rococoa;
 import org.rococoa.RunOnMainThread;
 
 
+@Deprecated
 public @RunOnMainThread abstract class QTMovieView extends NSObject {
-    
+
     public static final _Class CLASS = new _Class();
-    
+
     public static class _Class {
         public QTMovieView create() {
             return Foundation.callOnMainThread(new Callable<QTMovieView>() {
                 public QTMovieView call() throws Exception {
                     return Rococoa.create("QTMovieView", QTMovieView.class); //$NON-NLS-1$
-                }});                
+                }});
         }
     }
-    
-    public abstract void setMovie(QTMovie movie);
-    
-	public abstract void setControllerVisible(boolean isVisible);
-    
-	public abstract void setPreservesAspectRatio(boolean b);
-    
-	public abstract void play(NSObject sender);
-    
-	public abstract QTMovie movie();
 
+    public abstract void setMovie(QTMovie movie);
+
+    public abstract void setControllerVisible(boolean isVisible);
+
+    public abstract void setPreservesAspectRatio(boolean b);
+
+    public abstract void play(NSObject sender);
+
+    public abstract QTMovie movie();
 }

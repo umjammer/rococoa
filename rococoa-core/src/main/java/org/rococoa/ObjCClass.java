@@ -20,7 +20,6 @@
 package org.rococoa;
 
 
-
 /**
  * Marker interface that an OCObject represents a Class.
  * 
@@ -39,4 +38,7 @@ public interface ObjCClass extends ObjCObject {
         }
     }
 
+    public static ObjCClass classWithName(String className) {
+        return CLASS.classWithName(className);
+    }
 }

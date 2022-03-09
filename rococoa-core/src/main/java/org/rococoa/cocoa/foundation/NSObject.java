@@ -23,21 +23,29 @@ import org.rococoa.ID;
 import org.rococoa.ObjCClass;
 import org.rococoa.ObjCObject;
 import org.rococoa.Rococoa;
+import org.rococoa.Selector;
 
 public abstract class NSObject implements ObjCObject {
     public static _class_ CLASS = Rococoa.createClass("NSObject", _class_.class);
-	
-	public static abstract class _class_ implements ObjCClass {
-    	public abstract NSObject alloc();
-	}
+
+    public static abstract class _class_ implements ObjCClass {
+        public abstract NSObject alloc();
+    }
 
     public abstract NSObject retain();
     public abstract void release();
     public abstract int retainCount();
-    
+
     public abstract boolean isKindOfClass(ObjCClass nsClass);
     public abstract boolean isKindOfClass(ID nsClass);
-    
+
     public abstract String description();
-    
+
+    public abstract boolean respondsToSelector(Selector selector);
+
+    public abstract NSObject performSelector(Selector sel);
+
+    public abstract NSUInteger hash();
+
+    public abstract boolean isEqual(ID anObject);
 }

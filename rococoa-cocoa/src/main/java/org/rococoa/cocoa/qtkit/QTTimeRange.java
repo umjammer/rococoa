@@ -24,6 +24,7 @@ import java.util.List;
 
 import com.sun.jna.Structure;
 
+@Deprecated
 public class QTTimeRange extends Structure implements Structure.ByValue {
 
     public QTTime time;
@@ -38,7 +39,7 @@ public class QTTimeRange extends Structure implements Structure.ByValue {
     }
 
     @Override
-    protected List getFieldOrder() {
+    protected List<String> getFieldOrder() {
         return Arrays.asList("time", "duration");
     }
 

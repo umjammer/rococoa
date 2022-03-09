@@ -29,9 +29,9 @@ import org.rococoa.cocoa.foundation.NSObject;
 import org.rococoa.ObjCObjectByReference;
 import org.rococoa.Rococoa;
 import org.rococoa.RunOnMainThread;
+import org.rococoa.cocoa.appkit.NSImage;
 import org.rococoa.cocoa.foundation.NSArray;
 import org.rococoa.cocoa.foundation.NSDictionary;
-import org.rococoa.cocoa.foundation.NSImage;
 import org.rococoa.cocoa.foundation.NSString;
 
 import com.sun.jna.Pointer;
@@ -45,19 +45,20 @@ import com.sun.jna.Pointer;
  * @author duncan
  *
  */
+@Deprecated
 public @RunOnMainThread abstract class QTMovie extends NSObject {
-    
+
     // Loading the QTMovie class has to happen on the main thread
     private static final _Class CLASS = 
-		Foundation.callOnMainThread(new Callable<_Class>() {
+        Foundation.callOnMainThread(new Callable<_Class>() {
             public _Class call() throws Exception {
                 return Rococoa.wrap(Foundation.getClass("QTMovie"), _Class.class); //$NON-NLS-1$
-			}
-		});
-    
-	// Creating instances has to happen on the main thread
+            }
+        });
+
+    // Creating instances has to happen on the main thread
     public static @RunOnMainThread abstract class _Class implements org.rococoa.ObjCClass {//extends NSObject._class_ {
-		public abstract QTMovie movie();
+        public abstract QTMovie movie();
         public abstract QTMovie movieWithFile_error(String fileName, ObjCObjectByReference errorReference);        
         public abstract QTMovie movieWithAttributes_error(NSDictionary attributes, ObjCObjectByReference errorReference);
         public abstract QTMovie movieWithQuickTimeMovie_disposeWhenDone_error(Pointer movie, boolean b, ObjCObjectByReference errorReference);
@@ -71,12 +72,12 @@ public @RunOnMainThread abstract class QTMovie extends NSObject {
     public static final long QTMovieLoadStateError = -1L;
     public static final long QTMovieLoadStateLoading = 1000L;
     public static final long QTMovieLoadStateComplete = 100000L;
-    
+
     public static final String QTMovieFlatten = "QTMovieFlatten";  //$NON-NLS-1$
     public static final String QTMovieExport = "QTMovieExport";  //$NON-NLS-1$
     public static final String QTMovieExportType = "QTMovieExportType";  //$NON-NLS-1$
     public static final String QTMovieEditableAttribute = "QTMovieEditableAttribute"; //$NON-NLS-1$
-    
+
     public static QTMovie movie() {
         return CLASS.movie();
     }
@@ -95,15 +96,15 @@ public @RunOnMainThread abstract class QTMovie extends NSObject {
     }
 
     public abstract QTTime duration();
-    
+
     public abstract void gotoBeginning();
-    
+
     public abstract void gotoEnd();
-    
+
     public abstract void play();
-    
+
     public abstract void stop();
-    
+
     public abstract void stepBackward();
     
     public abstract void stepForward();

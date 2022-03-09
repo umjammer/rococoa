@@ -93,7 +93,7 @@ public abstract class Rococoa  {
     /**
      * Create a Java NSObject wrapping an existing Objective-C instance, represented
      * by id.
-     * 
+     *
      * The NSObject is retained, and released when the object is GC'd.
      */
     public static <T extends ObjCObject> T wrap(ID id, Class<T> javaClass) {

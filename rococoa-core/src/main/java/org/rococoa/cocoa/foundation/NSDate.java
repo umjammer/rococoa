@@ -29,6 +29,10 @@ public abstract class NSDate extends NSObject {
         public NSDate dateWithTimeIntervalSince1970(double d);
     }
 
+    public static NSDate from(double d) {
+        return CLASS.dateWithTimeIntervalSince1970(d);
+    }
+
     public abstract double timeIntervalSince1970();
 
     public abstract String description();

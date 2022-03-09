@@ -1,4 +1,5 @@
 [![GitHub Packages](https://github.com/umjammer/rococoa/actions/workflows/maven-publish.yml/badge.svg)](https://github.com/umjammer/rococoa/actions/workflows/maven-publish.yml)
+[![CodeQL](https://github.com/umjammer/rococoa/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/umjammer/rococoa/actions/workflows/codeql-analysis.yml)
 
 #  Welcome to Rococoa
 
@@ -27,3 +28,10 @@ any other problems.
  * [Limitations](https://github.com/iterate-ch/rococoa/blob/wiki/Limitations.md)
  * [Help Wanted](https://github.com/iterate-ch/rococoa/blob/wiki/HelpWanted.md)
  * [How To](https://github.com/iterate-ch/rococoa/blob/wiki/HowTo.md)
+
+## TODO
+
+ * https://github.com/ibinti/bugvm
+ * http://cocoawithlove.com/2009/10/how-blocks-are-implemented-and.html
+ * http://www.opensource.apple.com/source/libclosure/libclosure-38/BlockImplementation.txt
+ 

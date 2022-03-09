@@ -28,5 +28,14 @@ public abstract class NSNotification extends NSObject {
     public interface _Class extends ObjCClass {
         NSNotification notificationWithName_object(String notificationName, NSObject object);
     }
-  
+
+    public static NSNotification init(String name, String object) {
+        return CLASS.notificationWithName_object(name, NSString.stringWithString(object));
+    }
+
+    public abstract NSObject userInfo();
+
+    public abstract NSObject object();
+
+    public abstract String name();
 }

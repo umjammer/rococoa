@@ -16,12 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Rococoa.  If not, see <http://www.gnu.org/licenses/>.
  */
- 
+
 package org.rococoa.cocoa.qtkit;
 
 import com.sun.jna.Structure;
 
 //long   long         timeValue;   long            timeScale;   long            flags;
+@Deprecated
 public class QTTime extends QTTimeByReference implements Structure.ByValue {
 
     public QTTime() {
@@ -35,5 +36,4 @@ public class QTTime extends QTTimeByReference implements Structure.ByValue {
     public QTTime(long timeValue, int timeScale) {
         super(timeValue, timeScale);
     }
-    
 }

@@ -30,14 +30,21 @@ public abstract class NSNotificationCenter extends NSObject {
     public interface _Class extends ObjCClass {
         public NSNotificationCenter defaultCenter();
     }
-    
+
     public abstract void addObserver_selector_name_object(ID notificationObserver,
             Selector notificationSelector,
             String notificationName,
             NSObject notificationSender);
 
+    public static NSNotificationCenter defaultCenter() {
+        return CLASS.defaultCenter();
+    }
+
     public abstract void removeObserver(ID notificationObserver);
 
     public abstract void postNotification(NSNotification notification);
 
+    public abstract void postNotificationName_object_userInfo(String aName, ID anObject, NSDictionary aUserInfo);
+
+    public abstract String name();
 }

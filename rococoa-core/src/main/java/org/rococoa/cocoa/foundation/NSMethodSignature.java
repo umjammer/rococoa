@@ -24,10 +24,9 @@ import org.rococoa.ReturnType;
 import com.sun.jna.Pointer;
 
 public abstract class NSMethodSignature extends NSObject {
-    
+
     public abstract int numberOfArguments();
 
     public abstract @ReturnType(Pointer.class) String getArgumentTypeAtIndex(int index);
     public abstract @ReturnType(Pointer.class) String methodReturnType();
-
 }

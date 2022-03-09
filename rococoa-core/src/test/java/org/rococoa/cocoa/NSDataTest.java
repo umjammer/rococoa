@@ -16,25 +16,30 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Rococoa.  If not, see <http://www.gnu.org/licenses/>.
  */
- 
-package org.rococoa.cocoa;
 
-import static org.junit.jupiter.api.Assertions.*;
+package org.rococoa.cocoa;
 
 import org.junit.jupiter.api.Test;
 import org.rococoa.cocoa.foundation.NSData;
 import org.rococoa.test.RococoaTestCase;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+
 public class NSDataTest extends RococoaTestCase {
 
-    @Test public void testInitWithBytes() throws Exception {
-       byte[] bytes = "Hello".getBytes();
-       
-       NSData data = NSData.CLASS.dataWithBytes_length(bytes, bytes.length);
-       assertEquals(bytes.length, data.length());
+    @Test
+    public void testInitWithBytes() throws Exception {
+        byte[] bytes = "Hello".getBytes();
 
-       byte[] resultBytes = new byte[bytes.length];
-       data.getBytes(resultBytes);
-       assertEquals("Hello", new String(resultBytes));
-   }
+        NSData data = NSData.CLASS.dataWithBytes_length(bytes, bytes.length);
+        assertEquals(bytes.length, data.length());
+
+        byte[] resultBytes = new byte[bytes.length];
+        data.getBytes(resultBytes);
+        assertEquals("Hello", new String(resultBytes));
+
+        assertArrayEquals("Hello".getBytes(), data.getBytes());
+    }
 }

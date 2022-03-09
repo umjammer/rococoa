@@ -23,8 +23,9 @@ import com.sun.jna.Library;
 import com.sun.jna.Native;
 
 @SuppressWarnings("nls")
+@Deprecated
 public interface QTKit extends Library {
-    
+
     public static QTKit instance = (QTKit) Native.loadLibrary("QTKit", QTKit.class);
 
 }

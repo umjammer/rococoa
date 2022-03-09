@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Rococoa.  If not, see <http://www.gnu.org/licenses/>.
  */
- 
+
 package org.rococoa.cocoa.qtkit;
 
 import org.rococoa.ID;
@@ -27,19 +27,20 @@ import org.rococoa.cocoa.foundation.NSDictionary;
 import com.sun.jna.Pointer;
 
 @SuppressWarnings("nls")
+@Deprecated
 public @RunOnMainThread abstract class QTTrack extends NSObject {
 
     public static final String QTTrackTimeScaleAttribute = "QTTrackTimeScaleAttribute";
     public static final String QTTrackBoundsAttribute = "QTTrackBoundsAttribute";
     public static final String QTTrackDimensionsAttribute = "QTTrackDimensionsAttribute";
-    
+
     public abstract QTMovie movie();
-    
+
     public abstract QTMedia media();
-    
+
     public abstract boolean isEnabled();
     public abstract void setEnabled(boolean enabled);
-    
+
     public abstract float volume();
     public abstract void setVolume(float level);
     public abstract NSObject attributeForKey(String key);
@@ -48,5 +49,4 @@ public @RunOnMainThread abstract class QTTrack extends NSObject {
     public abstract NSDictionary trackAttributes();
     public abstract void setTrackAttributes(NSDictionary trackAttributes);
     public abstract Pointer quickTimeTrack();
-    
 }

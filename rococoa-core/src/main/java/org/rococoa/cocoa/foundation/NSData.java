@@ -1,35 +1,236 @@
 /*
- * Copyright 2007, 2008 Duncan McGregor
- * 
- * This file is part of Rococoa, a library to allow Java to talk to Cocoa.
- * 
- * Rococoa is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
+ * Copyright (c) 2002-2009 David Kocher. All rights reserved.
+ *
+ * http://cyberduck.ch/
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
- * Rococoa is distributed in the hope that it will be useful,
+ *
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public License
- * along with Rococoa.  If not, see <http://www.gnu.org/licenses/>.
+ * Bug fixes, suggestions and comments should be sent to:
+ * dkocher@cyberduck.ch
  */
- 
+
 package org.rococoa.cocoa.foundation;
 
 import org.rococoa.ObjCClass;
-import org.rococoa.Rococoa;
+import org.rococoa.ObjCObjectByReference;
 
+
+/// <i>native declaration : :27</i>
 public abstract class NSData extends NSObject {
-    public static final _Class CLASS = Rococoa.createClass("NSData", _Class.class);  //$NON-NLS-1$
-    public interface _Class extends ObjCClass {
-        NSData dataWithBytes_length(byte[] bytes, int length);
+    public static final _Class CLASS = org.rococoa.Rococoa.createClass("NSData", _Class.class);
+
+    public static NSData dataWithContentsOfURL(NSURL url) {
+        return CLASS.dataWithContentsOfURL(url);
     }
-    
+
+    public static NSData dataWithBytes(byte[] bytes) {
+        return CLASS.data().initWithBytes_length(bytes, bytes.length);
+    }
+
+    public interface _Class extends ObjCClass {
+        /**
+         * Original signature : <code>data()</code><br>
+         * <i>from NSDataCreation native declaration : :53</i>
+         */
+        NSData data();
+
+        /**
+         * Original signature : <code>dataWithBytes(const void*, NSUInteger)</code><br>
+         * <i>from NSDataCreation native declaration : :54</i>
+         */
+        NSData dataWithBytes_length(byte[] bytes, int length);
+
+        /**
+         * Original signature : <code>dataWithBytesNoCopy(void*, NSUInteger)</code><br>
+         * <i>from NSDataCreation native declaration : :55</i>
+         */
+        NSData dataWithBytesNoCopy_length(byte[] bytes, int length);
+
+        /**
+         * Original signature : <code>dataWithBytesNoCopy(void*, NSUInteger, BOOL)</code><br>
+         * <i>from NSDataCreation native declaration : :57</i>
+         */
+        NSData dataWithBytesNoCopy_length_freeWhenDone(byte[] bytes, int length, byte b);
+
+        /**
+         * Original signature : <code>dataWithContentsOfFile(NSString*, NSUInteger, NSError**)</code><br>
+         * <i>from NSDataCreation native declaration : :60</i>
+         */
+        NSData dataWithContentsOfFile_options_error(String path, int readOptionsMask, ObjCObjectByReference errorPtr);
+
+        /**
+         * Original signature : <code>dataWithContentsOfURL(NSURL*, NSUInteger, NSError**)</code><br>
+         * <i>from NSDataCreation native declaration : :61</i>
+         */
+        NSData dataWithContentsOfURL_options_error(NSURL url, int readOptionsMask, ObjCObjectByReference errorPtr);
+
+        /**
+         * Original signature : <code>dataWithContentsOfFile(NSString*)</code><br>
+         * <i>from NSDataCreation native declaration : :63</i>
+         */
+        NSData dataWithContentsOfFile(String path);
+
+        /**
+         * Original signature : <code>dataWithContentsOfURL(NSURL*)</code><br>
+         * <i>from NSDataCreation native declaration : :64</i>
+         */
+        NSData dataWithContentsOfURL(NSURL url);
+
+        /**
+         * Original signature : <code>dataWithContentsOfMappedFile(NSString*)</code><br>
+         * <i>from NSDataCreation native declaration : :65</i>
+         */
+        NSData dataWithContentsOfMappedFile(String path);
+
+        /**
+         * Original signature : <code>dataWithData(NSData*)</code><br>
+         * <i>from NSDataCreation native declaration : :79</i>
+         */
+        NSData dataWithData(NSData data);
+    }
+
+    /**
+     * Original signature : <code>NSUInteger length()</code><br>
+     * <i>native declaration : :29</i>
+     */
     public abstract int length();
-    public abstract void getBytes(byte[] bytes);
-    public abstract void getBytes_length(byte[] bytes, int length);
-    
+
+    /**
+     * Original signature : <code>const void* bytes()</code><br>
+     * <i>native declaration : :30</i>
+     */
+    public abstract com.sun.jna.Pointer bytes();
+
+    public byte[] getBytes() {
+        com.sun.jna.Pointer pointer = bytes();
+        return pointer.getByteArray(0, length());
+    }
+
+    /**
+     * Original signature : <code>NSString* description()</code><br>
+     * <i>from NSExtendedData native declaration : :36</i>
+     */
+    public abstract String description();
+
+    /**
+     * Original signature : <code>void getBytes(void*)</code><br>
+     * <i>from NSExtendedData native declaration : :37</i>
+     */
+    public abstract void getBytes(byte[] buffer);
+
+    /**
+     * Original signature : <code>void getBytes(void*, NSUInteger)</code><br>
+     * <i>from NSExtendedData native declaration : :38</i>
+     */
+    public abstract void getBytes_length(byte[] buffer, int length);
+    /**
+     * <i>from NSExtendedData native declaration : :39</i><br>
+     * Conversion Error : /// Original signature : <code>void getBytes(void*, null)</code><br>
+     * - (void)getBytes:(void*)buffer range:(null)range; (Argument range cannot be converted)
+     */
+    /**
+     * Original signature : <code>BOOL isEqualToData(NSData*)</code><br>
+     * <i>from NSExtendedData native declaration : :40</i>
+     */
+    public abstract byte isEqualToData(NSData other);
+    /**
+     * <i>from NSExtendedData native declaration : :41</i><br>
+     * Conversion Error : /// Original signature : <code>NSData* subdataWithRange(null)</code><br>
+     * - (NSData*)subdataWithRange:(null)range; (Argument range cannot be converted)
+     */
+    /**
+     * Original signature : <code>BOOL writeToFile(NSString*, BOOL)</code><br>
+     * <i>from NSExtendedData native declaration : :42</i>
+     */
+    public abstract byte writeToFile_atomically(String path, boolean useAuxiliaryFile);
+
+    public byte writeToFile(String path) {
+        return this.writeToFile_atomically(path, true);
+    }
+
+    /**
+     * Original signature : <code>BOOL writeToURL(NSURL*, BOOL)</code><br>
+     * the atomically flag is ignored if the url is not of a type the supports atomic writes<br>
+     * <i>from NSExtendedData native declaration : :43</i>
+     */
+    public abstract boolean writeToURL_atomically(NSURL url, boolean atomically);
+
+    public boolean writeToURL(NSURL url) {
+        return this.writeToURL_atomically(url, true);
+    }
+
+    /**
+     * Original signature : <code>BOOL writeToFile(NSString*, NSUInteger, NSError**)</code><br>
+     * <i>from NSExtendedData native declaration : :45</i>
+     */
+    public abstract boolean writeToFile_options_error(String path, int writeOptionsMask, ObjCObjectByReference errorPtr);
+
+    /**
+     * Original signature : <code>BOOL writeToURL(NSURL*, NSUInteger, NSError**)</code><br>
+     * <i>from NSExtendedData native declaration : :46</i>
+     */
+    public abstract boolean writeToURL_options_error(NSURL url, int writeOptionsMask, ObjCObjectByReference errorPtr);
+
+    /**
+     * Original signature : <code>initWithBytes(const void*, NSUInteger)</code><br>
+     * <i>from NSDataCreation native declaration : :66</i>
+     */
+    public abstract NSData initWithBytes_length(byte[] bytes, int length);
+
+    /**
+     * Original signature : <code>initWithBytesNoCopy(void*, NSUInteger)</code><br>
+     * <i>from NSDataCreation native declaration : :67</i>
+     */
+    public abstract NSData initWithBytesNoCopy_length(byte[] bytes, int length);
+
+    /**
+     * Original signature : <code>initWithBytesNoCopy(void*, NSUInteger, BOOL)</code><br>
+     * <i>from NSDataCreation native declaration : :69</i>
+     */
+    public abstract NSData initWithBytesNoCopy_length_freeWhenDone(byte[] bytes, int length, byte b);
+
+    /**
+     * Original signature : <code>initWithContentsOfFile(NSString*, NSUInteger, NSError**)</code><br>
+     * <i>from NSDataCreation native declaration : :72</i>
+     */
+    public abstract NSData initWithContentsOfFile_options_error(String path, int readOptionsMask, ObjCObjectByReference errorPtr);
+
+    /**
+     * Original signature : <code>initWithContentsOfURL(NSURL*, NSUInteger, NSError**)</code><br>
+     * <i>from NSDataCreation native declaration : :73</i>
+     */
+    public abstract NSData initWithContentsOfURL_options_error(com.sun.jna.Pointer url, int readOptionsMask, ObjCObjectByReference errorPtr);
+
+    /**
+     * Original signature : <code>initWithContentsOfFile(NSString*)</code><br>
+     * <i>from NSDataCreation native declaration : :75</i>
+     */
+    public abstract NSData initWithContentsOfFile(String path);
+
+    /**
+     * Original signature : <code>initWithContentsOfURL(NSURL*)</code><br>
+     * <i>from NSDataCreation native declaration : :76</i>
+     */
+    public abstract NSData initWithContentsOfURL(NSURL url);
+
+    /**
+     * Original signature : <code>initWithContentsOfMappedFile(NSString*)</code><br>
+     * <i>from NSDataCreation native declaration : :77</i>
+     */
+    public abstract NSData initWithContentsOfMappedFile(String path);
+
+    /**
+     * Original signature : <code>initWithData(NSData*)</code><br>
+     * <i>from NSDataCreation native declaration : :78</i>
+     */
+    public abstract NSData initWithData(NSData data);
 }
+

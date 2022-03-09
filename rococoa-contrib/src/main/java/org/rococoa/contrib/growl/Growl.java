@@ -25,9 +25,9 @@ import java.util.List;
 
 import org.rococoa.cocoa.NSApplication;
 import org.rococoa.cocoa.NSDistributedNotificationCenter;
+import org.rococoa.cocoa.appkit.NSImage;
 import org.rococoa.cocoa.foundation.NSArray;
 import org.rococoa.cocoa.foundation.NSDictionary;
-import org.rococoa.cocoa.foundation.NSImage;
 import org.rococoa.cocoa.foundation.NSMutableDictionary;
 import org.rococoa.cocoa.foundation.NSNumber;
 import org.rococoa.cocoa.foundation.NSObject;
@@ -208,7 +208,7 @@ public final class Growl {
             );
 
             // Make the Dictionary
-            NSDictionary regDict = NSDictionary.dictionaryWithObjects_forKeys(objects, keys);
+            NSDictionary regDict = NSDictionary.dictionaryWithObjectsForKeys(objects, keys);
 
             theCenter.postNotification(
                     GROWL_APP_REGISTRATION, // notificationName
