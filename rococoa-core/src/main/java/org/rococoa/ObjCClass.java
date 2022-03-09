@@ -38,4 +38,7 @@ public interface ObjCClass extends ObjCObject {
         }
     }
 
+    public static ObjCClass classWithName(String className) {
+        return CLASS.classWithName(className);
+    }
 }
