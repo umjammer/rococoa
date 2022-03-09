@@ -1,4 +1,5 @@
 [![GitHub Packages](https://github.com/umjammer/rococoa/actions/workflows/maven-publish.yml/badge.svg)](https://github.com/umjammer/rococoa/actions/workflows/maven-publish.yml)
+[![CodeQL](https://github.com/umjammer/rococoa/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/umjammer/rococoa/actions/workflows/codeql-analysis.yml)
 
 #  Welcome to Rococoa
 
