@@ -9,7 +9,7 @@
   <parent>
     <groupId>org.rococoa</groupId>
     <artifactId>rococoa-parent</artifactId>
-    <version>0.8.3</version>
+    <version>0.8.4</version>
   </parent>
 
   <name>Rococoa Core</name>
@@ -26,6 +26,7 @@
           <!-- trigger javah execution -->
           <javahClassNames>
             <javahClassName>org.rococoa.Rococoa</javahClassName>
+            <javahClassName>org.rococoa.ObjCBlocks</javahClassName>
           </javahClassNames>
           <!-- enable additional javah interface in dependencies list -->
           <javahSearchJNIFromDependencies>true</javahSearchJNIFromDependencies>
@@ -61,6 +62,7 @@
                   <fileNames>
                     <fileName>Rococoa.m</fileName>
                     <fileName>ProxyForJava.m</fileName>
+                    <fileName>ObjCBlocks.m</fileName>
                     <fileName>test.m</fileName>
                   </fileNames>
                 </source>
@@ -86,6 +88,7 @@
                   <fileNames>
                     <fileName>Rococoa.m</fileName>
                     <fileName>ProxyForJava.m</fileName>
+                    <fileName>ObjCBlocks.m</fileName>
                   </fileNames>
                 </source>
               </sources>
@@ -110,7 +113,7 @@
 
       <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
-        <version>3.0.0-M4</version>
+        <version>3.0.0-M5</version>
         <configuration>
           <excludes>
             <!-- Brain-dead plugin just looks for *Test* and so finds support 
@@ -196,7 +199,7 @@
           </environmentVariables>
         </configuration>
       </plugin>
-     </plugins>
+    </plugins>
   </build>
 
   <dependencies>

@@ -27,3 +27,10 @@ any other problems.
  * [Limitations](https://github.com/iterate-ch/rococoa/blob/wiki/Limitations.md)
  * [Help Wanted](https://github.com/iterate-ch/rococoa/blob/wiki/HelpWanted.md)
  * [How To](https://github.com/iterate-ch/rococoa/blob/wiki/HowTo.md)
+
+## TODO
+
+ * https://github.com/ibinti/bugvm
+ * http://cocoawithlove.com/2009/10/how-blocks-are-implemented-and.html
+ * http://www.opensource.apple.com/source/libclosure/libclosure-38/BlockImplementation.txt
+ 
