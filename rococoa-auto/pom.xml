@@ -59,7 +59,7 @@
     <pluginRepository>
       <id>nativelibs4java</id>
       <name>NativeLibs4Java</name>
-      <url>http://nativelibs4java.sourceforge.net/maven</url>
+      <url>https://nativelibs4java.sourceforge.net/maven</url>
     </pluginRepository>
     <pluginRepository>
       <id>sonatype-oss-public</id>
