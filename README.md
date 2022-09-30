@@ -1,5 +1,6 @@
 [![GitHub Packages](https://github.com/umjammer/rococoa/actions/workflows/maven-publish.yml/badge.svg)](https://github.com/umjammer/rococoa/actions/workflows/maven-publish.yml)
 [![CodeQL](https://github.com/umjammer/rococoa/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/umjammer/rococoa/actions/workflows/codeql-analysis.yml)
+![Java](https://img.shields.io/badge/Java-8-b07219)
 
 #  Welcome to Rococoa
 
@@ -32,6 +33,10 @@ any other problems.
 ## TODO
 
  * https://github.com/ibinti/bugvm
- * http://cocoawithlove.com/2009/10/how-blocks-are-implemented-and.html
- * http://www.opensource.apple.com/source/libclosure/libclosure-38/BlockImplementation.txt
+ * NSUrl tags (wip)
+ * block (wip)
+   * http://cocoawithlove.com/2009/10/how-blocks-are-implemented-and.html
+   * http://www.opensource.apple.com/source/libclosure/libclosure-38/BlockImplementation.txt
+ * CIFilter (wip)
+ * https://gitlab.com/axet/apple
  
