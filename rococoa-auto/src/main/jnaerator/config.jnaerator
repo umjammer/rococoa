@@ -1,12 +1,15 @@
--F "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks:$(JNAERATOR_FRAMEWORKS_PATH)"
+// TODO -F seems not working
+//-F "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks:$(JNAERATOR_FRAMEWORKS_PATH)"
+-F "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks"
 //-framework Foundation
 //-framework AppKit
 //-framework CoreFoundation
 //-framework CoreGraphics
+//-framework CoreImage
 
 -root org.rococoa.cocoa
 //-parseInOneChunk
--runtime JNAerator
+-runtime JNA
 
 //-o "$(DIR)/../java" // overwrite versioned files instead of writing to target/generated-sources/java
 

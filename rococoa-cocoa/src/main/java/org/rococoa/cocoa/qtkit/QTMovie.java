@@ -52,7 +52,7 @@ public @RunOnMainThread abstract class QTMovie extends NSObject {
     private static final _Class CLASS = 
         Foundation.callOnMainThread(new Callable<_Class>() {
             public _Class call() throws Exception {
-                return Rococoa.wrap(Foundation.getClass("QTMovie"), _Class.class); //$NON-NLS-1$
+                return Rococoa.wrap(Foundation.getClass("QTMovie"), _Class.class);
             }
         });
 
@@ -64,19 +64,19 @@ public @RunOnMainThread abstract class QTMovie extends NSObject {
         public abstract QTMovie movieWithQuickTimeMovie_disposeWhenDone_error(Pointer movie, boolean b, ObjCObjectByReference errorReference);
     }
 
-    public static final String QTMovieTimeScaleAttribute = "QTMovieTimeScaleAttribute"; //$NON-NLS-1$
-    public static final String QTMovieFileNameAttribute = "QTMovieFileNameAttribute";  //$NON-NLS-1$
-    public static final String QTMovieOpenAsyncOKAttribute = "QTMovieOpenAsyncOKAttribute";  //$NON-NLS-1$    
-    public static final String QTMoviePlaysSelectionOnlyAttribute = "QTMoviePlaysSelectionOnlyAttribute";  //$NON-NLS-1$
-    public static final String QTMovieLoadStateAttribute = "QTMovieLoadStateAttribute";  //$NON-NLS-1$
+    public static final String QTMovieTimeScaleAttribute = "QTMovieTimeScaleAttribute";
+    public static final String QTMovieFileNameAttribute = "QTMovieFileNameAttribute";
+    public static final String QTMovieOpenAsyncOKAttribute = "QTMovieOpenAsyncOKAttribute";
+    public static final String QTMoviePlaysSelectionOnlyAttribute = "QTMoviePlaysSelectionOnlyAttribute";
+    public static final String QTMovieLoadStateAttribute = "QTMovieLoadStateAttribute";
     public static final long QTMovieLoadStateError = -1L;
     public static final long QTMovieLoadStateLoading = 1000L;
     public static final long QTMovieLoadStateComplete = 100000L;
 
-    public static final String QTMovieFlatten = "QTMovieFlatten";  //$NON-NLS-1$
-    public static final String QTMovieExport = "QTMovieExport";  //$NON-NLS-1$
-    public static final String QTMovieExportType = "QTMovieExportType";  //$NON-NLS-1$
-    public static final String QTMovieEditableAttribute = "QTMovieEditableAttribute"; //$NON-NLS-1$
+    public static final String QTMovieFlatten = "QTMovieFlatten";
+    public static final String QTMovieExport = "QTMovieExport";
+    public static final String QTMovieExportType = "QTMovieExportType";
+    public static final String QTMovieEditableAttribute = "QTMovieEditableAttribute";
 
     public static QTMovie movie() {
         return CLASS.movie();

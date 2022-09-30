@@ -23,7 +23,7 @@ import org.rococoa.cocoa.foundation.NSObject;
 import org.rococoa.Rococoa;
 
 public abstract class NSDateFormatter extends NSFormatter {
-	public static final _Class CLASS = Rococoa.createClass("NSDateFormatter", _Class.class);  //$NON-NLS-1$
+	public static final _Class CLASS = Rococoa.createClass("NSDateFormatter", _Class.class);
     public abstract class _Class extends NSObject._class_ {
     }
     

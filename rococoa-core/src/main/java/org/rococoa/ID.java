@@ -56,7 +56,7 @@ public class ID extends NativeLong {
 
     @Override
     public String toString() {
-        return String.format("[ID 0x%x]", longValue()); //$NON-NLS-1$
+        return String.format("[ID 0x%x]", longValue());
     }
 
     public boolean isNull() {

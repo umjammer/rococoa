@@ -26,7 +26,7 @@ import org.rococoa.Selector;
 
 
 public abstract class NSNotificationCenter extends NSObject {
-    public static final _Class CLASS = Rococoa.createClass("NSNotificationCenter", _Class.class); //$NON-NLS-1$
+    public static final _Class CLASS = Rococoa.createClass("NSNotificationCenter", _Class.class);
     public interface _Class extends ObjCClass {
         public NSNotificationCenter defaultCenter();
     }

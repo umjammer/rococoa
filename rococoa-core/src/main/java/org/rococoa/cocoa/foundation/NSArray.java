@@ -24,7 +24,7 @@ import org.rococoa.Rococoa;
 
 public abstract class NSArray extends NSEnumerator {
 
-    public static final _Class CLASS = Rococoa.createClass("NSArray", _Class.class);  //$NON-NLS-1$
+    public static final _Class CLASS = Rococoa.createClass("NSArray", _Class.class);
     public interface _Class extends ObjCClass {
         /**
          * @param objects Contents and then a trailing null

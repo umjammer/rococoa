@@ -24,7 +24,7 @@ import org.rococoa.Rococoa;
 
 
 public abstract class NSNotification extends NSObject {
-    public static final _Class CLASS = Rococoa.createClass("NSNotification",  _Class.class); //$NON-NLS-1$
+    public static final _Class CLASS = Rococoa.createClass("NSNotification",  _Class.class);
     public interface _Class extends ObjCClass {
         NSNotification notificationWithName_object(String notificationName, NSObject object);
     }
