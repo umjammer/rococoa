@@ -17,7 +17,7 @@
  * along with Rococoa.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.rococoa.contrib.appkit;
+package org.rococoa.cocoa.appkit;
 
 import java.net.URI;
 import java.util.ArrayList;
@@ -51,7 +51,7 @@ import org.rococoa.cocoa.foundation.NSURL;
 public abstract class NSSpeechSynthesizer extends NSObject {
     /** Defines the properties associated with a speech synthesizer. Getters and setters have been provided for most of these,
      *  so using the properties directly will not usually be necessary.
-     *  @see NSSpeechSynthesizer#getProperty(org.rococoa.contrib.appkit.NSSpeechSynthesizer.SpeechProperty)
+     *  @see NSSpeechSynthesizer#getProperty(NSSpeechSynthesizer.SpeechProperty)
      *  @see NSSpeechSynthesizer#setProperty(SpeechProperty, NSObject)
      */
     public enum SpeechProperty implements NativeEnum<NSString> {

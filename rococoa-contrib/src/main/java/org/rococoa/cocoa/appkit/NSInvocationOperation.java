@@ -17,7 +17,7 @@
  * along with Rococoa.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.rococoa.contrib.appkit;
+package org.rococoa.cocoa.appkit;
 
 import org.rococoa.ID;
 import org.rococoa.ObjCClass;

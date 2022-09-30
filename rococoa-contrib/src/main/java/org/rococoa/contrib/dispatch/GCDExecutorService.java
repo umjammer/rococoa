@@ -39,9 +39,9 @@ import org.rococoa.Rococoa;
 import org.rococoa.Selector;
 import org.rococoa.cocoa.foundation.NSArray;
 import org.rococoa.cocoa.foundation.NSAutoreleasePool;
-import org.rococoa.contrib.appkit.NSInvocationOperation;
-import org.rococoa.contrib.appkit.NSOperation;
-import org.rococoa.contrib.appkit.NSOperationQueue;
+import org.rococoa.cocoa.appkit.NSInvocationOperation;
+import org.rococoa.cocoa.appkit.NSOperation;
+import org.rococoa.cocoa.appkit.NSOperationQueue;
 
 /** GCDExecutorService runs tasks by passing them to Grand Central Dispatch.
  *  Presently, every <code>GCDExecutorService</code> creates its own

@@ -17,7 +17,7 @@
  * along with Rococoa.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.rococoa.contrib.appkit;
+package org.rococoa.cocoa.appkit;
 
 import org.rococoa.cocoa.foundation.NSArray;
 import org.rococoa.cocoa.foundation.NSDictionary;
@@ -26,15 +26,15 @@ import org.rococoa.cocoa.foundation.NSString;
 import org.rococoa.contrib.AbstractPropertyDictionary;
 import org.rococoa.contrib.NativeEnum;
 
-import static org.rococoa.contrib.appkit.NSVoice.VoiceProperty.Age;
-import static org.rococoa.contrib.appkit.NSVoice.VoiceProperty.DemoText;
-import static org.rococoa.contrib.appkit.NSVoice.VoiceProperty.Gender;
-import static org.rococoa.contrib.appkit.NSVoice.VoiceProperty.Identifier;
-import static org.rococoa.contrib.appkit.NSVoice.VoiceProperty.IndividuallySpokenCharacters;
-import static org.rococoa.contrib.appkit.NSVoice.VoiceProperty.Language;
-import static org.rococoa.contrib.appkit.NSVoice.VoiceProperty.LocaleIdentifier;
-import static org.rococoa.contrib.appkit.NSVoice.VoiceProperty.Name;
-import static org.rococoa.contrib.appkit.NSVoice.VoiceProperty.SupportedCharacters;
+import static org.rococoa.cocoa.appkit.NSVoice.VoiceProperty.Age;
+import static org.rococoa.cocoa.appkit.NSVoice.VoiceProperty.DemoText;
+import static org.rococoa.cocoa.appkit.NSVoice.VoiceProperty.Gender;
+import static org.rococoa.cocoa.appkit.NSVoice.VoiceProperty.Identifier;
+import static org.rococoa.cocoa.appkit.NSVoice.VoiceProperty.IndividuallySpokenCharacters;
+import static org.rococoa.cocoa.appkit.NSVoice.VoiceProperty.Language;
+import static org.rococoa.cocoa.appkit.NSVoice.VoiceProperty.LocaleIdentifier;
+import static org.rococoa.cocoa.appkit.NSVoice.VoiceProperty.Name;
+import static org.rococoa.cocoa.appkit.NSVoice.VoiceProperty.SupportedCharacters;
 
 /** NSVoice encapsulates the properties of a speech synthesis voice, and can be
  *  used with NSSpeechSynthesizer to change the voice used to spreak.

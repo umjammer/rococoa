@@ -17,15 +17,19 @@
  * along with Rococoa.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.rococoa.cocoa;
+package org.rococoa.cocoa.appkit;
 
+import com.sun.jna.Callback;
 import org.rococoa.ID;
 import org.rococoa.ObjCClass;
+import org.rococoa.ObjCObject;
+import org.rococoa.ObjCObjectByReference;
 import org.rococoa.Rococoa;
 import org.rococoa.RunOnMainThread;
-import org.rococoa.cocoa.appkit.NSImage;
 import org.rococoa.cocoa.foundation.NSInteger;
 import org.rococoa.cocoa.foundation.NSObject;
+import org.rococoa.cocoa.foundation.NSPasteboard;
+
 
 /**
  * NSApplication
@@ -37,7 +41,7 @@ import org.rococoa.cocoa.foundation.NSObject;
 @RunOnMainThread
 public abstract class NSApplication extends NSObject {
 
-    private static final _Class CLASS = Rococoa.createClass("NSApplication", _Class.class);  //$NON-NLS-1$
+    private static final _Class CLASS = Rococoa.createClass("NSApplication", _Class.class);
 
     // NOTE: This class should not run on main thread (deadlocks?)
     private interface _Class extends ObjCClass {
@@ -82,7 +86,15 @@ Configuring Applications
     public abstract void setDelegate(ID delegate);
 
     public abstract NSWindow mainWindow();
-    
+
+    abstract ServicesProviderCallback servicesProvider();
+
+    interface ServicesProviderCallback extends Callback {
+        void apply(NSPasteboard pboard, String userData, ObjCObjectByReference/*NSError*/ error);
+    }
+
+    public abstract void setServicesProvider(ServicesProviderCallback callback);
+
     /*
     typedef enum {
        NSCriticalRequest = 0,

@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Rococoa.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.rococoa.contrib.appkit;
+package org.rococoa.cocoa.appkit;
 
 import org.rococoa.ObjCClass;
 import org.rococoa.Rococoa;
@@ -29,7 +29,7 @@ import org.rococoa.cocoa.foundation.NSUInteger;
  *
  */
 public abstract class NSOperationQueue extends NSObject {
-    public static final _Class CLASS = Rococoa.createClass(NSOperationQueue.class.getSimpleName(), _Class.class); //$NON-NLS-1$
+    public static final _Class CLASS = Rococoa.createClass(NSOperationQueue.class.getSimpleName(), _Class.class);
     public static final int NSOperationQueueDefaultMaxConcurrentOperationCount = -1;
     public interface _Class extends ObjCClass {
         public NSOperationQueue alloc();

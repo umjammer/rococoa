@@ -17,7 +17,7 @@
  * along with Rococoa.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.rococoa.cocoa;
+package org.rococoa.cocoa.appkit;
 
 import org.rococoa.cocoa.foundation.NSObject;
 
@@ -25,5 +25,5 @@ import org.rococoa.cocoa.foundation.NSObject;
  * @author Paul Loy
  */
 //TODO: flesh this out
-public abstract class NSDockTile extends NSObject {
+public abstract class NSMenu extends NSObject {
 }

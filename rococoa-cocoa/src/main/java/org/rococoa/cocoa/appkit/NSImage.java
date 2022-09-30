@@ -19,6 +19,7 @@
 
 package org.rococoa.cocoa.appkit;
 
+import com.sun.jna.Pointer;
 import org.rococoa.ObjCClass;
 import org.rococoa.cocoa.CGFloat;
 import org.rococoa.cocoa.foundation.NSArray;
@@ -498,4 +499,9 @@ public abstract class NSImage extends NSObject implements NSCopying {
      * <i>native declaration : :177</i>
      */
     public abstract void setTemplate(boolean isTemplate);
+
+    public abstract Pointer/*CGImageRef*/ CGImageForProposedRect_context_hints(
+            NSRect proposedDestRect,
+            NSGraphicsContext referenceContext,
+            NSDictionary hints);
 }

@@ -17,7 +17,7 @@
  * along with Rococoa.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.rococoa.cocoa;
+package org.rococoa.cocoa.appkit;
 
 import org.rococoa.ObjCClass;
 import org.rococoa.Rococoa;
@@ -32,7 +32,7 @@ import org.rococoa.cocoa.foundation.NSObject;
  * @version $Id: NSDistributedNotificationCenter.java,v 1.0 Mar 26, 2009 5:47:51 PM haraldk Exp$
  */
 public abstract class NSDistributedNotificationCenter extends NSObject {
-    public static final _Class CLASS = Rococoa.createClass("NSDistributedNotificationCenter", _Class.class);  //$NON-NLS-1$
+    public static final _Class CLASS = Rococoa.createClass("NSDistributedNotificationCenter", _Class.class);
 
     public interface _Class extends ObjCClass {
          NSDistributedNotificationCenter defaultCenter();

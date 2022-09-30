@@ -55,10 +55,16 @@ public interface FoundationLibrary extends Library {
     ID CFStringTokenizerCopyCurrentTokenAttribute(ID tokenizer, int attribute);
     int CFStringTokenizerAdvanceToNextToken(ID tokenizer);
 
-    static final ID kCFAllocatorDefault = null;
-    static final int kCFStringTokenizerUnitWordBoundary = 4;
-    static final int kCFStringTokenizerTokenNone = 0;
-    static final int kCFStringTokenizerAttributeLatinTranscription = 1 << 16;
+    /**
+     * This is a synonym for NULL.
+     * @see "https://developer.apple.com/documentation/corefoundation/kcfallocatordefault"
+     */
+    ID kCFAllocatorDefault = null;
+
+    int kCFStringTokenizerUnitWordBoundary = 4;
+    int kCFStringTokenizerTokenNone = 0;
+    int kCFStringTokenizerAttributeLatinTranscription = 1 << 16;
+
     // TODO
     static final String kCFStringTransformLatinHiragana = "Latin-Hiragana";
 }

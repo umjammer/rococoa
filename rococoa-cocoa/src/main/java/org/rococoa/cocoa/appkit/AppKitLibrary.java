@@ -36,4 +36,6 @@ public interface AppKitLibrary extends Library {
         "AppKit", AppKitLibrary.class, Collections.singletonMap(Library.OPTION_TYPE_MAPPER, new RococoaTypeMapper()));
 
     void NSRectFill (NSRect aRect);
+
+    long/*NSEventMask*/ NSEventMaskFromType(int/*NSEventType*/ type);
 }

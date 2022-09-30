@@ -17,7 +17,7 @@
  * along with Rococoa.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.rococoa.contrib.appkit;
+package org.rococoa.cocoa.appkit;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +27,9 @@ import org.rococoa.Foundation;
 import org.rococoa.ObjCObject;
 import static org.junit.jupiter.api.Assertions.*;
 import org.rococoa.Rococoa;
+import org.rococoa.cocoa.appkit.NSInvocationOperation;
+import org.rococoa.cocoa.appkit.NSOperation;
+import org.rococoa.cocoa.appkit.NSOperationQueue;
 import org.rococoa.cocoa.foundation.NSArray;
 import org.rococoa.cocoa.foundation.NSInteger;
 import org.rococoa.test.RococoaTestCase;

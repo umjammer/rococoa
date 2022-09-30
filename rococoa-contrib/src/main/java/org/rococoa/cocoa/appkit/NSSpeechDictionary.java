@@ -17,7 +17,7 @@
  * along with Rococoa.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.rococoa.contrib.appkit;
+package org.rococoa.cocoa.appkit;
 
 import org.rococoa.contrib.AbstractPropertyDictionary;
 import java.util.ArrayList;
@@ -33,7 +33,7 @@ import org.rococoa.Rococoa;
 import org.rococoa.cocoa.foundation.NSMutableArray;
 import org.rococoa.cocoa.foundation.NSMutableDictionary;
 import org.rococoa.cocoa.foundation.NSString;
-import static org.rococoa.contrib.appkit.NSSpeechDictionary.SpeechDictionaryProperty.*;
+import static org.rococoa.cocoa.appkit.NSSpeechDictionary.SpeechDictionaryProperty.*;
 
 /** NSVoice encapsulates the properties of a speech synthesis dictionary, and can be
  *  used with NSSpeechSynthesizer to change the way words are pronounced.

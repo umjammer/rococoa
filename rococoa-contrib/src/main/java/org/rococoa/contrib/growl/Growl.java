@@ -23,8 +23,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.rococoa.cocoa.NSApplication;
-import org.rococoa.cocoa.NSDistributedNotificationCenter;
+import org.rococoa.cocoa.appkit.NSApplication;
+import org.rococoa.cocoa.appkit.NSDistributedNotificationCenter;
 import org.rococoa.cocoa.appkit.NSImage;
 import org.rococoa.cocoa.foundation.NSArray;
 import org.rococoa.cocoa.foundation.NSDictionary;
