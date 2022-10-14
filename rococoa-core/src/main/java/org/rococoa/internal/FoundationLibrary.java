@@ -66,5 +66,5 @@ public interface FoundationLibrary extends Library {
     int kCFStringTokenizerAttributeLatinTranscription = 1 << 16;
 
     // TODO
-    static final String kCFStringTransformLatinHiragana = "Latin-Hiragana";
+    String kCFStringTransformLatinHiragana = "Latin-Hiragana";
 }

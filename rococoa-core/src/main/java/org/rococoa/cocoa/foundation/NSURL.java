@@ -235,4 +235,40 @@ public abstract class NSURL extends NSObject {
      * <i>from NSURLLoading native declaration : :89</i>
      */
     public abstract boolean setResourceData(NSData data);
+
+
+    public abstract boolean getResourceValue_forKey_error(ID id, NSString key, ObjCObjectByReference error);
+
+    public abstract boolean setResourceValue_forKey_error(ID value, String key, ObjCObjectByReference error);
+
+    public NSObject getResourceValue(String key) {
+        ObjCObjectByReference outError = new ObjCObjectByReference();
+        NSObject id = NSObject.CLASS.alloc();
+        boolean r = getResourceValue_forKey_error(id.id(), NSString.stringWithString(key), outError);
+        if (!r) {
+            throw new IllegalStateException();
+        }
+        NSError error = outError.getValueAs(NSError.class);
+        if (error != null) {
+            throw new IllegalStateException(error.description());
+        }
+        return id;
+    }
+
+    public static final String NSURLTagNamesKey = "NSURLTagNamesKey";
+
+    public List<String> getTags() {
+        NSObject id = getResourceValue(NSURL.NSURLTagNamesKey);
+System.err.println("id: " + id);
+        List<String> results = new ArrayList<String>();
+        if (id != null) {
+            NSArray array = Rococoa.cast(id, NSArray.class);
+System.err.println("array: " + array.count());
+            for (int i = 0; i < array.count(); i++) {
+                System.err.println("[" + i + "]: " + array.objectAtIndex(i));
+                results.add(NSString.class.cast(array.objectAtIndex(i)).toString());
+            }
+        }
+        return results;
+    }
 }
