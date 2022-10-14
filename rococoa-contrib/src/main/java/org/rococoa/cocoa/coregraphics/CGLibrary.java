@@ -6,14 +6,11 @@
 
 package org.rococoa.cocoa.coregraphics;
 
-import java.util.Collections;
-
 import com.sun.jna.Callback;
 import com.sun.jna.Library;
 import com.sun.jna.Native;
 import com.sun.jna.Pointer;
 import org.rococoa.cocoa.CGFloat;
-import org.rococoa.internal.RococoaTypeMapper;
 
 
 /**
@@ -24,8 +21,7 @@ import org.rococoa.internal.RococoaTypeMapper;
  */
 public interface CGLibrary extends Library {
 
-    CGLibrary library = Native.load(
-            "CoreGraphics", CGLibrary.class, Collections.singletonMap(Library.OPTION_TYPE_MAPPER, new RococoaTypeMapper()));
+    CGLibrary library = Native.load("CoreGraphics", CGLibrary.class);
 
     int kCGEventTapDisabledByTimeout = 0xFFFF_FFFE;
 
@@ -59,4 +55,47 @@ public interface CGLibrary extends Library {
     int CGImageGetHeight(Pointer/*CGImageRef*/ image);
 
     void CGImageRelease(Pointer/*CGImageRef*/ image);
+
+    boolean CGImageIsMask(Pointer/*CGImageRef*/ image);
+
+    /**
+     * Returns the number of bits allocated for a single color component of a bitmap image.
+     */
+    int CGImageGetBitsPerComponent(Pointer/*CGImageRef*/ image);
+    /**
+     * Returns the number of bits allocated for a single pixel in a bitmap image.
+     */
+    int CGImageGetBitsPerPixel(Pointer/*CGImageRef*/ image);
+    /**
+     * Returns the number of bytes allocated for a single row of a bitmap image.
+     */
+    int CGImageGetBytesPerRow(Pointer/*CGImageRef*/ image);
+    /**
+     * Returns the bitmap information for a bitmap image.
+     */
+    int CGImageGetBitmapInfo(Pointer/*CGImageRef*/ image);
+    /**
+     * Returns the decode array for a bitmap image.
+     */
+    CGFloat CGImageGetDecode(Pointer/*CGImageRef*/ image);
+    /**
+     * Return the color space for a bitmap image.
+     */
+    Pointer/*CGColorSpaceRef*/ CGImageGetColorSpace(Pointer/*CGImageRef*/ image);
+
+    Pointer/*CGDataProviderRef*/ CGImageGetDataProvider(Pointer/*CGImageRef*/ image);
+
+    Pointer/*CFDataRef*/ CGDataProviderCopyData(Pointer/*CGDataProviderRef*/ provider);
+
+    int CFDataGetLength(Pointer/*CFDataRef*/ dataRef);
+
+    Pointer CFDataGetBytePtr(Pointer/*CFDataRef*/ ref);
+
+    int kCGColorSpaceModelUnknown = -1;
+    int kCGColorSpaceModelMonochrome = 0;
+    int kCGColorSpaceModelRGB = 1;
+    int kCGColorSpaceModelCMYK = 2;
+    int kCGColorSpaceModelIndexed = 5;
+
+    int CGColorSpaceGetModel(Pointer/*CGColorSpaceRef*/ space);
 }

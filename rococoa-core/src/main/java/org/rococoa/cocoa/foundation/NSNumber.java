@@ -36,6 +36,18 @@ public abstract class NSNumber extends NSObject {
     public static NSNumber numberWithInt(int value) {
         return CLASS.numberWithInt(value);
     }
+    public static NSNumber of(int value) {
+        return numberWithInt(value);
+    }
+    public static NSNumber of(double value) {
+        return CLASS.numberWithDouble(value);
+    }
+    public static NSNumber of(float value) {
+        return CLASS.numberWithFloat(value);
+    }
+    public static NSNumber of(long value) {
+        return CLASS.numberWithLong(value);
+    }
 
     public abstract short shortValue();
     public abstract int intValue();

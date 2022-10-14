@@ -11,6 +11,7 @@ import java.util.List;
 
 import com.sun.jna.Pointer;
 import com.sun.jna.Structure;
+import org.rococoa.cocoa.CGFloat;
 
 
 /**
@@ -19,21 +20,18 @@ import com.sun.jna.Structure;
  * @author <a href="mailto:umjammer@gmail.com">Naohide Sano</a> (nsano)
  * @version 0.00 2022-09-04 nsano initial version <br>
  */
-public class CGPoint extends Structure {
+public class CGPoint extends Structure implements Structure.ByValue {
 
-    public double x;
-    public double y;
+    public CGFloat x;
+    public CGFloat y;
 
     public CGPoint() {
-    }
-
-    public CGPoint(Pointer pointer) {
-        super(pointer);
+        this(0, 0);
     }
 
     public CGPoint(int x, int y) {
-        this.x = x;
-        this.y = y;
+        this.x = new CGFloat(x);
+        this.y = new CGFloat(y);
     }
 
     @Override

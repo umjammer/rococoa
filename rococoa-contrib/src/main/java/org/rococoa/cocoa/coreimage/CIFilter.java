@@ -31,6 +31,10 @@ public abstract class CIFilter extends NSObject {
         CIFilter filterWithName_keysAndValues(String name, ID... key0);
     }
 
+    public static CIFilter of(String filterName) {
+        return CIFilter.CLASS.filterWithName(filterName);
+    }
+
     public abstract void setValue_forKey(NSObject value, String key);
 
     public abstract NSDictionary attributes();

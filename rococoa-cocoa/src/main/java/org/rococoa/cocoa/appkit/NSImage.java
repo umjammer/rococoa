@@ -19,7 +19,13 @@
 
 package org.rococoa.cocoa.appkit;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+
 import com.sun.jna.Pointer;
+import com.sun.jna.Structure;
 import org.rococoa.ObjCClass;
 import org.rococoa.cocoa.CGFloat;
 import org.rococoa.cocoa.foundation.NSArray;
@@ -83,6 +89,10 @@ public abstract class NSImage extends NSObject implements NSCopying {
 
     public static NSImage imageWithContentsOfFile(String filename) {
         return CLASS.alloc().initWithContentsOfFile(filename);
+    }
+
+    public static NSImage initWithCGImageSize(Pointer/*CGImageRef*/ cgImage, NSSize size) {
+        return CLASS.alloc().initWithCGImage_size(cgImage, size);
     }
 
     public interface _Class extends ObjCClass {
@@ -189,6 +199,9 @@ public abstract class NSImage extends NSObject implements NSCopying {
      * <i>native declaration : :86</i>
      */
     public abstract NSImage initWithPasteboard(NSPasteboard pasteboard);
+
+    /** */
+    public abstract NSImage initWithCGImage_size(Pointer/*CGImageRef*/ cgImage, NSSize size);
 
     /**
      * <i>native declaration : :88</i><br>
@@ -500,8 +513,20 @@ public abstract class NSImage extends NSObject implements NSCopying {
      */
     public abstract void setTemplate(boolean isTemplate);
 
+    /** */
     public abstract Pointer/*CGImageRef*/ CGImageForProposedRect_context_hints(
-            NSRect proposedDestRect,
+            Structure.ByReference proposedDestRect,
             NSGraphicsContext referenceContext,
             NSDictionary hints);
+
+    /** */
+    public BufferedImage toBufferedImage() {
+        try {
+            NSData data = TIFFRepresentation();
+            ByteArrayInputStream bais = new ByteArrayInputStream(data.getBytes());
+            return ImageIO.read(bais);
+        } catch (IOException ignored) {
+            throw new AssertionError("never happened");
+        }
+    }
 }

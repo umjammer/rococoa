@@ -19,16 +19,14 @@ import com.sun.jna.Structure;
  * @author <a href="mailto:umjammer@gmail.com">Naohide Sano</a> (nsano)
  * @version 0.00 2022-09-04 nsano initial version <br>
  */
-public class CGRect extends Structure {
+public class CGRect extends Structure implements Structure.ByValue {
 
     public CGPoint origin;
     public CGSize size;
 
     public CGRect() {
-    }
-
-    public CGRect(Pointer pointer) {
-        super(pointer);
+        this.origin = new CGPoint();
+        this.size = new CGSize();
     }
 
     public CGRect(int x, int y, int width, int height) {

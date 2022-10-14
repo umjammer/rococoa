@@ -6,11 +6,20 @@
 
 package org.rococoa.cocoa.coreimage;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.logging.Logger;
+
 import com.sun.jna.Pointer;
 import org.rococoa.ObjCClass;
 import org.rococoa.Rococoa;
+import org.rococoa.cocoa.coregraphics.CGImage;
 import org.rococoa.cocoa.coregraphics.CGRect;
-import org.rococoa.cocoa.foundation.NSArray;
+import org.rococoa.cocoa.coregraphics.CGSize;
+import org.rococoa.cocoa.foundation.NSData;
+import org.rococoa.cocoa.foundation.NSDictionary;
 import org.rococoa.cocoa.foundation.NSObject;
 import org.rococoa.cocoa.foundation.NSURL;
 
@@ -23,13 +32,69 @@ import org.rococoa.cocoa.foundation.NSURL;
  */
 public abstract class CIImage extends NSObject {
 
+    private static final Logger logger = Logger.getLogger(CIImage.class.getName());
+
     public static final _Class CLASS = Rococoa.createClass("CIImage", _Class.class);
 
     public interface _Class extends ObjCClass {
         CIImage emptyImage();
         CIImage imageWithCGImage(Pointer/*CGImageRef*/ image);
         CIImage imageWithContentsOfURL(NSURL url);
+        CIImage imageWithData(NSData data);
+        CIImage imageWithBitmapData_bytesPerRow_size_format_colorSpace(
+                NSData data, long bytesPerRowm, CGSize size, int/*CIFormat*/ format, Pointer/*CGColorSpaceRef*/ colorSpace);
+        CIImage alloc();
     }
 
+    /** A rectangle that specifies the extent of the image. */
     public abstract CGRect extent();
+
+    /** The color space of the image. */
+    public abstract Pointer/*CGColorSpaceRef*/ colorSpace();
+
+    /** A dictionary containing metadata about the image. */
+    public abstract NSDictionary properties();
+
+    /** The CoreGraphics image object this image was created from, if applicable. */
+    public abstract Pointer/*CGImageRef*/ CGImage();
+
+    public static final String kCIInputImageKey = "inputImage";
+
+    /** */
+    public static CIImage newInstance(InputStream is) throws IOException {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        byte[] b = new byte[8192];
+        int l = 0;
+        while (true) {
+            int r = is.read(b, 0, b.length);
+            if (r < 0) break;
+            baos.write(b, 0, r);
+            l += r;
+        }
+
+        return newInstance(baos.toByteArray());
+    }
+
+    /** */
+    public static CIImage newInstance(byte[] data) {
+        return CLASS.imageWithData(NSData.dataWithBytes(data));
+    }
+
+    /** */
+    public static CIImage newInstance(BufferedImage image) throws IOException {
+        CGImage cgImage = new CGImage(image);
+        return cgImage.toCIImage();
+    }
+
+    /** */
+    public BufferedImage toBufferedImage() {
+        Pointer cgImage = CGImage();
+logger.finer("cgImage1: " + cgImage);
+        if (cgImage == Pointer.NULL) {
+            CIContext context = CIContext.CLASS.contextWithOptions(null);
+            cgImage = context.createCGImage_fromRect(this, extent());
+logger.finer("cgImage2: " + cgImage);
+        }
+        return new CGImage(cgImage).toBufferedImage();
+    }
 }

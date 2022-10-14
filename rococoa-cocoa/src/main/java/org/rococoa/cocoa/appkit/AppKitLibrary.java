@@ -32,8 +32,7 @@ import com.sun.jna.Native;
  */
 public interface AppKitLibrary extends Library {
 
-    public static final AppKitLibrary INSTANCE = Native.load(
-        "AppKit", AppKitLibrary.class, Collections.singletonMap(Library.OPTION_TYPE_MAPPER, new RococoaTypeMapper()));
+    public static final AppKitLibrary INSTANCE = Native.load("AppKit", AppKitLibrary.class);
 
     void NSRectFill (NSRect aRect);
 

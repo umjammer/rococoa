@@ -11,6 +11,8 @@ import java.util.List;
 
 import com.sun.jna.Pointer;
 import com.sun.jna.Structure;
+import org.rococoa.cocoa.CGFloat;
+import org.rococoa.cocoa.foundation.NSSize;
 
 
 /**
@@ -19,21 +21,23 @@ import com.sun.jna.Structure;
  * @author <a href="mailto:umjammer@gmail.com">Naohide Sano</a> (nsano)
  * @version 0.00 2022-09-04 nsano initial version <br>
  */
-public class CGSize extends Structure {
+public class CGSize extends Structure implements Structure.ByValue {
 
-    public double width;
-    public double height;
+    public CGFloat width;
+    public CGFloat height;
 
     public CGSize() {
-    }
-
-    public CGSize(Pointer pointer) {
-        super(pointer);
+        this(0, 0);
     }
 
     public CGSize(int width, int height) {
-        this.width = width;
-        this.height = height;
+        this.width = new CGFloat(width);
+        this.height = new CGFloat(height);
+    }
+
+    /** */
+    public NSSize toNSSize() {
+        return new NSSize(width.doubleValue(), height.doubleValue());
     }
 
     @Override
