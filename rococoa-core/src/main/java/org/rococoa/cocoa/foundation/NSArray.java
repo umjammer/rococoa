@@ -22,24 +22,38 @@ package org.rococoa.cocoa.foundation;
 import org.rococoa.ObjCClass;
 import org.rococoa.Rococoa;
 
+
+/**
+ * A static ordered collection of objects.
+ */
 public abstract class NSArray extends NSEnumerator {
 
     public static final _Class CLASS = Rococoa.createClass("NSArray", _Class.class);
+
     public interface _Class extends ObjCClass {
+        /** Creates and returns an empty array. */
+        NSArray array();
         /**
          * @param objects Contents and then a trailing null
          */
         NSArray arrayWithObjects(NSObject...objects);
     }
 
+    /** */
     public static NSArray arrayWithObjects(NSObject...objects) {
         return CLASS.arrayWithObjects(objects);
     }
 
+    /**The number of objects in the array.  */
     public abstract int count();
 
+    /** The first object in the array. */
+    public abstract NSObject firstObject();
+    /** The last object in the array. */
     public abstract NSObject lastObject();
+    /** Returns the object located at the specified index. */
     public abstract NSObject objectAtIndex(int zeroOffsetIndex);
 
+    /** Returns an enumerator object that lets you access each object in the array. */
     public abstract NSEnumerator objectEnumerator();
 }

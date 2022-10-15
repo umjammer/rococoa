@@ -42,6 +42,10 @@ public abstract class NSDictionary extends NSObject {
         return CLASS.dictionaryWithObjectsAndKeys(objects);
     }
 
+    public static NSDictionary emptyDictionary() {
+        return CLASS.dictionary();
+    }
+
     public interface _Class extends ObjCClass {
         /**
          * Original signature : <code>id dictionary()</code><br>

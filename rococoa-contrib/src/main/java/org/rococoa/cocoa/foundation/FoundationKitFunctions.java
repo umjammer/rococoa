@@ -21,12 +21,9 @@ package org.rococoa.cocoa.foundation;
 
 import java.util.Collections;
 
-import com.sun.jna.NativeLong;
 import com.sun.jna.Pointer;
-import org.rococoa.ID;
 import org.rococoa.cocoa.CFIndex;
 
-import org.rococoa.cocoa.coregraphics.CGLibrary;
 import org.rococoa.internal.RococoaTypeMapper;
 
 import com.sun.jna.Library;
