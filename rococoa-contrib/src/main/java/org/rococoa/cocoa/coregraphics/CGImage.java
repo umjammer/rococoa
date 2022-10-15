@@ -20,7 +20,7 @@ import org.rococoa.cocoa.appkit.NSImage;
 import org.rococoa.cocoa.coreimage.CIImage;
 import org.rococoa.cocoa.foundation.NSData;
 
-import static org.rococoa.cocoa.coregraphics.CGLibrary.library;
+import static org.rococoa.cocoa.coregraphics.CoreGraphicsLibrary.library;
 
 
 /**
@@ -70,9 +70,14 @@ public class CGImage {
     /** */
     public CGImage(Pointer/*CGImageRef*/ cgImageRef) {
         this.image = cgImageRef;
-        int cBits = CGLibrary.library.CGImageGetBitsPerComponent(image);
-        int bits = CGLibrary.library.CGImageGetBitsPerPixel(image);
+        int cBits = CoreGraphicsLibrary.library.CGImageGetBitsPerComponent(image);
+        int bits = CoreGraphicsLibrary.library.CGImageGetBitsPerPixel(image);
 logger.finer(String.format("cgImage: %dx%d, cb:%d, b:%d%n", getWidth(), getHeight(), cBits, bits));
+    }
+
+    @Override
+    public String toString() {
+        return "CGImage: " + getWidth() + "x" + getHeight() + ", " + image;
     }
 
     /** */

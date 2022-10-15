@@ -38,6 +38,6 @@ any other problems.
  * block (wip)
    * http://cocoawithlove.com/2009/10/how-blocks-are-implemented-and.html
    * http://www.opensource.apple.com/source/libclosure/libclosure-38/BlockImplementation.txt
- * CIFilter (wip)
+ * ~~CIFilter~~ (done)
  * https://gitlab.com/axet/apple
  

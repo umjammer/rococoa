@@ -14,14 +14,14 @@ import org.rococoa.cocoa.CGFloat;
 
 
 /**
- * CGLibrary.
+ * CoreGraphicsLibrary.
  *
  * @author <a href="mailto:umjammer@gmail.com">Naohide Sano</a> (nsano)
  * @version 0.00 2022-09-10 nsano initial version <br>
  */
-public interface CGLibrary extends Library {
+public interface CoreGraphicsLibrary extends Library {
 
-    CGLibrary library = Native.load("CoreGraphics", CGLibrary.class);
+    CoreGraphicsLibrary library = Native.load("CoreGraphics", CoreGraphicsLibrary.class);
 
     int kCGEventTapDisabledByTimeout = 0xFFFF_FFFE;
 

@@ -13,12 +13,12 @@ import vavi.util.Debug;
 
 
 /**
- * CGLibraryTest.
+ * CoreGraphicsLibraryTest.
  *
  * @author <a href="mailto:umjammer@gmail.com">Naohide Sano</a> (nsano)
  * @version 0.00 2022-09-11 nsano initial version <br>
  */
-public class CGLibraryTest {
+public class CoreGraphicsLibraryTest {
 
     @Test
     void tes1() throws Exception {
@@ -28,7 +28,7 @@ Debug.println("rect: " + r);
 
     @Test
     void tes2() throws Exception {
-        CGImage cgImage = new CGImage(CGLibraryTest.class.getResourceAsStream("/sample1.heic"));
+        CGImage cgImage = new CGImage(CoreGraphicsLibraryTest.class.getResourceAsStream("/sample1.heic"));
 Debug.println("cgImage: " + cgImage.getWidth() + "x" + cgImage.getHeight());
         CGRect r = new CGRect(10, 20, 200, 100);
 Debug.println("rect: " + r);
@@ -36,7 +36,7 @@ Debug.println("rect: " + r);
         CIImage ciImage = CIImage.CLASS.imageWithCGImage(cgImage.pointer());
 Debug.println("ciImage: " + ciImage);
 
-        Pointer cgImage2 = CGLibrary.library.CGImageCreateWithImageInRect(cgImage.pointer(), r);
+        Pointer cgImage2 = CoreGraphicsLibrary.library.CGImageCreateWithImageInRect(cgImage.pointer(), r);
 Debug.println("CGImageCreateWithImageInRect: " + cgImage2);
     }
 }

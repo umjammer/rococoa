@@ -26,6 +26,7 @@ import org.rococoa.cocoa.foundation.NSObject;
  *
  * @author <a href="mailto:umjammer@gmail.com">Naohide Sano</a> (nsano)
  * @version 0.00 2022-10-13 nsano initial version <br>
+ * @see "https://cifilter.io/"
  */
 public class CIFilterOp implements BufferedImageOp {
 

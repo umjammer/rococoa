@@ -22,7 +22,7 @@ import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import org.rococoa.cocoa.CGFloat;
 import org.rococoa.cocoa.appkit.NSImage;
 import org.rococoa.cocoa.coregraphics.CGImage;
-import org.rococoa.cocoa.coregraphics.CGLibrary;
+import org.rococoa.cocoa.coregraphics.CoreGraphicsLibrary;
 import org.rococoa.cocoa.coregraphics.CGRect;
 import org.rococoa.cocoa.foundation.NSArray;
 import org.rococoa.cocoa.foundation.NSNumber;
@@ -31,19 +31,19 @@ import vavi.util.Debug;
 
 
 /**
- * TestCoreImage.
+ * CoreImageTest.
  *
  * @author <a href="mailto:umjammer@gmail.com">Naohide Sano</a> (nsano)
  * @version 0.00 2022-09-11 nsano initial version <br>
  */
-class TestCoreImage {
+class CoreImageTest {
 
     /** @see "https://stackoverflow.com/a/23877167" */
     @Test
     @EnabledIfSystemProperty(named = "vavi.test", matches = "ide")
     void test1() throws Exception {
 
-        Pointer/*CGColorRef*/ colorRef = CGLibrary.library.CGColorCreateGenericRGB(
+        Pointer/*CGColorRef*/ colorRef = CoreGraphicsLibrary.library.CGColorCreateGenericRGB(
                 new CGFloat(255.0),
                 new CGFloat(0),
                 new CGFloat(255.0),
@@ -53,7 +53,7 @@ class TestCoreImage {
 
         CIContext context = CIContext.CLASS.contextWithOptions(null);
 
-        CGImage cgImage = new CGImage(TestCoreImage.class.getResourceAsStream("/sample1.heic"));
+        CGImage cgImage = new CGImage(CoreImageTest.class.getResourceAsStream("/sample1.heic"));
 Debug.println("cgImage: " + cgImage.getWidth() + "x" + cgImage.getHeight());
 
         //  Convert UIImage to CIImage
@@ -91,6 +91,7 @@ Debug.println("cgImageX: " + cgImageX.getWidth() + ", " + cgImageX.getHeight());
         show(image);
     }
 
+    /** */
     void show(BufferedImage image) {
         JFrame frame = new JFrame();
         JPanel panel = new JPanel() {
@@ -111,7 +112,7 @@ Debug.println("cgImageX: " + cgImageX.getWidth() + ", " + cgImageX.getHeight());
     @DisplayName("CIImage -> BufferedImage")
     @EnabledIfSystemProperty(named = "vavi.test", matches = "ide")
     void test2() throws Exception {
-        CIImage ciImage = CIImage.newInstance(TestCoreImage.class.getResourceAsStream("/sample1.heic"));
+        CIImage ciImage = CIImage.newInstance(CoreImageTest.class.getResourceAsStream("/sample1.heic"));
 Debug.println("ciImage: " + ciImage);
         show(ciImage.toBufferedImage());
     }
@@ -120,7 +121,7 @@ Debug.println("ciImage: " + ciImage);
     @DisplayName("BufferedImage -> CIImage")
     @EnabledIfSystemProperty(named = "vavi.test", matches = "ide")
     void test3() throws Exception {
-        BufferedImage bi = ImageIO.read(TestCoreImage.class.getResourceAsStream("/test.jpg"));
+        BufferedImage bi = ImageIO.read(CoreImageTest.class.getResourceAsStream("/test.jpg"));
 Debug.println("bi: " + bi);
         CIImage ciImage = CIImage.newInstance(bi);
 Debug.println("ciImage: " + ciImage);
@@ -130,7 +131,7 @@ Debug.println("ciImage: " + ciImage);
     @Test
     @EnabledIfSystemProperty(named = "vavi.test", matches = "ide")
     void test4() throws Exception {
-        BufferedImage image = ImageIO.read(TestCoreImage.class.getResourceAsStream("/test.jpg"));
+        BufferedImage image = ImageIO.read(CoreImageTest.class.getResourceAsStream("/test.jpg"));
 
 long t = System.currentTimeMillis();
         Map<String, NSObject> options = new HashMap<>();
@@ -146,7 +147,7 @@ Debug.println((System.currentTimeMillis() - t) + " ms");
     @Test
     @EnabledIfSystemProperty(named = "vavi.test", matches = "ide")
     void test5() throws Exception {
-        BufferedImage image = ImageIO.read(TestCoreImage.class.getResourceAsStream("/test.jpg"));
+        BufferedImage image = ImageIO.read(CoreImageTest.class.getResourceAsStream("/test.jpg"));
 
 long t = System.currentTimeMillis();
         Map<String, NSObject> options = new HashMap<>();
