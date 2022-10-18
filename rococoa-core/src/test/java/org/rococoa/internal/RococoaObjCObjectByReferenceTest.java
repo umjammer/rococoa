@@ -37,12 +37,26 @@ import static org.junit.jupiter.api.Assertions.*;
 public class RococoaObjCObjectByReferenceTest extends RococoaTestCase {
 
     private interface TestShunt extends ObjCObject {
+        NSNumber testNumberFromInt(int value);
         void testNSNumberByReference_with(ObjCObjectByReference reference, int value);
         void testCallbackWithReference(ID delegate);
     }
 
     private interface TestShuntDelegate {
-        public void callback(ObjCObjectByReference reference);
+        void callback(ID reference);
+    }
+
+    @Test
+    public void testArgumentInt() {
+        TestShunt shunt = Rococoa.create("TestShunt", TestShunt.class);
+        NSNumber value = shunt.testNumberFromInt(42);
+        assertEquals(42, value.intValue());
+    }
+
+    @Test
+    public void testNSNumberFromInt() {
+        NSNumber nsNumber = NSNumber.CLASS.numberWithInt(42);
+        assertEquals(42, nsNumber.intValue());
     }
 
     @Disabled("by vavi")
