@@ -75,15 +75,14 @@ public class RococoaObjCObjectByReferenceTest extends RococoaTestCase {
         assertEquals(2, value.retainCount());
     }
 
-    @Disabled("by vavi")
     @Test
     public void testDelegate() {
         NSAutoreleasePool pool = NSAutoreleasePool.new_();
         TestShunt shunt = Rococoa.create("TestShunt", TestShunt.class);
         final CountDownLatch count = new CountDownLatch(1);
         final ObjCObject callback = Rococoa.proxy((TestShuntDelegate) reference -> {
-                // Success
-                count.countDown();
+            // Success
+            count.countDown();
         });
         final ID delegate = callback.id();
         shunt.testCallbackWithReference(delegate);

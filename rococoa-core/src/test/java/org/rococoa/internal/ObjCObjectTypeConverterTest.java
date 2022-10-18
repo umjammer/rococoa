@@ -35,7 +35,6 @@ import com.sun.jna.FromNativeConverter;
 import com.sun.jna.NativeLong;
 import com.sun.jna.ToNativeConverter;
 
-@Disabled("by vavi because of error")
 @SuppressWarnings({ "nls", "unchecked", "cast" })
 public class ObjCObjectTypeConverterTest extends RococoaTestCase {
 
@@ -61,6 +60,7 @@ public class ObjCObjectTypeConverterTest extends RococoaTestCase {
         assertNull(converter.toNative(null, null));
     }
 
+    @Disabled("by vavi because of error")
     @Test public void convertsReturnedIDToNSObjectSubclass() {
         FromNativeConverter converter = new ObjCObjectTypeConverter<>(NSNumber.class);
             // returning is based on declared type, see RococoaTypeMapper
@@ -88,6 +88,7 @@ public class ObjCObjectTypeConverterTest extends RococoaTestCase {
         assertNull(converter.fromNative(nativeValue, null));
     }
 
+    @Disabled("by vavi because of error")
     @Test public void returnedNSObjectIsNormallyRetained() {
         FromNativeConverter converter = new ObjCObjectTypeConverter<>(NSNumber.class);
 

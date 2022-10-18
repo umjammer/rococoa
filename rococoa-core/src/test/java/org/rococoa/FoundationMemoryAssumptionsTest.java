@@ -36,7 +36,6 @@ import org.junit.jupiter.api.Test;
  *
  * @author duncan
  */
-@Disabled("by vavi because of crash")
 public class FoundationMemoryAssumptionsTest {
 
     @Test
@@ -85,6 +84,7 @@ public class FoundationMemoryAssumptionsTest {
         Foundation.cfRelease(idNSObject);
     }
 
+    @Disabled("by vavi because of crash")
     @Test
     public void testAutoreleaseFactoryMethod() {
         ID idPool = Foundation.sendReturnsID(Foundation.getClass("NSAutoreleasePool"), "new");
@@ -126,6 +126,7 @@ public class FoundationMemoryAssumptionsTest {
         Foundation.cfRelease(idNSObject); // crash, but with stderr logging
     }
 
+    @Disabled("by vavi because of crash")
     @Test
     public void nSStringSpecialCases() {
         ID idEmptyNSString = Foundation.sendReturnsID(Foundation.getClass("NSString"), "alloc");

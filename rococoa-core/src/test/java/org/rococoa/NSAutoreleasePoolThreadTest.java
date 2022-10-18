@@ -19,7 +19,6 @@
 
 package org.rococoa;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.rococoa.cocoa.foundation.NSAutoreleasePool;
 import org.rococoa.test.RococoaTestCase;
@@ -51,8 +50,8 @@ public class NSAutoreleasePoolThreadTest {
     @Test
     public void garbageCollectDrainedPool() throws InterruptedException {
         Thread thread = new Thread(null, () -> {
-                NSAutoreleasePool pool = NSAutoreleasePool.new_();
-                pool.drain();
+            NSAutoreleasePool pool = NSAutoreleasePool.new_();
+            pool.drain();
         }, "test");
         thread.start();
         thread.join();
@@ -79,28 +78,26 @@ public class NSAutoreleasePoolThreadTest {
         RococoaTestCase.gc();
     }
 
-    @Disabled("crashes")
     @Test
     public void cantDrainPoolCreatedOnAFinishedThread() throws InterruptedException {
         final NSAutoreleasePool[] poolHolder = new NSAutoreleasePool[1];
         Thread thread = new Thread(null, () -> {
-                poolHolder[0] = NSAutoreleasePool.new_();
+            poolHolder[0] = NSAutoreleasePool.new_();
         }, "test");
         thread.start();
         thread.join();
         poolHolder[0].drain();
     }
 
-    @Disabled("crashes")
     @Test
     public void drainPoolCreatedOnANotFinishedThread() throws InterruptedException {
         final NSAutoreleasePool[] poolHolder = new NSAutoreleasePool[1];
         final CyclicBarrier beforeDrain = new CyclicBarrier(2);
         final CyclicBarrier afterDrain = new CyclicBarrier(2);
         Thread thread = new Thread(null, () -> {
-                poolHolder[0] = NSAutoreleasePool.new_();
-                await(beforeDrain);
-                await(afterDrain);
+            poolHolder[0] = NSAutoreleasePool.new_();
+            await(beforeDrain);
+            await(afterDrain);
         }, "test");
         thread.start();
         await(beforeDrain);
@@ -115,10 +112,10 @@ public class NSAutoreleasePoolThreadTest {
         final CyclicBarrier beforeDrain = new CyclicBarrier(2);
         final CyclicBarrier afterDrain = new CyclicBarrier(2);
         Thread thread = new Thread(null, () -> {
-                poolHolder[0] = NSAutoreleasePool.new_();
-                poolHolder[0].drain();
-                await(beforeDrain);
-                await(afterDrain);
+            poolHolder[0] = NSAutoreleasePool.new_();
+            poolHolder[0].drain();
+            await(beforeDrain);
+            await(afterDrain);
         }, "test");
         thread.start();
         await(beforeDrain);
