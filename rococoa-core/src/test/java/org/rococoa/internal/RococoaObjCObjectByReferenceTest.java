@@ -35,9 +35,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SuppressWarnings("nls")
 public class RococoaObjCObjectByReferenceTest extends RococoaTestCase {
+
     private interface TestShunt extends ObjCObject {
         void testNSNumberByReference_with(ObjCObjectByReference reference, int value);
-
         void testCallbackWithReference(ID delegate);
     }
 
@@ -67,11 +67,9 @@ public class RococoaObjCObjectByReferenceTest extends RococoaTestCase {
         NSAutoreleasePool pool = NSAutoreleasePool.new_();
         TestShunt shunt = Rococoa.create("TestShunt", TestShunt.class);
         final CountDownLatch count = new CountDownLatch(1);
-        final ObjCObject callback = Rococoa.proxy(new TestShuntDelegate() {
-            public void callback(ObjCObjectByReference reference) {
+        final ObjCObject callback = Rococoa.proxy((TestShuntDelegate) reference -> {
                 // Success
                 count.countDown();
-            }
         });
         final ID delegate = callback.id();
         shunt.testCallbackWithReference(delegate);

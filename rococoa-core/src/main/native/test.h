@@ -57,9 +57,7 @@ double addFieldsOfStructByValue(TestIntDoubleStruct s);
 - (BOOL) valueIsYES:(BOOL) a;
 
 - (BOOL) valueIsNO:(BOOL) a;
-	
+
 - (bool) isMainThread;
-
-
 
 @end

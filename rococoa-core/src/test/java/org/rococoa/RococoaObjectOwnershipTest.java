@@ -39,53 +39,35 @@ public class RococoaObjectOwnershipTest extends RococoaTestCase {
     @Test public void directFactoryMethodsReturnsYieldsPooledObject() {
 	// TODO - I've seen this fail with a retain count of 3. I wonder whether
 	// there is some aggressive instance sharing going on with NSDate
-        check(shouldBeInPool, 
-            new Factory() {
-                public NSDate create() {
-                    return Rococoa.create("NSDate", NSDate.class, "dateWithTimeIntervalSince1970:", 0.0);
-                }});
+        check(shouldBeInPool, () -> Rococoa.create("NSDate", NSDate.class, "dateWithTimeIntervalSince1970:", NSNumber.CLASS.numberWithInt(0)));
     }
 
     @Disabled("by vavi")
     @Test public void factoryMethodOnClassYieldsPooledObject() {
 	// TODO - see above
-        check(shouldBeInPool, 
-            new Factory() {
-                public NSDate create() {
-                    return NSDate.CLASS.dateWithTimeIntervalSince1970(0.0);
-                }});
+        check(shouldBeInPool, () -> NSDate.CLASS.dateWithTimeIntervalSince1970(0.0));
     }
 
     @Disabled("by vavi")
     @Test public void createYieldsNonPooledObject() {
-        check(shouldNotBeInPool, 
-            new Factory() {
-                public NSDate create() {
-                    return Rococoa.create("NSDate", NSDate.class);
-                }});
+        check(shouldNotBeInPool, () -> Rococoa.create("NSDate", NSDate.class));
     }
 
     @Disabled("by vavi")
     @Test public void newYieldsNonPooledObject() {
         // calling new on an NSClass results in a NOT autorelease'd object
-        check(shouldNotBeInPool, 
-            new Factory() {
-                public NSDate create() {
-                    return Rococoa.create("NSDate", NSDate.class, "new");
-                }});
+        check(shouldNotBeInPool, () -> Rococoa.create("NSDate", NSDate.class, "new"));
     }
 
     @Test public void allocYieldsNonPooledObject() {
         // calling alloc on an NSClass results in a NOT autorelease'd object
-        check(shouldNotBeInPool, 
-            new Factory() {
-                public NSObject create() {
+        check(shouldNotBeInPool, () -> {
                     // NSDate.alloc fails as it is an Umbrella class
                     return Rococoa.create("NSObject", NSObject.class, "alloc");
-                }});
+        });
     }
 
-    private static interface Factory {
+    private interface Factory {
         NSObject create();
     }
 
@@ -122,5 +104,4 @@ public class RococoaObjectOwnershipTest extends RococoaTestCase {
 
         assertRetainCount(expectedFinalRetainCount, alias);
     }
-
 }

@@ -93,5 +93,4 @@ TestIntIntStruct createIntIntStruct(int a, int b) {
 	return pthread_main_np();
 }
 
-
 @end

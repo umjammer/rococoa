@@ -47,7 +47,6 @@ public class TestStruct extends Structure {
         }
     }
 
-
     @Override
     protected List<String> getFieldOrder() {
         return Arrays.asList("anInt", "aDouble");

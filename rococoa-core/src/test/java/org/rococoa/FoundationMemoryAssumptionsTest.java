@@ -154,5 +154,4 @@ public class FoundationMemoryAssumptionsTest {
         Foundation.sendReturnsVoid(idPool, "drain");
         assertRetainCount(1, cfStringRef);
     }
-
 }
