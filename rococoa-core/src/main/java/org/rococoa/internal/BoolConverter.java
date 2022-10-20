@@ -37,11 +37,11 @@ import com.sun.jna.ToNativeConverter;
  */
 public class BoolConverter implements ToNativeConverter, FromNativeConverter {
 
-    public Object toNative(final Object value, final ToNativeContext context) {
+    public Object toNative(Object value, ToNativeContext context) {
         return ((Boolean) value) ? 1 : 0;
     }
 
-    public Object fromNative(final Object value, final FromNativeContext context) {
+    public Object fromNative(Object value, FromNativeContext context) {
         return ((Byte) value).intValue() == 1;
     }
 

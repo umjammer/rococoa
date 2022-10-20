@@ -19,12 +19,15 @@
 
 package org.rococoa;
 
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Callable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+import com.sun.jna.Library;
+import com.sun.jna.Native;
 import org.rococoa.cocoa.CFIndex;
 import org.rococoa.cocoa.CFRange;
 import org.rococoa.internal.FoundationLibrary;
@@ -34,12 +37,6 @@ import org.rococoa.internal.MsgSendLibrary;
 import org.rococoa.internal.OCInvocationCallbacks;
 import org.rococoa.internal.RococoaLibrary;
 import org.rococoa.internal.VarArgsUnpacker;
-
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import com.sun.jna.Library;
-import com.sun.jna.Native;
 
 
 /**

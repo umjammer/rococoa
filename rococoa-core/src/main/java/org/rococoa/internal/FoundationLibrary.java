@@ -20,12 +20,11 @@
 package org.rococoa.internal;
 
 
+import com.sun.jna.Library;
 import org.rococoa.ID;
 import org.rococoa.Selector;
 import org.rococoa.cocoa.CFIndex;
 import org.rococoa.cocoa.CFRange;
-
-import com.sun.jna.Library;
 
 /**
  * JNA Library for plain C calls, standard JNA marshalling applies to these

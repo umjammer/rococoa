@@ -19,6 +19,7 @@
 
 package org.rococoa.internal;
 
+import net.sf.cglib.core.Converter;
 import org.rococoa.ObjCObject;
 import org.rococoa.cocoa.foundation.NSObject;
 
@@ -40,12 +41,12 @@ import com.sun.jna.FromNativeConverter;
  * and objects and native values.
  *
  * @author duncan
- *
  */
 public class RococoaTypeMapper extends DefaultTypeMapper {
 
     public RococoaTypeMapper() {
         addToNativeConverter(ObjCObject.class, new ObjCObjectTypeConverter<>(ObjCObject.class));
+//        addToNativeConverter(Float.class, new FloatConverter()); // TODO doesn't work
         addToNativeConverter(Boolean.class, new BoolConverter());
         addFromNativeConverter(Boolean.class, new BoolConverter());
         addTypeConverter(String.class, new StringTypeConverter());
@@ -53,7 +54,7 @@ public class RococoaTypeMapper extends DefaultTypeMapper {
         // not actually used at present because NSObjectInvocationHandler does marshalling
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked", "rawtypes"})
     @Override public FromNativeConverter getFromNativeConverter(Class<?> javaType) {
         if (ObjCObject.class.isAssignableFrom(javaType)) {
             // return a new converter that knows the subtype it is going to create
@@ -61,5 +62,4 @@ public class RococoaTypeMapper extends DefaultTypeMapper {
         }
         return super.getFromNativeConverter(javaType);
     }
-
 }

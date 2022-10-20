@@ -35,20 +35,15 @@ import java.util.logging.Logger;
  * Exists just to tidy up Foundation.
  *
  * @author duncan
- *
  */
 public abstract class MainThreadUtils {
-    private static Logger logging = Logger.getLogger("org.rococoa.foundation");
+
+    private static final Logger logging = Logger.getLogger("org.rococoa.foundation");
 
     private static final ID idNSThreadClass = Foundation.getClass("NSThread");
     private static final Selector isMainThreadSelector = Foundation.selector("isMainThread");
 
-    private static final ThreadLocal<Boolean> isMainThreadThreadLocal = new ThreadLocal<Boolean>() {
-        @Override
-        protected Boolean initialValue() {
-            return nsThreadSaysIsMainThread();
-        }
-    };
+    private static final ThreadLocal<Boolean> isMainThreadThreadLocal = ThreadLocal.withInitial(MainThreadUtils::nsThreadSaysIsMainThread);
 
     private MainThreadUtils() {
         //
@@ -61,17 +56,16 @@ public abstract class MainThreadUtils {
      * Return the result of calling callable on the main Cococoa thread.
      */
     @SuppressWarnings("unchecked")
-    public static <T> T callOnMainThread(RococoaLibrary rococoaLibrary, final Callable<T> callable) {
+    public static <T> T callOnMainThread(RococoaLibrary rococoaLibrary, Callable<T> callable) {
         final Object[] result = new Object[1];
         final Throwable[] thrown = new Throwable[1];
-        RococoaLibrary.VoidCallback callback = new RococoaLibrary.VoidCallback() {
-            public void callback() {
-                try {
-                    result[0] = callable.call();
-                } catch (Throwable t) {
-                    thrown[0] = t;
-                }
-            }};
+        RococoaLibrary.VoidCallback callback = () -> {
+            try {
+                result[0] = callable.call();
+            } catch (Throwable t) {
+                thrown[0] = t;
+            }
+        };
 
         rococoaLibrary.callOnMainThread(callback, true);
         rethrow(thrown[0]);
@@ -83,8 +77,8 @@ public abstract class MainThreadUtils {
      * @param waitUntilDone A Boolean that specifies whether the current thread blocks until after
      * the specified selector is performed on the receiver on the main thread.
      */
-    public static void runOnMainThread(RococoaLibrary rococoaLibrary, final Runnable runnable, final boolean waitUntilDone) {
-        final Throwable[] thrown = new Throwable[1];
+    public static void runOnMainThread(RococoaLibrary rococoaLibrary, Runnable runnable, boolean waitUntilDone) {
+        Throwable[] thrown = new Throwable[1];
         RococoaLibrary.VoidCallback callback = new RococoaLibrary.VoidCallback() {
             public void callback() {
                 try {
@@ -92,8 +86,7 @@ public abstract class MainThreadUtils {
                 } catch (Throwable t) {
                     if (waitUntilDone) {
                         thrown[0] = t;
-                    }
-                    else {
+                    } else {
                         logging.log(Level.SEVERE, "Lost exception on main thread", t);
                     }
                 } finally {

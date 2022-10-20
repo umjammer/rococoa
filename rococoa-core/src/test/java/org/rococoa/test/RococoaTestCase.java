@@ -58,15 +58,10 @@ public abstract class RococoaTestCase {
 
     public static void initializeLogging() {
         try {
-            InputStream is = null;
-            try {
-                is = RococoaTestCase.class.getResourceAsStream("/test-logging.properties");
+            try (InputStream is = RococoaTestCase.class.getResourceAsStream("/test-logging.properties")) {
                 if (is == null)
                     throw new FileNotFoundException("Cannot find test-logging.properties");
                 LogManager.getLogManager().readConfiguration(is);
-            } finally {
-                if (is != null)
-                    is.close();
             }
         } catch (IOException x) {
             throw new RuntimeException("Could not initialize logging", x);

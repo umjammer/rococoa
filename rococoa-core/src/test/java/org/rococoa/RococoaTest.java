@@ -103,7 +103,7 @@ public class RococoaTest extends RococoaTestCase {
     }
     
     public interface OddClass extends ObjCClass {
-        public NSObject numberWithInt(int value);
+        NSObject numberWithInt(int value);
     }
 
     @Test public void testDownCast() {

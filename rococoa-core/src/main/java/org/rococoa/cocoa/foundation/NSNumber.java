@@ -26,11 +26,11 @@ import org.rococoa.Rococoa;
 public abstract class NSNumber extends NSObject {
     public static final _Class CLASS = Rococoa.createClass("NSNumber", _Class.class);
     public interface _Class extends ObjCClass {
-        public NSNumber numberWithBool(boolean value);
-        public NSNumber numberWithInt(int value);
-        public NSNumber numberWithDouble(double e);
-        public NSNumber numberWithLong(long value);
-        public NSNumber numberWithFloat(float value);
+        NSNumber numberWithBool(boolean value);
+        NSNumber numberWithInt(int value);
+        NSNumber numberWithDouble(double e);
+        NSNumber numberWithLong(long value);
+        NSNumber numberWithFloat(float value); // TODO
     }
 
     public static NSNumber numberWithInt(int value) {
@@ -43,7 +43,7 @@ public abstract class NSNumber extends NSObject {
         return CLASS.numberWithDouble(value);
     }
     public static NSNumber of(float value) {
-        return CLASS.numberWithFloat(value);
+        return CLASS.numberWithFloat(value); // TODO
     }
     public static NSNumber of(long value) {
         return CLASS.numberWithLong(value);
@@ -52,7 +52,20 @@ public abstract class NSNumber extends NSObject {
     public abstract short shortValue();
     public abstract int intValue();
     public abstract long longValue();
-    public abstract float floatValue();
+    public abstract float floatValue(); // TODO
     public abstract double doubleValue();
     public abstract int compare(NSNumber another);
+
+    public abstract String stringValue();
+
+    public abstract String objCType();
+
+//    public float floatValue() {
+//        return (float) doubleValue();
+//    }
+
+    @Override
+    public String toString() {
+        return stringValue();
+    }
 }
