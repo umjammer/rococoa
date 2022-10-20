@@ -208,17 +208,14 @@ public abstract class Foundation {
      *
      * Note that you are responsible for memory management if returnType is ID.
      */
-    @SuppressWarnings("unchecked")
     public static <T> T send(ID receiver, String selectorName, Class<T> returnType, Object... args) {
         return send(receiver, selectorName, returnType, null, args);
     }
 
-    @SuppressWarnings("unchecked")
     public static <T> T send(ID receiver, String selectorName, Class<T> returnType, Method method, Object... args) {
         return send(receiver, selector(selectorName), returnType, method, args);
     }
 
-    @SuppressWarnings("unchecked")
     public static <T> T send(ID receiver, Selector selector, Class<T> returnType, Object... args) {
         return send(receiver, selector, returnType, null, args);
     }
@@ -241,6 +238,7 @@ public abstract class Foundation {
         if (method != null && method.isVarArgs()) {
             return (T) messageSendLibrary.syntheticSendVarArgsMessage(returnType, receiver, selector, args);
         }
+logging.info("@@@0: " + new VarArgsUnpacker(args));
         return (T) messageSendLibrary.syntheticSendMessage(returnType, receiver, selector, args);
     }
 

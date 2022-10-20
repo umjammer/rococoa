@@ -31,8 +31,8 @@ import com.sun.jna.Structure;
  */
 public interface MsgSendLibrary extends Library {                
     // This doesn't exist in the library, but is synthesised by msgSendHandler
-    Object syntheticSendMessage(Class<?> returnType, ID receiver, Selector selector,  Object... args);
-    Object syntheticSendVarArgsMessage(Class<?> returnType, ID receiver, Selector selector,  Object... args);
+    Object syntheticSendMessage(Class<?> returnType, ID receiver, Selector selector, Object... args);
+    Object syntheticSendVarArgsMessage(Class<?> returnType, ID receiver, Selector selector, Object... args);
 
     // We don't call these directly, but through syntheticSendMessage
     Object objc_msgSend(ID receiver, Selector selector, Object... args);

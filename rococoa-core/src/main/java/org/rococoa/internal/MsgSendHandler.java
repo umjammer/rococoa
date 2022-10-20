@@ -34,6 +34,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
+
 
 /**
  * Very special case InvocationHandler that invokes the correct message dispatch
@@ -61,10 +63,12 @@ import java.util.Map;
  */
 class MsgSendHandler implements InvocationHandler {
 
+    private static Logger logging = Logger.getLogger("org.rococoa.foundation");
+
     /**
-     * @see com.sun.jna.Function#OPTION_INVOKING_METHOD
+     * @see "com.sun.jna.Function#OPTION_INVOKING_METHOD"
      */
-    private final String OPTION_INVOKING_METHOD = "invoking-method";
+    private static final String OPTION_INVOKING_METHOD = "invoking-method";
 
     private final static int I386_STRET_CUTOFF = 9;
     private final static int IA64_STRET_CUTOFF = 17;
@@ -95,13 +99,14 @@ class MsgSendHandler implements InvocationHandler {
     }
 
     private final MethodFunctionPair objc_msgSend_stret_Pair;
-    private final Pair<Method, Function> objc_msgSend_fpret_Pair;
+    // only for i386 https://github.com/jspahrsummers/ObjectiveHaskell/issues/22
+    private final MethodFunctionPair objc_msgSend_fpret_Pair;
     private final MethodFunctionPair objc_msgSend_varArgs_Pair;
     private final MethodFunctionPair objc_msgSend_Pair;
 
     private final RococoaTypeMapper rococoaTypeMapper = new RococoaTypeMapper();
 
-    public MsgSendHandler(final NativeLibrary lib) {
+    public MsgSendHandler(NativeLibrary lib) {
         this.objc_msgSend_Pair = new MethodFunctionPair(AARCH64 ? null : OBJC_MSGSEND,
                 lib.getFunction("objc_msgSend"));
         this.objc_msgSend_fpret_Pair = new MethodFunctionPair(OBJC_MSGSEND_FPRET,
@@ -112,7 +117,10 @@ class MsgSendHandler implements InvocationHandler {
                 AARCH64 ? null : lib.getFunction("objc_msgSend_stret"));
     }
 
-    public Object invoke(final Object proxy, final Method method, final Object[] args) {
+    public Object invoke(Object proxy, Method method, Object[] args) {
+if (((Selector)args[2]).getName().equals("testGetFloatByValue:")) {
+ new Exception("@@@1:  " + new VarArgsUnpacker(args)).printStackTrace();
+}
         Class<?> returnTypeForThisCall = (Class<?>) args[0];
         MethodFunctionPair invocation = this.invocationFor(returnTypeForThisCall, MsgSendInvocationMapper.SYNTHETIC_SEND_VARARGS_MSG.equals(method));
         Map<String, Object> options = new HashMap<>(Collections.singletonMap(Library.OPTION_TYPE_MAPPER, rococoaTypeMapper));
