@@ -15,7 +15,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import com.sun.jna.Pointer;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import org.rococoa.cocoa.coregraphics.CGImage;
 import org.rococoa.cocoa.vision.VNCoreMLModel;
 import org.rococoa.cocoa.vision.VNCoreMLRequest;
@@ -33,13 +35,15 @@ import vavi.util.Debug;
 class CoreMLTest {
 
     @Test
+    @EnabledIfSystemProperty(named = "vavi.test", matches = "ide")
     void test1() throws Exception {
 
 long t = System.currentTimeMillis();
 Debug.println("MLModel: loading...");
-        MLModel mlModel = MLModel.fromPath("/Users/nsano/Downloads/realesrganAnime512.mlmodel");
-//        MLModel mlModel = MLModel.fromPath("/Users/nsano/Downloads/bsrgan.mlmodel");
-//Debug.println("MLModel: " + mlModel.modelDescription());
+//        MLModel mlModel = MLModel.fromPath("/Users/nsano/Downloads/realesrganAnime512.mlmodel"); // wtf about color?
+        MLModel mlModel = MLModel.fromPath("/Users/nsano/Downloads/bsrgan.mlmodel"); // no good for japanese
+//        MLModel mlModel = MLModel.fromPath("/Users/nsano/Downloads/anime_noise0_model.mlmodel"); // input/output is not image
+Debug.println("MLModel: " + mlModel.modelDescription());
 
         VNCoreMLModel model = VNCoreMLModel.fromMLModel(mlModel);
 //Debug.println("VNCoreMLModel: " + model.inputImageFeatureName());
@@ -55,13 +59,13 @@ Debug.println("prepare done: " + (System.currentTimeMillis() - t) + " ms");
 t = System.currentTimeMillis();
         handler.performRequests(request);
 
-        CGImage filteredImage = new CGImage(request.result());
+        CGImage filteredImage = new CGImage((Pointer) request.result());
 Debug.println((System.currentTimeMillis() - t) + " ms");
 Debug.println("cgImage: " + filteredImage);
         show(filteredImage.toBufferedImage());
     }
 
-    /** */
+    /** never stop, u need to close the window by yourself */
     void show(BufferedImage image) {
         JFrame frame = new JFrame();
         JPanel panel = new JPanel() {

@@ -437,7 +437,7 @@ public abstract class NSSpeechSynthesizer extends NSObject {
      *  @param baselinePitch the baseline pitch to use
      */
     public void setPitchBase(float baselinePitch) {
-        setProperty(SpeechProperty.PitchBaseProperty, NSNumber.CLASS.numberWithFloat(baselinePitch));
+        setProperty(SpeechProperty.PitchBaseProperty, NSNumber.of((double) baselinePitch)); // TODO float bug?
     }
 
     /** Get the pitch modulation for the synthesizer
@@ -454,7 +454,7 @@ public abstract class NSSpeechSynthesizer extends NSObject {
         if ( modulation < 0.0f || modulation > 127.0f) {
             throw new IllegalArgumentException("Pitch modulation must be in the range 0.0 - 127.0");
         }
-        setProperty(SpeechProperty.PitchModProperty, NSNumber.CLASS.numberWithFloat(modulation));
+        setProperty(SpeechProperty.PitchModProperty, NSNumber.of((double) modulation)); // TODO float bug?
     }
 
     /** Get a list of phonemes the synthesizer uses

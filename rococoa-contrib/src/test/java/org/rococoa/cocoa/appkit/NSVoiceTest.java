@@ -16,13 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Rococoa.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.rococoa.cocoa.appkit;
 
 import java.util.Locale;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.rococoa.cocoa.appkit.NSVoice;
 import org.rococoa.cocoa.foundation.NSArray;
 import org.rococoa.cocoa.appkit.NSVoice.VoiceGender;
 import org.rococoa.test.RococoaTestCase;
@@ -57,9 +57,7 @@ public class NSVoiceTest extends RococoaTestCase {
     @Test
     public void testBadIdentifier() {
         String badId = "This voice does not exist";
-        IllegalArgumentException e = assertThrows(IllegalArgumentException.class, () -> {
-            new NSVoice(badId);
-        });
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class, () -> new NSVoice(badId));
         assertTrue(e.getMessage().indexOf(badId) > 0);
     }
 }

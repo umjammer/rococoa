@@ -40,6 +40,7 @@ class CoreImageTest {
 
     /** @see "https://stackoverflow.com/a/23877167" */
     @Test
+    @DisplayName("use primitives")
     @EnabledIfSystemProperty(named = "vavi.test", matches = "ide")
     void test1() throws Exception {
 
@@ -91,7 +92,7 @@ Debug.println("cgImageX: " + cgImageX.getWidth() + ", " + cgImageX.getHeight());
         show(image);
     }
 
-    /** */
+    /** never stop, u need to close the window by yourself */
     void show(BufferedImage image) {
         JFrame frame = new JFrame();
         JPanel panel = new JPanel() {
@@ -129,6 +130,7 @@ Debug.println("ciImage: " + ciImage);
     }
 
     @Test
+    @DisplayName("use utilities")
     @EnabledIfSystemProperty(named = "vavi.test", matches = "ide")
     void test4() throws Exception {
         BufferedImage image = ImageIO.read(CoreImageTest.class.getResourceAsStream("/test.jpg"));
@@ -145,6 +147,7 @@ Debug.println((System.currentTimeMillis() - t) + " ms");
     }
 
     @Test
+    @DisplayName("CIUnsharpMask")
     @EnabledIfSystemProperty(named = "vavi.test", matches = "ide")
     void test5() throws Exception {
         BufferedImage image = ImageIO.read(CoreImageTest.class.getResourceAsStream("/test.jpg"));

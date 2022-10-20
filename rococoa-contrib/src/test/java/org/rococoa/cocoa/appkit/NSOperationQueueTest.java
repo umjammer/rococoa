@@ -27,22 +27,16 @@ import org.rococoa.Foundation;
 import org.rococoa.ObjCObject;
 import static org.junit.jupiter.api.Assertions.*;
 import org.rococoa.Rococoa;
-import org.rococoa.cocoa.appkit.NSInvocationOperation;
-import org.rococoa.cocoa.appkit.NSOperation;
-import org.rococoa.cocoa.appkit.NSOperationQueue;
 import org.rococoa.cocoa.foundation.NSArray;
 import org.rococoa.cocoa.foundation.NSInteger;
 import org.rococoa.test.RococoaTestCase;
 
-/** Test case for mapping of NSOperationQueue.
- *
+/**
+ * Test case for mapping of NSOperationQueue.
  */
-public class NSOperationQueueTest extends RococoaTestCase {
+class NSOperationQueueTest extends RococoaTestCase {
 
     NSOperationQueue fixture;
-
-    public NSOperationQueueTest() {
-    }
 
     @BeforeEach
     public void setUp() {
@@ -59,11 +53,9 @@ public class NSOperationQueueTest extends RococoaTestCase {
             ops = new NSInvocationOperation[numItems];
             for(int i=0; i < ops.length; i++) {
                 final int j = i;
-                Runnable r = new Runnable() {
-                    public void run() {
-                        synchronized(results) {
-                            results[j] = true;
-                        }
+                Runnable r = () -> {
+                    synchronized(results) {
+                        results[j] = true;
                     }
                 };
                 ops[i] = NSInvocationOperation.CLASS.alloc();
@@ -198,6 +190,6 @@ public class NSOperationQueueTest extends RococoaTestCase {
         runnables.addOperations(fixture);
         assertTrue(fixture.operations().count() > 0, "Should have some operations");
         fixture.waitUntilAllOperationsAreFinished();
-        assertTrue(fixture.operations().count() == 0, "Should have completed all operations");
+        assertEquals(0, fixture.operations().count(), "Should have completed all operations");
     }
 }
