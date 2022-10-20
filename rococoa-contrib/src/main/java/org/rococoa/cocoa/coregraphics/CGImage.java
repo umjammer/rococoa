@@ -112,19 +112,24 @@ logger.fine(String.format("cgImage: %dx%d, cBits:%d, bits:%d, stride:%d, cm:%d%n
         Pointer buffer = library.CFDataGetBytePtr(data);
         byte[] src = buffer.getByteArray(0, stride * height);
 
-        BufferedImage bi = new BufferedImage(width, height, BufferedImage.TYPE_4BYTE_ABGR);
+        int cNum = bits / cBits;
+        BufferedImage bi;
+        if (cNum == 4) {
+            bi = new BufferedImage(width, height, BufferedImage.TYPE_4BYTE_ABGR);
+        } else {
+            bi = new BufferedImage(width, height, BufferedImage.TYPE_3BYTE_BGR);
+        }
         byte[] dst = ((DataBufferByte) bi.getRaster().getDataBuffer()).getData();
 
         int dP = 0;
         for (int y = 0; y < height; y++) {
             int sP = y * stride;
             for (int x = 0; x < width; x++) {
-                dst[dP + 0] = src[sP + 3]; // a
-                dst[dP + 1] = src[sP + 2]; // b
-                dst[dP + 2] = src[sP + 1]; // g
-                dst[dP + 3] = src[sP + 0]; // r
-                sP += 4;
-                dP += 4;
+                for (int i = 0; i < cNum; i++) {
+                    dst[dP + i] = src[sP + (cNum - 1 - i)];
+                }
+                dP += cNum;
+                sP += cNum;
             }
         }
 
