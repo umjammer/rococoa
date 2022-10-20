@@ -9,6 +9,45 @@ Rococoa is a generic Java binding to the Mac Objective-C object system. It
 allows the creation and use of Objective-C objects in Java, and the 
 implementation of Objective-C interfaces in Java.
 
+## Installation
+
+ * https://github.com/umjammer/rococoa/packages/
+ * this project uses github packages. add a personal access token to `~/.m2/settings.xml`
+ * see https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-apache-maven-registry
+
+## How To
+
+* [Basics](rococoa-core/readme.md#how-to)
+* [CGFilter Java2D BufferedImageOp](rococoa-contrib/src/test/java/org/rococoa/cocoa/coreimage/CoreImageTest.java)
+* [CoreML](rococoa-contrib/src/test/java/org/rococoa/cocoa/coreml/CoreMLTest.java)
+* [iTunes Library](https://github.com/umjammer/vavi-sound-sandbox/tree/master/src/main/java/vavix/rococoa/ituneslibrary)
+* [AudioUnit Java MIDI SPI synthesizer](https://github.com/umjammer/vavi-sound-sandbox/tree/master/src/main/java/vavi/sound/midi/rococoa)
+* [CoreMidi Java MIDI SPI](https://github.com/umjammer/osxmidi4j)
+* [NSSpeechSynthesizer Java Speech API](https://github.com/umjammer/vavi-speech2/tree/master/src/main/java/vavi/speech/rococoa/jsapi2)
+* [HEIF Java ImageIO SPI](https://github.com/umjammer/vavi-image-sandbox/tree/master/src/main/java/vavix/imageio/rococoa)
+* [MTLibrary](https://github.com/umjammer/vavi-apps-padsynth/tree/main/src/main/java/vavix/rococoa/multitouch)
+* [KeyChain Java crypto Keystore SPI](https://github.com/umjammer/vavi-crypto-sandbox/tree/1.0.2/src/main/java/vavix/rococoa/keychain)
+* [Vision Detecting Human Body Poses in Images](rococoa-contrib/src/test/java/org/rococoa/cocoa/vision/VisionTest.java)
+
+## Limitation
+
+* float
+* block
+
+## TODO
+
+* https://github.com/ibinti/bugvm
+* NSUrl tags (wip)
+* block (wip)
+   * http://cocoawithlove.com/2009/10/how-blocks-are-implemented-and.html
+   * http://www.opensource.apple.com/source/libclosure/libclosure-38/BlockImplementation.txt
+* ~~CIFilter~~ (done)
+* https://gitlab.com/axet/apple
+
+----
+
+# Original
+
 ## Fair Warning
 
 Rococoa is very much work in progress. Much is subject to change. A lot isn't
@@ -29,15 +68,3 @@ any other problems.
  * [Quicktime](https://github.com/iterate-ch/rococoa/blob/wiki/Quicktime.md)
  * [Limitations](https://github.com/iterate-ch/rococoa/blob/wiki/Limitations.md)
  * [Help Wanted](https://github.com/iterate-ch/rococoa/blob/wiki/HelpWanted.md)
- * [How To](https://github.com/iterate-ch/rococoa/blob/wiki/HowTo.md)
-
-## TODO
-
- * https://github.com/ibinti/bugvm
- * NSUrl tags (wip)
- * block (wip)
-   * http://cocoawithlove.com/2009/10/how-blocks-are-implemented-and.html
-   * http://www.opensource.apple.com/source/libclosure/libclosure-38/BlockImplementation.txt
- * ~~CIFilter~~ (done)
- * https://gitlab.com/axet/apple
- 

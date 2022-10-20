@@ -153,6 +153,7 @@
               <failOnWarnings>false</failOnWarnings>
               <failOnError>false</failOnError>
               <additionalJOptions>
+                <additionalJOption>-J-Duser.language=en_US</additionalJOption> <!-- ad-hoc -->
                 <additionalJOption>-Xdoclint:none</additionalJOption>
                 <additionalJOption>-Xdoclint:-missing</additionalJOption>
               </additionalJOptions>
