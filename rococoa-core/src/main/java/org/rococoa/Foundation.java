@@ -150,7 +150,7 @@ public abstract class Foundation {
         foundationLibrary.CFRelease(id);
     }
 
-    public static int cfGetRetainCount(ID cfTypeRef) {
+    public static CFIndex cfGetRetainCount(ID cfTypeRef) {
         return foundationLibrary.CFGetRetainCount(cfTypeRef);
     }
 

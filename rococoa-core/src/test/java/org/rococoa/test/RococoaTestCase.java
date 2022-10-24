@@ -1,13 +1,13 @@
 /*
  * Copyright 2007, 2008 Duncan McGregor
- * 
+ *
  * This file is part of Rococoa, a library to allow Java to talk to Cocoa.
- * 
+ *
  * Rococoa is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * Rococoa is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -19,22 +19,22 @@
 
 package org.rococoa.test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.logging.LogManager;
+import java.util.logging.Logger;
 
+import com.sun.jna.Native;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.rococoa.Foundation;
 import org.rococoa.ID;
 import org.rococoa.cocoa.foundation.NSAutoreleasePool;
 import org.rococoa.cocoa.foundation.NSObject;
-import java.util.logging.Logger;
 
-import com.sun.jna.Native;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 
 /**
@@ -54,7 +54,7 @@ public abstract class RococoaTestCase {
         initializeLogging();
         logging = Logger.getLogger("org.rococoa.RococoaTestCase");
         logVersions();
-    };
+    }
 
     public static void initializeLogging() {
         try {
@@ -95,7 +95,7 @@ public abstract class RococoaTestCase {
     }
 
     public static void assertRetainCount(int expected, ID id) {
-        assertEquals(expected, Foundation.cfGetRetainCount(id));
+        assertEquals(expected, Foundation.cfGetRetainCount(id).intValue());
     }
 
     public static void gc() {
@@ -103,5 +103,4 @@ public abstract class RococoaTestCase {
         System.gc();
         System.runFinalization();
     }
-
 }

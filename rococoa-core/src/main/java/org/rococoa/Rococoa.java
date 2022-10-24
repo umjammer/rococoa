@@ -25,6 +25,7 @@ import net.sf.cglib.core.DefaultNamingPolicy;
 import net.sf.cglib.core.Predicate;
 import net.sf.cglib.proxy.Enhancer;
 
+import org.rococoa.cocoa.CFIndex;
 import org.rococoa.internal.OCInvocationCallbacks;
 import org.rococoa.internal.ObjCObjectInvocationHandler;
 import org.rococoa.internal.VarArgsUnpacker;
@@ -40,7 +41,7 @@ import java.util.logging.Logger;
  */
 public abstract class Rococoa  {
 
-    private static Logger logging = Logger.getLogger("org.rococoa.proxy");
+    private static final Logger logging = Logger.getLogger("org.rococoa.proxy");
 
     /**
      * Create a Java NSClass representing the Objective-C class with ocClassName
@@ -84,9 +85,9 @@ public abstract class Rococoa  {
         }
         ID ocClass = Foundation.getClass(ocClassName);
         ID ocInstance = Foundation.send(ocClass, ocFactoryName, ID.class, args);
-        int initialRetainCount = Foundation.cfGetRetainCount(ocInstance);
+        CFIndex initialRetainCount = Foundation.cfGetRetainCount(ocInstance);
         T result = wrap(ocInstance, javaClass, retain);
-        checkRetainCount(ocInstance, retain ? initialRetainCount + 1 : initialRetainCount);
+        checkRetainCount(ocInstance, retain ? initialRetainCount.intValue() + 1 : initialRetainCount.intValue());
         return result;
     }
 
@@ -203,9 +204,9 @@ public abstract class Rococoa  {
     }
 
     private static void checkRetainCount(ID ocInstance, int expected) {
-        int retainCount = Foundation.cfGetRetainCount(ocInstance);
-        if (retainCount != expected) {
-            throw new IllegalStateException("Created an object which had a retain count of " + retainCount + " not " + expected);
+        CFIndex retainCount = Foundation.cfGetRetainCount(ocInstance);
+        if (retainCount.intValue() != expected) {
+            logging.warning("Created an object which had a retain count of " + retainCount + " not " + expected);
         }
     }
 

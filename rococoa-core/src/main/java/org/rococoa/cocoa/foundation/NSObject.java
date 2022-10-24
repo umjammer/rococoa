@@ -24,6 +24,8 @@ import org.rococoa.ObjCClass;
 import org.rococoa.ObjCObject;
 import org.rococoa.Rococoa;
 import org.rococoa.Selector;
+import org.rococoa.cocoa.CFIndex;
+
 
 public abstract class NSObject implements ObjCObject {
     public static _class_ CLASS = Rococoa.createClass("NSObject", _class_.class);
@@ -34,7 +36,7 @@ public abstract class NSObject implements ObjCObject {
 
     public abstract NSObject retain();
     public abstract void release();
-    public abstract int retainCount();
+    public abstract CFIndex retainCount();
 
     public abstract boolean isKindOfClass(ObjCClass nsClass);
     public abstract boolean isKindOfClass(ID nsClass);

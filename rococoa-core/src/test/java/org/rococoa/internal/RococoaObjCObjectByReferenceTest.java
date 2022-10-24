@@ -1,13 +1,13 @@
 /*
  * Copyright 2007, 2008 Duncan McGregor
- * 
+ *
  * This file is part of Rococoa, a library to allow Java to talk to Cocoa.
- * 
+ *
  * Rococoa is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * Rococoa is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -70,9 +70,9 @@ public class RococoaObjCObjectByReferenceTest extends RococoaTestCase {
         assertEquals(42, value.intValue());
 
         // we better have retained the result by the time it gets back
-        assertEquals(3, value.retainCount());
+        assertEquals(3, value.retainCount().intValue());
         pool.drain();
-        assertEquals(2, value.retainCount());
+        assertEquals(2, value.retainCount().intValue());
     }
 
     @Test

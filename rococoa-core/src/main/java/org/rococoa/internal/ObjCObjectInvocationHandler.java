@@ -46,6 +46,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.sun.jna.Pointer;
+import org.rococoa.cocoa.CFIndex;
 
 /**
  * Listens to invocations of methods on a Java NSObject, and forwards them to
@@ -59,7 +60,7 @@ public class ObjCObjectInvocationHandler implements InvocationHandler, MethodInt
 
     private static final int FINALIZE_AUTORELEASE_BATCH_SIZE = 1000;
 
-    private static Logger logging = Logger.getLogger("org.rococoa.proxy");
+    private static final Logger logging = Logger.getLogger("org.rococoa.proxy");
 
     static final Method OBJECT_TOSTRING;
     static final Method OBJECT_HASHCODE;
@@ -92,9 +93,9 @@ public class ObjCObjectInvocationHandler implements InvocationHandler, MethodInt
         releaseOnFinalize = shouldReleaseInFinalize(javaClass);
 
         if (logging.isLoggable(Level.FINEST)) {
-            int retainCount = Foundation.cfGetRetainCount(ocInstance);
+            CFIndex retainCount = Foundation.cfGetRetainCount(ocInstance);
             logging.finest(String.format("Creating NSObjectInvocationHandler for id %s, javaclass %s. retain = %s, retainCount = %s",
-                    new Object[]{ocInstance, javaClass, retain, retainCount}));
+                    ocInstance, javaClass, retain, retainCount.intValue()));
         }
 
         if (ocInstance.isNull()) {
@@ -152,9 +153,9 @@ public class ObjCObjectInvocationHandler implements InvocationHandler, MethodInt
             return;
         }
         if (logging.isLoggable(Level.FINEST)) {
-            int retainCount = Foundation.cfGetRetainCount(ocInstance);
+            CFIndex retainCount = Foundation.cfGetRetainCount(ocInstance);
             logging.finest(String.format("finalizing [%s %s], releasing with retain count = %s",
-                    new Object[]{javaClassName, ocInstance, retainCount}));
+                    javaClassName, ocInstance, retainCount.intValue()));
         }
         Foundation.cfRelease(ocInstance);
     }
@@ -165,7 +166,7 @@ public class ObjCObjectInvocationHandler implements InvocationHandler, MethodInt
     public Object invoke(Object proxy, Method method, Object[] args)  throws Exception {
         if (logging.isLoggable(Level.FINEST)) {
             logging.finest(String.format("invoking [%s %s].%s(%s)",
-                    new Object[]{javaClassName, ocInstance, method.getName(), new VarArgsUnpacker(args)}));
+                    javaClassName, ocInstance, method.getName(), new VarArgsUnpacker(args)));
         }
         if (isSpecialMethod(method)) {
             return invokeSpecialMethod(method, args);
@@ -179,7 +180,7 @@ public class ObjCObjectInvocationHandler implements InvocationHandler, MethodInt
     public Object intercept(Object proxy, Method method, Object[] args, MethodProxy methodProxy) throws Throwable {
         if (logging.isLoggable(Level.FINEST)) {
             logging.finest(String.format("invoking [%s %s].%s(%s)",
-                    new Object[]{javaClassName, ocInstance, method.getName(), new VarArgsUnpacker(args)}));
+                    javaClassName, ocInstance, method.getName(), new VarArgsUnpacker(args)));
         }
         if (isSpecialMethod(method)) {
             return invokeSpecialMethod(method, args);

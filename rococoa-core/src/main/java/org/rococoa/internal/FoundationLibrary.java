@@ -41,7 +41,7 @@ public interface FoundationLibrary extends Library {
 
     ID CFRetain(ID cfTypeRef);
     void CFRelease(ID cfTypeRef);
-    int CFGetRetainCount (ID cfTypeRef);
+    CFIndex CFGetRetainCount(ID cfTypeRef);
 
     ID objc_getClass(String className);
     ID class_createInstance(ID pClass, int extraBytes);
