@@ -148,16 +148,19 @@
               <goal>jar</goal>
             </goals>
             <configuration>
+              <additionalJOptions>
+                <additionalJOption>-J-Duser.language=en_US</additionalJOption> <!-- ad-hoc -->
+              </additionalJOptions>
+              <additionalOptions>
+                <additionalOption>-Xdoclint:none</additionalOption>
+                <additionalOption>-Xdoclint:-missing</additionalOption>
+              </additionalOptions>
               <debug>false</debug>
               <verbose>false</verbose>
               <failOnWarnings>false</failOnWarnings>
               <failOnError>false</failOnError>
-              <additionalJOptions>
-                <additionalJOption>-J-Duser.language=en_US</additionalJOption> <!-- ad-hoc -->
-                <additionalJOption>-Xdoclint:none</additionalJOption>
-                <additionalJOption>-Xdoclint:-missing</additionalJOption>
-              </additionalJOptions>
               <doclint>none</doclint>
+              <quiet>true</quiet>
             </configuration>
           </execution>
         </executions>

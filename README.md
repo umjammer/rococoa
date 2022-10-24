@@ -18,7 +18,7 @@ implementation of Objective-C interfaces in Java.
 ## How To
 
 * [Basics](rococoa-core/readme.md#how-to)
-* [CGFilter Java2D BufferedImageOp](rococoa-contrib/src/test/java/org/rococoa/cocoa/coreimage/CoreImageTest.java)
+* [CIFilter Java2D BufferedImageOp](rococoa-contrib/src/test/java/org/rococoa/cocoa/coreimage/CoreImageTest.java)
 * [CoreML](rococoa-contrib/src/test/java/org/rococoa/cocoa/coreml/CoreMLTest.java)
 * [iTunes Library](https://github.com/umjammer/vavi-sound-sandbox/tree/master/src/main/java/vavix/rococoa/ituneslibrary)
 * [AudioUnit Java MIDI SPI synthesizer](https://github.com/umjammer/vavi-sound-sandbox/tree/master/src/main/java/vavi/sound/midi/rococoa)
@@ -31,19 +31,27 @@ implementation of Objective-C interfaces in Java.
 
 ## Limitation
 
-* obj-c class's method call with float argument don't work
+* obj-c class's method call with float argument doesn't work
   * i found [the reason](https://github.com/java-native-access/jna/issues/463#issuecomment-1286015013) 
 * block
 
 ## TODO
 
-* https://github.com/ibinti/bugvm
 * NSUrl tags (wip)
 * block (wip)
    * http://cocoawithlove.com/2009/10/how-blocks-are-implemented-and.html
    * http://www.opensource.apple.com/source/libclosure/libclosure-38/BlockImplementation.txt
 * ~~CIFilter~~ (done)
+
+## References
+ 
+* https://github.com/ibinti/bugvm
 * https://gitlab.com/axet/apple
+* https://github.com/cbyrneee/JNApple
+* https://github.com/multi-os-engine/moe-mac-core
+* https://github.com/dthommes/jcocoa
+* https://github.com/allertonm/Couverjure
+* https://github.com/shannah/Java-Objective-C-Bridge
 
 ----
 

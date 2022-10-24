@@ -27,7 +27,6 @@
           <!-- trigger javah execution -->
           <javahClassNames>
             <javahClassName>org.rococoa.Rococoa</javahClassName>
-            <javahClassName>org.rococoa.ObjCBlocks</javahClassName>
           </javahClassNames>
           <!-- enable additional javah interface in dependencies list -->
           <javahSearchJNIFromDependencies>true</javahSearchJNIFromDependencies>
@@ -120,6 +119,9 @@
         <version>3.0.0-M7</version>
         <configuration>
           <forkMode>once</forkMode>
+          <argLine>
+            -Djava.util.logging.config.file=${project.build.testOutputDirectory}/logging.properties
+          </argLine>
           <trimStackTrace>false</trimStackTrace>
           <redirectTestOutputToFile>true</redirectTestOutputToFile>
         </configuration>
@@ -223,7 +225,7 @@
     <dependency>
       <groupId>com.github.umjammer</groupId>
       <artifactId>vavi-commons</artifactId>
-      <version>1.1.6</version>
+      <version>1.1.7</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
