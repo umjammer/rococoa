@@ -28,6 +28,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.logging.Logger;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -544,7 +545,7 @@ public class NSSpeechSynthesizerTest {
             return phonemesSpoken;
         }
 
-        public void speechSynthesizer_didFinishSpeaking(NSSpeechSynthesizer sender, final boolean success) {
+        public void speechSynthesizer_didFinishSpeaking(NSSpeechSynthesizer sender, boolean success) {
             this.success = success;
             synchronized (speechDoneMonitor) {
                 speechDoneMonitor.notify();
@@ -585,7 +586,7 @@ public class NSSpeechSynthesizerTest {
 
         private String getCallerName() {
             for (StackTraceElement ste : Thread.currentThread().getStackTrace()) {
-                if ( ste.getMethodName().startsWith("test") ) {
+                if (ste.getMethodName().startsWith("test")) {
                     return ste.getMethodName();
                 }
             }

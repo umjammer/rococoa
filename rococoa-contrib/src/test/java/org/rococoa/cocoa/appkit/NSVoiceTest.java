@@ -35,7 +35,6 @@ import static org.junit.jupiter.api.Assertions.*;
 public class NSVoiceTest extends RococoaTestCase {
 
     @Test
-    @Disabled
     @SuppressWarnings("deprecation")
     public void testAttributesForVoice() {
         NSVoice voice = new NSVoice(NSVoice.VICTORIA);
