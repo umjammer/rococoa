@@ -20,6 +20,8 @@
 package org.rococoa.cocoa;
 
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import javax.swing.JFrame;
 
@@ -27,18 +29,22 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import org.rococoa.ID;
 import org.rococoa.Rococoa;
 import org.rococoa.ObjCObject;
 import org.rococoa.cocoa.appkit.NSOpenPanel;
 import org.rococoa.cocoa.foundation.NSString;
+import org.rococoa.cocoa.foundation.NSURL;
 import org.rococoa.test.RococoaTestCase;
+import vavi.util.Debug;
+
 
 public class NSOpenPanelTest extends RococoaTestCase {
 
     // Requires user to select a text file somewhere downtree from ~
     @Test
-    @Disabled
+    @EnabledIfSystemProperty(named = "vavi.test", matches = "ide")
     public void testShow() {
         new JFrame().setVisible(true); // otherwise no panel
         NSOpenPanel panel = NSOpenPanel.CLASS.openPanel();
@@ -46,23 +52,27 @@ public class NSOpenPanelTest extends RococoaTestCase {
         // Keep this reference!
         ObjCObject ocProxy = Rococoa.proxy(new Object() {
             @SuppressWarnings("unused")
-            public boolean panel_shouldShowFilename(ID panel, String filename) {
-                char initialChar = new File(filename).getName().toLowerCase().charAt(0);
+            public boolean panel_shouldEnableURL(ID panel, NSURL url) {
+Debug.println("url: " + url);
+                char initialChar = new File(url.path()).getName().toLowerCase().charAt(0);
                 return initialChar % 2 == 0;
             }
         });
-        
+Debug.println("proxy: " + ocProxy);
+
+        panel.setTitle("Open Sesame!");
         panel.setDelegate(ocProxy.id());
         int button = panel.runModalForTypes(null);
 //              or, eg        
 //                NSArray.CLASS.arrayWithObjects(
 //                    NSString.stringWithString("txt"), null));
-        NSString filenameAsNSString = panel.filename();
+        String filename = panel.filename();
+Debug.println("filename: " + filename);
         if (button == NSOpenPanel.NSOKButton) {
-            assertTrue(filenameAsNSString.toString().startsWith("/Users"));
+            assertTrue(Files.exists(Paths.get(filename)));
         } else {
             assertEquals(NSOpenPanel.NSCancelButton, button);
-            assertNull(filenameAsNSString);
+            assertNull(filename);
         }
     }
 }
