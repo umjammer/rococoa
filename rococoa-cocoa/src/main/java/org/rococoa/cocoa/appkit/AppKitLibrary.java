@@ -19,20 +19,16 @@
 
 package org.rococoa.cocoa.appkit;
 
-import java.util.Collections;
-
-import org.rococoa.cocoa.foundation.NSRect;
-import org.rococoa.internal.RococoaTypeMapper;
-
 import com.sun.jna.Library;
 import com.sun.jna.Native;
+import org.rococoa.cocoa.foundation.NSRect;
 
 /**
  * @author paulloy
  */
 public interface AppKitLibrary extends Library {
 
-    public static final AppKitLibrary INSTANCE = Native.load("AppKit", AppKitLibrary.class);
+    AppKitLibrary INSTANCE = Native.load("AppKit", AppKitLibrary.class);
 
     void NSRectFill (NSRect aRect);
 

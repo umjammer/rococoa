@@ -47,7 +47,6 @@ import com.sun.jna.Memory;
  * on the Java Object.
  *
  * @author duncan
- *
  */
 @SuppressWarnings("nls")
 public class OCInvocationCallbacks {

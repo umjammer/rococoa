@@ -19,7 +19,6 @@
 
 package org.rococoa.internal;
 
-import net.sf.cglib.core.Converter;
 import org.rococoa.ObjCObject;
 import org.rococoa.cocoa.foundation.NSObject;
 

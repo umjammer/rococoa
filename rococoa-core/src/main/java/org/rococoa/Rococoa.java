@@ -161,10 +161,10 @@ public abstract class Rococoa  {
 
     /**
      * Create a java.lang.reflect.Proxy or cglib proxy of type, which forwards
-     * invocations to invococationHandler.
+     * invocations to invocationHandler.
      */
     @SuppressWarnings("unchecked")
-    private static <T> T createProxy(final Class<T> type, ObjCObjectInvocationHandler invocationHandler) {
+    private static <T> T createProxy(Class<T> type, ObjCObjectInvocationHandler invocationHandler) {
         if (type.isInterface()) {
             return (T) Proxy.newProxyInstance(
                 invocationHandler.getClass().getClassLoader(), 

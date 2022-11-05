@@ -22,13 +22,11 @@ package org.rococoa.cocoa.appkit;
 import com.sun.jna.Callback;
 import org.rococoa.ID;
 import org.rococoa.ObjCClass;
-import org.rococoa.ObjCObject;
 import org.rococoa.ObjCObjectByReference;
 import org.rococoa.Rococoa;
 import org.rococoa.RunOnMainThread;
 import org.rococoa.cocoa.foundation.NSInteger;
 import org.rococoa.cocoa.foundation.NSObject;
-import org.rococoa.cocoa.foundation.NSPasteboard;
 
 
 /**
@@ -89,18 +87,14 @@ Configuring Applications
 
     abstract ServicesProviderCallback servicesProvider();
 
+    /**
+     * @see "https://github.com/gnustep/tests-examples/blob/ec7876dd4031c20bfb3aed1ab79809210a1d58e8/gui/Ink/AppDelegate.m"
+     */
     interface ServicesProviderCallback extends Callback {
-        void apply(NSPasteboard pboard, String userData, ObjCObjectByReference/*NSError*/ error);
+        void openSelection_userData_error(ID pboard, String userData, ObjCObjectByReference/*NSError*/ error);
     }
 
-    public abstract void setServicesProvider(ServicesProviderCallback callback);
-
-    /*
-    typedef enum {
-       NSCriticalRequest = 0,
-       NSInformationalRequest = 10
-    } NSRequestUserAttentionType;    
-     */
+    public abstract void setServicesProvider(ID callback);
 
     public static final int NSCriticalRequest = 0;
     public static final int NSInformationalRequest = 10;
@@ -329,4 +323,7 @@ Deprecated
     * ? beginModalSessionForWindow:relativeToWindow:
     * ? application:printFiles:  delegate method Deprecated in Mac OS X v10.4 
     */
+
+    /** Indicates whether the receiver can send and receive the specified pasteboard types. */
+     public abstract ID validRequestorForSendType_returnType(String/*NSPasteboardType*/ sendType, String/*NSPasteboardType*/ returnType);
 }

@@ -53,7 +53,7 @@ public abstract class MainThreadUtils {
     private static final Set<RococoaLibrary.VoidCallback> asynchronousCallbacks = new HashSet<>();
 
     /**
-     * Return the result of calling callable on the main Cococoa thread.
+     * Return the result of calling callable on the main Rococoa thread.
      */
     @SuppressWarnings("unchecked")
     public static <T> T callOnMainThread(RococoaLibrary rococoaLibrary, Callable<T> callable) {

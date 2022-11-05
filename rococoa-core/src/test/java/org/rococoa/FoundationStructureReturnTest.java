@@ -19,16 +19,16 @@
  
 package org.rococoa;
 
-import static org.junit.jupiter.api.Assertions.*;
-
+import com.sun.jna.Library;
+import com.sun.jna.Native;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.rococoa.test.RococoaTestCase;
-
-import com.sun.jna.Library;
-import com.sun.jna.Native;
 import vavi.util.Debug;
 import vavi.util.StringUtil;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 @SuppressWarnings("nls")

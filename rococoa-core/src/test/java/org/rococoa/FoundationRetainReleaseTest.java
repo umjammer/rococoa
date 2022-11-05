@@ -77,5 +77,4 @@ public class FoundationRetainReleaseTest extends RococoaTestCase {
         assertRetainCount(1, idOfString);
         Foundation.cfRelease(idOfString);
     }
-
 }

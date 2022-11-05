@@ -33,8 +33,9 @@ public abstract class MLModelConfiguration extends NSObject {
 
     public interface _Class extends ObjCClass {
         MLModelConfiguration alloc();
-        MLModelConfiguration init();
     }
+
+    public abstract MLModelConfiguration init();
 
     /** A human readable name of a model for display purposes. */
     public abstract String modelDisplayName();
