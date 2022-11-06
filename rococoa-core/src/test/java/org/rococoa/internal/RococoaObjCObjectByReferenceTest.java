@@ -59,7 +59,7 @@ public class RococoaObjCObjectByReferenceTest extends RococoaTestCase {
         assertEquals(42, nsNumber.intValue());
     }
 
-    @Disabled("by vavi")
+    @Disabled("by vavi because of ???")
     @Test
     public void testArgument() {
         NSAutoreleasePool pool = NSAutoreleasePool.new_();

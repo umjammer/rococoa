@@ -258,7 +258,11 @@ public class JavaProxyTest extends RococoaTestCase {
         assertEquals(ID.fromLong(43), implementor2.arg);
     }
 
-    @Test public void testNotifications() {
+    /**
+     * @see "https://developer.apple.com/documentation/foundation/nsnotificationcenter/1415360-addobserver?language=objc"
+     */
+    @Test
+    public void testNotifications() {
         NSNotificationCenter notificationCentre = NSNotificationCenter.CLASS.defaultCenter();
         ID observer = proxy.id();
         notificationCentre.addObserver_selector_name_object(

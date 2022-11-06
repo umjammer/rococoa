@@ -103,7 +103,7 @@ public class FoundationMemoryAssumptionsTest {
         Foundation.cfRelease(idNSString);
     }
 
-    @Disabled
+    @Disabled("because of crash")
     @Test
     public void crashDoubleFreeing() {
         ID idNSObject = Foundation.sendReturnsID(Foundation.getClass("NSObject"), "new");
@@ -113,7 +113,7 @@ public class FoundationMemoryAssumptionsTest {
         Foundation.cfRelease(idNSObject); // crash
     }
 
-    @Disabled
+    @Disabled("because of crash")
     @Test
     public void zombies() {
         assertEquals("YES", System.getenv("NSZombiesEnabled"));

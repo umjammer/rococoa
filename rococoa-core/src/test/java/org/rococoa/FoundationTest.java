@@ -83,7 +83,7 @@ class FoundationTest extends RococoaTestCase {
         assertEquals(Math.E, aDoubleValue, 0.001);
     }
 
-    @Disabled("by vavi")
+    @Disabled("by vavi because of jna")
     @Test void testFloat() {
         ID clas = Foundation.getClass("NSNumber");
         ID aFloat = Foundation.sendReturnsID(clas, "numberWithFloat:", 3.142f);

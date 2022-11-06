@@ -54,18 +54,18 @@ public class RococoaObjectOwnershipTest extends RococoaTestCase {
         check(shouldBeInPool, () -> Rococoa.create("NSDate", NSDate.class, "dateWithTimeIntervalSince1970:", NSNumber.CLASS.numberWithInt(0)));
     }
 
-    @Disabled("by vavi")
+    @Disabled("by vavi ditto")
     @Test public void factoryMethodOnClassYieldsPooledObject() {
         // TODO - see above
         check(shouldBeInPool, () -> NSDate.CLASS.dateWithTimeIntervalSince1970(0.0));
     }
 
-    @Disabled("by vavi")
+    @Disabled("by vavi ditto")
     @Test public void createYieldsNonPooledObject() {
         check(shouldNotBeInPool, () -> Rococoa.create("NSDate", NSDate.class));
     }
 
-    @Disabled("by vavi")
+    @Disabled("by vavi ditto")
     @Test public void newYieldsNonPooledObject() {
         // calling new on an NSClass results in a NOT autorelease'd object
         check(shouldNotBeInPool, () -> Rococoa.create("NSDate", NSDate.class, "new"));
