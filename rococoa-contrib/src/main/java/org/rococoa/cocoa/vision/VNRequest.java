@@ -6,6 +6,7 @@
 
 package org.rococoa.cocoa.vision;
 
+import java.util.function.Consumer;
 import java.util.logging.Logger;
 
 import com.sun.jna.Pointer;
@@ -44,18 +45,32 @@ public abstract class VNRequest extends NSObject {
      */
     public abstract NSArray results();
 
-    /** utility */
-    public Pointer result() {
+    /** utility for only 1st */
+    public Object result() {
         NSArray results = results();
-logger.finer(results.count() + ", " + results.firstObject());
-        if (results.firstObject().isKindOfClass(VNPixelBufferObservation.CLASS)) {
-            Pointer pixelBuffer = Rococoa.cast(results.firstObject(), VNPixelBufferObservation.class).pixelBuffer();
-            PointerByReference imageRef = new PointerByReference();
-            VideoToolboxLibrary.library.VTCreateCGImageFromCVPixelBuffer(pixelBuffer, null, imageRef);
-            return imageRef.getValue();
+logger.finer("result: " + results.count());
+        return each(results.firstObject());
+    }
+
+    /** utility conversion */
+    private Object each(NSObject object) {
+logger.finer("result each: " + object);
+        if (object.isKindOfClass(VNPixelBufferObservation.CLASS)) {
+            return VNPixelBufferObservation.convert(Rococoa.cast(object, VNPixelBufferObservation.class));
+        } else if (object.isKindOfClass(VNHumanBodyPoseObservation.CLASS)) {
+            return VNHumanBodyPoseObservation.convert(Rococoa.cast(object, VNHumanBodyPoseObservation.class));
         } else {
             // TODO
-            throw new UnsupportedOperationException(results.firstObject().getClass().getName());
+            throw new UnsupportedOperationException(object.getClass().getName());
+        }
+    }
+
+    /** utility for each */
+    public void result(Consumer<Object> c) {
+        NSArray results = results();
+logger.finer("result: " + results.count());
+        for (int i = 0; i < results.count(); i++) {
+            c.accept(each(results.objectAtIndex(i)));
         }
     }
 }

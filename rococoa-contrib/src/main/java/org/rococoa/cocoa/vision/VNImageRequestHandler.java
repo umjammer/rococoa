@@ -55,7 +55,7 @@ public abstract class VNImageRequestHandler extends NSObject {
     public abstract boolean performRequests_error(NSArray requests, ObjCObjectByReference/*NSError*/ error);
 
     /** utility */
-    public void performRequests(VNCoreMLRequest request) {
+    public void performRequests(VNImageBasedRequest request) {
         ObjCObjectByReference errorRef = new ObjCObjectByReference();
         NSArray coreMLRequests = NSArray.arrayWithObjects(request);
         performRequests_error(coreMLRequests, errorRef);

@@ -9,8 +9,11 @@ package org.rococoa.cocoa.vision;
 import java.util.logging.Logger;
 
 import com.sun.jna.Pointer;
+import com.sun.jna.ptr.PointerByReference;
 import org.rococoa.ObjCClass;
 import org.rococoa.Rococoa;
+import org.rococoa.cocoa.corevideo.VideoToolboxLibrary;
+import org.rococoa.cocoa.foundation.NSObject;
 
 
 /**
@@ -34,4 +37,12 @@ public abstract class VNPixelBufferObservation extends VNImageBasedRequest {
 
     /** A feature name that the CoreML model defines. */
     public abstract String featureName();
+
+    /** @return CGImage Pointer */
+    static Pointer convert(VNPixelBufferObservation observation) {
+        Pointer pixelBuffer = observation.pixelBuffer();
+        PointerByReference imageRef = new PointerByReference();
+        VideoToolboxLibrary.library.VTCreateCGImageFromCVPixelBuffer(pixelBuffer, null, imageRef);
+        return imageRef.getValue();
+    }
 }
