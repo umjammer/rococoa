@@ -19,15 +19,10 @@
 
 package org.rococoa.cocoa.appkit;
 
-import com.sun.webkit.network.URLs;
-import org.rococoa.ID;
-
-import org.rococoa.cocoa.foundation.NSObject;
 import org.rococoa.Rococoa;
 import org.rococoa.RunOnMainThread;
 import org.rococoa.cocoa.foundation.NSArray;
-import org.rococoa.cocoa.foundation.NSString;
-import org.rococoa.cocoa.foundation.NSURL;
+import org.rococoa.cocoa.foundation.NSObject;
 
 
 /**
