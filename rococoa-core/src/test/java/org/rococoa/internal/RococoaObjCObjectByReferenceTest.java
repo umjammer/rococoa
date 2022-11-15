@@ -1,13 +1,13 @@
 /*
  * Copyright 2007, 2008 Duncan McGregor
- * 
+ *
  * This file is part of Rococoa, a library to allow Java to talk to Cocoa.
- * 
+ *
  * Rococoa is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * Rococoa is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -35,17 +35,31 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SuppressWarnings("nls")
 public class RococoaObjCObjectByReferenceTest extends RococoaTestCase {
-    private interface TestShunt extends ObjCObject {
-        void testNSNumberByReference_with(ObjCObjectByReference reference, int value);
 
+    private interface TestShunt extends ObjCObject {
+        NSNumber testNumberFromInt(int value);
+        void testNSNumberByReference_with(ObjCObjectByReference reference, int value);
         void testCallbackWithReference(ID delegate);
     }
 
     private interface TestShuntDelegate {
-        public void callback(ObjCObjectByReference reference);
+        void callback(ID reference);
     }
 
-    @Disabled("by vavi")
+    @Test
+    public void testArgumentInt() {
+        TestShunt shunt = Rococoa.create("TestShunt", TestShunt.class);
+        NSNumber value = shunt.testNumberFromInt(42);
+        assertEquals(42, value.intValue());
+    }
+
+    @Test
+    public void testNSNumberFromInt() {
+        NSNumber nsNumber = NSNumber.CLASS.numberWithInt(42);
+        assertEquals(42, nsNumber.intValue());
+    }
+
+    @Disabled("by vavi because of ???")
     @Test
     public void testArgument() {
         NSAutoreleasePool pool = NSAutoreleasePool.new_();
@@ -56,22 +70,19 @@ public class RococoaObjCObjectByReferenceTest extends RococoaTestCase {
         assertEquals(42, value.intValue());
 
         // we better have retained the result by the time it gets back
-        assertEquals(3, value.retainCount());
+        assertEquals(3, value.retainCount().intValue());
         pool.drain();
-        assertEquals(2, value.retainCount());
+        assertEquals(2, value.retainCount().intValue());
     }
 
-    @Disabled("by vavi")
     @Test
     public void testDelegate() {
         NSAutoreleasePool pool = NSAutoreleasePool.new_();
         TestShunt shunt = Rococoa.create("TestShunt", TestShunt.class);
         final CountDownLatch count = new CountDownLatch(1);
-        final ObjCObject callback = Rococoa.proxy(new TestShuntDelegate() {
-            public void callback(ObjCObjectByReference reference) {
-                // Success
-                count.countDown();
-            }
+        final ObjCObject callback = Rococoa.proxy((TestShuntDelegate) reference -> {
+            // Success
+            count.countDown();
         });
         final ID delegate = callback.id();
         shunt.testCallbackWithReference(delegate);

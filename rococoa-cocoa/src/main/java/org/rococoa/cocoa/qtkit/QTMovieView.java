@@ -36,7 +36,7 @@ public @RunOnMainThread abstract class QTMovieView extends NSObject {
         public QTMovieView create() {
             return Foundation.callOnMainThread(new Callable<QTMovieView>() {
                 public QTMovieView call() throws Exception {
-                    return Rococoa.create("QTMovieView", QTMovieView.class); //$NON-NLS-1$
+                    return Rococoa.create("QTMovieView", QTMovieView.class);
                 }});
         }
     }

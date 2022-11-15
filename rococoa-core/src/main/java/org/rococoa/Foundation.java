@@ -19,11 +19,16 @@
 
 package org.rococoa;
 
-import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Method;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Callable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+import com.sun.jna.Library;
+import com.sun.jna.Native;
 import org.rococoa.cocoa.CFIndex;
 import org.rococoa.cocoa.CFRange;
 import org.rococoa.internal.FoundationLibrary;
@@ -33,12 +38,6 @@ import org.rococoa.internal.MsgSendLibrary;
 import org.rococoa.internal.OCInvocationCallbacks;
 import org.rococoa.internal.RococoaLibrary;
 import org.rococoa.internal.VarArgsUnpacker;
-
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import com.sun.jna.Library;
-import com.sun.jna.Native;
 
 
 /**
@@ -101,14 +100,10 @@ public abstract class Foundation {
     public static ID cfString(String s) {
         // Use a byte[] rather than letting jna do the String -> char* marshalling itself.
         // Turns out about 10% quicker for long strings.
-        try {
-            byte[] utf16Bytes = s.getBytes("UTF-16LE");
-            return foundationLibrary.CFStringCreateWithBytes(null, utf16Bytes,
-                    utf16Bytes.length,
-                    StringEncoding.kCFStringEncodingUTF16LE.value, (byte) 0);
-        } catch (UnsupportedEncodingException x) {
-            throw new RococoaException(x);
-        }
+        byte[] utf16Bytes = s.getBytes(StandardCharsets.UTF_16LE);
+        return foundationLibrary.CFStringCreateWithBytes(null, utf16Bytes,
+                utf16Bytes.length,
+                StringEncoding.kCFStringEncodingUTF16LE.value, (byte) 0);
     }
 
     public static ID cfLocaleCreateCanonicalLanguageIdentifierFromString(ID allocator, String localeIdentifier) {
@@ -155,7 +150,7 @@ public abstract class Foundation {
         foundationLibrary.CFRelease(id);
     }
 
-    public static int cfGetRetainCount(ID cfTypeRef) {
+    public static CFIndex cfGetRetainCount(ID cfTypeRef) {
         return foundationLibrary.CFGetRetainCount(cfTypeRef);
     }
 
@@ -165,19 +160,15 @@ public abstract class Foundation {
 
     /* Experimental */
     static String toStringViaUTF16(ID cfString) {
-        try {
-            int lengthInChars = foundationLibrary.CFStringGetLength(cfString);
-            int potentialLengthInBytes = 3 * lengthInChars + 1; // UTF16 fully escaped 16 bit chars, plus nul
+        int lengthInChars = foundationLibrary.CFStringGetLength(cfString);
+        int potentialLengthInBytes = 3 * lengthInChars + 1; // UTF16 fully escaped 16 bit chars, plus nul
 
-            byte[] buffer = new byte[potentialLengthInBytes];
-            byte ok = foundationLibrary.CFStringGetCString(cfString, buffer, buffer.length, StringEncoding.kCFStringEncodingUTF16LE.value);
-            if (ok == 0) {
-                throw new RococoaException("Could not convert string");
-            }
-            return new String(buffer, "UTF-16LE").substring(0, lengthInChars);
-        } catch (UnsupportedEncodingException e) {
-            throw new RococoaException(e);
+        byte[] buffer = new byte[potentialLengthInBytes];
+        byte ok = foundationLibrary.CFStringGetCString(cfString, buffer, buffer.length, StringEncoding.kCFStringEncodingUTF16LE.value);
+        if (ok == 0) {
+            throw new RococoaException("Could not convert string");
         }
+        return new String(buffer, StandardCharsets.UTF_16LE).substring(0, lengthInChars);
     }
 
     static String toStringViaUTF8(ID cfString) {
@@ -218,20 +209,36 @@ public abstract class Foundation {
      * Note that you are responsible for memory management if returnType is ID.
      */
     public static <T> T send(ID receiver, String selectorName, Class<T> returnType, Object... args) {
-        return send(receiver, selector(selectorName), returnType, args);
+        return send(receiver, selectorName, returnType, null, args);
+    }
+
+    public static <T> T send(ID receiver, String selectorName, Class<T> returnType, Method method, Object... args) {
+        return send(receiver, selector(selectorName), returnType, method, args);
+    }
+
+    public static <T> T send(ID receiver, Selector selector, Class<T> returnType, Object... args) {
+        return send(receiver, selector, returnType, null, args);
     }
 
     /**
      * Send message with selector to receiver, passing args, expecting returnType.
      *
      * Note that you are responsible for memory management if returnType is ID.
+     *
+     * @param returnType Expected return type mapping
+     * @param method     Used to determine if variadic function call is required
+     * @param args       Arguments including ID and selector
      */
     @SuppressWarnings("unchecked")
-    public static <T> T send(ID receiver, Selector selector, Class<T> returnType, Object... args) {
+    public static <T> T send(ID receiver, Selector selector, Class<T> returnType, Method method, Object... args) {
         if (logging.isLoggable(Level.FINEST)) {
             logging.finest(String.format("sending (%s) %s.%s(%s)",
-                    new Object[]{returnType.getSimpleName(), receiver, selector.getName(), new VarArgsUnpacker(args)}));
+                    returnType.getSimpleName(), receiver, selector.getName(), new VarArgsUnpacker(args)));
         }
+        if (method != null && method.isVarArgs()) {
+            return (T) messageSendLibrary.syntheticSendVarArgsMessage(returnType, receiver, selector, args);
+        }
+logging.info("@@@0: " + new VarArgsUnpacker(args));
         return (T) messageSendLibrary.syntheticSendMessage(returnType, receiver, selector, args);
     }
 
@@ -263,18 +270,19 @@ public abstract class Foundation {
     }
 
     /**
-     * Run runnable on the main Cococoa thread, waiting for completion.
+     * Run runnable on the main Rococoa thread, waiting for completion.
      */
     public static void runOnMainThread(final Runnable runnable) {
         MainThreadUtils.runOnMainThread(rococoaLibrary, runnable, true);
     }
 
     /**
-     * Run runnable on the main Cococoa thread, optionally waiting for completion.
+     * Run runnable on the main Rococoa thread, optionally waiting for completion.
      */
     public static void runOnMainThread(Runnable runnable, boolean waitUntilDone) {
         MainThreadUtils.runOnMainThread(rococoaLibrary, runnable, waitUntilDone);
     }
+
     /**
      * Create an Objective-C object which delegates to callbacks when methods
      * are invoked on it.
@@ -303,5 +311,4 @@ public abstract class Foundation {
                 selectorName.startsWith("new") ||
                 selectorName.toLowerCase().contains("copy");
     }
-
 }

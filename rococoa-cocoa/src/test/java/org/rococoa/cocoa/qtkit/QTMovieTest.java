@@ -44,6 +44,7 @@ public class QTMovieTest extends RococoaTestCase {
 
     static String testMovieFile = "testdata/DrWho.mov";
     static int testMovieTimeScale = 1000;
+
     static {
         @SuppressWarnings("unused")
         QTKit instance = QTKit.instance;

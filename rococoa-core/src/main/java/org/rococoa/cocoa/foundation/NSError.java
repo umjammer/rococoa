@@ -24,7 +24,7 @@ import org.rococoa.Rococoa;
 
 public abstract class NSError extends NSObject {
     
-    public static final _Class CLASS = Rococoa.createClass("NSError", _Class.class); //$NON-NLS-1$
+    public static final _Class CLASS = Rococoa.createClass("NSError", _Class.class);
 
     public interface _Class extends ObjCClass {
         NSError alloc();

@@ -9,7 +9,7 @@
   <parent>
     <groupId>org.rococoa</groupId>
     <artifactId>rococoa-parent</artifactId>
-    <version>0.8.4</version>
+    <version>0.8.5</version>
   </parent>
 
   <name>Rococoa Core</name>
@@ -21,12 +21,12 @@
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>native-maven-plugin</artifactId>
+        <version>1.0-alpha-11</version>
         <extensions>true</extensions>
         <configuration>
           <!-- trigger javah execution -->
           <javahClassNames>
             <javahClassName>org.rococoa.Rococoa</javahClassName>
-            <javahClassName>org.rococoa.ObjCBlocks</javahClassName>
           </javahClassNames>
           <!-- enable additional javah interface in dependencies list -->
           <javahSearchJNIFromDependencies>true</javahSearchJNIFromDependencies>
@@ -43,7 +43,7 @@
                     -framework QTKit -framework Foundation
             </linkerStartOption>
           </linkerStartOptions>
-          <linkerFinalName></linkerFinalName>
+          <linkerFinalName/>
         </configuration>
         <executions>
           <execution>
@@ -62,7 +62,6 @@
                   <fileNames>
                     <fileName>Rococoa.m</fileName>
                     <fileName>ProxyForJava.m</fileName>
-                    <fileName>ObjCBlocks.m</fileName>
                     <fileName>test.m</fileName>
                   </fileNames>
                 </source>
@@ -88,7 +87,6 @@
                   <fileNames>
                     <fileName>Rococoa.m</fileName>
                     <fileName>ProxyForJava.m</fileName>
-                    <fileName>ObjCBlocks.m</fileName>
                   </fileNames>
                 </source>
               </sources>
@@ -101,7 +99,9 @@
       </plugin>
 
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>
+        <version>2.4</version>
         <executions>
           <execution>
             <goals>
@@ -112,22 +112,23 @@
       </plugin>
 
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
-        <version>3.0.0-M5</version>
+        <version>3.0.0-M7</version>
         <configuration>
-          <excludes>
-            <!-- Brain-dead plugin just looks for *Test* and so finds support 
-              classes -->
-            <exclude>**/TestStruct*.java</exclude>
-          </excludes>
           <forkMode>once</forkMode>
+          <argLine>
+            -Djava.util.logging.config.file=${project.build.testOutputDirectory}/logging.properties
+          </argLine>
           <trimStackTrace>false</trimStackTrace>
           <redirectTestOutputToFile>true</redirectTestOutputToFile>
         </configuration>
       </plugin>
 
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-install-plugin</artifactId>
+        <version>3.0.0-M1</version>
         <executions>
           <execution>
             <id>install-test-library</id>
@@ -202,6 +203,13 @@
     </plugins>
   </build>
 
+  <repositories>
+    <repository>
+      <id>jitpack.io</id>
+      <url>https://jitpack.io</url>
+    </repository>
+  </repositories>
+
   <dependencies>
     <dependency>
       <groupId>net.java.dev.jna</groupId>
@@ -210,6 +218,13 @@
     <dependency>
       <groupId>cglib</groupId>
       <artifactId>cglib</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.github.umjammer</groupId>
+      <artifactId>vavi-commons</artifactId>
+      <version>1.1.8</version>
+      <scope>test</scope>
     </dependency>
   </dependencies>
 </project>

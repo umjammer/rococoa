@@ -69,6 +69,12 @@ TestIntIntStruct createIntIntStruct(int a, int b) {
 	return s.aStruct.aDouble;
 }
 
+- (NSNumber*) testNumberFromInt: (int) aValue {
+    NSLog(@"Received number %i", aValue);
+	NSNumber* number = [NSNumber numberWithInt: aValue];
+	return number;
+}
+
 - (void) testNSNumberByReference: (NSNumber**) fillMeIn with: (int) aValue {
 	NSNumber* number = [NSNumber numberWithInt: aValue];
 	*fillMeIn = number;
@@ -93,5 +99,29 @@ TestIntIntStruct createIntIntStruct(int a, int b) {
 	return pthread_main_np();
 }
 
+- (float) testPassFloatByValue {
+    float f = 3.14;
+	return f;
+}
+
+union floatint
+{
+   float f;
+   int i;
+};
+
+- (int) testConvertFloatToInt: (float) f {
+    union floatint fi;
+    fi.f = f;
+fprintf(stderr, "%d\n", fi.i);
+fflush(stderr);
+	return fi.i;
+}
+
+- (BOOL) testGetFloatByValue: (float) f {
+fprintf(stderr, "%3.1f\n", f);
+fflush(stderr);
+	return f == 3.14;
+}
 
 @end

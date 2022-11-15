@@ -36,7 +36,6 @@ import org.junit.jupiter.api.Test;
  *
  * @author duncan
  */
-@Disabled("by vavi because of crash")
 public class FoundationMemoryAssumptionsTest {
 
     @Test
@@ -85,6 +84,7 @@ public class FoundationMemoryAssumptionsTest {
         Foundation.cfRelease(idNSObject);
     }
 
+    @Disabled("by vavi because of crash")
     @Test
     public void testAutoreleaseFactoryMethod() {
         ID idPool = Foundation.sendReturnsID(Foundation.getClass("NSAutoreleasePool"), "new");
@@ -103,7 +103,7 @@ public class FoundationMemoryAssumptionsTest {
         Foundation.cfRelease(idNSString);
     }
 
-    @Disabled
+    @Disabled("because of crash")
     @Test
     public void crashDoubleFreeing() {
         ID idNSObject = Foundation.sendReturnsID(Foundation.getClass("NSObject"), "new");
@@ -113,7 +113,7 @@ public class FoundationMemoryAssumptionsTest {
         Foundation.cfRelease(idNSObject); // crash
     }
 
-    @Disabled
+    @Disabled("because of crash")
     @Test
     public void zombies() {
         assertEquals("YES", System.getenv("NSZombiesEnabled"));
@@ -126,6 +126,7 @@ public class FoundationMemoryAssumptionsTest {
         Foundation.cfRelease(idNSObject); // crash, but with stderr logging
     }
 
+    @Disabled("by vavi because of crash")
     @Test
     public void nSStringSpecialCases() {
         ID idEmptyNSString = Foundation.sendReturnsID(Foundation.getClass("NSString"), "alloc");
@@ -154,5 +155,4 @@ public class FoundationMemoryAssumptionsTest {
         Foundation.sendReturnsVoid(idPool, "drain");
         assertRetainCount(1, cfStringRef);
     }
-
 }

@@ -9,7 +9,7 @@
   <parent>
     <groupId>org.rococoa</groupId>
     <artifactId>rococoa-parent</artifactId>
-    <version>0.8.3-SNAPSHOT</version>
+    <version>0.8.5</version>
   </parent>
 
   <name>Rococoa Functional Test</name>
@@ -18,7 +18,9 @@
   <build>
     <plugins>
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-dependency-plugin</artifactId>
+        <version>3.3.0</version>
       </plugin>
     </plugins>
   </build>
@@ -26,7 +28,6 @@
   <repositories>
     <repository>
       <id>github</id>
-      <name>GitHub umjammer Apache Maven Packages</name>
       <url>https://maven.pkg.github.com/umjammer/rococoa-core</url>
     </repository>
   </repositories>

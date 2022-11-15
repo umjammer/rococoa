@@ -47,7 +47,6 @@ import com.sun.jna.Memory;
  * on the Java Object.
  *
  * @author duncan
- *
  */
 @SuppressWarnings("nls")
 public class OCInvocationCallbacks {
@@ -62,14 +61,12 @@ public class OCInvocationCallbacks {
      * @see "http://www.cocoadev.com/index.pl?NSMethodSignature"
      */
     public final RococoaLibrary.MethodSignatureCallback methodSignatureCallback =
-        new RococoaLibrary.MethodSignatureCallback() {
-            public String callback(String selectorName) {
+            selectorName -> {
                 if (logging.isLoggable(Level.FINEST)) {
                     logging.finest(String.format("callback wanting methodSignature for selector %s", selectorName));
                 }
                 return methodSignatureForSelector(selectorName);
-            }
-    };
+            };
 
     /**
      * Called when method has been invoked on OC proxy and needs to be forwarded to javaObject
@@ -106,11 +103,8 @@ public class OCInvocationCallbacks {
             Method[] methods = javaObject.getClass().getMethods();
             for (Method method : methods) {
                 if (method.getName().equals(methodName) && method.getParameterTypes().length == parameterCount) {
-                    boolean match = true;
-                    if(null == stringForType(method.getReturnType())) {
-                        match = false;
-                    }
-                    if(match) {
+                    boolean match = null != stringForType(method.getReturnType());
+                    if (match) {
                         for (Class<?> parameterType : method.getParameterTypes()) {
                             if(null == stringForType(parameterType)) {
                                 match = false;
@@ -118,7 +112,7 @@ public class OCInvocationCallbacks {
                             }
                         }
                     }
-                    if(match) {
+                    if (match) {
                         return method;
                     }
                 }

@@ -32,10 +32,14 @@ public abstract class NSData extends NSObject {
     }
 
     public static NSData dataWithBytes(byte[] bytes) {
-        return CLASS.data().initWithBytes_length(bytes, bytes.length);
+        return CLASS.alloc().initWithBytes_length(bytes, bytes.length);
     }
 
     public interface _Class extends ObjCClass {
+        /**
+         */
+        NSData alloc();
+
         /**
          * Original signature : <code>data()</code><br>
          * <i>from NSDataCreation native declaration : :53</i>

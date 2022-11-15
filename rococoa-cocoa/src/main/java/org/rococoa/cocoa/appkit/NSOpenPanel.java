@@ -19,28 +19,34 @@
 
 package org.rococoa.cocoa.appkit;
 
-import org.rococoa.ID;
-
-import org.rococoa.cocoa.foundation.NSObject;
 import org.rococoa.Rococoa;
 import org.rococoa.RunOnMainThread;
 import org.rococoa.cocoa.foundation.NSArray;
-import org.rococoa.cocoa.foundation.NSString;
+import org.rococoa.cocoa.foundation.NSObject;
 
-public @RunOnMainThread abstract class NSOpenPanel extends NSObject {
+
+/**
+ * A panel that prompts the user to select a file to open.
+ */
+public @RunOnMainThread abstract class NSOpenPanel extends NSSavePanel {
     
     public static final int NSOKButton = 1;
     public static final int NSCancelButton = 0;
     
-    public static final _Class CLASS = Rococoa.createClass("NSOpenPanel",  _Class.class); //$NON-NLS-1$
-    public @RunOnMainThread abstract class _Class extends NSObject._class_ {
+    public static final _Class CLASS = Rococoa.createClass("NSOpenPanel", _Class.class);
+
+    public static @RunOnMainThread abstract class _Class extends NSObject._class_ {
         public abstract NSOpenPanel openPanel();
     }
-    
+
     public abstract int runModalForTypes(NSArray arrayOfTypeStrings);
-	
-    public abstract NSString filename();
+
+    public abstract String filename();
     public abstract NSArray filenames();
-	
-    public abstract void setDelegate(ID ocProxy);
+    public abstract NSArray/*NSURL*/ URLs();
+
+    public abstract boolean canChooseFiles();
+    public abstract boolean canChooseDirectories();
+    public abstract boolean allowsMultipleSelection();
+    public abstract void allowsMultipleSelection(boolean value);
 }

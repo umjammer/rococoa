@@ -24,6 +24,10 @@ import java.util.List;
 
 import com.sun.jna.Structure;
 
+
+/**
+ * TestStructOfStruct in test.h
+ */
 public class TestStructOfStruct extends Structure {
     public double aDouble;
     public TestStruct.ByValue aStruct;

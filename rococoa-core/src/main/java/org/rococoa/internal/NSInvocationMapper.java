@@ -51,7 +51,7 @@ public abstract class NSInvocationMapper {
     }
 
     protected Object readFrom(Memory buffer, Class<?> type) {
-        throw new Error("Should be overriden or bypassed");
+        throw new Error("Should be overridden or bypassed");
     }
     
     public abstract Memory bufferForResult(Object methodCallResult);

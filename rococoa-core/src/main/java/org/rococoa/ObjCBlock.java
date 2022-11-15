@@ -28,6 +28,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+
 package org.rococoa;
 
 import com.sun.jna.Pointer;
@@ -36,16 +37,17 @@ import com.sun.jna.Callback;
 public abstract class ObjCBlock implements ObjCObject, Callback {
 
     Pointer pCallback;
-    //static final int CALLBACK_CONSTRUCTOR_ID = -2;
-    /*protected C callback;
-     public ObjCBlock(C callback) {
-     super(CALLBACK_CONSTRUCTOR_ID, callback);
-     this.callback = callback; // retain a reference
-     }
-     public ObjCBlock() {
-     super();
-     assert callback != null; // set by parent constructor
-     }
-     *
-     */
+
+/*
+    static final int CALLBACK_CONSTRUCTOR_ID = -2;
+    protected C callback;
+    public ObjCBlock(C callback) {
+      super(CALLBACK_CONSTRUCTOR_ID, callback);
+      this.callback = callback; // retain a reference
+    }
+    public ObjCBlock() {
+      super();
+      assert callback != null; // set by parent constructor
+    }
+*/
 }

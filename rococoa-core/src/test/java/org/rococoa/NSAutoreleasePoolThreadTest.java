@@ -19,7 +19,6 @@
 
 package org.rococoa;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.rococoa.cocoa.foundation.NSAutoreleasePool;
 import org.rococoa.test.RococoaTestCase;
@@ -50,17 +49,14 @@ public class NSAutoreleasePoolThreadTest {
     // This is the test that is made pass by marking NSAutoreleasePool as ReleaseInFinalize(false)
     @Test
     public void garbageCollectDrainedPool() throws InterruptedException {
-        Thread thread = new Thread("test") {
-            public void run() {
-                NSAutoreleasePool pool = NSAutoreleasePool.new_();
-                pool.drain();
-            }
-        };
+        Thread thread = new Thread(null, () -> {
+            NSAutoreleasePool pool = NSAutoreleasePool.new_();
+            pool.drain();
+        }, "test");
         thread.start();
         thread.join();
         RococoaTestCase.gc();
     }
-
 
     @Test
     public void drainPoolAndFinalize() {
@@ -76,43 +72,33 @@ public class NSAutoreleasePoolThreadTest {
 
     @Test
     public void drainPoolAndFinalizeOnAnotherThread() throws InterruptedException {
-        Thread thread = new Thread("test") {
-            public void run() {
-                drainPoolAndFinalize();
-            }
-        };
+        Thread thread = new Thread(null, this::drainPoolAndFinalize, "test");
         thread.start();
         thread.join();
         RococoaTestCase.gc();
     }
 
-    @Disabled("crashes")
     @Test
     public void cantDrainPoolCreatedOnAFinishedThread() throws InterruptedException {
         final NSAutoreleasePool[] poolHolder = new NSAutoreleasePool[1];
-        Thread thread = new Thread("test") {
-            public void run() {
-                poolHolder[0] = NSAutoreleasePool.new_();
-            }
-        };
+        Thread thread = new Thread(null, () -> {
+            poolHolder[0] = NSAutoreleasePool.new_();
+        }, "test");
         thread.start();
         thread.join();
         poolHolder[0].drain();
     }
 
-    @Disabled("crashes")
     @Test
     public void drainPoolCreatedOnANotFinishedThread() throws InterruptedException {
         final NSAutoreleasePool[] poolHolder = new NSAutoreleasePool[1];
         final CyclicBarrier beforeDrain = new CyclicBarrier(2);
         final CyclicBarrier afterDrain = new CyclicBarrier(2);
-        Thread thread = new Thread("test") {
-            public void run() {
-                poolHolder[0] = NSAutoreleasePool.new_();
-                await(beforeDrain);
-                await(afterDrain);
-            }
-        };
+        Thread thread = new Thread(null, () -> {
+            poolHolder[0] = NSAutoreleasePool.new_();
+            await(beforeDrain);
+            await(afterDrain);
+        }, "test");
         thread.start();
         await(beforeDrain);
         poolHolder[0].drain();
@@ -125,14 +111,12 @@ public class NSAutoreleasePoolThreadTest {
         final NSAutoreleasePool[] poolHolder = new NSAutoreleasePool[1];
         final CyclicBarrier beforeDrain = new CyclicBarrier(2);
         final CyclicBarrier afterDrain = new CyclicBarrier(2);
-        Thread thread = new Thread("test") {
-            public void run() {
-                poolHolder[0] = NSAutoreleasePool.new_();
-                poolHolder[0].drain();
-                await(beforeDrain);
-                await(afterDrain);
-            }
-        };
+        Thread thread = new Thread(null, () -> {
+            poolHolder[0] = NSAutoreleasePool.new_();
+            poolHolder[0].drain();
+            await(beforeDrain);
+            await(afterDrain);
+        }, "test");
         thread.start();
         await(beforeDrain);
         poolHolder[0].drain();
@@ -150,5 +134,4 @@ public class NSAutoreleasePoolThreadTest {
             throw new RuntimeException(e);
         }
     }
-
 }

@@ -25,8 +25,10 @@ import java.lang.ref.WeakReference;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.rococoa.cocoa.foundation.NSArray;
 import org.rococoa.cocoa.foundation.NSAutoreleasePool;
 import org.rococoa.cocoa.foundation.NSDate;
+import org.rococoa.cocoa.foundation.NSNumber;
 import org.rococoa.cocoa.foundation.NSObject;
 import org.rococoa.test.RococoaTestCase;
 
@@ -34,58 +36,50 @@ public class RococoaObjectOwnershipTest extends RococoaTestCase {
 
     public static boolean shouldBeInPool = true;
     public static boolean shouldNotBeInPool = false;
-	
+
+    @Test
+    public void directFactoryMethodsReturnsYieldsPooledObject2() {
+        check(shouldBeInPool, () -> Rococoa.create("NSArray", NSArray.class, "arrayWithObjects:", NSNumber.CLASS.numberWithInt(0)));
+    }
+
+    @Test
+    public void factoryMethodOnClassYieldsPooledObject2() {
+        check(shouldBeInPool, () -> NSArray.CLASS.arrayWithObjects(NSNumber.CLASS.numberWithInt(0)));
+    }
+
     @Disabled("by vavi because of error")
     @Test public void directFactoryMethodsReturnsYieldsPooledObject() {
-	// TODO - I've seen this fail with a retain count of 3. I wonder whether
-	// there is some aggressive instance sharing going on with NSDate
-        check(shouldBeInPool, 
-            new Factory() {
-                public NSDate create() {
-                    return Rococoa.create("NSDate", NSDate.class, "dateWithTimeIntervalSince1970:", 0.0);
-                }});
+        // TODO - I've seen this fail with a retain count of 3. I wonder whether
+        // there is some aggressive instance sharing going on with NSDate
+        check(shouldBeInPool, () -> Rococoa.create("NSDate", NSDate.class, "dateWithTimeIntervalSince1970:", NSNumber.CLASS.numberWithInt(0)));
     }
 
-    @Disabled("by vavi")
+    @Disabled("by vavi ditto")
     @Test public void factoryMethodOnClassYieldsPooledObject() {
-	// TODO - see above
-        check(shouldBeInPool, 
-            new Factory() {
-                public NSDate create() {
-                    return NSDate.CLASS.dateWithTimeIntervalSince1970(0.0);
-                }});
+        // TODO - see above
+        check(shouldBeInPool, () -> NSDate.CLASS.dateWithTimeIntervalSince1970(0.0));
     }
 
-    @Disabled("by vavi")
+    @Disabled("by vavi ditto")
     @Test public void createYieldsNonPooledObject() {
-        check(shouldNotBeInPool, 
-            new Factory() {
-                public NSDate create() {
-                    return Rococoa.create("NSDate", NSDate.class);
-                }});
+        check(shouldNotBeInPool, () -> Rococoa.create("NSDate", NSDate.class));
     }
 
-    @Disabled("by vavi")
+    @Disabled("by vavi ditto")
     @Test public void newYieldsNonPooledObject() {
         // calling new on an NSClass results in a NOT autorelease'd object
-        check(shouldNotBeInPool, 
-            new Factory() {
-                public NSDate create() {
-                    return Rococoa.create("NSDate", NSDate.class, "new");
-                }});
+        check(shouldNotBeInPool, () -> Rococoa.create("NSDate", NSDate.class, "new"));
     }
 
     @Test public void allocYieldsNonPooledObject() {
         // calling alloc on an NSClass results in a NOT autorelease'd object
-        check(shouldNotBeInPool, 
-            new Factory() {
-                public NSObject create() {
-                    // NSDate.alloc fails as it is an Umbrella class
-                    return Rococoa.create("NSObject", NSObject.class, "alloc");
-                }});
+        check(shouldNotBeInPool, () -> {
+            // NSDate.alloc fails as it is an Umbrella class
+            return Rococoa.create("NSObject", NSObject.class, "alloc");
+        });
     }
 
-    private static interface Factory {
+    private interface Factory {
         NSObject create();
     }
 
@@ -122,5 +116,4 @@ public class RococoaObjectOwnershipTest extends RococoaTestCase {
 
         assertRetainCount(expectedFinalRetainCount, alias);
     }
-
 }

@@ -20,12 +20,11 @@
 package org.rococoa.internal;
 
 
+import com.sun.jna.Library;
 import org.rococoa.ID;
 import org.rococoa.Selector;
 import org.rococoa.cocoa.CFIndex;
 import org.rococoa.cocoa.CFRange;
-
-import com.sun.jna.Library;
 
 /**
  * JNA Library for plain C calls, standard JNA marshalling applies to these
@@ -42,7 +41,7 @@ public interface FoundationLibrary extends Library {
 
     ID CFRetain(ID cfTypeRef);
     void CFRelease(ID cfTypeRef);
-    int CFGetRetainCount (ID cfTypeRef);
+    CFIndex CFGetRetainCount(ID cfTypeRef);
 
     ID objc_getClass(String className);
     ID class_createInstance(ID pClass, int extraBytes);
@@ -55,10 +54,16 @@ public interface FoundationLibrary extends Library {
     ID CFStringTokenizerCopyCurrentTokenAttribute(ID tokenizer, int attribute);
     int CFStringTokenizerAdvanceToNextToken(ID tokenizer);
 
-    static final ID kCFAllocatorDefault = null;
-    static final int kCFStringTokenizerUnitWordBoundary = 4;
-    static final int kCFStringTokenizerTokenNone = 0;
-    static final int kCFStringTokenizerAttributeLatinTranscription = 1 << 16;
+    /**
+     * This is a synonym for NULL.
+     * @see "https://developer.apple.com/documentation/corefoundation/kcfallocatordefault"
+     */
+    ID kCFAllocatorDefault = null;
+
+    int kCFStringTokenizerUnitWordBoundary = 4;
+    int kCFStringTokenizerTokenNone = 0;
+    int kCFStringTokenizerAttributeLatinTranscription = 1 << 16;
+
     // TODO
     static final String kCFStringTransformLatinHiragana = "Latin-Hiragana";
 }

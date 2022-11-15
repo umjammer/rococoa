@@ -26,7 +26,7 @@ import org.rococoa.Rococoa;
 
 public abstract class NSString extends NSObject {
 
-    public static _Class CLASS = Rococoa.createClass("NSString", _Class.class);         //$NON-NLS-1$
+    public static _Class CLASS = Rococoa.createClass("NSString", _Class.class);
 
     public interface _Class extends ObjCClass {
         NSString stringWithString(String string);

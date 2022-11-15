@@ -24,6 +24,10 @@ import java.util.List;
 
 import com.sun.jna.Structure;
 
+
+/**
+ * TestIntDoubleStruct in test.h
+ */
 public class TestStruct extends Structure {
     public int anInt;
     public double aDouble;
@@ -46,7 +50,6 @@ public class TestStruct extends Structure {
             super(anInt, aDouble);
         }
     }
-
 
     @Override
     protected List<String> getFieldOrder() {

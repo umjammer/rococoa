@@ -31,11 +31,10 @@ import com.sun.jna.NativeLong;
 @SuppressWarnings({ "nls", "unchecked", "cast" })
 public class StringTypeConverterTest extends RococoaTestCase {
 
-    private static Class<? extends Number> primitiveTypeOfID = 
+    private static final Class<? extends Number> primitiveTypeOfID =
         (Class<? extends Number>) new NativeLong().nativeType();
 
-    private StringTypeConverter converter = new StringTypeConverter();
-
+    private final StringTypeConverter converter = new StringTypeConverter();
 
     @Test public void convertsStringAsArgumentToIDofCFString() {
         assertEquals(primitiveTypeOfID, converter.nativeType());
@@ -48,30 +47,27 @@ public class StringTypeConverterTest extends RococoaTestCase {
     @Test public void convertsNullAsArgumentToNull() {
         // Not entirely sure about this, maybe 0 would be better than null, 
         // but JNA seems to interpret it properly
-        assertEquals(null, converter.toNative(null, null));
+        assertNull(converter.toNative(null, null));
     }
 
     @Test public void convertsReturnedIDToString() {
         ID helloID = Foundation.cfString("Hello"); // just leaks
 
         // We can cope with 64 bits on 64 and 32
-        Number nativeValue = new Long(helloID.longValue());
+        Number nativeValue = helloID.longValue();
         String converted = converter.fromNative(nativeValue, null);
         assertEquals("Hello", converted);
 
         // We must cope with 32 bits on 32-bit
         if (NativeLong.SIZE == 4) {
-            nativeValue = new Integer(helloID.intValue());
+            nativeValue = helloID.intValue();
             converted = converter.fromNative(nativeValue, null);
             assertEquals("Hello", converted);
         }
     }
 
     @Test public void convertsReturnedNilToNull() {
-        Number nativeValue = new Long(0);
+        Number nativeValue = 0L;
         assertNull(converter.fromNative(nativeValue, null));
     }
-
-
-
 }

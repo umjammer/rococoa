@@ -44,8 +44,7 @@ public class StructsInObjectsTest extends RococoaTestCase {
         
         
         Foundation.send(value.id(), Foundation.selector("sizeValue"), NSSize.class);
-        NSSize size = value.sizeValue(); 
-            // fails here with jna 3.0.6+ in Java 1.5, see StaticStructureReturnTest
+        NSSize size = value.sizeValue(); // fails here with jna 3.0.6+ in Java 1.5, see StaticStructureReturnTest
 
         assertEquals(1.0, size.width.doubleValue(), 0.0001);
         assertEquals(3.0, size.height.doubleValue(), 0.0001);        

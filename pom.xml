@@ -6,8 +6,8 @@
 
   <groupId>org.rococoa</groupId>
   <artifactId>rococoa-parent</artifactId>
+  <version>0.8.5</version>
   <packaging>pom</packaging>
-  <version>0.8.4</version>
 
   <modules>
     <module>rococoa-auto</module>
@@ -80,12 +80,12 @@
   <properties>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
+    <jna.version>5.12.1</jna.version>
   </properties>
 
   <distributionManagement>
     <repository>
       <id>github</id>
-      <name>GitHub umjammer Apache Maven Packages</name>
       <url>https://maven.pkg.github.com/umjammer/rococoa</url>
     </repository>
   </distributionManagement>
@@ -94,8 +94,9 @@
     <pluginManagement>
       <plugins>
         <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-dependency-plugin</artifactId>
-          <version>2.10</version>
+          <version>3.3.0</version>
           <executions>
             <execution>
               <id>copy</id>
@@ -124,8 +125,9 @@
 
     <plugins>
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-source-plugin</artifactId>
-        <version>2.2.1</version>
+        <version>3.2.1</version>
         <executions>
           <execution>
             <id>attach-sources</id>
@@ -136,7 +138,9 @@
         </executions>
       </plugin>
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
+        <version>3.4.0</version>
         <executions>
           <execution>
             <id>attach-javadocs</id>
@@ -144,19 +148,27 @@
               <goal>jar</goal>
             </goals>
             <configuration>
+              <additionalJOptions>
+                <additionalJOption>-J-Duser.language=en_US</additionalJOption> <!-- ad-hoc -->
+              </additionalJOptions>
+              <additionalOptions>
+                <additionalOption>-Xdoclint:none</additionalOption>
+                <additionalOption>-Xdoclint:-missing</additionalOption>
+              </additionalOptions>
               <debug>false</debug>
               <verbose>false</verbose>
               <failOnWarnings>false</failOnWarnings>
               <failOnError>false</failOnError>
-              <additionalparam>-Xdoclint:none -Xdoclint:-missing</additionalparam>
               <doclint>none</doclint>
+              <quiet>true</quiet>
             </configuration>
           </execution>
         </executions>
       </plugin>
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-resources-plugin</artifactId>
-        <version>2.6</version>
+        <version>3.2.0</version>
         <inherited>true</inherited>
         <configuration>
           <encoding>UTF-8</encoding>
@@ -196,7 +208,7 @@
       <dependency>
         <groupId>net.java.dev.jna</groupId>
         <artifactId>jna</artifactId>
-        <version>5.9.0</version>
+        <version>${jna.version}</version>
       </dependency>
       <dependency>
         <groupId>cglib</groupId>
@@ -207,7 +219,7 @@
       <dependency>
         <groupId>org.junit</groupId>
         <artifactId>junit-bom</artifactId>
-        <version>5.8.1</version>
+        <version>5.9.1</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -217,7 +229,6 @@
   <repositories>
     <repository>
       <id>github</id>
-      <name>GitHub umjammer Apache Maven Packages</name>
       <url>https://maven.pkg.github.com/umjammer/rococoa-core</url>
     </repository>
   </repositories>
@@ -239,5 +250,4 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-
 </project>

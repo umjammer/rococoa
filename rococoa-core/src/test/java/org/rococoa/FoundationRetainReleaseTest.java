@@ -28,7 +28,6 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("nls")
-@Disabled("by vavi because of crash")
 public class FoundationRetainReleaseTest extends RococoaTestCase {
 
     @Test public void test() {
@@ -64,6 +63,7 @@ public class FoundationRetainReleaseTest extends RococoaTestCase {
         // causes count to go to 0 and dispose will happen
     }
 
+    @Disabled("by vavi because of crash")
     @Test public void testInitedObject() {
         NSAutoreleasePool pool = NSAutoreleasePool.new_();
 
@@ -77,5 +77,4 @@ public class FoundationRetainReleaseTest extends RococoaTestCase {
         assertRetainCount(1, idOfString);
         Foundation.cfRelease(idOfString);
     }
-
 }

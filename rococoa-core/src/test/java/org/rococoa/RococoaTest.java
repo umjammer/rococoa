@@ -41,17 +41,17 @@ public class RococoaTest extends RococoaTestCase {
         NSNumber fortyTwo = NSNumber.CLASS.numberWithInt(42);
         NSNumber fortyTwoAlias = Rococoa.wrap(fortyTwo.id(), NSNumber.class);
         NSNumber fortyThree = NSNumber.CLASS.numberWithInt(43);
-        assertTrue(fortyTwo.equals(fortyTwoAlias));
-        assertTrue(fortyTwoAlias.equals(fortyTwo));
-        assertFalse(fortyTwo.equals(fortyThree));
-        assertFalse(fortyTwo.equals(null));
+        assertEquals(fortyTwo, fortyTwoAlias);
+        assertEquals(fortyTwoAlias, fortyTwo);
+        assertNotEquals(fortyTwo, fortyThree);
+        assertNotEquals(null, fortyTwo);
     }
         
     @Test public void testEqualsMapsToIsEqual() {
         NSString s1 = NSString.stringWithString("string");
         NSString s2 = NSString.stringWithString("STRING").lowercaseString();
         assertNotSame(s1, s2);
-        assertFalse(s1.id().equals(s2.id()));
+        assertNotEquals(s1.id(), s2.id());
         assertEquals(s1, s2);
     }
    
@@ -98,18 +98,18 @@ public class RococoaTest extends RococoaTestCase {
     }
     
     @Test public void testFactory() {
-        NSNumber._Class nsNumberClass = Rococoa.createClass("NSNumber",  NSNumber._Class.class); //$NON-NLS-1$
+        NSNumber._Class nsNumberClass = Rococoa.createClass("NSNumber",  NSNumber._Class.class);
         assertEquals(nsNumberClass.id(), Foundation.getClass("NSNumber"));
     }
     
     public interface OddClass extends ObjCClass {
-        public NSObject numberWithInt(int value);
+        NSObject numberWithInt(int value);
     }
 
     @Test public void testDownCast() {
         // this is OK
-        NSObject numberAsObject = NSNumber.CLASS.numberWithInt(42);
-        assertEquals(42, ((NSNumber) numberAsObject).intValue());
+        NSNumber numberAsObject = NSNumber.CLASS.numberWithInt(42);
+        assertEquals(42, numberAsObject.intValue());
         
         // but when defined return type is NSObject, we can't cast Java objects
         OddClass nsClass = Rococoa.createClass("NSNumber", OddClass.class);
@@ -134,5 +134,4 @@ public class RococoaTest extends RococoaTestCase {
         assertEquals(NSString.class.getPackage(), stringClass.getPackage());
         assertEquals("NSString$$ByRococoa", stringClass.getSimpleName());
     }
-
 }

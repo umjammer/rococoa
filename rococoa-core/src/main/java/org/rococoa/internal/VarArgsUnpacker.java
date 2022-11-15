@@ -19,6 +19,10 @@
  
 package org.rococoa.internal;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
+
 @SuppressWarnings("nls")
 public class VarArgsUnpacker {
 
@@ -33,14 +37,7 @@ public class VarArgsUnpacker {
 
     @Override
     public String toString() {
-        StringBuilder  result = new StringBuilder();
-        for (int i = 0; i < args.length; i++) {
-            result.append(String.valueOf(args[i])).append(SEPERATOR);
-        }
-        if (result.length() > 0) {
-            result.setLength(result.length() - SEPERATOR.length());
-        }
-        return result.toString();
+//        return Arrays.stream(args).map(String::valueOf).collect(Collectors.joining(SEPERATOR));
+        return Arrays.stream(args).map(o -> o == null ? "null" : o + ":" + o.getClass().getSimpleName()).collect(Collectors.joining(SEPERATOR));
     }
-
 }

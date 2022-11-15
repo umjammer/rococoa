@@ -19,13 +19,17 @@
  
 package org.rococoa;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import org.junit.jupiter.api.Test;
-import org.rococoa.test.RococoaTestCase;
-
 import com.sun.jna.Library;
 import com.sun.jna.Native;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+import org.rococoa.test.RococoaTestCase;
+import vavi.util.Debug;
+import vavi.util.StringUtil;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 @SuppressWarnings("nls")
 public class FoundationStructureReturnTest extends RococoaTestCase {     
@@ -95,4 +99,39 @@ public class FoundationStructureReturnTest extends RococoaTestCase {
                 double.class, args);
         assertEquals(Math.E, result2, 0);        
     }        
+
+    @Test
+    @Disabled("float: fromNative is ok")
+    void test1() throws Exception {
+        ID testID = Foundation.sendReturnsID(Foundation.getClass("TestShunt"), "new");
+        Foundation.sendReturnsID(testID, "autorelease");
+        float result = Foundation.send(testID,
+                Foundation.selector("testPassFloatByValue"),
+                float.class);
+        assertEquals(3.14f, result, 0.01);
+    }
+
+    @Test
+    @Disabled("float: toNative is NG")
+    void test3() throws Exception {
+        ID testID = Foundation.sendReturnsID(Foundation.getClass("TestShunt"), "new");
+        Foundation.sendReturnsID(testID, "autorelease");
+        int result = Foundation.send(testID,
+                Foundation.selector("testConvertFloatToInt:"),
+                int.class, 3.14d);
+Debug.printf("%08x, %s", Float.floatToIntBits(3.14f), StringUtil.toBits(Float.floatToIntBits(3.14f), 32));
+Debug.printf("%08x, %s", result, StringUtil.toBits(result, 32));
+        assertEquals(Float.floatToIntBits(3.14f), result);
+    }
+
+    @Test
+    @Disabled("float: toNative is NG")
+    void test2() throws Exception {
+        ID testID = Foundation.sendReturnsID(Foundation.getClass("TestShunt"), "new");
+        Foundation.sendReturnsID(testID, "autorelease");
+        boolean result = Foundation.send(testID,
+                Foundation.selector("testGetFloatByValue:"),
+                boolean.class, 3.14f);
+        assertTrue(result);
+    }
 }
