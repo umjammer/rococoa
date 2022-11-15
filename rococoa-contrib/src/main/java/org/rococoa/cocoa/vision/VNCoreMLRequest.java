@@ -36,14 +36,6 @@ public abstract class VNCoreMLRequest extends VNImageBasedRequest {
     public abstract VNCoreMLRequest initWithModel(VNCoreMLModel model);
 
     /**
-     * A type alias to encapsulate the syntax for the completion handler block
-     * that's invoked after the request has finished processing.
-     */
-    public interface VNRequestCompletionHandler extends ObjCBlock {
-        void apply(ID/*VNRequest*/ requestId, ObjCObjectByReference errorRef);
-    }
-
-    /**
      * Creates a model container to be used with VNCoreMLRequest
      * based on a Core ML model, with an optional completion handler.
      */

@@ -62,7 +62,6 @@
                   <fileNames>
                     <fileName>Rococoa.m</fileName>
                     <fileName>ProxyForJava.m</fileName>
-                    <fileName>ObjCBlocks.m</fileName>
                     <fileName>test.m</fileName>
                   </fileNames>
                 </source>
@@ -88,7 +87,6 @@
                   <fileNames>
                     <fileName>Rococoa.m</fileName>
                     <fileName>ProxyForJava.m</fileName>
-                    <fileName>ObjCBlocks.m</fileName>
                   </fileNames>
                 </source>
               </sources>
@@ -225,7 +223,7 @@
     <dependency>
       <groupId>com.github.umjammer</groupId>
       <artifactId>vavi-commons</artifactId>
-      <version>1.1.7</version>
+      <version>1.1.8</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
