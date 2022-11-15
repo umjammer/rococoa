@@ -17,7 +17,7 @@ implementation of Objective-C interfaces in Java.
 
 ## How To
 
-* [Basics](rococoa-core/readme.md#how-to)
+* [Basics](rococoa-core/readme.md#How-To)
 * [CIFilter Java2D BufferedImageOp](rococoa-contrib/src/test/java/org/rococoa/cocoa/coreimage/CoreImageTest.java)
 * [CoreML](rococoa-contrib/src/test/java/org/rococoa/cocoa/coreml/CoreMLTest.java)
 * [iTunes Library](https://github.com/umjammer/vavi-sound-sandbox/tree/master/src/main/java/vavix/rococoa/ituneslibrary)
@@ -32,7 +32,8 @@ implementation of Objective-C interfaces in Java.
 ## Limitation
 
 * obj-c class's method call with float argument doesn't work
-  * i found [the reason](https://github.com/java-native-access/jna/issues/463#issuecomment-1286015013) 
+  * [the reason](https://github.com/java-native-access/jna/issues/463#issuecomment-1286015013)
+  * https://www.mikeash.com/pyblog/objc_msgsends-new-prototype.html
 * block
 
 ## TODO
@@ -42,6 +43,8 @@ implementation of Objective-C interfaces in Java.
    * http://cocoawithlove.com/2009/10/how-blocks-are-implemented-and.html
    * http://www.opensource.apple.com/source/libclosure/libclosure-38/BlockImplementation.txt
 * ~~CIFilter~~ (done)
+* `cglib` is mostly [suspended](https://github.com/cglib/cglib#readme)
+   * `cglib` recommends [ByteBuddy](https://bytebuddy.net/) that is based on `asm` same as the `cglib`  
 
 ## References
  
