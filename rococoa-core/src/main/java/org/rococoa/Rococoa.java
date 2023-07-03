@@ -19,12 +19,12 @@
 
 package org.rococoa;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Proxy;
 
-import net.sf.cglib.core.DefaultNamingPolicy;
-import net.sf.cglib.core.Predicate;
-import net.sf.cglib.proxy.Enhancer;
-
+import net.bytebuddy.ByteBuddy;
+import net.bytebuddy.implementation.MethodDelegation;
+import net.bytebuddy.matcher.ElementMatchers;
 import org.rococoa.cocoa.CFIndex;
 import org.rococoa.internal.OCInvocationCallbacks;
 import org.rococoa.internal.ObjCObjectInvocationHandler;
@@ -160,7 +160,7 @@ public abstract class Rococoa  {
     }
 
     /**
-     * Create a java.lang.reflect.Proxy or cglib proxy of type, which forwards
+     * Create a java.lang.reflect.Proxy or ByteBuddy proxy of type, which forwards
      * invocations to invocationHandler.
      */
     @SuppressWarnings("unchecked")
@@ -170,20 +170,19 @@ public abstract class Rococoa  {
                 invocationHandler.getClass().getClassLoader(), 
                 new Class[] {type}, invocationHandler);
         } else {
-            Enhancer e = new Enhancer();
-            e.setUseCache(true); // make sure that we reuse if we've already defined
-            e.setNamingPolicy(new DefaultNamingPolicy() {
-                public String getClassName(String prefix, String source, Object key, Predicate names) {
-                    if (source.equals(net.sf.cglib.proxy.Enhancer.class.getName())) {
-                        return type.getName() + "$$ByRococoa";
-                    }
-                    else {
-                        return super.getClassName(prefix, source, key, names);
-                    }
-                }});
-            e.setSuperclass(type);
-            e.setCallback(invocationHandler);
-            return (T) e.create();
+            try {
+                // TODO cache, TypeCache breaks instance individuality
+                return new ByteBuddy()
+                        .subclass(type)
+                        .name(type.getName() + "$$ByRococoa")
+                        .method(ElementMatchers.any()).intercept(MethodDelegation.to(invocationHandler))
+                        .make()
+                        .load(type.getClassLoader())
+                        .getLoaded().getDeclaredConstructor().newInstance();
+            } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
+                e.printStackTrace();
+                throw new IllegalStateException(e);
+            }
         }
     }
 
