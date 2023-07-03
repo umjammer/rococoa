@@ -25,12 +25,13 @@ import org.rococoa.cocoa.foundation.NSObject;
 import com.sun.jna.DefaultTypeMapper;
 import com.sun.jna.FromNativeConverter;
 
+
 /**
- * A JNA TypeMapper that knows how to convert :
+ * A JNA TypeMapper that knows how to convert:
  * <ul>
  *   <li>{@link NSObject} to and from an integer type with the right size to be an id.</li>
  *   <li>{@link String} to and from an integer type with the right size to be an id.</li>
- *   <li>{@link boolean} to a byte with the right values for Mac.</li>
+ *   <li>{@code boolean} to a byte with the right values for Mac.</li>
  * </ul>
  *
  * Note that nativeType is never NativeLong, but the appropriate Java primitive

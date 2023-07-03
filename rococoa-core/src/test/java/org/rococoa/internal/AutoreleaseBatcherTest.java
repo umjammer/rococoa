@@ -29,6 +29,7 @@ import org.rococoa.test.RococoaTestCase;
 
 
 public class AutoreleaseBatcherTest {
+
     static {
         RococoaTestCase.initializeLogging();
     }

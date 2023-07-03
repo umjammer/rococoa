@@ -31,6 +31,7 @@ import com.sun.jna.Native;
 import com.sun.jna.platform.mac.CoreFoundation;
 
 public interface FoundationKitFunctions extends Library {
+
     FoundationKitFunctions library = Native.load(
         "Foundation", FoundationKitFunctions.class, Collections.singletonMap(Library.OPTION_TYPE_MAPPER, new RococoaTypeMapper()));
 
@@ -281,8 +282,8 @@ public interface FoundationKitFunctions extends Library {
      * NSSearchPathDomainMask, BOOL)</code><br>
      * <i>native declaration : /System/Library/Frameworks/Foundation.framework/Headers/NSPathUtilities.h:106</i><br>
      *
-     * @param directory  @see NSSearchPathDirectory<br>
-     * @param domainMask @see NSSearchPathDomainMask
+     * @param directory  see {@link NSSearchPathDirectory}<br>
+     * @param domainMask see {@link NSSearchPathDomainMask}
      */
     NSArray NSSearchPathForDirectoriesInDomains(int directory, int domainMask, boolean expandTilde);
 
@@ -291,6 +292,7 @@ public interface FoundationKitFunctions extends Library {
      * TODO duplicated
      * @param format Statement
      */
+    @Deprecated(since = "aarch64")
     void NSLog(String format, String... args);
 
     CFStringRef CFStringCreateWithCharacters(CFAllocatorRef allocator, char[] chars, CFIndex index);

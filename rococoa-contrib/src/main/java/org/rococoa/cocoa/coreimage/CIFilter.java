@@ -28,6 +28,7 @@ public abstract class CIFilter extends NSObject {
     public interface _Class extends ObjCClass {
         CIFilter filterWithName(String name);
         CIFilter filterWithName_withInputParameters(String name, NSDictionary params);
+        @Deprecated(since = "aarch64")
         CIFilter filterWithName_keysAndValues(String name, ID... key0);
     }
 

@@ -19,11 +19,14 @@
 
 package org.rococoa.cocoa.foundation;
 
+import java.util.Map;
+
 import org.rococoa.ID;
 import org.rococoa.ObjCClass;
 
 /// <i>native declaration : :10</i>
-public abstract class NSDictionary extends NSObject {
+public abstract class NSDictionary extends NSObject implements Map<NSObject, NSObject> {
+
     private static final _Class CLASS = org.rococoa.Rococoa.createClass("NSDictionary", _Class.class);
 
     public static NSDictionary dictionaryWithObjectsForKeys(NSArray objects, NSArray keys) {
@@ -39,7 +42,22 @@ public abstract class NSDictionary extends NSObject {
     }
 
     public static NSDictionary dictionaryWithObjectsAndKeys(NSObject...objects) {
-        return CLASS.dictionaryWithObjectsAndKeys(objects);
+        NSMutableArray[] pair = flatToSeparate(objects);
+        return dictionaryWithObjectsForKeys(pair[0], pair[1]);
+    }
+
+    /** @return 0: values, 1: keys */
+    static NSMutableArray[] flatToSeparate(NSObject...objects) {
+        NSMutableArray values = NSMutableArray.array();
+        NSMutableArray keys = NSMutableArray.array();
+        for (int i = 0; i < objects.length; i += 2) {
+            if (objects[i] == null) {
+                break;
+            }
+            values.addObject(objects[i]);
+            keys.addObject(objects[i + 1]);
+        }
+        return new NSMutableArray[] { values, keys };
     }
 
     public static NSDictionary emptyDictionary() {
@@ -69,6 +87,7 @@ public abstract class NSDictionary extends NSObject {
          * Original signature : <code>id dictionaryWithObjectsAndKeys(id, null)</code><br>
          * <i>from NSDictionaryCreation native declaration : :43</i>
          */
+        @Deprecated(since = "aarch64")
         NSDictionary dictionaryWithObjectsAndKeys(NSObject... varargs);
 
         /**
@@ -102,12 +121,22 @@ public abstract class NSDictionary extends NSObject {
      */
     public abstract int count();
 
+    @Override
+    public int size() {
+        return count();
+    }
+
     /**
      * <i>native declaration : :13</i><br>
      * Conversion Error : /// Original signature : <code>objectForKey(null)</code><br>
      * - (null)objectForKey:(null)aKey; (Argument aKey cannot be converted)
      */
     public abstract NSObject objectForKey(NSObject key);
+
+    @Override
+    public NSObject get(Object key) {
+        return objectForKey((NSObject) key);
+    }
 
     public abstract NSObject objectForKey(String key);
 
@@ -208,6 +237,7 @@ public abstract class NSDictionary extends NSObject {
      * Original signature : <code>id initWithObjectsAndKeys(id, null)</code><br>
      * <i>from NSDictionaryCreation native declaration : :48</i>
      */
+    @Deprecated(since = "aarch64")
     public abstract NSDictionary initWithObjectsAndKeys(NSObject firstObject, NSObject... varargs);
 
     /**

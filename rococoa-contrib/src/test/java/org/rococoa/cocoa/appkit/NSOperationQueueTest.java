@@ -69,7 +69,7 @@ class NSOperationQueueTest extends RococoaTestCase {
             }
         }
         public void addOperationsAndWait(NSOperationQueue queue, boolean wait) {
-            queue.addOperations_waitUntilFinished(NSArray.CLASS.arrayWithObjects(ops), wait);
+            queue.addOperations_waitUntilFinished(NSArray.arrayWithObjects(ops), wait);
         }
         public void checkResults() {
             List<Integer> incomplete = new ArrayList<>(results.length);
@@ -104,6 +104,7 @@ class NSOperationQueueTest extends RococoaTestCase {
 
     /**
      * Test of addOperations_waitUntilFinished method, of class NSOperationQueue.
+     * TODO sometimes fail
      */
     @Test
     public void testAddOperations_waitUntilFinished() {
@@ -112,13 +113,14 @@ class NSOperationQueueTest extends RococoaTestCase {
         assertEquals(0, fixture.operationCount().intValue());
         runnables.checkResults();
 
-        //without waiting
+        // without waiting
         runnables = new RunnableHolder(250);
         runnables.addOperationsAndWait(fixture, false);
         fixture.waitUntilAllOperationsAreFinished();
         assertEquals(0, fixture.operationCount().intValue());
         runnables.checkResults();
     }
+
     /**
      * Test of cancelAllOperations method, of class NSOperationQueue.
      */

@@ -1,13 +1,19 @@
 [![GitHub Packages](https://github.com/umjammer/rococoa/actions/workflows/maven-publish.yml/badge.svg)](https://github.com/umjammer?tab=packages&repo_name=rococoa)
 [![Java CI](https://github.com/umjammer/rococoa/actions/workflows/maven.yml/badge.svg)](https://github.com/umjammer/rococoa/actions/workflows/maven.yml)
 [![CodeQL](https://github.com/umjammer/rococoa/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/umjammer/rococoa/actions/workflows/codeql-analysis.yml)
-![Java](https://img.shields.io/badge/Java-8-b07219)
+![Java](https://img.shields.io/badge/Java-17-b07219)
 
 #  Welcome to Rococoa
 
 Rococoa is a generic Java binding to the Mac Objective-C object system. It 
 allows the creation and use of Objective-C objects in Java, and the 
 implementation of Objective-C interfaces in Java.
+
+## ⚠ Caution
+
+ * this project **quit** supporting **intel** chips
+ * supported macos are also **after Ventura**
+ * methods has **varargs don't** work
 
 ## Installation
 
@@ -42,19 +48,24 @@ implementation of Objective-C interfaces in Java.
 * block (wip)
    * http://cocoawithlove.com/2009/10/how-blocks-are-implemented-and.html
    * http://www.opensource.apple.com/source/libclosure/libclosure-38/BlockImplementation.txt
+   * https://clang.llvm.org/docs/Block-ABI-Apple.html
 * ~~CIFilter~~ (done)
-* `cglib` is mostly [suspended](https://github.com/cglib/cglib#readme)
-   * `cglib` recommends [ByteBuddy](https://bytebuddy.net/) that is based on `asm` same as the `cglib`  
+* ~~`cglib` is mostly [suspended](https://github.com/cglib/cglib#readme)~~
+   * ~~`cglib` recommends [ByteBuddy](https://bytebuddy.net/) that is based on `asm` same as the `cglib`~~ (done)
+   * cache classes
+* ~~clean up logging~~
+* https://github.com/scijava/native-lib-loader
+* dynamic method creation
+  * invokedinamic? 
 
 ## References
  
 * https://github.com/ibinti/bugvm
 * https://gitlab.com/axet/apple
-* https://github.com/cbyrneee/JNApple
 * https://github.com/multi-os-engine/moe-mac-core
 * https://github.com/dthommes/jcocoa
 * https://github.com/allertonm/Couverjure
-* https://github.com/shannah/Java-Objective-C-Bridge
+* https://github.com/shannah/Java-Objective-C-Bridge (minecraft uses)
 
 ----
 

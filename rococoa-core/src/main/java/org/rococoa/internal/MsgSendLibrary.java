@@ -19,17 +19,17 @@
 
 package org.rococoa.internal;
 
-
 import org.rococoa.ID;
 import org.rococoa.Selector;
 
 import com.sun.jna.Library;
 import com.sun.jna.Structure;
 
+
 /**
  * JNA Library for special message send calls, called and marshalled specially.
  */
-public interface MsgSendLibrary extends Library {                
+public interface MsgSendLibrary extends Library {
     // This doesn't exist in the library, but is synthesised by msgSendHandler
     Object syntheticSendMessage(Class<?> returnType, ID receiver, Selector selector, Object... args);
     Object syntheticSendVarArgsMessage(Class<?> returnType, ID receiver, Selector selector, Object... args);
@@ -39,4 +39,13 @@ public interface MsgSendLibrary extends Library {
     Structure objc_msgSend_fpret(ID receiver, Selector selector, Object... args);
     Object objc_msgSend(ID receiver, Selector selector, Object arg, Object... args);
     Structure objc_msgSend_stret(ID receiver, Selector selector, Object... args);
+    Object objc_msgSend(ID receiver, Selector selector);
+    Object objc_msgSend(ID receiver, Selector selector, Object arg);
+    Object objc_msgSend(ID receiver, Selector selector, Object arg, Object arg2);
+    Object objc_msgSend(ID receiver, Selector selector, Object arg, Object arg2, Object arg3);
+    Object objc_msgSend(ID receiver, Selector selector, Object arg, Object arg2, Object arg3, Object arg4);
+    Object objc_msgSend(ID receiver, Selector selector, Object arg, Object arg2, Object arg3, Object arg4, Object arg5);
+    Object objc_msgSend(ID receiver, Selector selector, Object arg, Object arg2, Object arg3, Object arg4, Object arg5, Object arg6);
+    Object objc_msgSend(ID receiver, Selector selector, Object arg, Object arg2, Object arg3, Object arg4, Object arg5, Object arg6, Object arg7);
+    Object objc_msgSend(ID receiver, Selector selector, Object arg, Object arg2, Object arg3, Object arg4, Object arg5, Object arg6, Object arg7, Object arg8);
 }

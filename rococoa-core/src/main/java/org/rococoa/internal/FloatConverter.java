@@ -30,12 +30,12 @@ public class FloatConverter implements ToNativeConverter, FromNativeConverter {
     private static final Logger logger = Logger.getLogger(FloatConverter.class.getName());
 
     public Object toNative(Object value, ToNativeContext context) {
-logger.info("toNative: " + value + ", " + context);
+logger.fine("toNative: " + value + ", " + context);
         switch (CGFloat.SIZE) {
         case 4:
             return value;
         case 8:
-logger.info("toNative: " + value + " -> " + ((double) value));
+logger.fine("toNative: " + value + " -> " + ((double) value));
             return (double) value;
         default:
             throw new Error("Unknown Native.LONG_SIZE: " + CGFloat.SIZE);
@@ -47,7 +47,7 @@ logger.info("toNative: " + value + " -> " + ((double) value));
         case 4:
             return value;
         case 8:
-logger.info("fromNative: " + value + " -> " + ((Double) value).floatValue());
+logger.fine("fromNative: " + value + " -> " + ((Double) value).floatValue());
             return ((Double) value).floatValue();
         default:
             throw new Error("Unknown Native.LONG_SIZE: " + CGFloat.SIZE);

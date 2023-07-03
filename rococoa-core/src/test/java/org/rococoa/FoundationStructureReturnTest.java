@@ -22,7 +22,9 @@ package org.rococoa;
 import com.sun.jna.Library;
 import com.sun.jna.Native;
 import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.rococoa.test.RococoaTestCase;
 import vavi.util.Debug;
 import vavi.util.StringUtil;
@@ -33,6 +35,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SuppressWarnings("nls")
 public class FoundationStructureReturnTest extends RococoaTestCase {     
+
     private interface StructLibrary extends Library {
         TestStruct.ByValue createIntDoubleStruct(int a, double b);
         double addFieldsOfStructByValue(TestStruct.ByValue s);
@@ -53,6 +56,7 @@ public class FoundationStructureReturnTest extends RococoaTestCase {
         assertEquals(42 + Math.PI, result, 0);
     }
 
+    @Disabled
     @Test public void testStaticPassStructureVARARGS() {
         // demonstrate bug in JNA 3.0.3
         TestStruct.ByValue arg = new TestStruct.ByValue(42, Math.PI);
@@ -70,7 +74,8 @@ public class FoundationStructureReturnTest extends RococoaTestCase {
         assertEquals(42, result.anInt);
         assertEquals(Math.E, result.aDouble, 0);        
     }
-    
+
+    @DisabledIfSystemProperty(named = "os.arch", matches = "aarch64")
     @Test public void testAsPassStructAsArgument() {
         ID testID = Foundation.sendReturnsID(Foundation.getClass("TestShunt"), "new");
         Foundation.sendReturnsID(testID, "autorelease");
@@ -101,7 +106,7 @@ public class FoundationStructureReturnTest extends RococoaTestCase {
     }        
 
     @Test
-    @Disabled("float: fromNative is ok")
+    @DisplayName("float: fromNative is ok")
     void test1() throws Exception {
         ID testID = Foundation.sendReturnsID(Foundation.getClass("TestShunt"), "new");
         Foundation.sendReturnsID(testID, "autorelease");

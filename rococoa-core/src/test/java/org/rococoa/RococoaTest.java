@@ -19,8 +19,6 @@
  
 package org.rococoa;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.Test;
 import org.rococoa.cocoa.foundation.NSArray;
 import org.rococoa.cocoa.foundation.NSDate;
@@ -28,6 +26,14 @@ import org.rococoa.cocoa.foundation.NSNumber;
 import org.rococoa.cocoa.foundation.NSObject;
 import org.rococoa.cocoa.foundation.NSString;
 import org.rococoa.test.RococoaTestCase;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 @SuppressWarnings("nls")
 public class RococoaTest extends RococoaTestCase {
@@ -81,13 +87,13 @@ public class RococoaTest extends RococoaTestCase {
     @Test public void testKeywordMethod() {
         // TODO - this method doesn't actually test keyword methods any more
         NSDate epoc = NSDate.CLASS.dateWithTimeIntervalSince1970(0);
-        assertEquals(0, epoc.timeIntervalSince1970(), 0.000001f);
+        assertEquals(0, epoc.timeIntervalSince1970(), 0.000001);
         NSDate anotherDate = NSDate.CLASS.dateWithTimeIntervalSince1970(40d);
-        assertEquals(40, anotherDate.timeIntervalSince1970(), 0.000001f);        
+        assertEquals(40, anotherDate.timeIntervalSince1970(), 0.000001);
     }
-        
+
     @Test public void testVarags() {
-        NSArray array = NSArray.CLASS.arrayWithObjects(
+        NSArray array = NSArray.arrayWithObjects(
                 NSNumber.CLASS.numberWithBool(true),
                 NSNumber.CLASS.numberWithInt(42),
                 NSDate.CLASS.dateWithTimeIntervalSince1970(666),

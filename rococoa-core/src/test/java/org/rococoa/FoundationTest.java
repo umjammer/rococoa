@@ -52,8 +52,6 @@ class FoundationTest extends RococoaTestCase {
         assertEquals(stringWithOddChar, Foundation.toString(string));
     }
 
-    @SuppressWarnings("unused")
-    @Disabled("slow")
     @Test void testStringPerformance() {
         String stringWithOddChar = "Hello \u2648";
         StringBuilder longStringBuilder = new StringBuilder();

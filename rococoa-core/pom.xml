@@ -24,23 +24,15 @@
         <version>1.0-alpha-11</version>
         <extensions>true</extensions>
         <configuration>
-          <!-- trigger javah execution -->
-          <javahClassNames>
-            <javahClassName>org.rococoa.Rococoa</javahClassName>
-          </javahClassNames>
-          <!-- enable additional javah interface in dependencies list -->
-          <javahSearchJNIFromDependencies>true</javahSearchJNIFromDependencies>
-          <!-- | Add jdk include directories to system include path | Override 
-            ${jkdIncludePath} If your jdk does not conform to Sun JDK layout -->
           <javahOS>darwin</javahOS>
           <compilerProvider>generic-classic</compilerProvider>
           <compilerStartOptions>
             <compilerStartOption>-g -Wall -O2 -fomit-frame-pointer -fPIC</compilerStartOption>
-            <compilerStartOption>-arch x86_64</compilerStartOption>
+            <compilerStartOption>-arch x86_64 -arch arm64</compilerStartOption>
           </compilerStartOptions>
           <linkerStartOptions>
-            <linkerStartOption>-dynamiclib -arch x86_64
-                    -framework QTKit -framework Foundation
+            <linkerStartOption>-dynamiclib -arch x86_64 -arch arm64
+                    -framework Foundation
             </linkerStartOption>
           </linkerStartOptions>
           <linkerFinalName/>
@@ -50,7 +42,6 @@
             <id>test-daylib</id>
             <phase>test-compile</phase>
             <goals>
-              <goal>javah</goal>
               <goal>compile</goal>
               <goal>link</goal>
             </goals>
@@ -75,7 +66,6 @@
             <id>daylib</id>
             <phase>compile</phase>
             <goals>
-              <goal>javah</goal>
               <goal>compile</goal>
               <goal>link</goal>
             </goals>
@@ -119,6 +109,7 @@
           <forkMode>once</forkMode>
           <argLine>
             -Djava.util.logging.config.file=${project.build.testOutputDirectory}/logging.properties
+            --add-opens java.base/java.lang=ALL-UNNAMED
           </argLine>
           <trimStackTrace>false</trimStackTrace>
           <redirectTestOutputToFile>true</redirectTestOutputToFile>
@@ -163,23 +154,21 @@
       </plugin>
 
       <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>3.1.0</version>
+        <executions>
         <!--
           because of maven deploy-file uploads source, jar also
           TODO maven-metadata.xml!/metadata/versioning/latest is not updated
           TODO how about https://stackoverflow.com/a/37552776/6102938
          -->
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>exec-maven-plugin</artifactId>
-        <version>1.6.0</version>
-        <executions>
           <execution>
             <id>deploy-library</id>
             <phase>deploy</phase>
             <goals>
               <goal>exec</goal>
             </goals>
-          </execution>
-        </executions>
         <configuration>
           <executable>mvn</executable>
           <arguments>
@@ -199,6 +188,8 @@
             <GITHUB_TOKEN>${env.GITHUB_TOKEN}</GITHUB_TOKEN>
           </environmentVariables>
         </configuration>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>
@@ -216,14 +207,14 @@
       <artifactId>jna</artifactId>
     </dependency>
     <dependency>
-      <groupId>cglib</groupId>
-      <artifactId>cglib</artifactId>
+      <groupId>net.bytebuddy</groupId>
+      <artifactId>byte-buddy</artifactId>
     </dependency>
 
     <dependency>
       <groupId>com.github.umjammer</groupId>
       <artifactId>vavi-commons</artifactId>
-      <version>1.1.8</version>
+      <version>1.1.9</version>
       <scope>test</scope>
     </dependency>
   </dependencies>

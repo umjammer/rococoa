@@ -51,7 +51,7 @@ public abstract class VNHumanBodyPoseObservation extends VNRecognizedPointsObser
 
     /**
      * Retrieves the recognized points associated with the joint group name.
-     * @return NSDictionary<String, VNRecognizedPoint>
+     * @return NSDictionary&lt;String, VNRecognizedPoint&gt;
      */
     public abstract NSDictionary recognizedPointsForJointsGroupName_error(String/*VNHumanBodyPoseObservationJointsGroupName*/ jointsGroupName, ObjCObjectByReference/*NSError*/ error);
 

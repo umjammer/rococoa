@@ -25,12 +25,13 @@ import org.junit.jupiter.api.Test;
 import org.rococoa.Rococoa;
 import org.rococoa.cocoa.foundation.NSArray;
 import org.rococoa.cocoa.foundation.NSNumber;
+import org.rococoa.cocoa.foundation.NSObject;
 import org.rococoa.test.RococoaTestCase;
 
 public class NSArrayTest extends RococoaTestCase {
 
     @Test public void test() {
-        NSArray array = NSArray.CLASS.arrayWithObjects(
+        NSArray array = NSArray.arrayWithObjects(
                 NSNumber.CLASS.numberWithInt(42),
                 NSNumber.CLASS.numberWithInt(64)
         );
@@ -38,5 +39,17 @@ public class NSArrayTest extends RococoaTestCase {
         NSNumber second = Rococoa.cast(array.objectAtIndex(1), NSNumber.class);
         assertEquals(64, second.intValue());
     }
-    
+
+    @Test
+    public void test2() {
+        NSArray array = NSArray.arrayWithObjects(
+                NSNumber.of(1),
+                NSNumber.of(2),
+                NSNumber.of(3),
+                NSNumber.of(4),
+                NSNumber.of(5),
+                NSNumber.of(6)
+        );
+        assertEquals(6, array.stream().count());
+    }
 }

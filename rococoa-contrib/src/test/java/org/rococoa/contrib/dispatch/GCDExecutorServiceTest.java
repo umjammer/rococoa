@@ -20,25 +20,28 @@
 package org.rococoa.contrib.dispatch;
 
 import java.util.List;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.condition.DisabledIfEnvironmentVariable;
+import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-/** Test the API of the GCDExecutorService.
- *  @author Andrew Thompson (lordpixel@mac.com)
+
+/**
+ * Test the API of the GCDExecutorService.
+ * @author Andrew Thompson (lordpixel@mac.com)
  */
-@DisabledIfEnvironmentVariable(named = "GITHUB_WORKFLOW", matches = ".*")
+@EnabledIfEnvironmentVariable(named = "GITHUB_WORKFLOW", matches = ".*")
 public class GCDExecutorServiceTest {
     /**The GCD Executor to test*/
     ExecutorService fixture;
@@ -63,9 +66,7 @@ public class GCDExecutorServiceTest {
 	        fixture.shutdown();
 	        assertTrue(fixture.isShutdown());
 	        assertTrue(fixture.isTerminated());
-	        fixture.execute(new Runnable() {
-	            public void run() {}
-	        });
+	        fixture.execute(() -> {});
     	});
     }
 
@@ -103,15 +104,12 @@ public class GCDExecutorServiceTest {
 
     private void queueUpSomeTasks(final Object lock, int count) {
         for (int i=0; i < count; i++) {
-            fixture.execute(new Runnable() {
-                public void run() {
-                    try {
-                        synchronized(lock) {
-                            lock.wait();
-                        }
-                    } catch (InterruptedException ie) {
-
+            fixture.execute(() -> {
+                try {
+                    synchronized(lock) {
+                        lock.wait();
                     }
+                } catch (InterruptedException ignored) {
                 }
             });
         }
@@ -137,7 +135,7 @@ public class GCDExecutorServiceTest {
         List<Runnable> outstandingTasks = fixture.shutdownNow();
         assertEquals(count, outstandingTasks.size());
         assertTrue(fixture.isShutdown());
-        synchronized(lock) {
+        synchronized (lock) {
             lock.notifyAll();
         }
         assertTrue(fixture.awaitTermination(5, TimeUnit.SECONDS));
@@ -150,43 +148,29 @@ public class GCDExecutorServiceTest {
     @Test
     public void testExecute() throws InterruptedException {
         final boolean[] done = { false };
-        fixture.execute(new Runnable() {
-            public void run() {
-                done[0]=true;
-            }
-        });
+        fixture.execute(() -> done[0] = true);
         Thread.sleep(1000);
         assertTrue(done[0]);
     }
 
     @Test
     public void testSubmit_Callable() throws InterruptedException, ExecutionException {
-        Future<Boolean> result = fixture.submit(new Callable<Boolean> () {
-           public Boolean call() {
-               return true;
-           }
-        });
+        Future<Boolean> result = fixture.submit(() -> true);
         assertTrue(result.get());
     }
     @Test
-    public void testSubmit_Runnable() throws InterruptedException, ExecutionException, TimeoutException {
+    public void testSubmit_Runnable() throws InterruptedException, ExecutionException {
         final boolean[] runCheck = { false };
-        Future<?> result = fixture.submit(new Runnable () {
-           public void run() {
-               runCheck[0] = true;
-           }
+        Future<?> result = fixture.submit(() -> {
+            runCheck[0] = true;
         });
-        assertEquals(null, result.get());
+        assertNull(result.get());
         assertTrue(runCheck[0]);
     }
     @Test
-    public void testSubmit_Runnable_WithResult() throws InterruptedException, ExecutionException, TimeoutException {
+    public void testSubmit_Runnable_WithResult() throws InterruptedException, ExecutionException {
         final boolean[] runCheck = { false };
-        Future<Integer> result = fixture.submit(new Runnable () {
-           public void run() {
-               runCheck[0] = true;
-           }
-        }, 42);
+        Future<Integer> result = fixture.submit(() -> runCheck[0] = true, 42);
         assertEquals(Integer.valueOf(42), result.get());
         assertTrue(runCheck[0]);
     }

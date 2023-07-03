@@ -36,6 +36,7 @@ public abstract class NSMutableDictionary extends NSDictionary {
 
         NSMutableDictionary dictionaryWithDictionary(NSDictionary dict);
         NSMutableDictionary dictionaryWithObjects_forKeys(NSArray objects, NSArray keys);
+        @Deprecated(since = "aarch64")
         NSMutableDictionary dictionaryWithObjectsAndKeys(NSObject...objects);
     }
 
@@ -56,7 +57,8 @@ public abstract class NSMutableDictionary extends NSDictionary {
     }
 
     public static NSMutableDictionary dictionaryWithObjectsAndKeys(NSObject...objects) {
-        return CLASS.dictionaryWithObjectsAndKeys(objects);
+        NSMutableArray[] pair = flatToSeparate(objects);
+        return dictionaryWithObjects_forKeys(pair[0], pair[1]);
     }
 
     /**

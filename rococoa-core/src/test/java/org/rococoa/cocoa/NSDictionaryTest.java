@@ -33,10 +33,10 @@ import org.rococoa.test.RococoaTestCase;
 public class NSDictionaryTest extends RococoaTestCase {
 
     @Test public void testDictionaryWithObjects_forKeys() {
-        NSArray objects = NSArray.CLASS.arrayWithObjects(
+        NSArray objects = NSArray.arrayWithObjects(
                 NSString.stringWithString("string value"),
                 NSNumber.CLASS.numberWithInt(42));
-        NSArray keys = NSArray.CLASS.arrayWithObjects(
+        NSArray keys = NSArray.arrayWithObjects(
                 NSString.stringWithString("string key"),
                 NSString.stringWithString("int key"));
         NSDictionary dictionary = NSDictionary.dictionaryWithObjectsForKeys(objects, keys);

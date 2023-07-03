@@ -231,14 +231,10 @@ public abstract class Foundation {
      */
     @SuppressWarnings("unchecked")
     public static <T> T send(ID receiver, Selector selector, Class<T> returnType, Method method, Object... args) {
-        if (logging.isLoggable(Level.FINEST)) {
-            logging.finest(String.format("sending (%s) %s.%s(%s)",
-                    returnType.getSimpleName(), receiver, selector.getName(), new VarArgsUnpacker(args)));
-        }
+logging.finest(String.format("sending (%s) %s.%s(%s)", returnType.getSimpleName(), receiver, selector.getName(), new VarArgsUnpacker(args)));
         if (method != null && method.isVarArgs()) {
             return (T) messageSendLibrary.syntheticSendVarArgsMessage(returnType, receiver, selector, args);
         }
-logging.info("@@@0: " + new VarArgsUnpacker(args));
         return (T) messageSendLibrary.syntheticSendMessage(returnType, receiver, selector, args);
     }
 

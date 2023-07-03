@@ -60,7 +60,6 @@ public class ObjCObjectTypeConverterTest extends RococoaTestCase {
         assertNull(converter.toNative(null, null));
     }
 
-    @Disabled("by vavi because of error")
     @Test public void convertsReturnedIDToNSObjectSubclass() {
         FromNativeConverter converter = new ObjCObjectTypeConverter<>(NSNumber.class);
             // returning is based on declared type, see RococoaTypeMapper
@@ -93,6 +92,7 @@ public class ObjCObjectTypeConverterTest extends RococoaTestCase {
         FromNativeConverter converter = new ObjCObjectTypeConverter<>(NSNumber.class);
 
         NSNumber number = Rococoa.create("NSNumber", NSNumber.class, "numberWithInt:", 45);
+        // TODO check https://stackoverflow.com/a/4636477
         assertRetainCount(2, number); // one for the pool, one for Java
 
         NSNumber converted = (NSNumber) converter.fromNative(number.id().longValue(), null);

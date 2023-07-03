@@ -45,6 +45,7 @@ public abstract class NSSet extends NSObject {
          * Original signature : <code>id setWithObjects(id, null)</code><br>
          * <i>from NSSetCreation native declaration : /System/Library/Frameworks/Foundation.framework/Headers/NSSet.h:46</i>
          */
+        @Deprecated(since = "aarch64")
         NSSet setWithObjects(NSObject firstObj, NSObject... varargs);
 
         /**
@@ -156,6 +157,7 @@ public abstract class NSSet extends NSObject {
      * Original signature : <code>id initWithObjects(id, null)</code><br>
      * <i>from NSSetCreation native declaration : /System/Library/Frameworks/Foundation.framework/Headers/NSSet.h:51</i>
      */
+    @Deprecated(since = "aarch64")
     public abstract NSSet initWithObjects(NSObject firstObj, NSObject... varargs);
 
     /**

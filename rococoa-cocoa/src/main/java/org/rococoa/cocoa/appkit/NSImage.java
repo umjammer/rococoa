@@ -98,7 +98,7 @@ public abstract class NSImage extends NSObject implements NSCopying {
     public interface _Class extends ObjCClass {
         /**
          * Original signature : <code>id imageNamed(NSString*)</code><br>
-         * If this finds & creates the image, only name is saved when archived<br>
+         * If this finds &amp; creates the image, only name is saved when archived<br>
          * <i>native declaration : :73</i>
          */
         NSImage imageNamed(String name);

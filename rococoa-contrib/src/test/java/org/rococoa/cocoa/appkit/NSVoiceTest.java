@@ -32,6 +32,8 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * Simple tests for functionality of the voice class
  */
+@Disabled("use AVSpeechSynthesisVoice in vavi-sound-sandbox")
+@Deprecated(since = "aarch64")
 public class NSVoiceTest extends RococoaTestCase {
 
     @Test

@@ -19,14 +19,15 @@
 
 package org.rococoa.internal;
 
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+
 import com.sun.jna.InvocationMapper;
 import com.sun.jna.NativeLibrary;
 import org.rococoa.ID;
 import org.rococoa.RococoaException;
 import org.rococoa.Selector;
 
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
 
 /**
  * A JNA InvocationMapper that maps calls to syntheticSendMessage to a MsgSendHandler.
