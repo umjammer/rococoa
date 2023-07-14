@@ -21,7 +21,10 @@ package org.rococoa.cocoa.appkit;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import io.github.artsok.RepeatedIfExceptionsTest;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import org.rococoa.Foundation;
 import org.rococoa.ObjCObject;
@@ -106,7 +109,7 @@ class NSOperationQueueTest extends RococoaTestCase {
      * Test of addOperations_waitUntilFinished method, of class NSOperationQueue.
      * TODO sometimes fail
      */
-    @Test
+    @RepeatedIfExceptionsTest(repeats = 3)
     public void testAddOperations_waitUntilFinished() {
         RunnableHolder runnables = new RunnableHolder(250);
         runnables.addOperationsAndWait(fixture, true);
