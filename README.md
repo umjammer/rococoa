@@ -11,9 +11,16 @@ implementation of Objective-C interfaces in Java.
 
 ## ⚠ Caution
 
- * this project **quit** supporting **intel** chips
- * supported macos are also **after Ventura**
- * methods has **varargs don't** work
+ * this project will **quit** supporting **intel** chips
+ * supported macos will be **after Ventura** also
+
+## Limitation
+
+* ~~obj-c class's method call with float argument doesn't work~~ works → new limitation: arguments should be less equal 8
+  * ~~[the reason](https://github.com/java-native-access/jna/issues/463#issuecomment-1286015013)~~ -> actually https://github.com/java-native-access/jna/issues/1476#issuecomment-1292804072
+  * https://www.mikeash.com/pyblog/objc_msgsends-new-prototype.html
+* obj-c block
+* methods has **varargs don't** work (works less equal 8?)
 
 ## Installation
 
@@ -35,28 +42,29 @@ implementation of Objective-C interfaces in Java.
 * [KeyChain Java crypto Keystore SPI](https://github.com/umjammer/vavi-crypto-sandbox/tree/1.0.2/src/main/java/vavix/rococoa/keychain)
 * [Vision Detecting Human Body Poses in Images](rococoa-contrib/src/test/java/org/rococoa/cocoa/vision/VisionTest.java)
 
-## Limitation
-
-* ~~obj-c class's method call with float argument doesn't work~~ support currently → new limitation: arguments should be under 8
-  * [the reason](https://github.com/java-native-access/jna/issues/463#issuecomment-1286015013)
-  * https://www.mikeash.com/pyblog/objc_msgsends-new-prototype.html
-* block
-
 ## TODO
 
 * NSUrl tags (wip)
-* block (wip)
+* obj-block (wip)
+   * https://github.com/nativelibs4java/BridJ/
    * http://cocoawithlove.com/2009/10/how-blocks-are-implemented-and.html
    * http://www.opensource.apple.com/source/libclosure/libclosure-38/BlockImplementation.txt
    * https://clang.llvm.org/docs/Block-ABI-Apple.html
+   * https://github.com/ronaldoussoren/pyobjc/blob/77b98382e52818690449111cd2e23cd469b53cf5/pyobjc-core/Modules/objc/block_support.m
+   * https://docs.rs/block/latest/block/
 * ~~CIFilter~~ (done)
 * ~~`cglib` is mostly [suspended](https://github.com/cglib/cglib#readme)~~
    * ~~`cglib` recommends [ByteBuddy](https://bytebuddy.net/) that is based on `asm` same as the `cglib`~~ (done)
-   * cache classes
+   * cache classes (ByteBuddy)
 * ~~clean up logging~~
 * https://github.com/scijava/native-lib-loader
 * dynamic method creation
-  * invokedinamic? 
+  * invokedinamic?
+  * ByteBuddy's method interception???
+* CGController
+  * https://stackoverflow.com/a/65999820
+* activate application
+  * https://developer.apple.com/documentation/appkit/nsrunningapplication?language=objc
 
 ## References
  
@@ -66,6 +74,10 @@ implementation of Objective-C interfaces in Java.
 * https://github.com/dthommes/jcocoa
 * https://github.com/allertonm/Couverjure
 * https://github.com/shannah/Java-Objective-C-Bridge (minecraft uses)
+* gamepad
+  * http://eleccelerator.com/wiki/index.php?title=DualShock_4
+  * https://github.com/born2snipe/gamepad4j/blob/master/gamepad4j-desktop/src/main/c/macos/Gamepad_macosx.c
+  * port [hidapi](https://github.com/libusb/hidapi) mac part
 
 ----
 
