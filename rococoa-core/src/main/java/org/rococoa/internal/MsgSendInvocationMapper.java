@@ -41,12 +41,36 @@ import org.rococoa.Selector;
 public class MsgSendInvocationMapper implements InvocationMapper {
 
     public final static Method SYNTHETIC_SEND_MSG;
+    public final static Method SYNTHETIC_SEND_MSG1;
+    public final static Method SYNTHETIC_SEND_MSG2;
+    public final static Method SYNTHETIC_SEND_MSG3;
+    public final static Method SYNTHETIC_SEND_MSG4;
+    public final static Method SYNTHETIC_SEND_MSG5;
+    public final static Method SYNTHETIC_SEND_MSG6;
+    public final static Method SYNTHETIC_SEND_MSG7;
+    public final static Method SYNTHETIC_SEND_MSG8;
     public final static Method SYNTHETIC_SEND_VARARGS_MSG;
 
     static {
         try {
             SYNTHETIC_SEND_MSG = MsgSendLibrary.class.getDeclaredMethod("syntheticSendMessage",
-                    Class.class, ID.class, Selector.class, Object[].class);
+                    Class.class, ID.class, Selector.class);
+            SYNTHETIC_SEND_MSG1 = MsgSendLibrary.class.getDeclaredMethod("syntheticSendMessage",
+                    Class.class, ID.class, Selector.class, Object.class);
+            SYNTHETIC_SEND_MSG2 = MsgSendLibrary.class.getDeclaredMethod("syntheticSendMessage",
+                    Class.class, ID.class, Selector.class, Object.class, Object.class);
+            SYNTHETIC_SEND_MSG3 = MsgSendLibrary.class.getDeclaredMethod("syntheticSendMessage",
+                    Class.class, ID.class, Selector.class, Object.class, Object.class, Object.class);
+            SYNTHETIC_SEND_MSG4 = MsgSendLibrary.class.getDeclaredMethod("syntheticSendMessage",
+                    Class.class, ID.class, Selector.class, Object.class, Object.class, Object.class, Object.class);
+            SYNTHETIC_SEND_MSG5 = MsgSendLibrary.class.getDeclaredMethod("syntheticSendMessage",
+                    Class.class, ID.class, Selector.class, Object.class, Object.class, Object.class, Object.class, Object.class);
+            SYNTHETIC_SEND_MSG6 = MsgSendLibrary.class.getDeclaredMethod("syntheticSendMessage",
+                    Class.class, ID.class, Selector.class, Object.class, Object.class, Object.class, Object.class, Object.class, Object.class);
+            SYNTHETIC_SEND_MSG7 = MsgSendLibrary.class.getDeclaredMethod("syntheticSendMessage",
+                    Class.class, ID.class, Selector.class, Object.class, Object.class, Object.class, Object.class, Object.class, Object.class, Object.class);
+            SYNTHETIC_SEND_MSG8 = MsgSendLibrary.class.getDeclaredMethod("syntheticSendMessage",
+                    Class.class, ID.class, Selector.class, Object.class, Object.class, Object.class, Object.class, Object.class, Object.class, Object.class, Object.class);
         } catch (Exception e) {
             throw new RococoaException("Error retrieving method");
         }
@@ -59,7 +83,16 @@ public class MsgSendInvocationMapper implements InvocationMapper {
     }
 
     public InvocationHandler getInvocationHandler(NativeLibrary lib, Method m) {
-        if (m.equals(SYNTHETIC_SEND_MSG) || m.equals(SYNTHETIC_SEND_VARARGS_MSG)) {
+        if (m.equals(SYNTHETIC_SEND_MSG) ||
+                m.equals(SYNTHETIC_SEND_MSG1) ||
+                m.equals(SYNTHETIC_SEND_MSG2) ||
+                m.equals(SYNTHETIC_SEND_MSG3) ||
+                m.equals(SYNTHETIC_SEND_MSG4) ||
+                m.equals(SYNTHETIC_SEND_MSG5) ||
+                m.equals(SYNTHETIC_SEND_MSG6) ||
+                m.equals(SYNTHETIC_SEND_MSG7) ||
+                m.equals(SYNTHETIC_SEND_MSG8) ||
+                m.equals(SYNTHETIC_SEND_VARARGS_MSG)) {
             // Have to late bind this, as it's the only time we get to see lib.
             // Not too bad as the results are cached.
             return new MsgSendHandler(lib);

@@ -25,6 +25,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.ConcurrentModificationException;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.logging.Logger;
@@ -81,7 +82,15 @@ public class ObjCObjectInvocationHandler implements InvocationHandler {
     private ID ocInstance;
     private final String javaClassName;
     private final boolean invokeAllMethodsOnMainThread;
-    private static volatile boolean shuttingDown;
+
+    private static final List<Runnable> finalizers = new ArrayList<>();
+
+    static {
+        // TODO this cause Concurrent Modification Exception, but using old for cause crash. WTF???
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            try { finalizers.forEach(Runnable::run); } catch (ConcurrentModificationException ignore) {}
+        }));
+    }
 
     public ObjCObjectInvocationHandler(ID ocInstance, Class<? extends ObjCObject> javaClass, boolean retain) {
         this.ocInstance = ocInstance;
@@ -106,7 +115,7 @@ logging.finest(String.format("Creating NSObjectInvocationHandler for id %s, java
             }
         }
 
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+        finalizers.add(() -> {
             if (callAcrossToMainThread()) {
                 Foundation.runOnMainThread(this::release);
             } else {
@@ -114,7 +123,7 @@ logging.finest(String.format("Creating NSObjectInvocationHandler for id %s, java
                 release();
                 autoreleaseBatcher.operate();
             }
-        }));
+        });
     }
 
     private boolean shouldReleaseInFinalize(Class<? extends ObjCObject> javaClass) {

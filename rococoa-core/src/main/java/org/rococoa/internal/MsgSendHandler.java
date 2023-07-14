@@ -19,14 +19,6 @@
 
 package org.rococoa.internal;
 
-import com.sun.jna.Library;
-import com.sun.jna.NativeLibrary;
-import com.sun.jna.NativeLong;
-import com.sun.jna.Structure;
-import org.rococoa.ID;
-import org.rococoa.RococoaException;
-import org.rococoa.Selector;
-
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -35,6 +27,14 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
+
+import com.sun.jna.Library;
+import com.sun.jna.NativeLibrary;
+import com.sun.jna.NativeLong;
+import com.sun.jna.Structure;
+import org.rococoa.ID;
+import org.rococoa.RococoaException;
+import org.rococoa.Selector;
 
 
 /**
@@ -174,23 +174,28 @@ class MsgSendHandler implements InvocationHandler {
                 lib.getFunction("objc_msgSend"));
     }
 
+    /**
+     * proxy -> jna (* float -> double) -> here
+     * @param args 0: return type,
+     *             1: id,
+     *             2: selector
+     *             3...: args, null terminated
+     */
     public Object invoke(Object proxy, Method method, Object[] args) {
-        String m = ((Selector) args[2]).getName();
-//if (m.equals("testGetFloatByValue:")) {
-// new Exception("@@@1:  " + new VarArgsUnpacker(args)).printStackTrace();
-//}
-logging.finest("invoke: " + m + "(" + Arrays.toString(Arrays.copyOfRange(args, 3, args.length)) + ")");
+        String methodName = ((Selector) args[2]).getName();
+        Object[] methodArgs = Arrays.copyOfRange(args, 3, args.length); // null terminated
         Class<?> returnTypeForThisCall = (Class<?>) args[0];
-        MethodFunctionPair invocation = this.invocationFor(returnTypeForThisCall, args.length > 3 ? args.length - 3 : 0);
+logging.finest("invoke: " + returnTypeForThisCall.getSimpleName() + " " + methodName + "(" + Arrays.toString(methodArgs) + "), " + methodArgs.length + ", " + method);
+        MethodFunctionPair invocation = this.invocationFor(returnTypeForThisCall, methodArgs);
         Map<String, Object> options = new HashMap<>(Collections.singletonMap(Library.OPTION_TYPE_MAPPER, rococoaTypeMapper));
         options.put(OPTION_INVOKING_METHOD, invocation.method);
         return invocation.function.invoke(returnTypeForThisCall, Arrays.copyOfRange(args, 1, args.length), options);
     }
 
-    private MethodFunctionPair invocationFor(Class<?> returnTypeForThisCall, int varArgs) {
+    private MethodFunctionPair invocationFor(Class<?> returnTypeForThisCall, Object[] args) {
         if (AARCH64) {
-logging.finest("AARCH64: " + returnTypeForThisCall.getName() + ", " + (varArgs - 1));
-            return switch (varArgs) {
+logging.finest("AARCH64: " + returnTypeForThisCall.getName() + ", " + (args.length - 1));
+            return switch (args.length) {
                 case 0 -> objc_msgSend_Args0_Pair;
                 case 1 -> objc_msgSend_Args1_Pair;
                 case 2 -> objc_msgSend_Args2_Pair;
@@ -200,7 +205,7 @@ logging.finest("AARCH64: " + returnTypeForThisCall.getName() + ", " + (varArgs -
                 case 6 -> objc_msgSend_Args6_Pair;
                 case 7 -> objc_msgSend_Args7_Pair;
                 case 8 -> objc_msgSend_Args8_Pair;
-                default -> throw new IllegalArgumentException("varargs: " + varArgs);
+                default -> throw new IllegalArgumentException("args: " + args.length);
             };
         }
         boolean isStruct = Structure.class.isAssignableFrom(returnTypeForThisCall);

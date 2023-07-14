@@ -37,7 +37,7 @@ implementation of Objective-C interfaces in Java.
 
 ## Limitation
 
-* obj-c class's method call with float argument doesn't work
+* ~~obj-c class's method call with float argument doesn't work~~ support currently → new limitation: arguments should be under 8
   * [the reason](https://github.com/java-native-access/jna/issues/463#issuecomment-1286015013)
   * https://www.mikeash.com/pyblog/objc_msgsends-new-prototype.html
 * block

@@ -81,14 +81,13 @@ class FoundationTest extends RococoaTestCase {
         assertEquals(Math.E, aDoubleValue, 0.001);
     }
 
-    @Disabled("by vavi because of jna")
     @Test void testFloat() {
         ID clas = Foundation.getClass("NSNumber");
         ID aFloat = Foundation.sendReturnsID(clas, "numberWithFloat:", 3.142f);
         String aStringValue = Foundation.send(aFloat, Foundation.selector("stringValue"), String.class);
 logger.info("NSNumber: " + aStringValue + ", " + CGFloat.SIZE);
         Object[] args = {};
-        float aFloatValue = Foundation.send(aFloat, Foundation.selector("floatValue"), int.class, args);
+        float aFloatValue = Foundation.send(aFloat, Foundation.selector("floatValue"), float.class, args);
 Debug.println(StringUtil.toBits(Float.floatToIntBits(3.142f), 32));
 Debug.println(StringUtil.toBits(Float.floatToIntBits(aFloatValue), 32));
         assertEquals(3.142f, aFloatValue, 0.001);
@@ -127,7 +126,6 @@ Debug.println(StringUtil.toBits(Float.floatToIntBits(aFloatValue), 32));
     }
 
     @Test
-    @Disabled("setting float doesn't work")
     void test1() throws Exception {
         NSNumber number = NSNumber.of(1234);
         assertEquals(1234f, number.floatValue());

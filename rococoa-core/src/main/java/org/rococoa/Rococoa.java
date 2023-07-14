@@ -161,10 +161,12 @@ logging.finest(String.format("creating [%s (%s)].%s(%s)", ocClassName, javaClass
     @SuppressWarnings("unchecked")
     private static <T> T createProxy(Class<T> type, ObjCObjectInvocationHandler invocationHandler) {
         if (type.isInterface()) {
+logging.finest("createProxy: java: " + type);
             return (T) Proxy.newProxyInstance(
                 invocationHandler.getClass().getClassLoader(), 
                 new Class[] {type}, invocationHandler);
         } else {
+logging.finest("createProxy: ByteBuddy: " + type);
             try {
                 // TODO cache, TypeCache breaks instance individuality
                 return new ByteBuddy()

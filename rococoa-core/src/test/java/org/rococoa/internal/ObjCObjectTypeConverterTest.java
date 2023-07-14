@@ -41,7 +41,7 @@ public class ObjCObjectTypeConverterTest extends RococoaTestCase {
     private static final Class<? extends Number> primitiveTypeOfID =
         (Class<? extends Number>) new ID().nativeType();
 
-    @Test public void convertsNSObjectAsArgumentToID() {	
+    @Test public void convertsNSObjectAsArgumentToID() {
         ToNativeConverter converter = new ObjCObjectTypeConverter<>(ObjCObject.class);
         // We treat all NSObject's equally in toNative, see RococoaTypeMapper
         assertEquals(primitiveTypeOfID, converter.nativeType());

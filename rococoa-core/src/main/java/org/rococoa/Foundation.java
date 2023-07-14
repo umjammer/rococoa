@@ -231,11 +231,23 @@ public abstract class Foundation {
      */
     @SuppressWarnings("unchecked")
     public static <T> T send(ID receiver, Selector selector, Class<T> returnType, Method method, Object... args) {
-logging.finest(String.format("sending (%s) %s.%s(%s)", returnType.getSimpleName(), receiver, selector.getName(), new VarArgsUnpacker(args)));
+logging.finest(String.format("sending (%s) %s.%s(%s), %s", returnType.getSimpleName(), receiver, selector.getName(), new VarArgsUnpacker(args), method != null && method.isVarArgs()));
         if (method != null && method.isVarArgs()) {
             return (T) messageSendLibrary.syntheticSendVarArgsMessage(returnType, receiver, selector, args);
+        } else {
+            return switch (args != null ? args.length : 0) {
+                case 0 -> (T) messageSendLibrary.syntheticSendMessage(returnType, receiver, selector);
+                case 1 -> (T) messageSendLibrary.syntheticSendMessage(returnType, receiver, selector, args[0]);
+                case 2 -> (T) messageSendLibrary.syntheticSendMessage(returnType, receiver, selector, args[0], args[1]);
+                case 3 -> (T) messageSendLibrary.syntheticSendMessage(returnType, receiver, selector, args[0], args[1], args[2]);
+                case 4 -> (T) messageSendLibrary.syntheticSendMessage(returnType, receiver, selector, args[0], args[1], args[2], args[3]);
+                case 5 -> (T) messageSendLibrary.syntheticSendMessage(returnType, receiver, selector, args[0], args[1], args[2], args[3], args[4]);
+                case 6 -> (T) messageSendLibrary.syntheticSendMessage(returnType, receiver, selector, args[0], args[1], args[2], args[3], args[4], args[5]);
+                case 7 -> (T) messageSendLibrary.syntheticSendMessage(returnType, receiver, selector, args[0], args[1], args[2], args[3], args[4], args[5], args[6]);
+                case 8 -> (T) messageSendLibrary.syntheticSendMessage(returnType, receiver, selector, args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7]);
+                default -> throw new IllegalArgumentException("args: " + args.length);
+            };
         }
-        return (T) messageSendLibrary.syntheticSendMessage(returnType, receiver, selector, args);
     }
 
     /**
@@ -306,5 +318,10 @@ logging.finest(String.format("sending (%s) %s.%s(%s)", returnType.getSimpleName(
         return selectorName.startsWith("alloc") ||
                 selectorName.startsWith("new") ||
                 selectorName.toLowerCase().contains("copy");
+    }
+
+    /** */
+    public static RococoaLibrary getRococoaLibrary() {
+        return rococoaLibrary;
     }
 }
