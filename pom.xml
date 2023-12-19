@@ -18,13 +18,12 @@
   </modules>
 
   <name>Rococoa Parent Project</name>
-  <url>http://www.rococoa.org</url>
+  <url>https://github.com/umjammer/rococoa</url>
   <scm>
     <url>https://github.com/umjammer/rococoa</url>
     <connection>scm:git:git@github.com:umjammer/rococoa.git</connection>
     <developerConnection>scm:git:git@github.com:umjammer/rococoa.git</developerConnection>
   </scm>
-
   <developers>
     <developer>
       <id>oneeyedmen</id>
@@ -68,7 +67,6 @@
       </roles>
     </developer>
   </developers>
-
   <licenses>
     <license>
       <name>LGPL 3</name>
@@ -94,7 +92,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-compiler-plugin</artifactId>
-          <version>3.10.1</version>
+          <version>3.11.0</version>
           <configuration>
             <release>17</release>
             <compilerArgs>
@@ -151,7 +149,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
-        <version>3.4.0</version>
+        <version>3.4.1</version>
         <executions>
           <execution>
             <id>attach-javadocs</id>
@@ -179,7 +177,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-resources-plugin</artifactId>
-        <version>3.2.0</version>
+        <version>3.3.1</version>
         <inherited>true</inherited>
         <configuration>
           <encoding>UTF-8</encoding>
@@ -224,13 +222,13 @@
       <dependency>
         <groupId>net.bytebuddy</groupId>
         <artifactId>byte-buddy</artifactId>
-        <version>1.10.3</version>
+        <version>1.14.8</version>
       </dependency>
 
       <dependency>
         <groupId>org.junit</groupId>
         <artifactId>junit-bom</artifactId>
-        <version>5.9.1</version>
+        <version>5.10.0</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>

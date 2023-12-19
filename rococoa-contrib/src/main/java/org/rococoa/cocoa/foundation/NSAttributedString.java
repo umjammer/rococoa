@@ -1,5 +1,3 @@
-package org.rococoa.cocoa.foundation;
-
 /*
  * Copyright (c) 2002-2009 David Kocher. All rights reserved.
  *
@@ -18,6 +16,8 @@ package org.rococoa.cocoa.foundation;
  * Bug fixes, suggestions and comments should be sent to:
  * dkocher@cyberduck.ch
  */
+
+package org.rococoa.cocoa.foundation;
 
 import org.rococoa.ObjCClass;
 import org.rococoa.ObjCObjectByReference;

@@ -1,5 +1,3 @@
-package org.rococoa.cocoa.foundation;
-
 /*
  * Copyright (c) 2002-2015 David Kocher. All rights reserved.
  * http://cyberduck.ch/
@@ -16,6 +14,8 @@ package org.rococoa.cocoa.foundation;
  *
  * Bug fixes, suggestions and comments should be sent to feedback@cyberduck.ch
  */
+
+package org.rococoa.cocoa.foundation;
 
 import com.sun.jna.ptr.PointerByReference;
 

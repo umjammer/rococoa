@@ -119,7 +119,7 @@ public abstract class Foundation {
     }
 
     public static int cfStringTokenizerGoToTokenAtIndex(ID tokenizer, int index) {
-        return foundationLibrary.CFStringTokenizerGoToTokenAtIndex(tokenizer, CFIndex.valueOf(index));
+        return foundationLibrary.CFStringTokenizerGoToTokenAtIndex(tokenizer, CFIndex.of(index));
     }
 
     public static ID cfStringTokenizerCopyCurrentTokenAttribute(ID tokenizer, int attribute) {

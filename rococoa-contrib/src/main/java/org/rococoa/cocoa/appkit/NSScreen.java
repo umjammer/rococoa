@@ -93,5 +93,12 @@ public abstract class NSScreen extends NSObject {
      * Original signature : <code>-(CGFloat)userSpaceScaleFactor</code><br>
      * <i>native declaration : /System/Library/Frameworks/AppKit.framework/Headers/NSGraphics.h:249</i>
      */
+    @Deprecated
     public abstract CGFloat userSpaceScaleFactor();
+
+    /** Converts the rectangle to the device pixel aligned coordinates system of a screen. */
+    public abstract NSRect convertRectToBacking(NSRect rect);
+
+    /** Converts the rectangle from the device pixel aligned coordinates system of a screen. */
+    public abstract NSRect convertRectFromBacking(NSRect rect);
 }

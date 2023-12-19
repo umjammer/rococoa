@@ -25,22 +25,26 @@ import java.util.List;
 import com.sun.jna.Structure;
 
 /**
+ * ⚠ this is Structure.ByValue
+ *
  * @author pixel
  */
 public class CFRange extends Structure implements Structure.ByValue {
+
     public CFIndex location;
     public CFIndex length;
 
     public CFRange() {
     }
 
-    public CFRange(final CFIndex location, final CFIndex length) {
+    public CFRange(CFIndex location, CFIndex length) {
         this.location = location;
         this.length = length;
+        write();
     }
 
-    public static CFRange make(final int location, final int length) {
-        return new CFRange(CFIndex.valueOf(location), CFIndex.valueOf(length));
+    public static CFRange make(int location, int length) {
+        return new CFRange(CFIndex.of(location), CFIndex.of(length));
     }
 
     public long getLength() {

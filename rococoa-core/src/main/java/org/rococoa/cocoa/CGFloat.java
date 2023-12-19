@@ -83,35 +83,26 @@ public class CGFloat extends Number implements NativeMapped {
 
     // Native mapping
     public Object fromNative(Object o, FromNativeContext fromNativeContext) {
-        switch (SIZE) {
-            case 4:
-                return new CGFloat((Float) o);
-            case 8:
-                return new CGFloat((Double) o);
-            default:
-                throw new Error("Unknown Native.LONG_SIZE: " + SIZE);
-        }
+        return switch (SIZE) {
+            case 4 -> new CGFloat((Float) o);
+            case 8 -> new CGFloat((Double) o);
+            default -> throw new Error("Unknown Native.LONG_SIZE: " + SIZE);
+        };
     }
 
     public Object toNative() {
-        switch (SIZE) {
-            case 4:
-                return floatValue();
-            case 8:
-                return doubleValue();
-            default:
-                throw new Error("Unknown Native.LONG_SIZE: " + SIZE);
-        }
+        return switch (SIZE) {
+            case 4 -> floatValue();
+            case 8 -> doubleValue();
+            default -> throw new Error("Unknown Native.LONG_SIZE: " + SIZE);
+        };
     }
 
     public Class<?> nativeType() {
-        switch (SIZE) {
-            case 4:
-                return Float.class;
-            case 8:
-                return Double.class;
-            default:
-                throw new Error("Unknown Native.LONG_SIZE: " + SIZE);
-        }
+        return switch (SIZE) {
+            case 4 -> Float.class;
+            case 8 -> Double.class;
+            default -> throw new Error("Unknown Native.LONG_SIZE: " + SIZE);
+        };
     }
 }

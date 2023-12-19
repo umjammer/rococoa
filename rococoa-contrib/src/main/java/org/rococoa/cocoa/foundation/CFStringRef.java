@@ -26,6 +26,6 @@ public class CFStringRef extends PointerByReference {
     public static CFStringRef toCFString(String s) {
         final char[] chars = s.toCharArray();
         int length = chars.length;
-        return FoundationKitFunctions.library.CFStringCreateWithCharacters(null, chars, CFIndex.valueOf(length));
+        return FoundationKitFunctions.library.CFStringCreateWithCharacters(null, chars, CFIndex.of(length));
     }
 }
