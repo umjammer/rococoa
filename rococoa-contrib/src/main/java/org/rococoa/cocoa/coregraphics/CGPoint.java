@@ -32,6 +32,7 @@ public class CGPoint extends Structure implements Structure.ByValue {
     public CGPoint(int x, int y) {
         this.x = new CGFloat(x);
         this.y = new CGFloat(y);
+        write();
     }
 
     @Override

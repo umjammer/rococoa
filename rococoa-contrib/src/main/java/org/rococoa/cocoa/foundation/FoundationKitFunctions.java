@@ -21,14 +21,13 @@ package org.rococoa.cocoa.foundation;
 
 import java.util.Collections;
 
-import com.sun.jna.Pointer;
-import org.rococoa.cocoa.CFIndex;
-
-import org.rococoa.internal.RococoaTypeMapper;
-
 import com.sun.jna.Library;
 import com.sun.jna.Native;
-import com.sun.jna.platform.mac.CoreFoundation;
+import com.sun.jna.Pointer;
+import org.rococoa.cocoa.CFIndex;
+import org.rococoa.cocoa.CGFloat;
+import org.rococoa.cocoa.coregraphics.CGRect;
+import org.rococoa.internal.RococoaTypeMapper;
 
 public interface FoundationKitFunctions extends Library {
 
@@ -142,6 +141,31 @@ public interface FoundationKitFunctions extends Library {
      * <i>native declaration : /System/Library/Frameworks/ApplicationServices.framework/Headers/../Frameworks/framework/Headers/CGGeometry.h:448</i>
      */
     boolean NSEqualSizes(NSSize aSize, NSSize bSize);
+
+    /** Creates a new NSRect from the specified values. */
+    static NSRect /* NS_INLINE */ NSMakeRect(CGFloat x, CGFloat y, CGFloat w, CGFloat h) {
+        NSRect r = new NSRect();
+        r.origin.x = x;
+        r.origin.y = y;
+        r.size.width = w;
+        r.size.height = h;
+        r.write();
+        return r;
+    }
+
+    /** Returns a CGRect typecast from an NSRect. */
+    static /* NS_INLINE */ CGRect NSRectToCGRect(NSRect rect) {
+        CGRect cgRect = new CGRect(rect.getPointer());
+        cgRect.read();
+        return cgRect;
+    }
+
+    /** Returns an NSRect typecast from a CGRect. */
+    static /* NS_INLINE */ NSRect NSRectFromCGRect(CGRect rect) {
+        NSRect nsRect = new NSRect(rect.getPointer());
+        nsRect.read();
+        return nsRect;
+    }
 
     /**
      * Original signature : <code>BOOL NSEqualRects(NSRect, NSRect)</code><br>
@@ -305,7 +329,7 @@ public interface FoundationKitFunctions extends Library {
      *
      * @param ref A CFType object to release. This value must not be NULL.
      */
-    void CFRelease(CoreFoundation.CFTypeRef ref);
+    void CFRelease(Pointer ref);
 
     void CFRunLoopAddSource(Pointer/*CFRunLoopRef*/ rl, Pointer/*CFRunLoopSourceRef*/ source, CFStringRef/*CFRunLoopMode*/ mode);
 

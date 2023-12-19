@@ -38,6 +38,7 @@ public class NSSize extends Structure implements Structure.ByValue {
     public NSSize(double width, double height) {
         this.width = new CGFloat(width);
         this.height = new CGFloat(height);
+        write();
     }
 
     public NSSize(Dimension2D pSize) {

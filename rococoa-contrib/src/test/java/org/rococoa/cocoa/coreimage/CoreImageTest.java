@@ -8,9 +8,12 @@ package org.rococoa.cocoa.coreimage;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.CountDownLatch;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -20,14 +23,18 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import org.rococoa.cocoa.CGFloat;
-import org.rococoa.cocoa.appkit.NSImage;
+import org.rococoa.cocoa.appkit.NSScreen;
 import org.rococoa.cocoa.coregraphics.CGImage;
-import org.rococoa.cocoa.coregraphics.CoreGraphicsLibrary;
 import org.rococoa.cocoa.coregraphics.CGRect;
+import org.rococoa.cocoa.coregraphics.CoreGraphicsLibrary;
 import org.rococoa.cocoa.foundation.NSArray;
 import org.rococoa.cocoa.foundation.NSNumber;
 import org.rococoa.cocoa.foundation.NSObject;
+import org.rococoa.cocoa.foundation.NSRect;
 import vavi.util.Debug;
+
+import static org.rococoa.cocoa.foundation.FoundationKitFunctions.NSRectFromCGRect;
+import static org.rococoa.cocoa.foundation.FoundationKitFunctions.NSRectToCGRect;
 
 
 /**
@@ -53,6 +60,7 @@ class CoreImageTest {
         CIColor coreColor = CIColor.CLASS.colorWithString(colorString);
 
         CIContext context = CIContext.CLASS.contextWithOptions(null);
+//Debug.println("context: " + context);
 
         CGImage cgImage = new CGImage(CoreImageTest.class.getResourceAsStream("/sample1.heic"));
 Debug.println("cgImage: " + cgImage.getWidth() + "x" + cgImage.getHeight());
@@ -75,12 +83,31 @@ Debug.printf("[%d] %s%n", i, a.objectAtIndex(i));
 Debug.println("result: " + result);
 
         CGRect extent = result.extent();
-Debug.println("extent: " + extent);
+Debug.println("extent: " + extent.getPointer() + ", " + extent);
 
-        Pointer/*CGImageRef*/ cgImage2 = context.createCGImage_fromRect(result, extent);
-Debug.println("hereE: " + cgImage2);
-        NSImage nsImage = NSImage.initWithCGImageSize(cgImage2, extent.size.toNSSize());
-Debug.println("nsImage: " + nsImage);
+        NSScreen screen = NSScreen.mainScreen();
+Debug.println("screen: " + screen);
+Debug.println("userSpaceScaleFactor: " + screen.userSpaceScaleFactor());
+
+        //  it doesn't make sense
+
+//        NSRect nsRect1 = NSRectFromCGRect(extent);
+//Debug.println("nsRect1: " + nsRect1);
+////        NSRect nsRect2 = screen.convertRectToBacking(nsRect1);
+////        nsRect2.read();
+//        NSRect nsRect2 = convertRectToBacking(nsRect1);
+//Debug.println("nsRect2: " + nsRect2);
+//        CGRect extent2 = NSRectToCGRect(nsRect2);
+
+        CGRect extent2 = NSRectToCGRect(screen.convertRectToBacking(NSRectFromCGRect(extent))); // TODO wtf return value
+//        CGRect extent2 = NSRectToCGRect(convertRectToBacking(NSRectFromCGRect(extent)));
+Debug.println("extent2: " + extent2.getPointer() + ", " + extent2);
+        Pointer/*CGImageRef*/ cgImage2 = context.createCGImage_fromRect(result, extent2); // TODO why returns nil
+Debug.println("createCGImage:fromRect: " + cgImage2);
+
+//        NSImage nsImage = NSImage.initWithCGImageSize(cgImage2, extent2.size.toNSSize());
+//Debug.println("nsImage: " + nsImage + ", " + nsImage.size().width.intValue() + "x" + nsImage.size().height.intValue());
+//        show(nsImage.toBufferedImage());
 
         //
         CGImage cgImageX = new CGImage(cgImage2);
@@ -92,9 +119,23 @@ Debug.println("cgImageX: " + cgImageX.getWidth() + ", " + cgImageX.getHeight());
         show(image);
     }
 
-    /** never stop, u need to close the window by yourself */
-    void show(BufferedImage image) {
+    NSRect convertRectToBacking(NSRect rect) { // TODO this doesn't help
+        NSRect rect2 = new NSRect();
+        rect2.origin.x = new CGFloat(10);
+        rect2.origin.y = new CGFloat(10 );
+        rect2.size.width = new CGFloat(200);
+        rect2.size.height = new CGFloat(200);
+        rect2.write();
+        return rect2;
+    }
+
+    /** using cdl cause junit stops awt thread suddenly */
+    void show(BufferedImage image) throws Exception {
+        CountDownLatch cdl = new CountDownLatch(1);
         JFrame frame = new JFrame();
+        frame.addWindowListener(new WindowAdapter() {
+            @Override public void windowClosing(WindowEvent e) { cdl.countDown(); }
+        });
         JPanel panel = new JPanel() {
             public void paintComponent(Graphics g) {
                 g.drawImage(image, 0, 0, this);
@@ -103,10 +144,9 @@ Debug.println("cgImageX: " + cgImageX.getWidth() + ", " + cgImageX.getHeight());
         panel.setPreferredSize(new Dimension(image.getWidth(), image.getHeight()));
         frame.setContentPane(panel);
         frame.setTitle("CoreImage");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
-        while (true) Thread.yield();
+        cdl.await();
     }
 
     @Test

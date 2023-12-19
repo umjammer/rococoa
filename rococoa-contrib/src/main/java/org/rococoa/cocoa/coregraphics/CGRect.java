@@ -27,11 +27,17 @@ public class CGRect extends Structure implements Structure.ByValue {
     public CGRect() {
         this.origin = new CGPoint();
         this.size = new CGSize();
+        write();
     }
 
     public CGRect(int x, int y, int width, int height) {
         this.origin = new CGPoint(x, y);
         this.size = new CGSize(width, height);
+        write();
+    }
+
+    public CGRect(Pointer p) {
+        super(p);
     }
 
     @Override
