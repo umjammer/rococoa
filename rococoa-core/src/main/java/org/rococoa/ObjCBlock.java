@@ -31,23 +31,14 @@
 
 package org.rococoa;
 
-import com.sun.jna.Pointer;
 import com.sun.jna.Callback;
 
-public abstract class ObjCBlock implements ObjCObject, Callback {
 
-    Pointer pCallback;
-
-/*
-    static final int CALLBACK_CONSTRUCTOR_ID = -2;
-    protected C callback;
-    public ObjCBlock(C callback) {
-      super(CALLBACK_CONSTRUCTOR_ID, callback);
-      this.callback = callback; // retain a reference
-    }
-    public ObjCBlock() {
-      super();
-      assert callback != null; // set by parent constructor
-    }
-*/
+/**
+ * ObjCBlock.
+ *
+ * @author <a href="mailto:umjammer@gmail.com">Naohide Sano</a> (nsano)
+ * @version 0.00 2022/10/22 nsano initial version <br>
+ */
+public interface ObjCBlock extends Callback {
 }

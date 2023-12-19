@@ -19,11 +19,12 @@
 
 package org.rococoa.internal;
 
-
-import org.rococoa.ID;
-
 import com.sun.jna.Callback;
 import com.sun.jna.Library;
+import com.sun.jna.Pointer;
+import org.rococoa.ID;
+import org.rococoa.ObjCBlock;
+
 
 /**
  * JNA Library for special operations provided by our own native code
@@ -64,11 +65,11 @@ public interface RococoaLibrary extends Library {
     void callOnMainThread(RococoaLibrary.VoidCallback callback, boolean waitUntilDone);
 
     /** for block */
-    long createObjCBlockWithFunctionPointer(long fptr);
+    Pointer createObjCBlockWithFunctionPointer(ID pcb);
 
     /** for block */
-    long getObjCBlockFunctionPointer(long blockPtr);
+    ObjCBlock getObjCBlockFunctionPointer(Pointer blockPtr);
 
     /** for block */
-    void releaseObjCBlock(long blockPtr);
+    void releaseObjCBlock(Pointer blockPtr);
 }

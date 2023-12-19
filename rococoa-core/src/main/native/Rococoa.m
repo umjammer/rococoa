@@ -5,6 +5,7 @@ void callOnMainThread(void (*fn)(void), BOOL waitUntilDone) {
 	// Pool is required as we're being called from Java, which probably doesn't have a pool to 
 	// allocate the NSValue from.
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
+	// performSelectorOnMainThread is NSObject's method
 	[RococoaHelper performSelectorOnMainThread: @selector(callback:) 
 		withObject: [NSValue valueWithPointer: fn] waitUntilDone: waitUntilDone];
 	[pool release];

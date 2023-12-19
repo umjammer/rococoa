@@ -24,7 +24,6 @@
         <version>1.0-alpha-11</version>
         <extensions>true</extensions>
         <configuration>
-          <javahOS>darwin</javahOS>
           <compilerProvider>generic-classic</compilerProvider>
           <compilerStartOptions>
             <compilerStartOption>-g -Wall -O2 -fomit-frame-pointer -fPIC</compilerStartOption>
@@ -53,6 +52,7 @@
                   <fileNames>
                     <fileName>Rococoa.m</fileName>
                     <fileName>ProxyForJava.m</fileName>
+                    <fileName>ObjCBlocks.m</fileName>
                     <fileName>test.m</fileName>
                   </fileNames>
                 </source>
@@ -77,6 +77,7 @@
                   <fileNames>
                     <fileName>Rococoa.m</fileName>
                     <fileName>ProxyForJava.m</fileName>
+                    <fileName>ObjCBlocks.m</fileName>
                   </fileNames>
                 </source>
               </sources>
