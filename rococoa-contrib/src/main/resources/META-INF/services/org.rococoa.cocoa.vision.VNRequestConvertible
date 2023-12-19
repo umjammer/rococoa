@@ -1,0 +1,9 @@
+#
+# Copyright (c) 2023 by Naohide Sano, All rights reserved.
+#
+# Programmed by Naohide Sano
+#
+
+org.rococoa.cocoa.vision.VNPixelBufferObservation$Convertible
+org.rococoa.cocoa.vision.VNHumanHandPoseObservation$Convertible
+org.rococoa.cocoa.vision.VNHumanBodyPoseObservation$Convertible

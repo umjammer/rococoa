@@ -38,7 +38,7 @@ public abstract class VNImageRequestHandler extends NSObject {
     }
 
     /** Creates a handler to be used for performing requests on Core Graphics images. */
-    public abstract VNImageRequestHandler initWithCGImage_options(Pointer/*CGImageRef*/ image, NSDictionary options);
+    public abstract VNImageRequestHandler initWithCGImage_options(Pointer /* CGImageRef */ image, NSDictionary options);
     /** Creates a handler to be used for performing requests on CIImage data. */
     public abstract VNImageRequestHandler initWithCIImage_options(CIImage image, NSDictionary options);
     /** Creates a handler to be used for performing requests on an image contained in an NSData object. */
@@ -47,12 +47,12 @@ public abstract class VNImageRequestHandler extends NSObject {
     public abstract VNImageRequestHandler initWithURL_options(NSURL imageURL, NSDictionary options);
 
     /** utility */
-    public static VNImageRequestHandler initWithCGImage(Pointer/*CGImageRef*/ image) {
+    public static VNImageRequestHandler initWithCGImage(Pointer /* CGImageRef */ image) {
         return CLASS.alloc().initWithCGImage_options(image, NSDictionary.emptyDictionary());
     }
 
     /** Schedules Vision requests to be performed. */
-    public abstract boolean performRequests_error(NSArray requests, ObjCObjectByReference/*NSError*/ error);
+    public abstract boolean performRequests_error(NSArray requests, ObjCObjectByReference /* NSError */ error);
 
     /** utility */
     public void performRequests(VNImageBasedRequest request) {

@@ -8,7 +8,6 @@ package org.rococoa.cocoa.vision;
 
 import java.util.logging.Logger;
 
-import com.sun.jna.Pointer;
 import org.rococoa.ID;
 import org.rococoa.ObjCBlock;
 import org.rococoa.ObjCClass;
@@ -50,4 +49,8 @@ public abstract class VNCoreMLRequest extends VNImageBasedRequest {
      * The Core ML model on which the request is based, wrapped in a VNCoreMLModel.
      */
     public abstract VNCoreMLModel model();
+
+    public interface VNRequestCompletionHandler extends ObjCBlock {
+        void callback(ID id, ObjCObjectByReference error);
+    }
 }

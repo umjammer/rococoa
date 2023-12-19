@@ -6,16 +6,19 @@
 
 package org.rococoa.cocoa.vision;
 
+import java.util.Arrays;
 import java.util.logging.Logger;
 import java.util.stream.IntStream;
 
 import org.rococoa.ObjCClass;
+import org.rococoa.ObjCObject;
 import org.rococoa.ObjCObjectByReference;
 import org.rococoa.Rococoa;
 import org.rococoa.cocoa.coregraphics.CGPoint;
 import org.rococoa.cocoa.foundation.NSArray;
 import org.rococoa.cocoa.foundation.NSDictionary;
 import org.rococoa.cocoa.foundation.NSError;
+import org.rococoa.cocoa.foundation.NSObject;
 
 
 /**
@@ -47,13 +50,13 @@ public abstract class VNHumanBodyPoseObservation extends VNRecognizedPointsObser
     public abstract NSArray availableJointsGroupNames();
 
     /** Retrieves the recognized point for a joint name. */
-    public abstract VNRecognizedPoint recognizedPointForJointName_error(String/*String*/ jointName, ObjCObjectByReference/*NSError*/ error);
+    public abstract VNRecognizedPoint recognizedPointForJointName_error(String /* String */ jointName, ObjCObjectByReference /* NSError */ error);
 
     /**
      * Retrieves the recognized points associated with the joint group name.
      * @return NSDictionary&lt;String, VNRecognizedPoint&gt;
      */
-    public abstract NSDictionary recognizedPointsForJointsGroupName_error(String/*VNHumanBodyPoseObservationJointsGroupName*/ jointsGroupName, ObjCObjectByReference/*NSError*/ error);
+    public abstract NSDictionary recognizedPointsForJointsGroupName_error(String /* VNHumanBodyPoseObservationJointsGroupName */ jointsGroupName, ObjCObjectByReference/*NSError*/ error);
 
     public static final String Nose = "Nose";
     public static final String LeftEye = "left_eye_joint";
@@ -83,6 +86,7 @@ public abstract class VNHumanBodyPoseObservation extends VNRecognizedPointsObser
     public static final String BodyLandmarkRegionKeyLeftLeg = "VNBLKLLEG";
     public static final String BodyLandmarkRegionKeyRightLeg = "VNBLKRLEG";
 
+    // for getting strings above
     private static boolean done = false;
     private void debug() {
         if (done) return;
@@ -97,24 +101,40 @@ logger.fine("group key: " + names.objectAtIndex(i));
         done = true;
     }
 
-    /** @return CGPoint[] */
-    public static Object convert(VNHumanBodyPoseObservation observation) {
+    public static class Convertible implements VNRequestConvertible<VNHumanBodyPoseObservation, CGPoint[]> {
+
+        /**
+         * @param args 0: groupName, 1...: torsoJointNames
+         */
+        @Override
+        public CGPoint[] convert(VNHumanBodyPoseObservation observation, Object... args) {
+            String groupName = (String) args[0];
+            // Torso joint names in a clockwise ordering.
+            String[] torsoJointNames = Arrays.stream(Arrays.copyOfRange(args, 1, args.length)).map(String.class::cast).toArray(String[]::new);
 //observation.debug();
-        ObjCObjectByReference errorRef = new ObjCObjectByReference();
-        NSDictionary recognizedPoints = observation.recognizedPointsForJointsGroupName_error(BodyLandmarkRegionKeyTorso, errorRef);
-        NSError error = errorRef.getValueAs(NSError.class);
-        if (error != null) {
-            throw new IllegalStateException(error.description());
+
+            ObjCObjectByReference errorRef = new ObjCObjectByReference();
+            NSDictionary recognizedPoints = observation.recognizedPointsForJointsGroupName_error(groupName, errorRef);
+            NSError error = errorRef.getValueAs(NSError.class);
+            if (error != null) {
+                throw new IllegalStateException(error.description());
+            }
+            CGPoint[] imagePoints = new CGPoint[torsoJointNames.length];
+            IntStream.range(0, torsoJointNames.length).forEach(i -> {
+                VNRecognizedPoint point = Rococoa.cast(recognizedPoints.objectForKey(torsoJointNames[i]), VNRecognizedPoint.class);
+                imagePoints[i] = point.confidence() > 0 ? point.location() : null;
+            });
+            return imagePoints;
         }
-        // Torso joint names in a clockwise ordering.
-        String[] torsoJointNames = {
-                Neck, RightShoulder, RightHip, Root, LeftHip, LeftShoulder
-        };
-        CGPoint[] imagePoints = new CGPoint[torsoJointNames.length];
-        IntStream.range(0, torsoJointNames.length).forEach(i -> {
-            VNRecognizedPoint point = Rococoa.cast(recognizedPoints.objectForKey(torsoJointNames[i]), VNRecognizedPoint.class);
-            imagePoints[i] = point.confidence() > 0 ? point.location() : null;
-        });
-        return imagePoints;
+
+        @Override
+        public boolean isKindOfClass(NSObject object) {
+            return object.isKindOfClass(VNHumanBodyPoseObservation.CLASS);
+        }
+
+        @Override
+        public VNHumanBodyPoseObservation cast(NSObject object) {
+            return Rococoa.cast(object, VNHumanBodyPoseObservation.class);
+        }
     }
 }

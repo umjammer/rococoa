@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 
 import org.rococoa.ObjCClass;
 import org.rococoa.Rococoa;
+import org.rococoa.cocoa.foundation.NSObject;
 
 
 /**
@@ -18,7 +19,7 @@ import org.rococoa.Rococoa;
  * @author <a href="mailto:umjammer@gmail.com">Naohide Sano</a> (nsano)
  * @version 0.00 2022-10-15 nsano initial version <br>
  */
-public abstract class VNObservation extends VNImageBasedRequest {
+public abstract class VNObservation extends NSObject {
 
     private static final Logger logger = Logger.getLogger(VNObservation.class.getName());
 
