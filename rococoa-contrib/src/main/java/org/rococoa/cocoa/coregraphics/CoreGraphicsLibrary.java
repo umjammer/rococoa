@@ -10,6 +10,7 @@ import com.sun.jna.Callback;
 import com.sun.jna.Library;
 import com.sun.jna.Native;
 import com.sun.jna.Pointer;
+import com.sun.jna.platform.mac.CoreFoundation.CFTypeRef;
 import org.rococoa.cocoa.CGFloat;
 
 
@@ -25,10 +26,46 @@ public interface CoreGraphicsLibrary extends Library {
 
     int kCGEventTapDisabledByTimeout = 0xFFFF_FFFE;
 
+    // enum CGEventTapLocation
     int kCGHIDEventTap = 0;
     int kCGSessionEventTap = 1;
     int kCGHeadInsertEventTap = 0;
+
+    // enum CGEventSourceStateID
+    int kCGEventSourceStateHIDSystemState = 1;
+
     int kCGEventTapOptionListenOnly = 1;
+
+    int NX_ALPHASHIFTMASK = 0x00010000;
+    int NX_SHIFTMASK = 0x00020000;
+    int NX_CONTROLMASK = 0x00040000;
+    int NX_ALTERNATEMASK = 0x00080000;
+    int NX_COMMANDMASK = 0x00100000;
+    int NX_NUMERICPADMASK = 0x00200000;
+    int NX_HELPMASK = 0x00400000;
+    int NX_SECONDARYFNMASK = 0x00800000;
+    int NX_ALPHASHIFT_STATELESS_MASK = 0x01000000;
+
+    int NX_DEVICELCTLKEYMASK = 0x00000001;
+    int NX_DEVICELSHIFTKEYMASK = 0x00000002;
+    int NX_DEVICERSHIFTKEYMASK = 0x00000004;
+    int NX_DEVICELCMDKEYMASK = 0x00000008;
+    int NX_DEVICERCMDKEYMASK = 0x00000010;
+    int NX_DEVICELALTKEYMASK = 0x00000020;
+    int NX_DEVICERALTKEYMASK = 0x00000040;
+    int NX_DEVICE_ALPHASHIFT_STATELESS_MASK = 0x00000080;
+    int NX_DEVICERCTLKEYMASK = 0x00002000;
+
+    int KEYBOARD_FLAGSMASK = NX_ALPHASHIFTMASK | NX_SHIFTMASK | NX_CONTROLMASK | NX_ALTERNATEMASK
+            | NX_COMMANDMASK | NX_NUMERICPADMASK | NX_HELPMASK | NX_SECONDARYFNMASK
+            | NX_DEVICELSHIFTKEYMASK | NX_DEVICERSHIFTKEYMASK | NX_DEVICELCMDKEYMASK
+            | NX_ALPHASHIFT_STATELESS_MASK | NX_DEVICE_ALPHASHIFT_STATELESS_MASK
+            | NX_DEVICERCMDKEYMASK | NX_DEVICELALTKEYMASK | NX_DEVICERALTKEYMASK
+            | NX_DEVICELCTLKEYMASK | NX_DEVICERCTLKEYMASK;
+
+    // enum CGEventFlags
+    long kCGEventFlagMaskCommand = NX_COMMANDMASK;
+
     long kCGEventMaskForAllEvents = 0xFFFF_FFFF_FFFF_FFFFL;
 
     interface CGEventTapCallBack extends Callback {
@@ -98,4 +135,19 @@ public interface CoreGraphicsLibrary extends Library {
     int kCGColorSpaceModelIndexed = 5;
 
     int CGColorSpaceGetModel(Pointer/*CGColorSpaceRef*/ space);
+
+    /** Returns a Quartz event source created with a specified source state. */
+    Pointer /* CGEventSourceRef */ CGEventSourceCreate(int /* CGEventSourceStateID */ stateID);
+
+    /** Returns a new Quartz keyboard event. */
+    Pointer /* CGEventRef */ CGEventCreateKeyboardEvent(Pointer /*CGEventSourceRef*/ source, char /*CGKeyCode*/ virtualKey, boolean keyDown);
+
+    /** Sets the event flags of a Quartz event. */
+    void CGEventSetFlags(Pointer /* CGEventRef */ event, long /* CGEventFlags */ flags);
+
+    /** Posts a Quartz event into the event stream at a specified location. */
+    void CGEventPost(int /* CGEventTapLocation */ tap, Pointer /* CGEventRef */ event);
+
+    /** Returns a rectangle with the specified coordinate and size values. */
+    CGRect CGRectMake(CGFloat x, CGFloat y, CGFloat width, CGFloat height);
 }
