@@ -9,20 +9,21 @@ package org.rococoa.cocoa.appkit;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
+import java.util.concurrent.CountDownLatch;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import org.rococoa.ID;
 import org.rococoa.ObjCObject;
-import org.rococoa.ObjCObjectByReference;
 import org.rococoa.Rococoa;
-import vavi.util.Debug;
-import vavi.util.StringUtil;
+import org.rococoa.cocoa.foundation.FoundationKitFunctions;
 import org.rococoa.cocoa.foundation.NSData;
 import org.rococoa.cocoa.foundation.NSPasteboard;
+import org.rococoa.cocoa.foundation.NSRect;
+import vavi.util.Debug;
+import vavi.util.StringUtil;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -64,7 +65,9 @@ Debug.println(proxyId);
 
         ID id = application.validRequestorForSendType_returnType("NSPasteboardTypeString", "NSPasteboardTypeString");
 Debug.println(id);
-        while (true) Thread.yield();
+        // never stop, u need to close the window by yourself
+        CountDownLatch cdl = new CountDownLatch(1);
+        cdl.await();
     }
 
     @Test
@@ -75,5 +78,16 @@ System.err.println("string: " + string);
         assertEquals("vavi", string);
         NSData data = pasteboard.dataForType(NSPasteboard.StringPboardType);
 System.err.println("dataForType:\n" + StringUtil.getDump(data.getBytes()));
+    }
+
+    @Test
+    void test3() throws Exception {
+        FoundationKitFunctions.library.toString();
+        NSScreen screen = NSScreen.mainScreen();
+        NSRect rect = new NSRect(1000, 1000, 1000, 1000);
+Debug.println("rect: " + rect);
+        NSRect converted = screen.convertRectFromBacking(rect);
+Debug.println("converted: " + converted);
+Debug.printf("converted: %d, %d - %d, %d", converted.origin.x.intValue(), converted.origin.y.intValue(), converted.size.width.intValue(), converted.size.height.intValue());
     }
 }
