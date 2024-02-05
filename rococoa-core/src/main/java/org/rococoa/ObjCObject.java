@@ -19,6 +19,7 @@
 
 package org.rococoa;
 
+
 public interface ObjCObject {
 
     ID id();

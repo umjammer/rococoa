@@ -23,27 +23,15 @@ import java.util.Collections;
 
 import com.sun.jna.Library;
 import com.sun.jna.Native;
-import com.sun.jna.Pointer;
-import org.rococoa.cocoa.CFIndex;
 import org.rococoa.cocoa.CGFloat;
 import org.rococoa.cocoa.coregraphics.CGRect;
 import org.rococoa.internal.RococoaTypeMapper;
+
 
 public interface FoundationKitFunctions extends Library {
 
     FoundationKitFunctions library = Native.load(
         "Foundation", FoundationKitFunctions.class, Collections.singletonMap(Library.OPTION_TYPE_MAPPER, new RococoaTypeMapper()));
-
-    /**
-     * <i>native declaration : /System/Library/Frameworks/ApplicationServices.framework/Headers/../Frameworks/CoreGraphics.framework/Headers/CGGeometry.h:36</i><br>
-     * enum values
-     */
-    interface CGRectEdge {
-        int CGRectMinXEdge = 0;
-        int CGRectMinYEdge = 1;
-        int CGRectMaxXEdge = 2;
-        int CGRectMaxYEdge = 3;
-    }
 
     /**
      * <i>native declaration : /System/Library/Frameworks/ApplicationServices.framework/Headers/../Frameworks/CoreGraphics.framework/Headers/CGGeometry.h</i><br>
@@ -318,31 +306,4 @@ public interface FoundationKitFunctions extends Library {
      */
     @Deprecated(since = "aarch64")
     void NSLog(String format, String... args);
-
-    CFStringRef CFStringCreateWithCharacters(CFAllocatorRef allocator, char[] chars, CFIndex index);
-
-    /**
-     * Releases a Core Foundation object. If the retain count of cf becomes zero the memory allocated to the object is
-     * deallocated and the object is destroyed. If you create, copy, or explicitly retain (see the CFRetain function) a
-     * Core Foundation object, you are responsible for releasing it when you no longer need it (see Memory Management
-     * Programming Guide for Core Foundation).
-     *
-     * @param ref A CFType object to release. This value must not be NULL.
-     */
-    void CFRelease(Pointer ref);
-
-    void CFRunLoopAddSource(Pointer/*CFRunLoopRef*/ rl, Pointer/*CFRunLoopSourceRef*/ source, CFStringRef/*CFRunLoopMode*/ mode);
-
-    // TODO duplicated
-    Pointer kCFAllocatorDefault = null;
-
-    Pointer/*CFRunLoopSourceRef*/ CFMachPortCreateRunLoopSource(CFAllocatorRef allocator, Pointer/*CFMachPortRef*/ port, CFIndex order);
-
-    CFStringRef kCFRunLoopCommonModes = CFStringRef.toCFString("kCFRunLoopCommonModes");
-
-    Pointer CFRunLoopGetCurrent();
-
-    void CFRunLoopRun();
-
-    void CFRunLoopStop(Pointer runningLoop);
 }

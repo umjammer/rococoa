@@ -19,20 +19,27 @@
 
 package org.rococoa.cocoa.foundation;
 
+import java.io.Serial;
+
 import com.sun.jna.NativeLong;
+
 
 /**
  *
  * @author pixel
  */
 public class NSInteger extends NativeLong  {
+
+    @Serial
     private static final long serialVersionUID = 0;
 
     public NSInteger() {
     }
+
     public NSInteger(long value) {
         super(value);
     }
+
     public NSInteger(NativeLong nativeLong) {
     	super(nativeLong.longValue());
     }

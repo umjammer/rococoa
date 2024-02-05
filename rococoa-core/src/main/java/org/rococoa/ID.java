@@ -33,6 +33,8 @@ import com.sun.jna.NativeLong;
  * Technically, this should be {@link Native#POINTER_SIZE} not {@link Native#LONG_SIZE},
  * but as they are both 32 on 32-bit and 64 on 64-bit we'll gloss over that. Ideally
  * it would be Pointer, but they have no protected constructors.
+ *
+ * TODO should extends {@link com.sun.jna.PointerType}
  */
 public class ID extends NativeLong {
 

@@ -22,11 +22,11 @@ package org.rococoa;
 import com.sun.jna.NativeLong;
 import com.sun.jna.ptr.ByReference;
 
+
 /**
  * Used to retrieve an NSObject as an out param.
  *
  * @author duncan
- *
  */
 public class ObjCObjectByReference extends ByReference {
 

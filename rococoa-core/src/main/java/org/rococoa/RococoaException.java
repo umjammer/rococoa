@@ -19,7 +19,7 @@
 
 package org.rococoa;
 
-@SuppressWarnings("serial")
+
 public class RococoaException extends RuntimeException {
 
     public RococoaException() {
@@ -36,5 +36,4 @@ public class RococoaException extends RuntimeException {
     public RococoaException(String message, Throwable cause) {
         super(message, cause);
     }
-
 }

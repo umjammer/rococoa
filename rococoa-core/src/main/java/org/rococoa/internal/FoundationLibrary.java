@@ -28,6 +28,7 @@ import org.rococoa.cocoa.CFRange;
 
 /**
  * JNA Library for plain C calls, standard JNA marshalling applies to these
+ * DON'T ADD methods, this class is internal use only.
  */
 public interface FoundationLibrary extends Library {
 
@@ -53,12 +54,6 @@ public interface FoundationLibrary extends Library {
     int CFStringTokenizerGoToTokenAtIndex(ID tokenizer, CFIndex index);
     ID CFStringTokenizerCopyCurrentTokenAttribute(ID tokenizer, int attribute);
     int CFStringTokenizerAdvanceToNextToken(ID tokenizer);
-
-    /**
-     * This is a synonym for NULL.
-     * @see "https://developer.apple.com/documentation/corefoundation/kcfallocatordefault"
-     */
-    ID kCFAllocatorDefault = null;
 
     int kCFStringTokenizerUnitWordBoundary = 4;
     int kCFStringTokenizerTokenNone = 0;

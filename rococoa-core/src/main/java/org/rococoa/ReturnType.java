@@ -24,14 +24,13 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+
 /**
- * Annotation to specify or disambiguate the return type of a method.
- * 
+ * Annotation to specify or disambiguate the return type of method.
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 public @interface ReturnType {
 
     Class<?> value();
-
 }

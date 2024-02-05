@@ -22,14 +22,16 @@ package org.rococoa.cocoa.foundation;
 import org.rococoa.ObjCClass;
 import org.rococoa.ObjCObjectByReference;
 
+
 /// <i>native declaration : :12</i>
 public abstract class NSBundle extends NSObject {
+
     private static final _Class CLASS = org.rococoa.Rococoa.createClass("NSBundle", _Class.class);
 
     private static NSBundle mainBundle = null;
 
     public static NSBundle mainBundle() {
-        if(null == mainBundle) {
+        if (null == mainBundle) {
             mainBundle = CLASS.mainBundle();
         }
         return mainBundle;
@@ -60,6 +62,9 @@ public abstract class NSBundle extends NSObject {
          * <i>native declaration : :25</i>
          */
         NSBundle bundleWithPath(String path1);
+
+        /** Returns an NSBundle object that corresponds to the specified file URL. */
+        NSBundle bundleWithURL(NSURL url);
 
         /**
          * Original signature : <code>NSBundle* bundleWithIdentifier(String*)</code><br>
