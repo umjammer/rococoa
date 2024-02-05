@@ -33,6 +33,7 @@ public class CGSize extends Structure implements Structure.ByValue {
     public CGSize(int width, int height) {
         this.width = new CGFloat(width);
         this.height = new CGFloat(height);
+        write();
     }
 
     /** */

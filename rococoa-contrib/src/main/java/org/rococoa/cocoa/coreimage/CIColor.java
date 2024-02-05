@@ -31,7 +31,7 @@ public abstract class CIColor extends NSObject {
         CIColor colorWithString(String representation);
     }
 
-    public abstract Pointer/*CGImageRef*/ createCGImage_fromRect(CIImage image, CGRect.ByReference fromRect);
+    public abstract Pointer/*CGImageRef*/ createCGImage_fromRect(CIImage image, CGRect fromRect);
 
     public abstract String stringRepresentation();
 

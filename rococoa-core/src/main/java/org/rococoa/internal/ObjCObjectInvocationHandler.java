@@ -25,12 +25,18 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.ConcurrentModificationException;
 import java.util.List;
 import java.util.concurrent.Callable;
+import java.util.logging.Logger;
 
-import net.sf.cglib.proxy.MethodInterceptor;
-import net.sf.cglib.proxy.MethodProxy;
-
+import com.sun.jna.Pointer;
+import net.bytebuddy.implementation.bind.annotation.AllArguments;
+import net.bytebuddy.implementation.bind.annotation.Empty;
+import net.bytebuddy.implementation.bind.annotation.Origin;
+import net.bytebuddy.implementation.bind.annotation.RuntimeType;
+import net.bytebuddy.implementation.bind.annotation.SuperMethod;
+import net.bytebuddy.implementation.bind.annotation.This;
 import org.rococoa.Foundation;
 import org.rococoa.ID;
 import org.rococoa.IDByReference;
@@ -42,11 +48,6 @@ import org.rococoa.Rococoa;
 import org.rococoa.RococoaException;
 import org.rococoa.RunOnMainThread;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import com.sun.jna.Pointer;
-import org.rococoa.cocoa.CFIndex;
 
 /**
  * Listens to invocations of methods on a Java NSObject, and forwards them to
@@ -55,7 +56,7 @@ import org.rococoa.cocoa.CFIndex;
  * @author duncan
  */
 @SuppressWarnings("nls")
-public class ObjCObjectInvocationHandler implements InvocationHandler, MethodInterceptor {
+public class ObjCObjectInvocationHandler implements InvocationHandler {
 
     private static final int FINALIZE_AUTORELEASE_BATCH_SIZE = 1000;
 
@@ -81,36 +82,48 @@ public class ObjCObjectInvocationHandler implements InvocationHandler, MethodInt
     private ID ocInstance;
     private final String javaClassName;
     private final boolean invokeAllMethodsOnMainThread;
-    
-    private final boolean releaseOnFinalize;
-    private volatile boolean finalized;
 
-    public ObjCObjectInvocationHandler(final ID ocInstance, Class<? extends ObjCObject> javaClass, boolean retain) {
+    private static final List<Runnable> finalizers = new ArrayList<>();
+
+    static {
+        // TODO this cause Concurrent Modification Exception, but using old for cause crash. WTF???
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            try { finalizers.forEach(Runnable::run); } catch (ConcurrentModificationException ignore) {}
+        }));
+    }
+
+    public ObjCObjectInvocationHandler(ID ocInstance, Class<? extends ObjCObject> javaClass, boolean retain) {
         this.ocInstance = ocInstance;
         javaClassName = javaClass.getSimpleName();
         invokeAllMethodsOnMainThread = shouldInvokeMethodsOnMainThread(javaClass);
-        releaseOnFinalize = shouldReleaseInFinalize(javaClass);
+        boolean releaseOnFinalize = shouldReleaseInFinalize(javaClass);
 
-        if (logging.isLoggable(Level.FINEST)) {
-            CFIndex retainCount = Foundation.cfGetRetainCount(ocInstance);
-            logging.finest(String.format("Creating NSObjectInvocationHandler for id %s, javaclass %s. retain = %s, retainCount = %s",
-                    ocInstance, javaClass, retain, retainCount.intValue()));
-        }
+logging.finest(String.format("Creating NSObjectInvocationHandler for id %s, javaclass %s. retain = %s, retainCount = %s",
+ ocInstance, javaClass, retain, Foundation.cfGetRetainCount(ocInstance).intValue()));
 
         if (ocInstance.isNull()) {
             throw new NullPointerException();
         }
 
         if (retain) {
-            if (callAcrossToMainThread()) {
-                Foundation.runOnMainThread(new Runnable() {
-                    public void run() {
-                        Foundation.cfRetain(ocInstance);
-                    }});
-            } else {
-                Foundation.cfRetain(ocInstance);
+            if (releaseOnFinalize) {
+                if (callAcrossToMainThread()) {
+                    Foundation.runOnMainThread(() -> Foundation.cfRetain(ocInstance));
+                } else {
+                    Foundation.cfRetain(ocInstance);
+                }
             }
         }
+
+        finalizers.add(() -> {
+            if (callAcrossToMainThread()) {
+                Foundation.runOnMainThread(this::release);
+            } else {
+                AutoreleaseBatcher autoreleaseBatcher = AutoreleaseBatcher.forThread(FINALIZE_AUTORELEASE_BATCH_SIZE);
+                release();
+                autoreleaseBatcher.operate();
+            }
+        });
     }
 
     private boolean shouldReleaseInFinalize(Class<? extends ObjCObject> javaClass) {
@@ -123,36 +136,13 @@ public class ObjCObjectInvocationHandler implements InvocationHandler, MethodInt
         return annotation.value();
     }
 
-    @Override
-    protected void finalize() throws Throwable {
-        if (finalized || !releaseOnFinalize) {
-            return;
-        }
-        try {
-            if (callAcrossToMainThread()) {
-                Foundation.runOnMainThread(this::release);
-            } else {
-                AutoreleaseBatcher autoreleaseBatcher = AutoreleaseBatcher.forThread(FINALIZE_AUTORELEASE_BATCH_SIZE);
-                release();
-                autoreleaseBatcher.operate();
-            }
-            super.finalize();
-        } finally {
-            finalized = true;
-        }
-        super.finalize();
-    }
-
     // must be run on appropriate thread
     private void release() {
         if (ocInstance.isNull()) {
             return;
         }
-        if (logging.isLoggable(Level.FINEST)) {
-            CFIndex retainCount = Foundation.cfGetRetainCount(ocInstance);
-            logging.finest(String.format("finalizing [%s %s], releasing with retain count = %s",
-                    javaClassName, ocInstance, retainCount.intValue()));
-        }
+logging.finest(String.format("finalizing [%s %s], releasing with retain count = %s",
+ javaClassName, ocInstance, Foundation.cfGetRetainCount(ocInstance).intValue()));
         Foundation.cfRelease(ocInstance);
     }
 
@@ -160,10 +150,7 @@ public class ObjCObjectInvocationHandler implements InvocationHandler, MethodInt
      * Callback from java.lang.reflect proxy
      */
     public Object invoke(Object proxy, Method method, Object[] args)  throws Exception {
-        if (logging.isLoggable(Level.FINEST)) {
-            logging.finest(String.format("invoking [%s %s].%s(%s)",
-                    javaClassName, ocInstance, method.getName(), new VarArgsUnpacker(args)));
-        }
+logging.finest(String.format("JavaProxy:invoking [%s %s].%s(%s)", javaClassName, ocInstance, method.getName(), new VarArgsUnpacker(args)));
         if (isSpecialMethod(method)) {
             return invokeSpecialMethod(method, args);
         }
@@ -171,19 +158,18 @@ public class ObjCObjectInvocationHandler implements InvocationHandler, MethodInt
     }
 
     /**
-     * Callback from cglib proxy
+     * Callback from ByteBuddy proxy
      */
-    public Object intercept(Object proxy, Method method, Object[] args, MethodProxy methodProxy) throws Throwable {
-        if (logging.isLoggable(Level.FINEST)) {
-            logging.finest(String.format("invoking [%s %s].%s(%s)",
-                    javaClassName, ocInstance, method.getName(), new VarArgsUnpacker(args)));
-        }
+    @RuntimeType
+    public Object intercept(@This Object proxy, @Origin Method method, @AllArguments Object[] args, @SuperMethod(nullIfImpossible = true) Method superMethod, @Empty Object defaultValue) throws Throwable {
+logging.finest(String.format("ByteBuddyProxy:invoking [%s %s].%s(%s)", javaClassName, ocInstance, method.getName(), new VarArgsUnpacker(args)));
         if (isSpecialMethod(method)) {
             return invokeSpecialMethod(method, args);
         }
         if (!Modifier.isAbstract(method.getModifiers())) {
             // method is not abstract, so a Java override has been provided, which we call
-            return methodProxy.invokeSuper(proxy, args);
+logging.finest(String.format("superMethod.invoke [%s %s].%s(%s)", javaClassName, ocInstance, method.getName(), new VarArgsUnpacker(args)));
+            return superMethod.invoke(proxy, args);
         }
         // normal case
         return invokeCocoa(method, args);
@@ -195,7 +181,8 @@ public class ObjCObjectInvocationHandler implements InvocationHandler, MethodInt
                 OCOBJECT_ID.equals(method));
     }
 
-    private Object invokeSpecialMethod(final Method method, final Object[] args) {
+    private Object invokeSpecialMethod(Method method, Object[] args) {
+logging.finest(String.format("invokeSpecialMethod [%s %s].%s(%s)", javaClassName, ocInstance, method.getName(), new VarArgsUnpacker(args)));
         if (OBJECT_TOSTRING.equals(method)) {
             return invokeDescription();
         }
@@ -223,6 +210,7 @@ public class ObjCObjectInvocationHandler implements InvocationHandler, MethodInt
     }
 
     private Object invokeCocoa(final Method method, Object[] args) {
+logging.finest(String.format("invokeCocoa [%s %s].%s(%s)", javaClassName, ocInstance, method.getName(), new VarArgsUnpacker(args)));
         String selectorName = selectorNameFor(method);
         Class<?> returnType = returnTypeFor(method);
         Object[] marshalledArgs = marshallArgsFor(args);
@@ -259,8 +247,7 @@ public class ObjCObjectInvocationHandler implements InvocationHandler, MethodInt
         if (callAcrossToMainThreadFor(method)) {
             return Foundation.callOnMainThread(
                     (Callable<Object>) () -> Foundation.send(id, selectorName, returnType, args));
-        }
-        else {
+        } else {
             return Foundation.send(id, selectorName, returnType, args);
         }
     }

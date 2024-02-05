@@ -19,14 +19,6 @@
 
 package org.rococoa.internal;
 
-import com.sun.jna.Library;
-import com.sun.jna.NativeLibrary;
-import com.sun.jna.NativeLong;
-import com.sun.jna.Structure;
-import org.rococoa.ID;
-import org.rococoa.RococoaException;
-import org.rococoa.Selector;
-
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -35,6 +27,14 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
+
+import com.sun.jna.Library;
+import com.sun.jna.NativeLibrary;
+import com.sun.jna.NativeLong;
+import com.sun.jna.Structure;
+import org.rococoa.ID;
+import org.rococoa.RococoaException;
+import org.rococoa.Selector;
 
 
 /**
@@ -79,61 +79,134 @@ class MsgSendHandler implements InvocationHandler {
     public final static boolean PPC = System.getProperty("os.arch").trim().equalsIgnoreCase("ppc");
 
     private final static Method OBJC_MSGSEND;
+    private final static Method OBJC_MSGSEND_ARGS0;
+    private final static Method OBJC_MSGSEND_ARGS1;
+    private final static Method OBJC_MSGSEND_ARGS2;
+    private final static Method OBJC_MSGSEND_ARGS3;
+    private final static Method OBJC_MSGSEND_ARGS4;
+    private final static Method OBJC_MSGSEND_ARGS5;
+    private final static Method OBJC_MSGSEND_ARGS6;
+    private final static Method OBJC_MSGSEND_ARGS7;
+    private final static Method OBJC_MSGSEND_ARGS8;
+    private final static Method OBJC_MSGSEND_STRET;
     private final static Method OBJC_MSGSEND_FPRET;
     private final static Method OBJC_MSGSEND_VAR_ARGS;
-    private final static Method OBJC_MSGSEND_STRET;
 
     static {
         try {
             OBJC_MSGSEND = MsgSendLibrary.class.getDeclaredMethod("objc_msgSend",
+                    ID.class, Selector.class);
+            OBJC_MSGSEND_ARGS0 = MsgSendLibrary.class.getDeclaredMethod("objc_msgSend",
+                    ID.class, Selector.class);
+            OBJC_MSGSEND_ARGS1 = MsgSendLibrary.class.getDeclaredMethod("objc_msgSend",
+                    ID.class, Selector.class, Object.class);
+            OBJC_MSGSEND_ARGS2 = MsgSendLibrary.class.getDeclaredMethod("objc_msgSend",
+                    ID.class, Selector.class, Object.class, Object.class);
+            OBJC_MSGSEND_ARGS3 = MsgSendLibrary.class.getDeclaredMethod("objc_msgSend",
+                    ID.class, Selector.class, Object.class, Object.class, Object.class);
+            OBJC_MSGSEND_ARGS4 = MsgSendLibrary.class.getDeclaredMethod("objc_msgSend",
+                    ID.class, Selector.class, Object.class, Object.class, Object.class, Object.class);
+            OBJC_MSGSEND_ARGS5 = MsgSendLibrary.class.getDeclaredMethod("objc_msgSend",
+                    ID.class, Selector.class, Object.class, Object.class, Object.class, Object.class, Object.class);
+            OBJC_MSGSEND_ARGS6 = MsgSendLibrary.class.getDeclaredMethod("objc_msgSend",
+                    ID.class, Selector.class, Object.class, Object.class, Object.class, Object.class, Object.class, Object.class);
+            OBJC_MSGSEND_ARGS7 = MsgSendLibrary.class.getDeclaredMethod("objc_msgSend",
+                    ID.class, Selector.class, Object.class, Object.class, Object.class, Object.class, Object.class, Object.class, Object.class);
+            OBJC_MSGSEND_ARGS8 = MsgSendLibrary.class.getDeclaredMethod("objc_msgSend",
+                    ID.class, Selector.class, Object.class, Object.class, Object.class, Object.class, Object.class, Object.class, Object.class, Object.class);
+
+            OBJC_MSGSEND_STRET = MsgSendLibrary.class.getDeclaredMethod("objc_msgSend_stret",
                     ID.class, Selector.class, Object[].class);
             OBJC_MSGSEND_FPRET = MsgSendLibrary.class.getDeclaredMethod("objc_msgSend_fpret",
                     ID.class, Selector.class, Object[].class);
             OBJC_MSGSEND_VAR_ARGS = MsgSendLibrary.class.getDeclaredMethod("objc_msgSend",
                     ID.class, Selector.class, Object.class, Object[].class);
-            OBJC_MSGSEND_STRET = MsgSendLibrary.class.getDeclaredMethod("objc_msgSend_stret",
-                    ID.class, Selector.class, Object[].class);
         } catch (NoSuchMethodException x) {
             throw new RococoaException(x);
         }
     }
 
-    private final MethodFunctionPair objc_msgSend_stret_Pair;
+    private MethodFunctionPair objc_msgSend_stret_Pair;
     // only for i386 https://github.com/jspahrsummers/ObjectiveHaskell/issues/22
-    private final MethodFunctionPair objc_msgSend_fpret_Pair;
-    private final MethodFunctionPair objc_msgSend_varArgs_Pair;
-    private final MethodFunctionPair objc_msgSend_Pair;
+    private MethodFunctionPair objc_msgSend_fpret_Pair;
+    private MethodFunctionPair objc_msgSend_varArgs_Pair;
+    private MethodFunctionPair objc_msgSend_Pair;
+    private final MethodFunctionPair objc_msgSend_Args0_Pair;
+    private final MethodFunctionPair objc_msgSend_Args1_Pair;
+    private final MethodFunctionPair objc_msgSend_Args2_Pair;
+    private final MethodFunctionPair objc_msgSend_Args3_Pair;
+    private final MethodFunctionPair objc_msgSend_Args4_Pair;
+    private final MethodFunctionPair objc_msgSend_Args5_Pair;
+    private final MethodFunctionPair objc_msgSend_Args6_Pair;
+    private final MethodFunctionPair objc_msgSend_Args7_Pair;
+    private final MethodFunctionPair objc_msgSend_Args8_Pair;
 
     private final RococoaTypeMapper rococoaTypeMapper = new RococoaTypeMapper();
 
     public MsgSendHandler(NativeLibrary lib) {
-        this.objc_msgSend_Pair = new MethodFunctionPair(AARCH64 ? null : OBJC_MSGSEND,
+        if (!AARCH64) {
+            this.objc_msgSend_varArgs_Pair = new MethodFunctionPair(OBJC_MSGSEND_VAR_ARGS,
+                    lib.getFunction("objc_msgSend"));
+            this.objc_msgSend_Pair = new MethodFunctionPair(OBJC_MSGSEND,
+                    lib.getFunction("objc_msgSend"));
+            this.objc_msgSend_fpret_Pair = new MethodFunctionPair(OBJC_MSGSEND_FPRET,
+                    lib.getFunction("objc_msgSend_fpret"));
+            this.objc_msgSend_stret_Pair = new MethodFunctionPair(OBJC_MSGSEND_STRET,
+                    lib.getFunction("objc_msgSend_stret"));
+        }
+        this.objc_msgSend_Args0_Pair = new MethodFunctionPair(OBJC_MSGSEND_ARGS0,
                 lib.getFunction("objc_msgSend"));
-        this.objc_msgSend_fpret_Pair = new MethodFunctionPair(OBJC_MSGSEND_FPRET,
-                lib.getFunction("objc_msgSend_fpret"));
-        this.objc_msgSend_varArgs_Pair = new MethodFunctionPair(OBJC_MSGSEND_VAR_ARGS,
+        this.objc_msgSend_Args1_Pair = new MethodFunctionPair(OBJC_MSGSEND_ARGS1,
                 lib.getFunction("objc_msgSend"));
-        this.objc_msgSend_stret_Pair = new MethodFunctionPair(OBJC_MSGSEND_STRET,
-                AARCH64 ? null : lib.getFunction("objc_msgSend_stret"));
+        this.objc_msgSend_Args2_Pair = new MethodFunctionPair(OBJC_MSGSEND_ARGS2,
+                lib.getFunction("objc_msgSend"));
+        this.objc_msgSend_Args3_Pair = new MethodFunctionPair(OBJC_MSGSEND_ARGS3,
+                lib.getFunction("objc_msgSend"));
+        this.objc_msgSend_Args4_Pair = new MethodFunctionPair(OBJC_MSGSEND_ARGS4,
+                lib.getFunction("objc_msgSend"));
+        this.objc_msgSend_Args5_Pair = new MethodFunctionPair(OBJC_MSGSEND_ARGS5,
+                lib.getFunction("objc_msgSend"));
+        this.objc_msgSend_Args6_Pair = new MethodFunctionPair(OBJC_MSGSEND_ARGS6,
+                lib.getFunction("objc_msgSend"));
+        this.objc_msgSend_Args7_Pair = new MethodFunctionPair(OBJC_MSGSEND_ARGS7,
+                lib.getFunction("objc_msgSend"));
+        this.objc_msgSend_Args8_Pair = new MethodFunctionPair(OBJC_MSGSEND_ARGS8,
+                lib.getFunction("objc_msgSend"));
     }
 
+    /**
+     * proxy -> jna (* float -> double) -> here
+     * @param args 0: return type,
+     *             1: id,
+     *             2: selector
+     *             3...: args, null terminated
+     */
     public Object invoke(Object proxy, Method method, Object[] args) {
-if (((Selector)args[2]).getName().equals("testGetFloatByValue:")) {
- new Exception("@@@1:  " + new VarArgsUnpacker(args)).printStackTrace();
-}
+        String methodName = ((Selector) args[2]).getName();
+        Object[] methodArgs = Arrays.copyOfRange(args, 3, args.length); // null terminated
         Class<?> returnTypeForThisCall = (Class<?>) args[0];
-        MethodFunctionPair invocation = this.invocationFor(returnTypeForThisCall, MsgSendInvocationMapper.SYNTHETIC_SEND_VARARGS_MSG.equals(method));
+logging.finest("invoke: " + returnTypeForThisCall.getSimpleName() + " " + methodName + "(" + Arrays.toString(methodArgs) + "), " + methodArgs.length + ", " + method);
+        MethodFunctionPair invocation = this.invocationFor(returnTypeForThisCall, methodArgs);
         Map<String, Object> options = new HashMap<>(Collections.singletonMap(Library.OPTION_TYPE_MAPPER, rococoaTypeMapper));
         options.put(OPTION_INVOKING_METHOD, invocation.method);
         return invocation.function.invoke(returnTypeForThisCall, Arrays.copyOfRange(args, 1, args.length), options);
     }
 
-    private MethodFunctionPair invocationFor(Class<?> returnTypeForThisCall, boolean varArgs) {
+    private MethodFunctionPair invocationFor(Class<?> returnTypeForThisCall, Object[] args) {
         if (AARCH64) {
-            if (varArgs) {
-                return objc_msgSend_varArgs_Pair;
-            }
-            return objc_msgSend_Pair;
+logging.finest("AARCH64: " + returnTypeForThisCall.getName() + ", " + (args.length - 1));
+            return switch (args.length) {
+                case 0 -> objc_msgSend_Args0_Pair;
+                case 1 -> objc_msgSend_Args1_Pair;
+                case 2 -> objc_msgSend_Args2_Pair;
+                case 3 -> objc_msgSend_Args3_Pair;
+                case 4 -> objc_msgSend_Args4_Pair;
+                case 5 -> objc_msgSend_Args5_Pair;
+                case 6 -> objc_msgSend_Args6_Pair;
+                case 7 -> objc_msgSend_Args7_Pair;
+                case 8 -> objc_msgSend_Args8_Pair;
+                default -> throw new IllegalArgumentException("args: " + args.length);
+            };
         }
         boolean isStruct = Structure.class.isAssignableFrom(returnTypeForThisCall);
         boolean isStructByValue = isStruct && Structure.ByValue.class.isAssignableFrom(returnTypeForThisCall);

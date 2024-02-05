@@ -24,6 +24,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.rococoa.test.RococoaTestCase.assertRetainCount;
 
 import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 
@@ -84,7 +85,6 @@ public class FoundationMemoryAssumptionsTest {
         Foundation.cfRelease(idNSObject);
     }
 
-    @Disabled("by vavi because of crash")
     @Test
     public void testAutoreleaseFactoryMethod() {
         ID idPool = Foundation.sendReturnsID(Foundation.getClass("NSAutoreleasePool"), "new");
@@ -126,7 +126,6 @@ public class FoundationMemoryAssumptionsTest {
         Foundation.cfRelease(idNSObject); // crash, but with stderr logging
     }
 
-    @Disabled("by vavi because of crash")
     @Test
     public void nSStringSpecialCases() {
         ID idEmptyNSString = Foundation.sendReturnsID(Foundation.getClass("NSString"), "alloc");

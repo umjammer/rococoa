@@ -6,14 +6,12 @@
 
 package org.rococoa.cocoa.vision;
 
+import java.util.ServiceLoader;
 import java.util.function.Consumer;
 import java.util.logging.Logger;
 
-import com.sun.jna.Pointer;
-import com.sun.jna.ptr.PointerByReference;
 import org.rococoa.ObjCClass;
 import org.rococoa.Rococoa;
-import org.rococoa.cocoa.corevideo.VideoToolboxLibrary;
 import org.rococoa.cocoa.foundation.NSArray;
 import org.rococoa.cocoa.foundation.NSObject;
 
@@ -46,31 +44,40 @@ public abstract class VNRequest extends NSObject {
     public abstract NSArray results();
 
     /** utility for only 1st */
-    public Object result() {
+    public Object result(Object... args) {
         NSArray results = results();
 logger.finer("result: " + results.count());
-        return each(results.firstObject());
+        return each(results.firstObject(), args);
     }
 
     /** utility conversion */
-    private Object each(NSObject object) {
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    private static Object each(NSObject object, Object... args) {
 logger.finer("result each: " + object);
-        if (object.isKindOfClass(VNPixelBufferObservation.CLASS)) {
-            return VNPixelBufferObservation.convert(Rococoa.cast(object, VNPixelBufferObservation.class));
-        } else if (object.isKindOfClass(VNHumanBodyPoseObservation.CLASS)) {
-            return VNHumanBodyPoseObservation.convert(Rococoa.cast(object, VNHumanBodyPoseObservation.class));
-        } else {
-            // TODO
-            throw new UnsupportedOperationException(object.getClass().getName());
+        for (VNRequestConvertible convertible : convertibles) {
+            if (convertible.isKindOfClass(object)) {
+                return convertible.convert(convertible.cast(object), args);
+            }
         }
+
+        // TODO
+        throw new UnsupportedOperationException(object.getClass().getName());
+    }
+
+    /** converters */
+    @SuppressWarnings("rawtypes")
+    private static final ServiceLoader<VNRequestConvertible> convertibles;
+
+    static {
+        convertibles = ServiceLoader.load(VNRequestConvertible.class);
     }
 
     /** utility for each */
-    public void result(Consumer<Object> c) {
+    public void result(Consumer<Object> c, Object... args) {
         NSArray results = results();
 logger.finer("result: " + results.count());
         for (int i = 0; i < results.count(); i++) {
-            c.accept(each(results.objectAtIndex(i)));
+            c.accept(each(results.objectAtIndex(i), args));
         }
     }
 }

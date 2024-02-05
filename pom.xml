@@ -6,11 +6,11 @@
 
   <groupId>org.rococoa</groupId>
   <artifactId>rococoa-parent</artifactId>
-  <version>0.8.5</version>
+  <version>0.8.6</version>
   <packaging>pom</packaging>
 
   <modules>
-    <module>rococoa-auto</module>
+    <!-- module>rococoa-auto</module -->
     <module>rococoa-core</module>
     <module>rococoa-cocoa</module>
     <module>rococoa-contrib</module>
@@ -18,13 +18,12 @@
   </modules>
 
   <name>Rococoa Parent Project</name>
-  <url>http://www.rococoa.org</url>
+  <url>https://github.com/umjammer/rococoa</url>
   <scm>
     <url>https://github.com/umjammer/rococoa</url>
     <connection>scm:git:git@github.com:umjammer/rococoa.git</connection>
     <developerConnection>scm:git:git@github.com:umjammer/rococoa.git</developerConnection>
   </scm>
-
   <developers>
     <developer>
       <id>oneeyedmen</id>
@@ -68,7 +67,6 @@
       </roles>
     </developer>
   </developers>
-
   <licenses>
     <license>
       <name>LGPL 3</name>
@@ -78,9 +76,7 @@
   </licenses>
 
   <properties>
-    <maven.compiler.source>1.8</maven.compiler.source>
-    <maven.compiler.target>1.8</maven.compiler.target>
-    <jna.version>5.12.1</jna.version>
+    <jna.version>5.14.0</jna.version>
   </properties>
 
   <distributionManagement>
@@ -93,6 +89,19 @@
   <build>
     <pluginManagement>
       <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.11.0</version>
+          <configuration>
+            <release>17</release>
+            <compilerArgs>
+              <arg>-XDignore.symbol.file</arg> <!-- for com.apple.eawt -->
+            </compilerArgs>
+            <!-- https://stackoverflow.com/a/30472473 -->
+            <fork>true</fork>
+          </configuration>
+        </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-dependency-plugin</artifactId>
@@ -127,7 +136,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-source-plugin</artifactId>
-        <version>3.2.1</version>
+        <version>3.3.0</version>
         <executions>
           <execution>
             <id>attach-sources</id>
@@ -140,7 +149,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
-        <version>3.4.0</version>
+        <version>3.5.0</version>
         <executions>
           <execution>
             <id>attach-javadocs</id>
@@ -168,7 +177,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-resources-plugin</artifactId>
-        <version>3.2.0</version>
+        <version>3.3.1</version>
         <inherited>true</inherited>
         <configuration>
           <encoding>UTF-8</encoding>
@@ -211,15 +220,15 @@
         <version>${jna.version}</version>
       </dependency>
       <dependency>
-        <groupId>cglib</groupId>
-        <artifactId>cglib</artifactId>
-        <version>3.3.0</version>
+        <groupId>net.bytebuddy</groupId>
+        <artifactId>byte-buddy</artifactId>
+        <version>1.14.8</version>
       </dependency>
 
       <dependency>
         <groupId>org.junit</groupId>
         <artifactId>junit-bom</artifactId>
-        <version>5.9.1</version>
+        <version>5.10.1</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>

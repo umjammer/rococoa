@@ -41,6 +41,7 @@ public class NSPoint extends Structure implements Structure.ByValue {
     public NSPoint(double x, double y) {
         this.x = new CGFloat(x);
         this.y = new CGFloat(y);
+        write();
     }
 
     public NSPoint(Point2D point) {

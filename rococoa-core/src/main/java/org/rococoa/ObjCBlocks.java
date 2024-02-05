@@ -31,46 +31,21 @@
 
 package org.rococoa;
 
-import com.sun.jna.Callback;
-import com.sun.jna.Native;
+import java.util.logging.Logger;
+
 import com.sun.jna.Pointer;
-import org.rococoa.internal.RococoaLibrary;
 
 
 public class ObjCBlocks {
 
-    private static final RococoaLibrary rococoaLibrary;
+    private static final Logger logging = Logger.getLogger("org.rococoa.foundation");
 
-    static {
-        rococoaLibrary = Native.load("rococoa", RococoaLibrary.class);
-    }
-
-    /** */
-    static synchronized Pointer createObjCBlockWithFunctionPointer(Pointer pcb) {
-        Pointer pointer = new Pointer(rococoaLibrary.createObjCBlockWithFunctionPointer(Pointer.nativeValue(pcb)));
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            releaseObjCBlock(pointer);
-        }));
-        return pointer;
-    }
-
-    /** */
-    static synchronized Pointer getObjCBlockFunctionPointer(Pointer blockPtr) {
-        return new Pointer(rococoaLibrary.getObjCBlockFunctionPointer(Pointer.nativeValue(blockPtr)));
-    }
-
-    /** */
-    static synchronized void releaseObjCBlock(Pointer pBlock) {
-        rococoaLibrary.releaseObjCBlock(Pointer.nativeValue(pBlock));
-    }
-
-    void x(ObjCObject instance) {
-        if (instance instanceof ObjCBlock) {
-
-//            Pointer pcb = registerCallbackInstance((Callback) instance);
-//            ((ObjCBlock) instance).pCallback = pcb;
-
-//            Pointer pBlock = createObjCBlockWithFunctionPointer(pcb);
-        }
+    public static ID block(ObjCBlock instance) {
+        ID id = Rococoa.proxy(instance).id();
+logging.info(String.format("instance: %s, %16x", instance, id.longValue()));
+        Pointer pBlock = Foundation.getRococoaLibrary().createObjCBlockWithFunctionPointer(id);
+logging.info("pBlock: " + pBlock);
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> Foundation.getRococoaLibrary().releaseObjCBlock(pBlock)));
+        return ID.fromLong(Pointer.nativeValue(pBlock));
     }
 }

@@ -1,5 +1,3 @@
-package org.rococoa.cocoa.foundation;
-
 /*
  * Copyright (c) 2002-2009 David Kocher. All rights reserved.
  *
@@ -19,8 +17,11 @@ package org.rococoa.cocoa.foundation;
  * dkocher@cyberduck.ch
  */
 
+package org.rococoa.cocoa.foundation;
+
 import org.rococoa.ObjCClass;
 import org.rococoa.cocoa.foundation.NSObject;
+
 
 public abstract class NSThread extends NSObject {
     private static final _Class CLASS = org.rococoa.Rococoa.createClass("NSThread", _Class.class);

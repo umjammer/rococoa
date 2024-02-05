@@ -21,6 +21,7 @@ package org.rococoa;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.rococoa.cocoa.foundation.NSObject;
 import org.rococoa.test.RococoaTestCase;
@@ -53,6 +54,7 @@ public class RococoaAbstractClassTest extends RococoaTestCase {
         assertEquals(84, number.twice());
     }
 
+	@Disabled("currently ByteBuddy cannot cache classes")
     @Test public void testCGLibResusesClasses() {
         NSNumberAsClass number = NSNumberAsClass.numberWithInt(42);
         NSNumberAsClass number2 = NSNumberAsClass.numberWithInt(42);

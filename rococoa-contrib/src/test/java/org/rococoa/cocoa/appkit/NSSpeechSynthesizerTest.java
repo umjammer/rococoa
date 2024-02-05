@@ -48,6 +48,8 @@ import static org.junit.jupiter.api.Assertions.fail;
 /**
  * Exercise the speech synthesizer.
  */
+@Disabled("use AVSpeechSynthesizer in vavi-sound-sandbox")
+@Deprecated(since = "aarch64")
 public class NSSpeechSynthesizerTest {
     private static final int TIME_TO_WAIT = 5000;
     private static final float VOLUME = 0.2f;
@@ -394,7 +396,6 @@ public class NSSpeechSynthesizerTest {
         assertTrue(spi.getHiliteEnd() >= 0);
         assertTrue(spi.getHiliteStart() >= 0);
         assertTrue(spi.getOpcode() != 0);
-
     }
 
     @Test
@@ -415,9 +416,9 @@ public class NSSpeechSynthesizerTest {
         NSVoice defaultVoice = NSSpeechSynthesizer.defaultVoice();
         assertEquals(defaultVoice, ss.getVoice());
         assertEquals(defaultVoice.getIdentifier(), ss.voice());
-        ss.setVoice(NSVoice.SAMANTHA);
-        assertEquals(NSVoice.SAMANTHA, ss.voice());
-        assertEquals(new NSVoice(NSVoice.SAMANTHA), ss.getVoice());
+        ss.setVoice(NSVoice.VICTORIA);
+        assertEquals(NSVoice.VICTORIA, ss.voice());
+        assertEquals(new NSVoice(NSVoice.VICTORIA), ss.getVoice());
         ss.setVoice(NSVoice.ALEX);
         assertEquals(new NSVoice(NSVoice.ALEX), ss.getVoice());
         ss = NSSpeechSynthesizer.synthesizerWithVoice(new NSVoice(NSVoice.FRED));
@@ -596,13 +597,13 @@ public class NSSpeechSynthesizerTest {
         public void speechSynthesizer_didEncounterErrorAtIndex_ofString_message(NSSpeechSynthesizer sender, Integer characterIndex, String text, String errorMessage) {
             position = characterIndex;
             this.errorMessage = errorMessage;
-            //System.out.println(errorMessage);
-            //System.out.println("In callback: " + sender.getError());
+//            System.out.println(errorMessage);
+//            System.out.println("In callback: " + sender.getError());
         }
 
         public void speechSynthesizer_didEncounterSyncMessage(NSSpeechSynthesizer sender, String synchMark) {
             this.synchMark = synchMark;
-         //   System.out.println("In callback, sync: " + sender.getRecentSync());
+//            System.out.println("In callback, sync: " + sender.getRecentSync());
         }
 
         public synchronized void speechSynthesizer_willSpeakPhoneme(NSSpeechSynthesizer sender, short phonemeOpcode) {

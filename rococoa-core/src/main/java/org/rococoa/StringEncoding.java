@@ -19,6 +19,7 @@
 
 package org.rococoa;
 
+
 public enum StringEncoding {
     
     // This set is CFStringBuiltInEncodings 
@@ -167,7 +168,7 @@ public enum StringEncoding {
 
     public final int value;
 
-    private StringEncoding(int value) {
+    StringEncoding(int value) {
         this.value = value;
     }
 }

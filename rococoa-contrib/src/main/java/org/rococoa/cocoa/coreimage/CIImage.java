@@ -38,11 +38,11 @@ public abstract class CIImage extends NSObject {
 
     public interface _Class extends ObjCClass {
         CIImage emptyImage();
-        CIImage imageWithCGImage(Pointer/*CGImageRef*/ image);
+        CIImage imageWithCGImage(Pointer /* CGImageRef */ image);
         CIImage imageWithContentsOfURL(NSURL url);
         CIImage imageWithData(NSData data);
         CIImage imageWithBitmapData_bytesPerRow_size_format_colorSpace(
-                NSData data, long bytesPerRowm, CGSize size, int/*CIFormat*/ format, Pointer/*CGColorSpaceRef*/ colorSpace);
+                NSData data, long bytesPerRowm, CGSize size, int /* CIFormat */ format, Pointer /* CGColorSpaceRef */ colorSpace);
         CIImage alloc();
     }
 
@@ -50,13 +50,13 @@ public abstract class CIImage extends NSObject {
     public abstract CGRect extent();
 
     /** The color space of the image. */
-    public abstract Pointer/*CGColorSpaceRef*/ colorSpace();
+    public abstract Pointer /* CGColorSpaceRef */ colorSpace();
 
     /** A dictionary containing metadata about the image. */
     public abstract NSDictionary properties();
 
     /** The CoreGraphics image object this image was created from, if applicable. */
-    public abstract Pointer/*CGImageRef*/ CGImage();
+    public abstract Pointer /* CGImageRef */ CGImage();
 
     public static final String kCIInputImageKey = "inputImage";
 

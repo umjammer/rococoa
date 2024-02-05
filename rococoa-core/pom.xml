@@ -9,12 +9,12 @@
   <parent>
     <groupId>org.rococoa</groupId>
     <artifactId>rococoa-parent</artifactId>
-    <version>0.8.5</version>
+    <version>0.8.6</version>
   </parent>
 
   <name>Rococoa Core</name>
   <packaging>jar</packaging>
-  <url>http://www.rococoa.org</url>
+  <url>https://github.com/umjammer/rococoa</url>
 
   <build>
     <plugins>
@@ -24,23 +24,14 @@
         <version>1.0-alpha-11</version>
         <extensions>true</extensions>
         <configuration>
-          <!-- trigger javah execution -->
-          <javahClassNames>
-            <javahClassName>org.rococoa.Rococoa</javahClassName>
-          </javahClassNames>
-          <!-- enable additional javah interface in dependencies list -->
-          <javahSearchJNIFromDependencies>true</javahSearchJNIFromDependencies>
-          <!-- | Add jdk include directories to system include path | Override 
-            ${jkdIncludePath} If your jdk does not conform to Sun JDK layout -->
-          <javahOS>darwin</javahOS>
           <compilerProvider>generic-classic</compilerProvider>
           <compilerStartOptions>
             <compilerStartOption>-g -Wall -O2 -fomit-frame-pointer -fPIC</compilerStartOption>
-            <compilerStartOption>-arch x86_64</compilerStartOption>
+            <compilerStartOption>-arch x86_64 -arch arm64</compilerStartOption>
           </compilerStartOptions>
           <linkerStartOptions>
-            <linkerStartOption>-dynamiclib -arch x86_64
-                    -framework QTKit -framework Foundation
+            <linkerStartOption>-dynamiclib -arch x86_64 -arch arm64
+                    -framework Foundation
             </linkerStartOption>
           </linkerStartOptions>
           <linkerFinalName/>
@@ -50,7 +41,6 @@
             <id>test-daylib</id>
             <phase>test-compile</phase>
             <goals>
-              <goal>javah</goal>
               <goal>compile</goal>
               <goal>link</goal>
             </goals>
@@ -62,6 +52,7 @@
                   <fileNames>
                     <fileName>Rococoa.m</fileName>
                     <fileName>ProxyForJava.m</fileName>
+                    <fileName>ObjCBlocks.m</fileName>
                     <fileName>test.m</fileName>
                   </fileNames>
                 </source>
@@ -75,7 +66,6 @@
             <id>daylib</id>
             <phase>compile</phase>
             <goals>
-              <goal>javah</goal>
               <goal>compile</goal>
               <goal>link</goal>
             </goals>
@@ -87,6 +77,7 @@
                   <fileNames>
                     <fileName>Rococoa.m</fileName>
                     <fileName>ProxyForJava.m</fileName>
+                    <fileName>ObjCBlocks.m</fileName>
                   </fileNames>
                 </source>
               </sources>
@@ -101,7 +92,14 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>
-        <version>2.4</version>
+        <version>2.4</version> <!-- use 2.4 for native-maven-plugin -->
+        <configuration>
+          <archive>
+            <manifestEntries>
+              <version>${project.version}</version>
+            </manifestEntries>
+          </archive>
+        </configuration>
         <executions>
           <execution>
             <goals>
@@ -114,11 +112,12 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
-        <version>3.0.0-M7</version>
+        <version>3.2.2</version>
         <configuration>
-          <forkMode>once</forkMode>
+          <reuseForks>false</reuseForks>
           <argLine>
             -Djava.util.logging.config.file=${project.build.testOutputDirectory}/logging.properties
+            --add-opens java.base/java.lang=ALL-UNNAMED
           </argLine>
           <trimStackTrace>false</trimStackTrace>
           <redirectTestOutputToFile>true</redirectTestOutputToFile>
@@ -128,7 +127,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-install-plugin</artifactId>
-        <version>3.0.0-M1</version>
+        <version>3.1.1</version>
         <executions>
           <execution>
             <id>install-test-library</id>
@@ -163,42 +162,42 @@
       </plugin>
 
       <plugin>
-        <!--
-          because of maven deploy-file uploads source, jar also
-          TODO maven-metadata.xml!/metadata/versioning/latest is not updated
-          TODO how about https://stackoverflow.com/a/37552776/6102938
-         -->
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>exec-maven-plugin</artifactId>
-        <version>1.6.0</version>
+        <version>3.1.0</version>
         <executions>
+          <!--
+            because of maven deploy-file uploads source, jar also
+            TODO maven-metadata.xml!/metadata/versioning/latest is not updated
+            TODO how about https://stackoverflow.com/a/37552776/6102938
+           -->
           <execution>
             <id>deploy-library</id>
             <phase>deploy</phase>
             <goals>
               <goal>exec</goal>
             </goals>
+            <configuration>
+              <executable>mvn</executable>
+              <arguments>
+                <argument>deploy:deploy-file</argument>
+                <argument>-DgroupId=${project.groupId}</argument>
+                <argument>-DartifactId=${project.artifactId}</argument>
+                <argument>-Dversion=${project.version}</argument>
+                <argument>-Dpackaging=dylib</argument>
+                <argument>-Dfile=${project.build.directory}/librococoa-${project.version}.dylib</argument>
+                <argument>-DrepositoryId=github</argument>
+                <argument>-Durl=https://maven.pkg.github.com/umjammer/rococoa</argument>
+                <argument>-DgeneratePom=false</argument>
+                <argument>-s</argument>
+                <argument>${env.GITHUB_WORKSPACE}/settings.xml</argument>
+              </arguments>
+              <environmentVariables>
+                <GITHUB_TOKEN>${env.GITHUB_TOKEN}</GITHUB_TOKEN>
+              </environmentVariables>
+            </configuration>
           </execution>
         </executions>
-        <configuration>
-          <executable>mvn</executable>
-          <arguments>
-            <argument>deploy:deploy-file</argument>
-            <argument>-DgroupId=${project.groupId}</argument>
-            <argument>-DartifactId=${project.artifactId}</argument>
-            <argument>-Dversion=${project.version}</argument>
-            <argument>-Dpackaging=dylib</argument>
-            <argument>-Dfile=${project.build.testOutputDirectory}/librococoa.dylib</argument>
-            <argument>-DrepositoryId=github</argument>
-            <argument>-Durl=https://maven.pkg.github.com/umjammer/rococoa</argument>
-            <argument>-DgeneratePom=false</argument>
-            <argument>-s</argument>
-            <argument>${env.GITHUB_WORKSPACE}/settings.xml</argument>
-          </arguments>
-          <environmentVariables>
-            <GITHUB_TOKEN>${env.GITHUB_TOKEN}</GITHUB_TOKEN>
-          </environmentVariables>
-        </configuration>
       </plugin>
     </plugins>
   </build>
@@ -216,14 +215,20 @@
       <artifactId>jna</artifactId>
     </dependency>
     <dependency>
-      <groupId>cglib</groupId>
-      <artifactId>cglib</artifactId>
+      <groupId>net.bytebuddy</groupId>
+      <artifactId>byte-buddy</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.maven.resolver</groupId>
+      <artifactId>maven-resolver-api</artifactId>
+      <version>1.9.15</version>
     </dependency>
 
     <dependency>
       <groupId>com.github.umjammer</groupId>
       <artifactId>vavi-commons</artifactId>
-      <version>1.1.8</version>
+      <version>1.1.9</version>
       <scope>test</scope>
     </dependency>
   </dependencies>

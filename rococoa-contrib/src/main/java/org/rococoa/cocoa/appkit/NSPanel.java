@@ -1,5 +1,3 @@
-package org.rococoa.cocoa.appkit;
-
 /*
  * Copyright (c) 2002-2009 David Kocher. All rights reserved.
  *
@@ -18,6 +16,9 @@ package org.rococoa.cocoa.appkit;
  * Bug fixes, suggestions and comments should be sent to:
  * dkocher@cyberduck.ch
  */
+
+package org.rococoa.cocoa.appkit;
+
 
 /// <i>native declaration : :83</i>
 public abstract class NSPanel extends NSWindow {

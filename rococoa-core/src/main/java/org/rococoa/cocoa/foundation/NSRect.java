@@ -25,12 +25,18 @@ import java.awt.geom.Rectangle2D;
 import java.util.Arrays;
 import java.util.List;
 
+import com.sun.jna.Pointer;
 import com.sun.jna.Structure;
+import org.rococoa.cocoa.CGFloat;
+
 
 /**
+ * ⚠ this is Structure.ByValue
+ *
  * @author <a href="mailto:harald.kuhr@gmail.com">Harald Kuhr</a>
  */
 public class NSRect extends Structure implements Structure.ByValue {
+
     public NSPoint origin;
     public NSSize size;
 
@@ -38,28 +44,42 @@ public class NSRect extends Structure implements Structure.ByValue {
         this(new NSPoint(0, 0), new NSSize());
     }
 
+    public NSRect(int x, int y, int w, int h) {
+        origin = new NSPoint(x, y);
+        size = new NSSize(w, h);
+        write();
+    }
+
     public NSRect(NSPoint origin, NSSize size) {
         this.origin = origin;
         this.size = size;
+        write();
     }
 
     public NSRect(Point2D origin, Dimension2D size) {
         this.origin = new NSPoint(origin);
         this.size = new NSSize(size);
+        write();
     }
 
     public NSRect(Rectangle2D rect) {
         this.origin = new NSPoint(rect.getX(), rect.getY());
         this.size = new NSSize(rect.getWidth(), rect.getHeight());
+        write();
     }
 
     public NSRect(double w, double h) {
         this.origin = new NSPoint(0, 0);
         this.size = new NSSize(w, h);
+        write();
     }
 
     public Rectangle2D getBounds() {
         return new Rectangle2D.Double(origin.x.doubleValue(), origin.y.doubleValue(), size.width.doubleValue(), size.height.doubleValue());
+    }
+
+    public NSRect(Pointer p) {
+        super(p);
     }
 
     @Override

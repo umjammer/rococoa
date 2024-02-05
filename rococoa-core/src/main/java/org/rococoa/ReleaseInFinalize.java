@@ -24,6 +24,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+
 /**
  * Marker to allow us to disable CFRelease'ing an id when its Java proxy is finalized.
  * <p>
@@ -33,5 +34,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 public @interface ReleaseInFinalize {
+
     boolean value();
 }

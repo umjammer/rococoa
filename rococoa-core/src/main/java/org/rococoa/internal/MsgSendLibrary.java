@@ -19,24 +19,43 @@
 
 package org.rococoa.internal;
 
-
 import org.rococoa.ID;
 import org.rococoa.Selector;
 
 import com.sun.jna.Library;
 import com.sun.jna.Structure;
 
+
 /**
  * JNA Library for special message send calls, called and marshalled specially.
+ * <p>
+ * TODO objc_msgSend_*() varargs has abi problems
+ * @see "https://github.com/java-native-access/jna/issues/1476#issuecomment-1292804072"
  */
-public interface MsgSendLibrary extends Library {                
+public interface MsgSendLibrary extends Library {
     // This doesn't exist in the library, but is synthesised by msgSendHandler
-    Object syntheticSendMessage(Class<?> returnType, ID receiver, Selector selector, Object... args);
+    Object syntheticSendMessage(Class<?> returnType, ID receiver, Selector selector);
+    Object syntheticSendMessage(Class<?> returnType, ID receiver, Selector selector, Object arg);
+    Object syntheticSendMessage(Class<?> returnType, ID receiver, Selector selector, Object arg, Object arg2);
+    Object syntheticSendMessage(Class<?> returnType, ID receiver, Selector selector, Object arg, Object arg2, Object arg3);
+    Object syntheticSendMessage(Class<?> returnType, ID receiver, Selector selector, Object arg, Object arg2, Object arg3, Object arg4);
+    Object syntheticSendMessage(Class<?> returnType, ID receiver, Selector selector, Object arg, Object arg2, Object arg3, Object arg4, Object arg5);
+    Object syntheticSendMessage(Class<?> returnType, ID receiver, Selector selector, Object arg, Object arg2, Object arg3, Object arg4, Object arg5, Object arg6);
+    Object syntheticSendMessage(Class<?> returnType, ID receiver, Selector selector, Object arg, Object arg2, Object arg3, Object arg4, Object arg5, Object arg6, Object arg7);
+    Object syntheticSendMessage(Class<?> returnType, ID receiver, Selector selector, Object arg, Object arg2, Object arg3, Object arg4, Object arg5, Object arg6, Object arg7, Object arg8);
     Object syntheticSendVarArgsMessage(Class<?> returnType, ID receiver, Selector selector, Object... args);
 
     // We don't call these directly, but through syntheticSendMessage
-    Object objc_msgSend(ID receiver, Selector selector, Object... args);
     Structure objc_msgSend_fpret(ID receiver, Selector selector, Object... args);
     Object objc_msgSend(ID receiver, Selector selector, Object arg, Object... args);
     Structure objc_msgSend_stret(ID receiver, Selector selector, Object... args);
+    Object objc_msgSend(ID receiver, Selector selector);
+    Object objc_msgSend(ID receiver, Selector selector, Object arg);
+    Object objc_msgSend(ID receiver, Selector selector, Object arg, Object arg2);
+    Object objc_msgSend(ID receiver, Selector selector, Object arg, Object arg2, Object arg3);
+    Object objc_msgSend(ID receiver, Selector selector, Object arg, Object arg2, Object arg3, Object arg4);
+    Object objc_msgSend(ID receiver, Selector selector, Object arg, Object arg2, Object arg3, Object arg4, Object arg5);
+    Object objc_msgSend(ID receiver, Selector selector, Object arg, Object arg2, Object arg3, Object arg4, Object arg5, Object arg6);
+    Object objc_msgSend(ID receiver, Selector selector, Object arg, Object arg2, Object arg3, Object arg4, Object arg5, Object arg6, Object arg7);
+    Object objc_msgSend(ID receiver, Selector selector, Object arg, Object arg2, Object arg3, Object arg4, Object arg5, Object arg6, Object arg7, Object arg8);
 }

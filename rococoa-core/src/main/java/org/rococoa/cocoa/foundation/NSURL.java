@@ -19,17 +19,12 @@
 
 package org.rococoa.cocoa.foundation;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.rococoa.ID;
 import org.rococoa.ObjCClass;
-import org.rococoa.ObjCObjectByReference;
-import org.rococoa.Rococoa;
 
 
 /// <i>native declaration : :15</i>
 public abstract class NSURL extends NSObject {
+
     @SuppressWarnings("hiding")
     private static final _Class CLASS = org.rococoa.Rococoa.createClass("NSURL", _Class.class);
 
@@ -217,12 +212,14 @@ public abstract class NSURL extends NSObject {
      * <i>from NSURLLoading native declaration : :84</i>
      */
     public abstract NSData resourceDataUsingCache(boolean shouldUseCache);
-    /**
+
+    /*
      * <i>from NSURLLoading native declaration : :85</i><br>
      * Conversion Error : /// Original signature : <code>void loadResourceDataNotifyingClient(null, BOOL)</code><br>
      * - (void)loadResourceDataNotifyingClient:(null)client usingCache:(BOOL)shouldUseCache; // Starts an asynchronous load of the data, registering delegate to receive notification.  Only one such background load can proceed at a time.<br>
      *  (Argument client cannot be converted)
      */
+
     /**
      * Original signature : <code>propertyForKey(String*)</code><br>
      * <i>from NSURLLoading native declaration : :86</i>

@@ -19,19 +19,18 @@
 
 package org.rococoa;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Proxy;
+import java.util.logging.Logger;
 
-import net.sf.cglib.core.DefaultNamingPolicy;
-import net.sf.cglib.core.Predicate;
-import net.sf.cglib.proxy.Enhancer;
-
+import net.bytebuddy.ByteBuddy;
+import net.bytebuddy.implementation.MethodDelegation;
+import net.bytebuddy.matcher.ElementMatchers;
 import org.rococoa.cocoa.CFIndex;
 import org.rococoa.internal.OCInvocationCallbacks;
 import org.rococoa.internal.ObjCObjectInvocationHandler;
 import org.rococoa.internal.VarArgsUnpacker;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Static factory for creating Java wrappers for Objective-C instances, and Objective-C
@@ -79,10 +78,7 @@ public abstract class Rococoa  {
             String ocFactoryName, 
             boolean retain,
             Object... args) {
-        if (logging.isLoggable(Level.FINEST)) {
-            logging.finest(String.format("creating [%s (%s)].%s(%s)",
-                    ocClassName, javaClass.getName(), ocFactoryName, new VarArgsUnpacker(args)));
-        }
+logging.finest(String.format("creating [%s (%s)].%s(%s)", ocClassName, javaClass.getName(), ocFactoryName, new VarArgsUnpacker(args)));
         ID ocClass = Foundation.getClass(ocClassName);
         ID ocInstance = Foundation.send(ocClass, ocFactoryName, ID.class, args);
         CFIndex initialRetainCount = Foundation.cfGetRetainCount(ocInstance);
@@ -160,30 +156,31 @@ public abstract class Rococoa  {
     }
 
     /**
-     * Create a java.lang.reflect.Proxy or cglib proxy of type, which forwards
+     * Create a java.lang.reflect.Proxy or ByteBuddy proxy of type, which forwards
      * invocations to invocationHandler.
      */
     @SuppressWarnings("unchecked")
     private static <T> T createProxy(Class<T> type, ObjCObjectInvocationHandler invocationHandler) {
         if (type.isInterface()) {
+logging.finest("createProxy: java: " + type);
             return (T) Proxy.newProxyInstance(
                 invocationHandler.getClass().getClassLoader(), 
                 new Class[] {type}, invocationHandler);
         } else {
-            Enhancer e = new Enhancer();
-            e.setUseCache(true); // make sure that we reuse if we've already defined
-            e.setNamingPolicy(new DefaultNamingPolicy() {
-                public String getClassName(String prefix, String source, Object key, Predicate names) {
-                    if (source.equals(net.sf.cglib.proxy.Enhancer.class.getName())) {
-                        return type.getName() + "$$ByRococoa";
-                    }
-                    else {
-                        return super.getClassName(prefix, source, key, names);
-                    }
-                }});
-            e.setSuperclass(type);
-            e.setCallback(invocationHandler);
-            return (T) e.create();
+logging.finest("createProxy: ByteBuddy: " + type);
+            try {
+                // TODO cache, TypeCache breaks instance individuality
+                return new ByteBuddy()
+                        .subclass(type)
+                        .name(type.getName() + "$$ByRococoa")
+                        .method(ElementMatchers.any()).intercept(MethodDelegation.to(invocationHandler))
+                        .make()
+                        .load(type.getClassLoader())
+                        .getLoaded().getDeclaredConstructor().newInstance();
+            } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
+                e.printStackTrace();
+                throw new IllegalStateException(e);
+            }
         }
     }
 

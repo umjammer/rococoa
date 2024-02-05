@@ -39,7 +39,6 @@ import org.rococoa.cocoa.foundation.NSRange;
 import org.rococoa.cocoa.foundation.NSString;
 import org.rococoa.cocoa.foundation.NSUInteger;
 import org.rococoa.cocoa.foundation.NSURL;
-import org.rococoa.cocoa.vision.VNDetectHumanBodyPoseRequest;
 import org.rococoa.contrib.AbstractPropertyDictionary;
 import org.rococoa.contrib.NativeEnum;
 
@@ -188,7 +187,7 @@ public abstract class NSSpeechSynthesizer extends NSObject {
         if (delegate != null) {
             this.delegate = delegate;
             delegateProxy = Rococoa.proxy(delegate);
-logger.severe(String.format("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ delegate: %16x", this.delegateProxy.id().longValue()));
+logger.finer(String.format("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ delegate: %16x", this.delegateProxy.id().longValue()));
             setDelegate(this.delegateProxy.id());
         }
     }
@@ -770,7 +769,13 @@ logger.severe(String.format("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ delegate: %16x", 
 
     /**
      * Set the volume
-     *
+     * <p>
+     * Volumes are expressed in floating-point units ranging from 0.0 through 1.0. A value of 0.0
+     * corresponds to silence, and a value of 1.0 corresponds to the maximum possible volume.
+     * Volume units lie on a scale that is linear with amplitude or voltage. A doubling of
+     * perceived loudness corresponds to a doubling of the volume. Setting a value outside
+     * this range is undefined.
+     * </p>
      * @param volume the volume to use
      */
     public abstract void setVolume(float volume);

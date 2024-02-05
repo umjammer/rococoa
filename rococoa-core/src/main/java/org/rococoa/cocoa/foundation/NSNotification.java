@@ -19,8 +19,10 @@
  
 package org.rococoa.cocoa.foundation;
 
+import org.rococoa.ID;
 import org.rococoa.ObjCClass;
 import org.rococoa.Rococoa;
+import org.rococoa.Selector;
 
 
 public abstract class NSNotification extends NSObject {
@@ -38,4 +40,6 @@ public abstract class NSNotification extends NSObject {
     public abstract NSObject object();
 
     public abstract String name();
+
+    public abstract void addObserver_selector_name_object(ID observer, Selector aSelector, String aName, ID anObject);
 }

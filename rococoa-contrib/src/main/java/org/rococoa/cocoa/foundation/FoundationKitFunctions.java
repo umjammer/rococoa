@@ -21,29 +21,17 @@ package org.rococoa.cocoa.foundation;
 
 import java.util.Collections;
 
-import com.sun.jna.Pointer;
-import org.rococoa.cocoa.CFIndex;
-
-import org.rococoa.internal.RococoaTypeMapper;
-
 import com.sun.jna.Library;
 import com.sun.jna.Native;
-import com.sun.jna.platform.mac.CoreFoundation;
+import org.rococoa.cocoa.CGFloat;
+import org.rococoa.cocoa.coregraphics.CGRect;
+import org.rococoa.internal.RococoaTypeMapper;
+
 
 public interface FoundationKitFunctions extends Library {
+
     FoundationKitFunctions library = Native.load(
         "Foundation", FoundationKitFunctions.class, Collections.singletonMap(Library.OPTION_TYPE_MAPPER, new RococoaTypeMapper()));
-
-    /**
-     * <i>native declaration : /System/Library/Frameworks/ApplicationServices.framework/Headers/../Frameworks/CoreGraphics.framework/Headers/CGGeometry.h:36</i><br>
-     * enum values
-     */
-    interface CGRectEdge {
-        int CGRectMinXEdge = 0;
-        int CGRectMinYEdge = 1;
-        int CGRectMaxXEdge = 2;
-        int CGRectMaxYEdge = 3;
-    }
 
     /**
      * <i>native declaration : /System/Library/Frameworks/ApplicationServices.framework/Headers/../Frameworks/CoreGraphics.framework/Headers/CGGeometry.h</i><br>
@@ -141,6 +129,31 @@ public interface FoundationKitFunctions extends Library {
      * <i>native declaration : /System/Library/Frameworks/ApplicationServices.framework/Headers/../Frameworks/framework/Headers/CGGeometry.h:448</i>
      */
     boolean NSEqualSizes(NSSize aSize, NSSize bSize);
+
+    /** Creates a new NSRect from the specified values. */
+    static NSRect /* NS_INLINE */ NSMakeRect(CGFloat x, CGFloat y, CGFloat w, CGFloat h) {
+        NSRect r = new NSRect();
+        r.origin.x = x;
+        r.origin.y = y;
+        r.size.width = w;
+        r.size.height = h;
+        r.write();
+        return r;
+    }
+
+    /** Returns a CGRect typecast from an NSRect. */
+    static /* NS_INLINE */ CGRect NSRectToCGRect(NSRect rect) {
+        CGRect cgRect = new CGRect(rect.getPointer());
+        cgRect.read();
+        return cgRect;
+    }
+
+    /** Returns an NSRect typecast from a CGRect. */
+    static /* NS_INLINE */ NSRect NSRectFromCGRect(CGRect rect) {
+        NSRect nsRect = new NSRect(rect.getPointer());
+        nsRect.read();
+        return nsRect;
+    }
 
     /**
      * Original signature : <code>BOOL NSEqualRects(NSRect, NSRect)</code><br>
@@ -281,8 +294,8 @@ public interface FoundationKitFunctions extends Library {
      * NSSearchPathDomainMask, BOOL)</code><br>
      * <i>native declaration : /System/Library/Frameworks/Foundation.framework/Headers/NSPathUtilities.h:106</i><br>
      *
-     * @param directory  @see NSSearchPathDirectory<br>
-     * @param domainMask @see NSSearchPathDomainMask
+     * @param directory  see {@link NSSearchPathDirectory}<br>
+     * @param domainMask see {@link NSSearchPathDomainMask}
      */
     NSArray NSSearchPathForDirectoriesInDomains(int directory, int domainMask, boolean expandTilde);
 
@@ -291,32 +304,6 @@ public interface FoundationKitFunctions extends Library {
      * TODO duplicated
      * @param format Statement
      */
+    @Deprecated(since = "aarch64")
     void NSLog(String format, String... args);
-
-    CFStringRef CFStringCreateWithCharacters(CFAllocatorRef allocator, char[] chars, CFIndex index);
-
-    /**
-     * Releases a Core Foundation object. If the retain count of cf becomes zero the memory allocated to the object is
-     * deallocated and the object is destroyed. If you create, copy, or explicitly retain (see the CFRetain function) a
-     * Core Foundation object, you are responsible for releasing it when you no longer need it (see Memory Management
-     * Programming Guide for Core Foundation).
-     *
-     * @param ref A CFType object to release. This value must not be NULL.
-     */
-    void CFRelease(CoreFoundation.CFTypeRef ref);
-
-    void CFRunLoopAddSource(Pointer/*CFRunLoopRef*/ rl, Pointer/*CFRunLoopSourceRef*/ source, CFStringRef/*CFRunLoopMode*/ mode);
-
-    // TODO duplicated
-    Pointer kCFAllocatorDefault = null;
-
-    Pointer/*CFRunLoopSourceRef*/ CFMachPortCreateRunLoopSource(CFAllocatorRef allocator, Pointer/*CFMachPortRef*/ port, CFIndex order);
-
-    CFStringRef kCFRunLoopCommonModes = CFStringRef.toCFString("kCFRunLoopCommonModes");
-
-    Pointer CFRunLoopGetCurrent();
-
-    void CFRunLoopRun();
-
-    void CFRunLoopStop(Pointer runningLoop);
 }

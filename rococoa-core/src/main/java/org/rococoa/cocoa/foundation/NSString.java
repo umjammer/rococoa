@@ -30,6 +30,7 @@ public abstract class NSString extends NSObject {
 
     public interface _Class extends ObjCClass {
         NSString stringWithString(String string);
+        @Deprecated(since = "aarch64")
         NSString stringWithFormat(String string, NSObject...objects);
     }
 

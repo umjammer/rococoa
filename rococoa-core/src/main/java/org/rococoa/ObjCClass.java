@@ -26,19 +26,18 @@ package org.rococoa;
  * Note that in Objective-C Class is a struct, so there are no methods to call.
  * 
  * @author duncan
- *
  */
 public interface ObjCClass extends ObjCObject {
 
-    public static final _Class CLASS = new _Class();
+    _Class CLASS = new _Class();
 
-    public static class _Class {
+    class _Class {
         public ObjCClass classWithName(String className) {
             return Rococoa.createClass(className, ObjCClass.class);
         }
     }
 
-    public static ObjCClass classWithName(String className) {
+    static ObjCClass classWithName(String className) {
         return CLASS.classWithName(className);
     }
 }

@@ -485,7 +485,7 @@ public abstract class NSFont extends NSObject implements NSCopying {
 
     /**
      * Original signature : <code>BOOL glyphIsEncoded(NSGlyph)</code><br>
-     * Can be deduced by aGlyph < [NSFont numberOfGlyphs] since only NSNativeShortGlyphPacking is supported.<br>
+     * Can be deduced by aGlyph &lt; [NSFont numberOfGlyphs] since only NSNativeShortGlyphPacking is supported.<br>
      * <i>from NSFontDeprecated native declaration : :215</i>
      */
     public abstract boolean glyphIsEncoded(int aGlyph);

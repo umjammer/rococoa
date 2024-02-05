@@ -37,16 +37,18 @@ import org.rococoa.ID;
 import org.rococoa.ObjCObject;
 import org.rococoa.Rococoa;
 import org.rococoa.Selector;
-import org.rococoa.cocoa.foundation.NSArray;
-import org.rococoa.cocoa.foundation.NSAutoreleasePool;
 import org.rococoa.cocoa.appkit.NSInvocationOperation;
 import org.rococoa.cocoa.appkit.NSOperation;
 import org.rococoa.cocoa.appkit.NSOperationQueue;
+import org.rococoa.cocoa.foundation.NSArray;
+import org.rococoa.cocoa.foundation.NSAutoreleasePool;
 
-/** GCDExecutorService runs tasks by passing them to Grand Central Dispatch.
- *  Presently, every <code>GCDExecutorService</code> creates its own
- *  <code>NSOperationQueue</code> underneath.
- *  @author Andrew Thompson (lordpixel@mac.com)
+
+/**
+ * GCDExecutorService runs tasks by passing them to Grand Central Dispatch.
+ * Presently, every <code>GCDExecutorService</code> creates its own
+ * <code>NSOperationQueue</code> underneath.
+ * @author Andrew Thompson (lordpixel@mac.com)
  */
 public class GCDExecutorService extends AbstractExecutorService {
     /**An Object-C selector representing a run() method*/
@@ -73,10 +75,6 @@ public class GCDExecutorService extends AbstractExecutorService {
     }
 
     public void shutdown() {
-        SecurityManager sm = System.getSecurityManager();
-	if ( sm != null ) {
-            sm.checkPermission(shutdownPerm);
-        }
         try {
             shutdownLock.lock();
             state = State.SHUTDOWN;
@@ -87,10 +85,6 @@ public class GCDExecutorService extends AbstractExecutorService {
     }
 
     public List<Runnable> shutdownNow() {
-        SecurityManager sm = System.getSecurityManager();
-	if ( sm != null ) {
-            sm.checkPermission(shutdownPerm);
-        }
         return doWithAutoreleasePool(new Callable<List<Runnable>>() {
             public List<Runnable> call() {
                 try {

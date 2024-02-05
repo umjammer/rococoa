@@ -63,7 +63,6 @@ public class FoundationRetainReleaseTest extends RococoaTestCase {
         // causes count to go to 0 and dispose will happen
     }
 
-    @Disabled("by vavi because of crash")
     @Test public void testInitedObject() {
         NSAutoreleasePool pool = NSAutoreleasePool.new_();
 

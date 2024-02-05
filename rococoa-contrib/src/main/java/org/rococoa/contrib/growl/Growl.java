@@ -28,9 +28,9 @@ import org.rococoa.cocoa.appkit.NSDistributedNotificationCenter;
 import org.rococoa.cocoa.appkit.NSImage;
 import org.rococoa.cocoa.foundation.NSArray;
 import org.rococoa.cocoa.foundation.NSDictionary;
+import org.rococoa.cocoa.foundation.NSMutableArray;
 import org.rococoa.cocoa.foundation.NSMutableDictionary;
 import org.rococoa.cocoa.foundation.NSNumber;
-import org.rococoa.cocoa.foundation.NSObject;
 import org.rococoa.cocoa.foundation.NSString;
 
 /**
@@ -92,26 +92,25 @@ public final class Growl {
     // The notification center
     private final NSDistributedNotificationCenter theCenter;
 
-    private static NSArray toNSArray(final List<String> strings) {
+    private static NSArray toNSArray(List<String> strings) {
         if (strings == null) {
             return null;
         }
 
-        return toNSArray(strings.toArray(new String[strings.size()]));
+        return toNSArray(strings.toArray(String[]::new));
     }
 
-    private static NSArray toNSArray(final String... strings) {
+    private static NSArray toNSArray(String... strings) {
         if (strings == null) {
             return null;
         }
 
-        NSObject[] types = new NSObject[strings.length];
-        for (int i = 0; i < strings.length; i++) {
-            types[i] = NSString.stringWithString(strings[i]);
-
+        NSMutableArray types = NSMutableArray.array();
+        for (String string : strings) {
+            types.addObject(NSString.stringWithString(string));
         }
 
-        return NSArray.CLASS.arrayWithObjects(types);
+        return NSArray.CLASS.arrayWithArray(types);
     }
 
 //    private static NSDictionary toNSDictionary(final Map<?, ?> map) {

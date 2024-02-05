@@ -121,7 +121,7 @@ fflush(stderr);
 - (BOOL) testGetFloatByValue: (float) f {
 fprintf(stderr, "%3.1f\n", f);
 fflush(stderr);
-	return f == 3.14;
+	return f == (float) 3.14;
 }
 
 @end

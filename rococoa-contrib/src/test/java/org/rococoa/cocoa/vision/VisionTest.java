@@ -12,10 +12,14 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicInteger;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -27,6 +31,14 @@ import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import org.rococoa.cocoa.coregraphics.CGImage;
 import org.rococoa.cocoa.coregraphics.CGPoint;
 import vavi.util.Debug;
+
+import static org.rococoa.cocoa.vision.VNHumanBodyPoseObservation.BodyLandmarkRegionKeyTorso;
+import static org.rococoa.cocoa.vision.VNHumanBodyPoseObservation.LeftHip;
+import static org.rococoa.cocoa.vision.VNHumanBodyPoseObservation.LeftShoulder;
+import static org.rococoa.cocoa.vision.VNHumanBodyPoseObservation.Neck;
+import static org.rococoa.cocoa.vision.VNHumanBodyPoseObservation.RightHip;
+import static org.rococoa.cocoa.vision.VNHumanBodyPoseObservation.RightShoulder;
+import static org.rococoa.cocoa.vision.VNHumanBodyPoseObservation.Root;
 
 
 class VisionTest {
@@ -53,23 +65,24 @@ Debug.println("points: " + points.length);
 Debug.println((System.currentTimeMillis() - t) + " ms");
             AtomicInteger i = new AtomicInteger(1);
             Arrays.stream(points).forEach(p -> {
-                CGPoint cp = (VisionLibrary.library.VNImagePointForNormalizedPoint(
-                    p, new NativeLong(cgImage.getWidth()), new NativeLong(cgImage.getHeight())));
-                int x = cp.x.intValue();
-                int y = cgImage.getHeight() - cp.y.intValue();
+                Point np = cgImage.normalize(p);
                 g.setColor(Color.green);
                 g.setStroke(new BasicStroke(W));
-                g.drawArc(x - W, y - W, 2 * W, 2 * W, 0, 360);
+                g.drawArc(np.x - W, np.y - W, 2 * W, 2 * W, 0, 360);
                 g.setFont(new Font("Dialog", Font.PLAIN, 32));
-                g.drawString(String.valueOf(i.getAndIncrement()), x - 2 * W, y - 2 * W);
+                g.drawString(String.valueOf(i.getAndIncrement()), np.x - 2 * W, np.y - 2 * W);
             });
-        });
+        }, BodyLandmarkRegionKeyTorso, Neck, RightShoulder, RightHip, Root, LeftHip, LeftShoulder);
         show(image);
     }
 
-    /** */
-    void show(BufferedImage image) {
+    /** using cdl cause junit stops awt thread suddenly */
+    void show(BufferedImage image) throws Exception {
+        CountDownLatch cdl = new CountDownLatch(1);
         JFrame frame = new JFrame();
+        frame.addWindowListener(new WindowAdapter() {
+            @Override public void windowClosing(WindowEvent e) { cdl.countDown(); }
+        });
         JPanel panel = new JPanel() {
             public void paintComponent(Graphics g) {
                 g.drawImage(image, 0, 0, this);
@@ -78,9 +91,8 @@ Debug.println((System.currentTimeMillis() - t) + " ms");
         panel.setPreferredSize(new Dimension(image.getWidth(), image.getHeight()));
         frame.setContentPane(new JScrollPane(panel));
         frame.setTitle("Vision");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
-        while (true) Thread.yield();
+        cdl.await();
     }
 }

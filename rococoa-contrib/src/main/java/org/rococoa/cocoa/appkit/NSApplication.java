@@ -49,11 +49,10 @@ public abstract class NSApplication extends NSObject {
     static public final NSApplication NSApp = NSApplication.CLASS.sharedApplication();
 
     /*
-    Tasks
-Getting the Application
-
-    * + sharedApplication
-*/
+     * Tasks
+     * Getting the Application
+     * + sharedApplication
+     */
     static public NSApplication sharedApplication() {
         return NSApp;
     }
@@ -63,14 +62,13 @@ Getting the Application
     public abstract void stop(ID sender);
 
     /*
-
-Configuring Applications
-
-    * ? applicationIconImage
-    * ? setApplicationIconImage:
-    * ? delegate
-    * ? setDelegate:
-    * */
+     * Configuring Applications
+     *
+     * ? applicationIconImage
+     * ? setApplicationIconImage:
+     * ? delegate
+     * ? setDelegate:
+     */
 
     public abstract NSImage applicationIconImage();
 
@@ -91,7 +89,7 @@ Configuring Applications
      * @see "https://github.com/gnustep/tests-examples/blob/ec7876dd4031c20bfb3aed1ab79809210a1d58e8/gui/Ink/AppDelegate.m"
      */
     interface ServicesProviderCallback extends Callback {
-        void openSelection_userData_error(ID pboard, String userData, ObjCObjectByReference/*NSError*/ error);
+        void openSelection_userData_error(ID pboard, String userData, ObjCObjectByReference /* NSError */ error);
     }
 
     public abstract void setServicesProvider(ID callback);
@@ -113,8 +111,9 @@ Configuring Applications
      * You can use this value to cancel the request later using the {@link #cancelUserAttentionRequest} method.
      */
     public abstract NSInteger requestUserAttention(int requestType);
-    
+
     public abstract void cancelUserAttentionRequest(NSInteger request);
+
     /*
 
 Launching Applications
@@ -158,6 +157,7 @@ Managing the Event Loop
     * ? runModalForWindow:
     */
     public abstract int runModalForWindow(NSWindow window);
+
     /*
     * ? stopModal
     * ? stopModalWithCode:
@@ -219,12 +219,11 @@ Managing Window Layers
 Accessing the Main Menu
 
     * ? mainMenu
-    * */
-
+    */
     public abstract NSMenu mainMenu();
 
     /*
-    * ? setMainMenu:
+     * ? setMainMenu:
 
 Managing the Window Menu
 
@@ -325,5 +324,5 @@ Deprecated
     */
 
     /** Indicates whether the receiver can send and receive the specified pasteboard types. */
-     public abstract ID validRequestorForSendType_returnType(String/*NSPasteboardType*/ sendType, String/*NSPasteboardType*/ returnType);
+    public abstract ID validRequestorForSendType_returnType(String/*NSPasteboardType*/ sendType, String/*NSPasteboardType*/ returnType);
 }

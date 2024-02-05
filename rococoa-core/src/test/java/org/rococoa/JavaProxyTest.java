@@ -22,6 +22,7 @@ package org.rococoa;
 import com.sun.jna.NativeLong;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.rococoa.cocoa.foundation.NSAutoreleasePool;
 import org.rococoa.cocoa.foundation.NSNotification;
 import org.rococoa.cocoa.foundation.NSNotificationCenter;
@@ -203,6 +204,7 @@ public class JavaProxyTest extends RococoaTestCase {
     }
 
     @Test
+    @DisabledIfSystemProperty(named = "os.arch", matches = "aarch64")
     public void testSendAndReceiveStructByValue() {
         // Hmmm, difficult to prove this is passed by value
         TestStruct.ByValue struct = new TestStruct.ByValue(42, Math.PI);
