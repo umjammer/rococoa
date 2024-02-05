@@ -112,7 +112,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
-        <version>3.0.0</version>
+        <version>3.2.2</version>
         <configuration>
           <reuseForks>false</reuseForks>
           <argLine>
@@ -185,7 +185,7 @@
             <argument>-DartifactId=${project.artifactId}</argument>
             <argument>-Dversion=${project.version}</argument>
             <argument>-Dpackaging=dylib</argument>
-            <argument>-Dfile=${project.build.testOutputDirectory}/librococoa.dylib</argument>
+                <argument>-Dfile=${project.build.directory}/librococoa-${project.version}.dylib</argument>
             <argument>-DrepositoryId=github</argument>
             <argument>-Durl=https://maven.pkg.github.com/umjammer/rococoa</argument>
             <argument>-DgeneratePom=false</argument>
@@ -217,6 +217,12 @@
     <dependency>
       <groupId>net.bytebuddy</groupId>
       <artifactId>byte-buddy</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.maven.resolver</groupId>
+      <artifactId>maven-resolver-api</artifactId>
+      <version>1.9.15</version>
     </dependency>
 
     <dependency>

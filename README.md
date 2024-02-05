@@ -53,11 +53,13 @@ implementation of Objective-C interfaces in Java.
    * https://github.com/ronaldoussoren/pyobjc/blob/77b98382e52818690449111cd2e23cd469b53cf5/pyobjc-core/Modules/objc/block_support.m
    * https://docs.rs/block/latest/block/
 * ~~CIFilter~~ (done)
+  * CGImage fails around density related 
 * ~~`cglib` is mostly [suspended](https://github.com/cglib/cglib#readme)~~
    * ~~`cglib` recommends [ByteBuddy](https://bytebuddy.net/) that is based on `asm` same as the `cglib`~~ (done)
    * cache classes (ByteBuddy)
 * ~~clean up logging~~
-* https://github.com/scijava/native-lib-loader
+* native library loading
+  * https://github.com/scijava/native-lib-loader
 * dynamic method creation
   * invokedinamic?
   * ByteBuddy's method interception???
@@ -65,6 +67,8 @@ implementation of Objective-C interfaces in Java.
   * https://stackoverflow.com/a/65999820
 * activate application
   * https://developer.apple.com/documentation/appkit/nsrunningapplication?language=objc
+* separate same parts of jna-platform (like jna-platform-extended)
+* deprecate rococoa-contrib
 
 ## References
  
