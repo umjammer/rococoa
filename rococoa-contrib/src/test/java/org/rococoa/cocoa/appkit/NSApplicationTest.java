@@ -9,8 +9,13 @@ package org.rococoa.cocoa.appkit;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
+import java.util.Arrays;
+import java.util.NoSuchElementException;
 import java.util.concurrent.CountDownLatch;
 
+import com.sun.jna.Pointer;
+import com.sun.tools.attach.VirtualMachine;
+import com.sun.tools.attach.VirtualMachineDescriptor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,6 +23,7 @@ import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import org.rococoa.ID;
 import org.rococoa.ObjCObject;
 import org.rococoa.Rococoa;
+import org.rococoa.cocoa.CGFloat;
 import org.rococoa.cocoa.foundation.FoundationKitFunctions;
 import org.rococoa.cocoa.foundation.NSData;
 import org.rococoa.cocoa.foundation.NSPasteboard;
@@ -26,6 +32,14 @@ import vavi.util.Debug;
 import vavi.util.StringUtil;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.rococoa.cocoa.coregraphics.CoreGraphicsLibrary.kCGEventFlagMaskCommand;
+import static org.rococoa.cocoa.coregraphics.CoreGraphicsLibrary.kCGEventLeftMouseDown;
+import static org.rococoa.cocoa.coregraphics.CoreGraphicsLibrary.kCGEventLeftMouseUp;
+import static org.rococoa.cocoa.coregraphics.CoreGraphicsLibrary.kCGEventMouseMoved;
+import static org.rococoa.cocoa.coregraphics.CoreGraphicsLibrary.kCGEventSourceStateHIDSystemState;
+import static org.rococoa.cocoa.coregraphics.CoreGraphicsLibrary.kCGHIDEventTap;
+import static org.rococoa.cocoa.coregraphics.CoreGraphicsLibrary.kCGMouseButtonLeft;
+import static org.rococoa.cocoa.coregraphics.CoreGraphicsLibrary.library;
 
 
 /**
@@ -45,7 +59,7 @@ class NSApplicationTest {
     }
 
     @Test
-    @DisplayName("TODO wip")
+    @DisplayName("test dialog TODO wip")
     @EnabledIfSystemProperty(named = "vavi.test", matches = "ide")
     void test1() throws Exception {
         NSApplication.ServicesProviderCallback servicesProvider = (pboard, userData, error) -> {
@@ -71,6 +85,7 @@ Debug.println(id);
     }
 
     @Test
+    @DisplayName("test clipboard")
     void test2() throws Exception {
         NSPasteboard pasteboard = NSPasteboard.generalPasteboard();
         String string = pasteboard.stringForType(NSPasteboard.StringPboardType);
@@ -81,13 +96,25 @@ System.err.println("dataForType:\n" + StringUtil.getDump(data.getBytes()));
     }
 
     @Test
+    @DisplayName("test display density")
     void test3() throws Exception {
-        FoundationKitFunctions.library.toString();
         NSScreen screen = NSScreen.mainScreen();
         NSRect rect = new NSRect(1000, 1000, 1000, 1000);
 Debug.println("rect: " + rect);
         NSRect converted = screen.convertRectFromBacking(rect);
 Debug.println("converted: " + converted);
 Debug.printf("converted: %d, %d - %d, %d", converted.origin.x.intValue(), converted.origin.y.intValue(), converted.size.width.intValue(), converted.size.height.intValue());
+    }
+
+    @Test
+    @DisplayName("test application window")
+    void test4() throws Exception {
+        System.out.println("frontmost ----");
+        NSRunningApplication fa = NSWorkspace.sharedWorkspace().frontmostApplication();
+        System.out.println(" " + fa.localizedName() + " (" + fa.bundleIdentifier() + ", " + fa.executableURL() + ")");
+        System.out.println("running ----");
+        NSWorkspace.sharedWorkspace().runningApplications().stream()
+                .map(o -> Rococoa.cast(o, NSRunningApplication.class))
+                .forEach(a -> System.out.println(" " + a.localizedName() + " (" + a.bundleIdentifier() + ", " + a.bundleURL() + ")"));
     }
 }
