@@ -10,7 +10,7 @@
   <parent>
     <groupId>org.rococoa</groupId>
     <artifactId>rococoa-parent</artifactId>
-    <version>0.8.5</version>
+    <version>0.8.6</version>
   </parent>
 
   <name>Rococoa Contrib</name>
@@ -85,12 +85,12 @@
       <artifactId>webcam-capture</artifactId>
       <version>0.3.12</version>
       <scope>test</scope>
-
     </dependency>
+
     <dependency>
       <groupId>com.github.eduramiba</groupId>
       <artifactId>webcam-capture-driver-native</artifactId>
-      <version>master-SNAPSHOT</version>
+      <version>dc4b67c6cc</version>
       <scope>test</scope>
     </dependency>
     <dependency>

@@ -9,7 +9,7 @@
   <parent>
     <groupId>org.rococoa</groupId>
     <artifactId>rococoa-parent</artifactId>
-    <version>0.8.5</version>
+    <version>0.8.6</version>
   </parent>
 
   <name>Rococoa Core</name>
@@ -166,36 +166,36 @@
         <artifactId>exec-maven-plugin</artifactId>
         <version>3.1.0</version>
         <executions>
-        <!--
-          because of maven deploy-file uploads source, jar also
-          TODO maven-metadata.xml!/metadata/versioning/latest is not updated
-          TODO how about https://stackoverflow.com/a/37552776/6102938
-         -->
+          <!--
+            because of maven deploy-file uploads source, jar also
+            TODO maven-metadata.xml!/metadata/versioning/latest is not updated
+            TODO how about https://stackoverflow.com/a/37552776/6102938
+           -->
           <execution>
             <id>deploy-library</id>
             <phase>deploy</phase>
             <goals>
               <goal>exec</goal>
             </goals>
-        <configuration>
-          <executable>mvn</executable>
-          <arguments>
-            <argument>deploy:deploy-file</argument>
-            <argument>-DgroupId=${project.groupId}</argument>
-            <argument>-DartifactId=${project.artifactId}</argument>
-            <argument>-Dversion=${project.version}</argument>
-            <argument>-Dpackaging=dylib</argument>
+            <configuration>
+              <executable>mvn</executable>
+              <arguments>
+                <argument>deploy:deploy-file</argument>
+                <argument>-DgroupId=${project.groupId}</argument>
+                <argument>-DartifactId=${project.artifactId}</argument>
+                <argument>-Dversion=${project.version}</argument>
+                <argument>-Dpackaging=dylib</argument>
                 <argument>-Dfile=${project.build.directory}/librococoa-${project.version}.dylib</argument>
-            <argument>-DrepositoryId=github</argument>
-            <argument>-Durl=https://maven.pkg.github.com/umjammer/rococoa</argument>
-            <argument>-DgeneratePom=false</argument>
-            <argument>-s</argument>
-            <argument>${env.GITHUB_WORKSPACE}/settings.xml</argument>
-          </arguments>
-          <environmentVariables>
-            <GITHUB_TOKEN>${env.GITHUB_TOKEN}</GITHUB_TOKEN>
-          </environmentVariables>
-        </configuration>
+                <argument>-DrepositoryId=github</argument>
+                <argument>-Durl=https://maven.pkg.github.com/umjammer/rococoa</argument>
+                <argument>-DgeneratePom=false</argument>
+                <argument>-s</argument>
+                <argument>${env.GITHUB_WORKSPACE}/settings.xml</argument>
+              </arguments>
+              <environmentVariables>
+                <GITHUB_TOKEN>${env.GITHUB_TOKEN}</GITHUB_TOKEN>
+              </environmentVariables>
+            </configuration>
           </execution>
         </executions>
       </plugin>
