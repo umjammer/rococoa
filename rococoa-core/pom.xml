@@ -16,6 +16,37 @@
   <packaging>jar</packaging>
   <url>https://github.com/umjammer/rococoa</url>
 
+  <profiles>
+    <profile>
+      <id>test1</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <version>3.1.0</version>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <configuration>
+              <target>
+                <java classname="Test1" fork="true">
+                  <classpath>
+                    <path location="${project.build.directory}/${project.artifactId}-${project.version}.jar"/>
+                    <path location="${project.build.directory}/${project.artifactId}-${project.version}-tests.jar"/>
+                    <path location="${net.java.dev.jna:jna:jar}"/>
+                    <path location="${net.bytebuddy:byte-buddy:jar}"/>
+                  </classpath>
+                  <arg value="${value}" />
+                </java>
+              </target>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+
   <build>
     <plugins>
       <plugin>
@@ -82,7 +113,7 @@
                 </source>
               </sources>
               <linkerEndOptions>
-                <linkerEndOption>-o ${project.build.directory}/librococoa-${project.version}.dylib</linkerEndOption>
+                <linkerEndOption>-o ${project.build.outputDirectory}/librococoa.dylib</linkerEndOption>
               </linkerEndOptions>
             </configuration>
           </execution>
@@ -105,6 +136,14 @@
             <goals>
               <goal>test-jar</goal>
             </goals>
+            <configuration>
+              <archive>
+                <manifest>
+                  <addClasspath>true</addClasspath>
+                  <mainClass>Test1</mainClass>
+                </manifest>
+              </archive>
+            </configuration>
           </execution>
         </executions>
       </plugin>
@@ -124,81 +163,6 @@
         </configuration>
       </plugin>
 
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-install-plugin</artifactId>
-        <version>3.1.1</version>
-        <executions>
-          <execution>
-            <id>install-test-library</id>
-            <phase>install</phase>
-            <goals>
-              <goal>install-file</goal>
-            </goals>
-            <configuration>
-              <groupId>org.rococoa</groupId>
-              <artifactId>rococoa-core</artifactId>
-              <version>${project.parent.version}</version>
-              <packaging>dylib</packaging>
-              <classifier>test</classifier>
-              <file>${project.build.testOutputDirectory}/librococoa.dylib</file>
-            </configuration>
-          </execution>
-          <execution>
-            <id>install-library</id>
-            <phase>install</phase>
-            <goals>
-              <goal>install-file</goal>
-            </goals>
-            <configuration>
-              <groupId>org.rococoa</groupId>
-              <artifactId>rococoa-core</artifactId>
-              <version>${project.parent.version}</version>
-              <packaging>dylib</packaging>
-              <file>${project.build.directory}/librococoa-${project.version}.dylib</file>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>exec-maven-plugin</artifactId>
-        <version>3.1.0</version>
-        <executions>
-          <!--
-            because of maven deploy-file uploads source, jar also
-            TODO maven-metadata.xml!/metadata/versioning/latest is not updated
-            TODO how about https://stackoverflow.com/a/37552776/6102938
-           -->
-          <execution>
-            <id>deploy-library</id>
-            <phase>deploy</phase>
-            <goals>
-              <goal>exec</goal>
-            </goals>
-            <configuration>
-              <executable>mvn</executable>
-              <arguments>
-                <argument>deploy:deploy-file</argument>
-                <argument>-DgroupId=${project.groupId}</argument>
-                <argument>-DartifactId=${project.artifactId}</argument>
-                <argument>-Dversion=${project.version}</argument>
-                <argument>-Dpackaging=dylib</argument>
-                <argument>-Dfile=${project.build.directory}/librococoa-${project.version}.dylib</argument>
-                <argument>-DrepositoryId=github</argument>
-                <argument>-Durl=https://maven.pkg.github.com/umjammer/rococoa</argument>
-                <argument>-DgeneratePom=false</argument>
-                <argument>-s</argument>
-                <argument>${env.GITHUB_WORKSPACE}/settings.xml</argument>
-              </arguments>
-              <environmentVariables>
-                <GITHUB_TOKEN>${env.GITHUB_TOKEN}</GITHUB_TOKEN>
-              </environmentVariables>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
     </plugins>
   </build>
 

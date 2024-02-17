@@ -104,30 +104,6 @@
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-dependency-plugin</artifactId>
-          <version>3.3.0</version>
-          <executions>
-            <execution>
-              <id>copy</id>
-              <phase>generate-resources</phase>
-              <goals>
-                <goal>copy</goal>
-              </goals>
-              <configuration>
-                <artifactItems>
-                  <artifactItem>
-                    <groupId>org.rococoa</groupId>
-                    <artifactId>rococoa-core</artifactId>
-                    <type>dylib</type>
-                    <classifier>test</classifier>
-                    <overWrite>false</overWrite>
-                    <outputDirectory>${project.build.testOutputDirectory}</outputDirectory>
-                    <destFileName>librococoa.dylib</destFileName>
-                  </artifactItem>
-                </artifactItems>
-              </configuration>
-            </execution>
-          </executions>
         </plugin>
       </plugins>
     </pluginManagement>
@@ -234,13 +210,6 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
-
-  <repositories>
-    <repository>
-      <id>github</id>
-      <url>https://maven.pkg.github.com/umjammer/rococoa-core</url>
-    </repository>
-  </repositories>
 
   <dependencies>
     <dependency>
