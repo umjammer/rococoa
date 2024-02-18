@@ -56,7 +56,7 @@ public class Test1 {
     void test2() throws Exception {
         String jh = System.getProperty("java.home");
 Debug.println("JAVA_HOME: " + jh);
-        ProcessBuilder pb = new ProcessBuilder().command("mvn", "-P", "test1", "antrun:run", "-Dvalue=umjammer");
+        ProcessBuilder pb = new ProcessBuilder().command("mvn", "-P", "test-standalone", "antrun:run", "-Dvalue=umjammer");
         Map<String, String> env = pb.environment();
         env.put("JAVA_HOME", jh);
         pb.redirectErrorStream(true);

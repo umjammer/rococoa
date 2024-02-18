@@ -18,7 +18,7 @@
 
   <profiles>
     <profile>
-      <id>test1</id>
+      <id>test-standalone</id>
       <build>
         <plugins>
           <plugin>
@@ -45,81 +45,94 @@
         </plugins>
       </build>
     </profile>
+
+    <profile>
+      <id>native</id>
+      <activation>
+        <property>
+          <name>env.JITPACK</name>
+          <value>!true</value>
+        </property>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>native-maven-plugin</artifactId>
+            <version>1.0-alpha-11</version>
+            <extensions>true</extensions>
+            <configuration>
+              <compilerProvider>generic-classic</compilerProvider>
+              <compilerStartOptions>
+                <compilerStartOption>-g -Wall -O2 -fomit-frame-pointer -fPIC</compilerStartOption>
+                <compilerStartOption>-arch x86_64 -arch arm64</compilerStartOption>
+              </compilerStartOptions>
+              <linkerStartOptions>
+                <linkerStartOption>-dynamiclib -arch x86_64 -arch arm64
+                  -framework Foundation
+                </linkerStartOption>
+              </linkerStartOptions>
+              <linkerFinalName/>
+            </configuration>
+            <executions>
+              <execution>
+                <id>test-daylib</id>
+                <phase>test-compile</phase>
+                <goals>
+                  <goal>compile</goal>
+                  <goal>link</goal>
+                </goals>
+                <configuration>
+                  <sources>
+                    <source>
+                      <!-- relative to your project directory -->
+                      <directory>src/main/native</directory>
+                      <fileNames>
+                        <fileName>Rococoa.m</fileName>
+                        <fileName>ProxyForJava.m</fileName>
+                        <fileName>ObjCBlocks.m</fileName>
+                        <fileName>test.m</fileName>
+                      </fileNames>
+                    </source>
+                  </sources>
+                  <linkerEndOptions>
+                    <linkerEndOption>-o ${project.build.testOutputDirectory}/librococoa.dylib</linkerEndOption>
+                  </linkerEndOptions>
+                </configuration>
+              </execution>
+              <execution>
+                <id>daylib</id>
+                <phase>prepare-package</phase>
+                <goals>
+                  <goal>compile</goal>
+                  <goal>link</goal>
+                </goals>
+                <configuration>
+                  <sources>
+                    <source>
+                      <!-- relative to your project directory -->
+                      <directory>src/main/native</directory>
+                      <fileNames>
+                        <fileName>Rococoa.m</fileName>
+                        <fileName>ProxyForJava.m</fileName>
+                        <fileName>ObjCBlocks.m</fileName>
+                      </fileNames>
+                    </source>
+                  </sources>
+                  <linkerEndOptions>
+                    <linkerEndOption>-o ${project.build.outputDirectory}/librococoa.dylib</linkerEndOption>
+                  </linkerEndOptions>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
   </profiles>
 
   <build>
     <plugins>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>native-maven-plugin</artifactId>
-        <version>1.0-alpha-11</version>
-        <extensions>true</extensions>
-        <configuration>
-          <compilerProvider>generic-classic</compilerProvider>
-          <compilerStartOptions>
-            <compilerStartOption>-g -Wall -O2 -fomit-frame-pointer -fPIC</compilerStartOption>
-            <compilerStartOption>-arch x86_64 -arch arm64</compilerStartOption>
-          </compilerStartOptions>
-          <linkerStartOptions>
-            <linkerStartOption>-dynamiclib -arch x86_64 -arch arm64
-                    -framework Foundation
-            </linkerStartOption>
-          </linkerStartOptions>
-          <linkerFinalName/>
-        </configuration>
-        <executions>
-          <execution>
-            <id>test-daylib</id>
-            <phase>test-compile</phase>
-            <goals>
-              <goal>compile</goal>
-              <goal>link</goal>
-            </goals>
-            <configuration>
-              <sources>
-                <source>
-                  <!-- relative to your project directory -->
-                  <directory>src/main/native</directory>
-                  <fileNames>
-                    <fileName>Rococoa.m</fileName>
-                    <fileName>ProxyForJava.m</fileName>
-                    <fileName>ObjCBlocks.m</fileName>
-                    <fileName>test.m</fileName>
-                  </fileNames>
-                </source>
-              </sources>
-              <linkerEndOptions>
-                <linkerEndOption>-o ${project.build.testOutputDirectory}/librococoa.dylib</linkerEndOption>
-              </linkerEndOptions>
-            </configuration>
-          </execution>
-          <execution>
-            <id>daylib</id>
-            <phase>compile</phase>
-            <goals>
-              <goal>compile</goal>
-              <goal>link</goal>
-            </goals>
-            <configuration>
-              <sources>
-                <source>
-                  <!-- relative to your project directory -->
-                  <directory>src/main/native</directory>
-                  <fileNames>
-                    <fileName>Rococoa.m</fileName>
-                    <fileName>ProxyForJava.m</fileName>
-                    <fileName>ObjCBlocks.m</fileName>
-                  </fileNames>
-                </source>
-              </sources>
-              <linkerEndOptions>
-                <linkerEndOption>-o ${project.build.outputDirectory}/librococoa.dylib</linkerEndOption>
-              </linkerEndOptions>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>
@@ -154,14 +167,35 @@
         <configuration>
           <reuseForks>false</reuseForks>
           <argLine>
-            -Djava.util.logging.config.file=${project.build.testOutputDirectory}/logging.properties
+            -Djava.util.logging.config.file=${project.build.testOutputDirectory}/test-logging.properties
             --add-opens java.base/java.lang=ALL-UNNAMED
           </argLine>
           <trimStackTrace>false</trimStackTrace>
           <redirectTestOutputToFile>true</redirectTestOutputToFile>
+          <excludes>
+            <exclude>Test1.java</exclude>
+          </excludes>
         </configuration>
       </plugin>
 
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-failsafe-plugin</artifactId>
+        <version>3.1.0</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>integration-test</goal>
+              <goal>verify</goal>
+            </goals>
+            <configuration>
+              <includes>
+                <include>Test1.java</include>
+              </includes>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
   </build>
 
@@ -180,12 +214,6 @@
     <dependency>
       <groupId>net.bytebuddy</groupId>
       <artifactId>byte-buddy</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.apache.maven.resolver</groupId>
-      <artifactId>maven-resolver-api</artifactId>
-      <version>1.9.15</version>
     </dependency>
 
     <dependency>
