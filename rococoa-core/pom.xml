@@ -126,6 +126,21 @@
               </execution>
             </executions>
           </plugin>
+
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <version>3.1.0</version>
+            <goals>
+              <goal>run</goal>
+              <phase>verify</phase>
+            </goals>
+            <configuration>
+              <target>
+                <copy file="${project.build.outputDirectory}/librococoa.dylib" toFile="src/main/resources/librococoa.dylib" />
+              </target>
+            </configuration>
+          </plugin>
         </plugins>
       </build>
     </profile>
@@ -133,6 +148,22 @@
 
   <build>
     <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-clean-plugin</artifactId>
+        <version>3.3.1</version>
+        <configuration>
+          <filesets>
+            <fileset>
+              <directory>${basedir}</directory>
+              <includes>
+                <include>src/main/resources/librococoa.dylib</include>
+              </includes>
+            </fileset>
+          </filesets>
+        </configuration>
+      </plugin>
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>
@@ -215,6 +246,14 @@
       <groupId>net.bytebuddy</groupId>
       <artifactId>byte-buddy</artifactId>
     </dependency>
+
+<!--
+    <dependency>
+      <groupId>org.apache.maven.resolver</groupId>
+      <artifactId>maven-resolver-api</artifactId>
+      <version>1.9.15</version>
+    </dependency>
+-->
 
     <dependency>
       <groupId>com.github.umjammer</groupId>
