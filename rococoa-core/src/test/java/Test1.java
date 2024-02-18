@@ -20,6 +20,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.DisabledIfEnvironmentVariable;
 import org.rococoa.cocoa.foundation.NSString;
 import vavi.util.Debug;
 
@@ -51,7 +52,7 @@ public class Test1 {
     }
 
     @Test
-//    @Disabled
+    @DisabledIfEnvironmentVariable(named = "GITHUB_WORKFLOW", matches = ".*")
     void test2() throws Exception {
         String jh = System.getProperty("java.home");
 Debug.println("JAVA_HOME: " + jh);
