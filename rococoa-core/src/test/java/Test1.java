@@ -4,14 +4,6 @@
  * Programmed by Naohide Sano
  */
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.lang.invoke.CallSite;
-import java.lang.invoke.ConstantCallSite;
-import java.lang.invoke.MethodHandle;
-import java.lang.invoke.MethodType;
-import java.nio.charset.Charset;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.concurrent.CountDownLatch;
@@ -56,7 +48,7 @@ public class Test1 {
     void test2() throws Exception {
         String jh = System.getProperty("java.home");
 Debug.println("JAVA_HOME: " + jh);
-        ProcessBuilder pb = new ProcessBuilder().command("mvn", "-P", "test-standalone", "antrun:run", "-Dvalue=umjammer");
+        ProcessBuilder pb = new ProcessBuilder().command("mvn", "-P", "test-standalone", "antrun:run@integration-test", "-Dvalue=umjammer");
         Map<String, String> env = pb.environment();
         env.put("JAVA_HOME", jh);
         pb.redirectErrorStream(true);

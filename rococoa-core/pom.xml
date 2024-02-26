@@ -247,14 +247,6 @@
       <artifactId>byte-buddy</artifactId>
     </dependency>
 
-<!--
-    <dependency>
-      <groupId>org.apache.maven.resolver</groupId>
-      <artifactId>maven-resolver-api</artifactId>
-      <version>1.9.15</version>
-    </dependency>
--->
-
     <dependency>
       <groupId>com.github.umjammer</groupId>
       <artifactId>vavi-commons</artifactId>

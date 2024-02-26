@@ -24,7 +24,7 @@ import com.sun.jna.Function;
 import java.lang.reflect.Method;
 
 public class MethodFunctionPair {
-    
+
     public final Method method;
     public final Function function;
 

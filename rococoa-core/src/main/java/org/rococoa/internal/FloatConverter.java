@@ -31,37 +31,32 @@ public class FloatConverter implements ToNativeConverter, FromNativeConverter {
 
     public Object toNative(Object value, ToNativeContext context) {
 logger.fine("toNative: " + value + ", " + context);
-        switch (CGFloat.SIZE) {
-        case 4:
-            return value;
-        case 8:
-logger.fine("toNative: " + value + " -> " + ((double) value));
-            return (double) value;
-        default:
-            throw new Error("Unknown Native.LONG_SIZE: " + CGFloat.SIZE);
-        }
+        return switch (CGFloat.SIZE) {
+            case 4 -> value;
+            case 8 -> {
+                logger.fine("toNative: " + value + " -> " + value);
+                yield (double) value;
+            }
+            default -> throw new AssertionError("Unknown Native.LONG_SIZE: " + CGFloat.SIZE);
+        };
     }
 
     public Object fromNative(Object value, FromNativeContext context) {
-        switch (CGFloat.SIZE) {
-        case 4:
-            return value;
-        case 8:
-logger.fine("fromNative: " + value + " -> " + ((Double) value).floatValue());
-            return ((Double) value).floatValue();
-        default:
-            throw new Error("Unknown Native.LONG_SIZE: " + CGFloat.SIZE);
-        }
+        return switch (CGFloat.SIZE) {
+            case 4 -> value;
+            case 8 -> {
+                logger.fine("fromNative: " + value + " -> " + ((Double) value).floatValue());
+                yield ((Double) value).floatValue();
+            }
+            default -> throw new AssertionError("Unknown Native.LONG_SIZE: " + CGFloat.SIZE);
+        };
     }
 
     public Class<?> nativeType() {
-        switch (CGFloat.SIZE) {
-        case 4:
-            return float.class;
-        case 8:
-            return double.class;
-        default:
-            throw new Error("Unknown Native.LONG_SIZE: " + CGFloat.SIZE);
-        }
+        return switch (CGFloat.SIZE) {
+            case 4 -> float.class;
+            case 8 -> double.class;
+            default -> throw new AssertionError("Unknown Native.LONG_SIZE: " + CGFloat.SIZE);
+        };
     }
 }

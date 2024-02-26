@@ -30,7 +30,7 @@ import org.junit.jupiter.api.Test;
 public class RococoaMainThreadTest extends RococoaTestCase {
     private interface TestShunt extends ObjCObject {
         boolean isMainThread();
-    };
+    }
 
     private @RunOnMainThread interface TestShuntOnMainThread extends TestShunt {};
 
