@@ -104,8 +104,7 @@ TestIntIntStruct createIntIntStruct(int a, int b) {
 	return f;
 }
 
-union floatint
-{
+union floatint {
    float f;
    int i;
 };
@@ -122,6 +121,26 @@ fflush(stderr);
 fprintf(stderr, "%3.1f\n", f);
 fflush(stderr);
 	return f == (float) 3.14;
+}
+
+- (int) testBlock: (int) number operation: (MyBlock) operationBlock {
+    int r = operationBlock(number);
+    return r;
+}
+
+- (long) testBlockI: (id) id operation: (MyBlockI) operationBlock {
+    long r = operationBlock(id);
+    return r;
+}
+
+- (id) testBlockS: (NSString*) s operation: (MyBlockS) operationBlock {
+    id r = operationBlock(s);
+    return r;
+}
+
+- (id) testBlockS2: (id) s times: (int) n operation: (MyBlockS2) operationBlock {
+    id r = operationBlock(s, n);
+    return r;
 }
 
 @end
