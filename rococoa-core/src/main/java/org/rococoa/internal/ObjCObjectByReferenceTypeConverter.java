@@ -34,14 +34,17 @@ import com.sun.jna.TypeConverter;
  */
 class ObjCObjectByReferenceTypeConverter<T extends ObjCObject> implements TypeConverter {
 
+    @Override
     public Object fromNative(Object nativeValue, FromNativeContext context) {
 	    throw new UnsupportedOperationException();
     }
 
+    @Override
     public Class<?> nativeType() {
 	    return IDByReference.class;
     }
 
+    @Override
     public Object toNative(Object value, ToNativeContext context) {
 	if (value == null) {
 	    return null;

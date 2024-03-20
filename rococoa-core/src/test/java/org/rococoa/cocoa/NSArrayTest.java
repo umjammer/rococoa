@@ -25,7 +25,6 @@ import org.junit.jupiter.api.Test;
 import org.rococoa.Rococoa;
 import org.rococoa.cocoa.foundation.NSArray;
 import org.rococoa.cocoa.foundation.NSNumber;
-import org.rococoa.cocoa.foundation.NSObject;
 import org.rococoa.test.RococoaTestCase;
 
 public class NSArrayTest extends RococoaTestCase {
@@ -50,6 +49,6 @@ public class NSArrayTest extends RococoaTestCase {
                 NSNumber.of(5),
                 NSNumber.of(6)
         );
-        assertEquals(6, array.stream().count());
+        assertEquals(6, (long) array.size());
     }
 }

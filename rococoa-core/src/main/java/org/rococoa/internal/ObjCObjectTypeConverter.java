@@ -49,6 +49,7 @@ class ObjCObjectTypeConverter<T extends ObjCObject> implements TypeConverter {
         this.javaType = javaType;
     }
 
+    @Override
     public Class<?> nativeType() {
         // we can't return NativeLong here - has to be a primitive type, so
         // delegate so that we are 32/64 correct
@@ -57,6 +58,7 @@ class ObjCObjectTypeConverter<T extends ObjCObject> implements TypeConverter {
 
     // Takes an Integer or Long representing id (32 or 64 bit respectively)
     // and returns an NSObject of javaType with that id.
+    @Override
     public T fromNative(Object nativeValue, FromNativeContext context) {
         Number nativeValueAsNumber = (Number) nativeValue;
         if (nativeValueAsNumber == null) {
@@ -71,6 +73,7 @@ class ObjCObjectTypeConverter<T extends ObjCObject> implements TypeConverter {
     }
 
     // Takes an NSObject and returns its id as Integer or Long
+    @Override
     public Object toNative(Object value, ToNativeContext context) {
         if (value == null) {
             return null;
@@ -85,16 +88,15 @@ class ObjCObjectTypeConverter<T extends ObjCObject> implements TypeConverter {
         return this.javaType == javaType;
     }
 
-    private boolean shouldRetainFor(FromNativeContext context) {
+    private static boolean shouldRetainFor(FromNativeContext context) {
         // Generally we should default to retaining, as by default NSObjects that
         // are returned from methods are owned by the current autorelease pool and
         // unless we retain will be dealloc'ed when is is drained.
-        if (!(context instanceof FunctionResultContext)) {
+        if (!(context instanceof FunctionResultContext resultContext)) {
             return true;
         }
         // The exception is if this conversion is for an object that we own, because
         // the selector name matches those
-        FunctionResultContext resultContext = (FunctionResultContext) context;
         Object[] arguments = resultContext.getArguments();
         if (arguments.length < 2) {
             return true;

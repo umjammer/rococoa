@@ -51,7 +51,7 @@ import com.sun.jna.Memory;
 @SuppressWarnings("nls")
 public class OCInvocationCallbacks {
 
-    private static Logger logging = Logger.getLogger("org.rococoa.callback");
+    private static final Logger logging = Logger.getLogger("org.rococoa.callback");
 
     private final Object javaObject;
 
@@ -73,6 +73,7 @@ public class OCInvocationCallbacks {
      */
     public final RococoaLibrary.SelectorInvokedCallback selectorInvokedCallback =
         new RococoaLibrary.SelectorInvokedCallback() {
+            @Override
             public void callback(String selectorName, ID nsInvocation) {
                 if (logging.isLoggable(Level.FINEST)) {
                     logging.finest(String.format("callback invoking %s on %s", selectorName, javaObject));
@@ -173,14 +174,14 @@ public class OCInvocationCallbacks {
         }
     }
 
-    private String methodNameForSelector(String selectorName) {
+    private static String methodNameForSelector(String selectorName) {
         String candidate =  selectorName.replaceAll(":", "_");
         return candidate.endsWith("_") ?
                 candidate.substring(0, candidate.length() - 1) :
                 candidate;
     }
 
-    private Object[] argsForFrom(Method method, NSInvocation invocation, NSMethodSignature nsMethodSignature) {
+    private static Object[] argsForFrom(Method method, NSInvocation invocation, NSMethodSignature nsMethodSignature) {
         Class<?>[] parameterTypes = method.getParameterTypes();
         Object[] result = new Object[parameterTypes.length];
         for (int i = 0; i < result.length; i++) {
@@ -200,8 +201,8 @@ public class OCInvocationCallbacks {
      * Our mission is to get the value of the argument from the NSInvocation
      * and return a Java object of the desired type.
      */
-    private Object javaObjectForOCArgument(NSInvocation invocation,
-            int indexInInvocation, String objCArgumentTypeAsString, Class<?> javaParameterType) {
+    private static Object javaObjectForOCArgument(NSInvocation invocation,
+                                                  int indexInInvocation, String objCArgumentTypeAsString, Class<?> javaParameterType) {
         NSInvocationMapper mapper = NSInvocationMapperLookup.mapperForType(javaParameterType);
         if (mapper == null) {
             throw new IllegalStateException(
@@ -211,7 +212,7 @@ public class OCInvocationCallbacks {
         return mapper.readArgumentFrom(invocation, indexInInvocation, javaParameterType);
     }
 
-    private void putResultIntoInvocation(NSInvocation invocation, String typeToReturnToObjC, Object result) {
+    private static void putResultIntoInvocation(NSInvocation invocation, String typeToReturnToObjC, Object result) {
         if (typeToReturnToObjC.equals("v")) {
             if (result != null) {
                 throw new IllegalStateException("Java method returned a result, but expected void");// void
@@ -229,12 +230,12 @@ public class OCInvocationCallbacks {
         invocation.setReturnValue(buffer);
     }
 
-    private Memory bufferForReturn(Object methodCallResult) {
+    private static Memory bufferForReturn(Object methodCallResult) {
         NSInvocationMapper mapper = NSInvocationMapperLookup.mapperForType(methodCallResult.getClass());
         return mapper == null ? null : mapper.bufferForResult(methodCallResult);
     }
 
-    private int countColons(String selectorName) {
+    private static int countColons(String selectorName) {
         int result = 0;
         for (int i = 0; i < selectorName.length(); i++) {
             if (selectorName.charAt(i) == ':') {
@@ -244,7 +245,7 @@ public class OCInvocationCallbacks {
         return result;
     }
 
-    private String stringForType(Class<?> clas) {
+    private static String stringForType(Class<?> clas) {
         NSInvocationMapper result = NSInvocationMapperLookup.mapperForType(clas);
         if (result == null) {
             logging.warning("Unable to give Objective-C type string for Java type " + clas);

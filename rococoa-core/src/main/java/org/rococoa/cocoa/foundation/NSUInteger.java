@@ -19,6 +19,8 @@
 
 package org.rococoa.cocoa.foundation;
 
+import java.io.Serial;
+
 import com.sun.jna.NativeLong;
 
 /**
@@ -26,6 +28,7 @@ import com.sun.jna.NativeLong;
  * @author pixel
  */
 public class NSUInteger extends NativeLong {
+    @Serial
     private static final long serialVersionUID = 0;
     
     public NSUInteger() {

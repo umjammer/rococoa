@@ -8,6 +8,20 @@
 
 #import <Cocoa/Cocoa.h>
 
+struct block_descriptor_basic {
+    unsigned long int reserved;
+    unsigned long int size;
+    void* _Nullable rest[1];
+};
+
+struct block_literal {
+    void* isa;
+    int   flags;
+    int   reserved;
+    void (*invoke)(void*, ...);
+    struct block_descriptor_basic* descriptor;
+};
+
 typedef struct TestIntDoubleStruct {
 	int anInt;
 	double aDouble;
@@ -72,5 +86,7 @@ typedef id (^MyBlockS2)(id, int);
 - (id) testBlockS: (id) s operation: (MyBlockS) operationBlock;
 
 - (id) testBlockS2: (id) s times: (int) n operation: (MyBlockS2) operationBlock;
+
+- (void) testBlockX;
 
 @end

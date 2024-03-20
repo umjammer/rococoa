@@ -6,7 +6,6 @@
 
 package org.rococoa;
 
-import com.sun.jna.Pointer;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.rococoa.ObjCBlocks.BlockLiteral;
@@ -34,6 +33,8 @@ class ObjCBlocksTest {
         ID testBlockS_operation(String s, BlockLiteral operationBlock);
 
         ID testBlockS2_times_operation(String s, int n, BlockLiteral operationBlock);
+
+        void testBlockX();
     }
 
     public interface MyBlock extends ObjCBlock {
@@ -74,6 +75,7 @@ class ObjCBlocksTest {
     @Test
     public void testBlock2() {
         int r = shunt.testBlock_operation(234, block((MyBlock) ((l, n) -> 1000 + n)));
+Debug.println(r);
         assertEquals(1234, r);
     }
 
@@ -81,6 +83,7 @@ class ObjCBlocksTest {
     public void testBlockI() {
         ID id = new ID(314159265358979L);
         long r = shunt.testBlockI_operation(id, block((MyBlockI) ((l, i) -> i.longValue())));
+Debug.println(r);
         assertEquals(314159265358979L, r);
     }
 
@@ -90,6 +93,7 @@ class ObjCBlocksTest {
             NSString s = Rococoa.wrap(i, NSString.class);
             return NSString.stringWithString(s.toString() + "++").id();
         })));
+Debug.println(Rococoa.wrap(r, NSString.class).toString());
         assertEquals("umjammer++", Rococoa.wrap(r, NSString.class).toString());
     }
 
@@ -99,6 +103,12 @@ class ObjCBlocksTest {
             NSString s = Rococoa.wrap(i, NSString.class);
             return NSString.stringWithString(s.toString().repeat(n)).id();
         })));
+Debug.println(Rococoa.wrap(r, NSString.class).toString());
         assertEquals("vavivavivavi", Rococoa.wrap(r, NSString.class).toString());
+    }
+
+    @Test
+    public void testBlockX() {
+        shunt.testBlockX();
     }
 }

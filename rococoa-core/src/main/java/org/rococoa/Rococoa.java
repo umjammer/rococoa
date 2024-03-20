@@ -21,6 +21,7 @@ package org.rococoa;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Proxy;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import net.bytebuddy.ByteBuddy;
@@ -178,7 +179,7 @@ logging.finest("createProxy: ByteBuddy: " + type);
                         .load(type.getClassLoader())
                         .getLoaded().getDeclaredConstructor().newInstance();
             } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
-                e.printStackTrace();
+                logging.log(Level.SEVERE, e.getMessage(), e);
                 throw new IllegalStateException(e);
             }
         }

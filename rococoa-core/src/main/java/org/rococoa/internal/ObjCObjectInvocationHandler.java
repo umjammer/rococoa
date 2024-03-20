@@ -149,6 +149,7 @@ logging.finest(String.format("finalizing [%s %s], releasing with retain count = 
     /**
      * Callback from java.lang.reflect proxy
      */
+    @Override
     public Object invoke(Object proxy, Method method, Object[] args)  throws Exception {
 logging.finest(String.format("JavaProxy:invoking [%s %s].%s(%s)", javaClassName, ocInstance, method.getName(), new VarArgsUnpacker(args)));
         if (isSpecialMethod(method)) {
@@ -205,11 +206,11 @@ logging.finest(String.format("invokeSpecialMethod [%s %s].%s(%s)", javaClassName
         return sendOnThisOrMainThread(null, ocInstance, "description", String.class);
     }
 
-    private Object invokeIsEqual(final ID another) {
+    private Object invokeIsEqual(ID another) {
         return sendOnThisOrMainThread(null, ocInstance, "isEqual:", Boolean.class, another);
     }
 
-    private Object invokeCocoa(final Method method, Object[] args) {
+    private Object invokeCocoa(Method method, Object[] args) {
 logging.finest(String.format("invokeCocoa [%s %s].%s(%s)", javaClassName, ocInstance, method.getName(), new VarArgsUnpacker(args)));
         String selectorName = selectorNameFor(method);
         Class<?> returnType = returnTypeFor(method);
@@ -274,7 +275,7 @@ logging.finest(String.format("invokeCocoa [%s %s].%s(%s)", javaClassName, ocInst
         }
     }
 
-    private Class<?> returnTypeFor(final Method method) {
+    private Class<?> returnTypeFor(Method method) {
         ReturnType annotation = method.getAnnotation(ReturnType.class);
         if (annotation == null) {
             return method.getReturnType();

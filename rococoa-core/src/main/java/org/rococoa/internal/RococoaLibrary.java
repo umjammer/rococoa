@@ -21,6 +21,7 @@ package org.rococoa.internal;
 
 import com.sun.jna.Callback;
 import com.sun.jna.Library;
+import com.sun.jna.Pointer;
 import org.rococoa.ID;
 
 
@@ -61,4 +62,14 @@ public interface RococoaLibrary extends Library {
      * Call callback on the main Cococa event thread
      */
     void callOnMainThread(RococoaLibrary.VoidCallback callback, boolean waitUntilDone);
+
+//#region Block
+
+    /** */
+    Pointer createObjCBlock();
+
+    /** */
+    void releaseObjCBlock(Pointer blockPtr);
+
+//#endregion Block
 }

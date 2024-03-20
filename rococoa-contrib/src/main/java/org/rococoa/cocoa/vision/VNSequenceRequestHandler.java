@@ -6,17 +6,13 @@
 
 package org.rococoa.cocoa.vision;
 
-import java.sql.Ref;
 import java.util.logging.Logger;
 
 import com.sun.jna.Pointer;
 import org.rococoa.ObjCClass;
 import org.rococoa.ObjCObjectByReference;
 import org.rococoa.Rococoa;
-import org.rococoa.cocoa.coregraphics.CGImage;
 import org.rococoa.cocoa.foundation.NSArray;
-import org.rococoa.cocoa.foundation.NSDictionary;
-import org.rococoa.cocoa.foundation.NSError;
 import org.rococoa.cocoa.foundation.NSObject;
 
 

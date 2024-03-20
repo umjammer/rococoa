@@ -29,6 +29,7 @@ public class FloatConverter implements ToNativeConverter, FromNativeConverter {
 
     private static final Logger logger = Logger.getLogger(FloatConverter.class.getName());
 
+    @Override
     public Object toNative(Object value, ToNativeContext context) {
 logger.fine("toNative: " + value + ", " + context);
         return switch (CGFloat.SIZE) {
@@ -41,6 +42,7 @@ logger.fine("toNative: " + value + ", " + context);
         };
     }
 
+    @Override
     public Object fromNative(Object value, FromNativeContext context) {
         return switch (CGFloat.SIZE) {
             case 4 -> value;
@@ -52,6 +54,7 @@ logger.fine("toNative: " + value + ", " + context);
         };
     }
 
+    @Override
     public Class<?> nativeType() {
         return switch (CGFloat.SIZE) {
             case 4 -> float.class;

@@ -72,17 +72,13 @@ public class GCDExecutorServiceTest {
 
     @Test
     public void testShutdown_TasksFinish() throws InterruptedException {
-        final boolean[] finished = { false };
-        fixture.execute(new Runnable() {
-            public void run() {
-                finished[0] = true;
-            }
-        });
+        boolean[] finished = { false };
+        fixture.execute(() -> finished[0] = true);
         fixture.shutdown();
         assertTrue(fixture.isShutdown());
         Thread.sleep(100);
         List<Runnable> unrun = fixture.shutdownNow();
-        assertTrue(finished[0] && unrun.size() == 0, finished[0] + ", " + unrun);
+        assertTrue(finished[0] && unrun.isEmpty(), finished[0] + ", " + unrun);
     }
 
     /**
@@ -102,7 +98,7 @@ public class GCDExecutorServiceTest {
         assertTrue(fixture.awaitTermination(10, TimeUnit.SECONDS));
     }
 
-    private void queueUpSomeTasks(final Object lock, int count) {
+    private void queueUpSomeTasks(Object lock, int count) {
         for (int i=0; i < count; i++) {
             fixture.execute(() -> {
                 try {
@@ -147,7 +143,7 @@ public class GCDExecutorServiceTest {
      */
     @Test
     public void testExecute() throws InterruptedException {
-        final boolean[] done = { false };
+        boolean[] done = { false };
         fixture.execute(() -> done[0] = true);
         Thread.sleep(1000);
         assertTrue(done[0]);
@@ -160,7 +156,7 @@ public class GCDExecutorServiceTest {
     }
     @Test
     public void testSubmit_Runnable() throws InterruptedException, ExecutionException {
-        final boolean[] runCheck = { false };
+        boolean[] runCheck = { false };
         Future<?> result = fixture.submit(() -> {
             runCheck[0] = true;
         });
@@ -169,7 +165,7 @@ public class GCDExecutorServiceTest {
     }
     @Test
     public void testSubmit_Runnable_WithResult() throws InterruptedException, ExecutionException {
-        final boolean[] runCheck = { false };
+        boolean[] runCheck = { false };
         Future<Integer> result = fixture.submit(() -> runCheck[0] = true, 42);
         assertEquals(Integer.valueOf(42), result.get());
         assertTrue(runCheck[0]);

@@ -14,7 +14,6 @@ import org.rococoa.Rococoa;
 import org.rococoa.cocoa.coreml.MLModel;
 import org.rococoa.cocoa.foundation.NSError;
 import org.rococoa.cocoa.foundation.NSObject;
-import org.rococoa.cocoa.foundation.NSString;
 
 
 /**
@@ -39,7 +38,7 @@ public abstract class VNCoreMLModel extends NSObject {
          * For example, a model that does not accept an image as any of its inputs
          * will yield an VNErrorInvalidModel error.
          */
-        VNCoreMLModel modelForMLModel_error(MLModel model, ObjCObjectByReference/*NSError*/ error);
+        VNCoreMLModel modelForMLModel_error(MLModel model, ObjCObjectByReference /* NSError */ error);
     }
 
     /** The name of the MLFeatureValue that Vision sets from the request handler. */

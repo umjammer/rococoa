@@ -12,14 +12,12 @@ import com.sun.jna.Callback;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.rococoa.Foundation;
-import org.rococoa.ObjCClass;
 import org.rococoa.ObjCObject;
 import org.rococoa.Rococoa;
 import org.rococoa.Selector;
 import org.rococoa.cocoa.foundation.NSBundle;
 import org.rococoa.cocoa.foundation.NSNotification;
 import org.rococoa.cocoa.foundation.NSNotificationCenter;
-import org.rococoa.cocoa.foundation.NSObject;
 import vavi.util.Debug;
 
 

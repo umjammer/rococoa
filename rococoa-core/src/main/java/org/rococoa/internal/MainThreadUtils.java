@@ -57,8 +57,8 @@ public abstract class MainThreadUtils {
      */
     @SuppressWarnings("unchecked")
     public static <T> T callOnMainThread(RococoaLibrary rococoaLibrary, Callable<T> callable) {
-        final Object[] result = new Object[1];
-        final Throwable[] thrown = new Throwable[1];
+        Object[] result = new Object[1];
+        Throwable[] thrown = new Throwable[1];
         RococoaLibrary.VoidCallback callback = () -> {
             try {
                 result[0] = callable.call();
@@ -80,6 +80,7 @@ public abstract class MainThreadUtils {
     public static void runOnMainThread(RococoaLibrary rococoaLibrary, Runnable runnable, boolean waitUntilDone) {
         Throwable[] thrown = new Throwable[1];
         RococoaLibrary.VoidCallback callback = new RococoaLibrary.VoidCallback() {
+            @Override
             public void callback() {
                 try {
                     runnable.run();

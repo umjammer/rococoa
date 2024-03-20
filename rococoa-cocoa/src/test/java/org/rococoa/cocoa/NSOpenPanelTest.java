@@ -27,14 +27,12 @@ import javax.swing.JFrame;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import org.rococoa.ID;
 import org.rococoa.Rococoa;
 import org.rococoa.ObjCObject;
 import org.rococoa.cocoa.appkit.NSOpenPanel;
-import org.rococoa.cocoa.foundation.NSString;
 import org.rococoa.cocoa.foundation.NSURL;
 import org.rococoa.test.RococoaTestCase;
 import vavi.util.Debug;

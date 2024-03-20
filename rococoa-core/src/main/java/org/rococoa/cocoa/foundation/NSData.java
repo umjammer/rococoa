@@ -122,6 +122,7 @@ public abstract class NSData extends NSObject {
      * Original signature : <code>NSString* description()</code><br>
      * <i>from NSExtendedData native declaration : :36</i>
      */
+    @Override
     public abstract String description();
 
     /**

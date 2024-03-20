@@ -389,120 +389,121 @@ public abstract class NSText extends NSView {
      * Original signature : <code>void copy(id)</code><br>
      * <i>native declaration : /Users/dkocher/null:136</i>
      */
-    public abstract void copy(final ID sender);
+    public abstract void copy(ID sender);
 
     /**
      * Original signature : <code>void copyFont(id)</code><br>
      * <i>native declaration : /Users/dkocher/null:137</i>
      */
-    public abstract void copyFont(final ID sender);
+    public abstract void copyFont(ID sender);
 
     /**
      * Original signature : <code>void copyRuler(id)</code><br>
      * <i>native declaration : /Users/dkocher/null:138</i>
      */
-    public abstract void copyRuler(final ID sender);
+    public abstract void copyRuler(ID sender);
 
     /**
      * Original signature : <code>void cut(id)</code><br>
      * <i>native declaration : /Users/dkocher/null:139</i>
      */
-    public abstract void cut(final ID sender);
+    public abstract void cut(ID sender);
 
     /**
      * Original signature : <code>void delete(id)</code><br>
      * <i>native declaration : /Users/dkocher/null:140</i>
      */
-    public abstract void delete(final ID sender);
+    public abstract void delete(ID sender);
 
     /**
      * Original signature : <code>void paste(id)</code><br>
      * <i>native declaration : /Users/dkocher/null:141</i>
      */
-    public abstract void paste(final ID sender);
+    public abstract void paste(ID sender);
 
     /**
      * Original signature : <code>void pasteFont(id)</code><br>
      * <i>native declaration : /Users/dkocher/null:142</i>
      */
-    public abstract void pasteFont(final ID sender);
+    public abstract void pasteFont(ID sender);
 
     /**
      * Original signature : <code>void pasteRuler(id)</code><br>
      * <i>native declaration : /Users/dkocher/null:143</i>
      */
-    public abstract void pasteRuler(final ID sender);
+    public abstract void pasteRuler(ID sender);
 
     /**
      * Original signature : <code>void selectAll(id)</code><br>
      * <i>native declaration : /Users/dkocher/null:144</i>
      */
-    public abstract void selectAll(final ID sender);
+    @Override
+    public abstract void selectAll(ID sender);
 
     /**
      * Original signature : <code>void changeFont(id)</code><br>
      * <i>native declaration : /Users/dkocher/null:145</i>
      */
-    public abstract void changeFont(final ID sender);
+    public abstract void changeFont(ID sender);
 
     /**
      * Original signature : <code>void alignLeft(id)</code><br>
      * <i>native declaration : /Users/dkocher/null:146</i>
      */
-    public abstract void alignLeft(final ID sender);
+    public abstract void alignLeft(ID sender);
 
     /**
      * Original signature : <code>void alignRight(id)</code><br>
      * <i>native declaration : /Users/dkocher/null:147</i>
      */
-    public abstract void alignRight(final ID sender);
+    public abstract void alignRight(ID sender);
 
     /**
      * Original signature : <code>void alignCenter(id)</code><br>
      * <i>native declaration : /Users/dkocher/null:148</i>
      */
-    public abstract void alignCenter(final ID sender);
+    public abstract void alignCenter(ID sender);
 
     /**
      * Original signature : <code>void subscript(id)</code><br>
      * <i>native declaration : /Users/dkocher/null:149</i>
      */
-    public abstract void subscript(final ID sender);
+    public abstract void subscript(ID sender);
 
     /**
      * Original signature : <code>void superscript(id)</code><br>
      * <i>native declaration : /Users/dkocher/null:150</i>
      */
-    public abstract void superscript(final ID sender);
+    public abstract void superscript(ID sender);
 
     /**
      * Original signature : <code>void underline(id)</code><br>
      * <i>native declaration : /Users/dkocher/null:151</i>
      */
-    public abstract void underline(final ID sender);
+    public abstract void underline(ID sender);
 
     /**
      * Original signature : <code>void unscript(id)</code><br>
      * <i>native declaration : /Users/dkocher/null:152</i>
      */
-    public abstract void unscript(final ID sender);
+    public abstract void unscript(ID sender);
 
     /**
      * Original signature : <code>void showGuessPanel(id)</code><br>
      * <i>native declaration : /Users/dkocher/null:153</i>
      */
-    public abstract void showGuessPanel(final ID sender);
+    public abstract void showGuessPanel(ID sender);
 
     /**
      * Original signature : <code>void checkSpelling(id)</code><br>
      * <i>native declaration : /Users/dkocher/null:154</i>
      */
-    public abstract void checkSpelling(final ID sender);
+    public abstract void checkSpelling(ID sender);
 
     /**
      * Original signature : <code>void toggleRuler(id)</code><br>
      * <i>native declaration : /Users/dkocher/null:155</i>
      */
-    public abstract void toggleRuler(final ID sender);
+    public abstract void toggleRuler(ID sender);
 
 }

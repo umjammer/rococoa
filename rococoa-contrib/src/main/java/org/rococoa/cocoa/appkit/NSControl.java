@@ -16,6 +16,7 @@ public abstract class NSControl extends NSView {
      * Conversion Error : /// Original signature : <code>id initWithFrame(null)</code><br>
      * - (id)initWithFrame:(null)frameRect; (Argument frameRect cannot be converted)
      */
+    @Override
     public abstract NSControl initWithFrame(NSRect frameRect);
 
     /**
@@ -268,31 +269,31 @@ public abstract class NSControl extends NSView {
      * Original signature : <code>void takeIntValueFrom(id)</code><br>
      * <i>native declaration : :74</i>
      */
-    public abstract void takeIntValueFrom(final ID sender);
+    public abstract void takeIntValueFrom(ID sender);
 
     /**
      * Original signature : <code>void takeFloatValueFrom(id)</code><br>
      * <i>native declaration : :75</i>
      */
-    public abstract void takeFloatValueFrom(final ID sender);
+    public abstract void takeFloatValueFrom(ID sender);
 
     /**
      * Original signature : <code>void takeDoubleValueFrom(id)</code><br>
      * <i>native declaration : :76</i>
      */
-    public abstract void takeDoubleValueFrom(final ID sender);
+    public abstract void takeDoubleValueFrom(ID sender);
 
     /**
      * Original signature : <code>void takeStringValueFrom(id)</code><br>
      * <i>native declaration : :77</i>
      */
-    public abstract void takeStringValueFrom(final ID sender);
+    public abstract void takeStringValueFrom(ID sender);
 
     /**
      * Original signature : <code>void takeObjectValueFrom(id)</code><br>
      * <i>native declaration : :78</i>
      */
-    public abstract void takeObjectValueFrom(final ID sender);
+    public abstract void takeObjectValueFrom(ID sender);
 
     /**
      * Original signature : <code>NSText* currentEditor()</code><br>
@@ -316,6 +317,7 @@ public abstract class NSControl extends NSView {
      * Original signature : <code>void mouseDown(NSEvent*)</code><br>
      * <i>native declaration : :82</i>
      */
+    @Override
     public abstract void mouseDown(NSEvent event);
 
     /**

@@ -64,7 +64,7 @@ public class QTTimeRange extends Structure implements Structure.ByValue {
         if(getClass() != obj.getClass()) {
             return false;
         }
-        final QTTimeRange other = (QTTimeRange) obj;
+        QTTimeRange other = (QTTimeRange) obj;
         if(duration == null) {
             if(other.duration != null) {
                 return false;

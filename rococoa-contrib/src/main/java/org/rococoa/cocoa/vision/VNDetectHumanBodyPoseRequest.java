@@ -32,6 +32,7 @@ public abstract class VNDetectHumanBodyPoseRequest extends VNImageBasedRequest {
         VNDetectHumanBodyPoseRequest alloc();
     }
 
+    @Override
     public abstract VNDetectHumanBodyPoseRequest init();
 
     /** utility */

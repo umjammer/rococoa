@@ -6,12 +6,8 @@
 
 package org.rococoa.cocoa.gamecontroller;
 
-import com.sun.jna.Callback;
 import com.sun.jna.Library;
 import com.sun.jna.Native;
-import com.sun.jna.Pointer;
-import org.rococoa.cocoa.CGFloat;
-import org.rococoa.cocoa.coregraphics.CGRect;
 
 
 /**

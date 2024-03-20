@@ -97,6 +97,7 @@ public abstract class NSSet extends NSObject {
      * Original signature : <code>NSString* description()</code><br>
      * <i>from NSExtendedSet native declaration : /System/Library/Frameworks/Foundation.framework/Headers/NSSet.h:26</i>
      */
+    @Override
     public abstract String description();
     /**
      * <i>from NSExtendedSet native declaration : /System/Library/Frameworks/Foundation.framework/Headers/NSSet.h:27</i><br>

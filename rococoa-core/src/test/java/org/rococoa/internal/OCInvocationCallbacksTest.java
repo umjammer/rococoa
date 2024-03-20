@@ -62,7 +62,7 @@ public class OCInvocationCallbacksTest {
         }
     }
 
-    private OCInvocationCallbacks callbacks = new OCInvocationCallbacks(new JavaImplementor());
+    private final OCInvocationCallbacks callbacks = new OCInvocationCallbacks(new JavaImplementor());
         
     @Test public void testMethodForSelector() throws SecurityException, NoSuchMethodException {
         assertNull(callbacks.methodForSelector("nosuch"));

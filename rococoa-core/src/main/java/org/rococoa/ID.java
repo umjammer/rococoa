@@ -45,7 +45,7 @@ public class ID extends NativeLong {
     // Public for JNA
     public ID() {
         super();
-    };
+    }
 
     protected ID(long value) {
         super(value);

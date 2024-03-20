@@ -8,7 +8,6 @@ package org.rococoa.cocoa.corevideo;
 
 import com.sun.jna.Library;
 import com.sun.jna.Native;
-import com.sun.jna.NativeLong;
 import com.sun.jna.Pointer;
 
 

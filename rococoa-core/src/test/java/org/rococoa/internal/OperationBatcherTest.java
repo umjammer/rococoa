@@ -36,10 +36,12 @@ private class TestBatcher extends OperationBatcher {
         super(batchSize);
     }
     
+    @Override
     protected void operation() {
         ++operationCount;
     }
     
+    @Override
     protected void reset() {
         ++resetCount;
     }

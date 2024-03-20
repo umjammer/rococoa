@@ -51,14 +51,14 @@ public abstract class AbstractPropertyDictionary<E extends Enum<E> & NativeEnum<
      *  The dictionary is <strong>not</strong> copied.
      *  @param data the dictionary to use
      */
-    protected AbstractPropertyDictionary(final NSMutableDictionary data) {
+    protected AbstractPropertyDictionary(NSMutableDictionary data) {
         this.data = data;
     }
     /** Construct a new dictionary with the given dictionary.
      *  The dictionary <strong>is</strong> copied into a mutable dictionary.
      *  @param data the dictionary to use
      */
-    protected AbstractPropertyDictionary(final NSDictionary data) {
+    protected AbstractPropertyDictionary(NSDictionary data) {
         this.data = NSMutableDictionary.dictionaryWithDictionary(data);
     }
     /** Get the underlying dictionary
@@ -162,8 +162,6 @@ public abstract class AbstractPropertyDictionary<E extends Enum<E> & NativeEnum<
 
     @Override
     public String toString() {
-        StringBuilder result = new StringBuilder('[' + getClass().getSimpleName());
-        result.append(": ").append(data).append(']');
-        return result.toString();
+        return '[' + getClass().getSimpleName() + ": " + data + ']';
     }
 }

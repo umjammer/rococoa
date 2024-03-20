@@ -25,7 +25,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import com.sun.jna.NativeLong;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import org.rococoa.cocoa.coregraphics.CGImage;
@@ -84,6 +83,7 @@ Debug.println((System.currentTimeMillis() - t) + " ms");
             @Override public void windowClosing(WindowEvent e) { cdl.countDown(); }
         });
         JPanel panel = new JPanel() {
+            @Override
             public void paintComponent(Graphics g) {
                 g.drawImage(image, 0, 0, this);
             }

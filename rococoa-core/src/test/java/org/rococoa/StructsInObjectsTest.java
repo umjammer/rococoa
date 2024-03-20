@@ -21,9 +21,7 @@ package org.rococoa;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.condition.DisabledIf;
 import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.rococoa.cocoa.foundation.NSSize;
 import org.rococoa.cocoa.foundation.NSValue;
@@ -32,7 +30,7 @@ import org.rococoa.test.RococoaTestCase;
 import com.sun.jna.Library;
 
 /**
- * Checks that we can embed a struct by value in a object.
+ * Checks that we can embed a struct by value in an object.
  * 
  */
 @DisabledIfSystemProperty(named = "os.arch", matches = "aarch64")

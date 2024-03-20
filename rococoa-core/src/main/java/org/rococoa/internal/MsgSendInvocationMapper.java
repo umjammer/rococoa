@@ -82,6 +82,7 @@ public class MsgSendInvocationMapper implements InvocationMapper {
         }
     }
 
+    @Override
     public InvocationHandler getInvocationHandler(NativeLibrary lib, Method m) {
         if (m.equals(SYNTHETIC_SEND_MSG) ||
                 m.equals(SYNTHETIC_SEND_MSG1) ||

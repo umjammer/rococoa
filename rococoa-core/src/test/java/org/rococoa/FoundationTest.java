@@ -54,11 +54,7 @@ class FoundationTest extends RococoaTestCase {
 
     @Test void testStringPerformance() {
         String stringWithOddChar = "Hello \u2648";
-        StringBuilder longStringBuilder = new StringBuilder();
-        for (int i = 0; i < 1000; i++) {
-            longStringBuilder.append(stringWithOddChar);
-        }
-        String longString = longStringBuilder.toString();
+        String longString = stringWithOddChar.repeat(1000);
         ID string = Foundation.cfString(longString); 
 
         for (int i = 0; i < 10000; i++) {
@@ -120,9 +116,7 @@ Debug.println(StringUtil.toBits(Float.floatToIntBits(aFloatValue), 32));
         Selector noSuchSelector = Foundation.selector("noSelector:NamedThis:OrribleThing:");
         assertTrue(noSuchSelector.longValue() != 0); 
         ID clas = Foundation.getClass("NSNumber");
-        assertThrows(NoSuchMethodError.class, () -> {
-            Foundation.send(clas, noSuchSelector, int.class);
-        });
+        assertThrows(NoSuchMethodError.class, () -> Foundation.send(clas, noSuchSelector, int.class));
     }
 
     @Test

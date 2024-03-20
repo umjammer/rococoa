@@ -6,7 +6,6 @@
 
 package org.rococoa.cocoa.coreml;
 
-import java.net.URL;
 import java.util.logging.Logger;
 
 import org.rococoa.ObjCClass;

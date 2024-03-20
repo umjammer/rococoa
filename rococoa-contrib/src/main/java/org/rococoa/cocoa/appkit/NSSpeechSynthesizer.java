@@ -19,6 +19,7 @@
 
 package org.rococoa.cocoa.appkit;
 
+import java.io.Serial;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
@@ -67,6 +68,7 @@ public abstract class NSSpeechSynthesizer extends NSObject {
 
         private final NSString value = NSString.getGlobalString("NSSpeech" + name());
 
+        @Override
         public NSString getNativeValue() {
             return value;
         }
@@ -272,6 +274,7 @@ logger.finer(String.format("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ delegate: %16x", t
 
     /** Describes boundaries between speech units */
     public static final class NSSpeechBoundary extends NSUInteger {
+        @Serial
         private static final long serialVersionUID = 0;
         public static final NSSpeechBoundary ImmediateBoundary = new NSSpeechBoundary(0);
         public static final NSSpeechBoundary WordBoundary = new NSSpeechBoundary(1);
@@ -303,6 +306,7 @@ logger.finer(String.format("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ delegate: %16x", t
             OutputBusy, OutputPaused, NumberOfCharactersLeft, PhonemeCode;
             private final NSString value = NSString.getGlobalString(NSSpeechStatus.class.getSimpleName() + name());
 
+            @Override
             public NSString getNativeValue() {
                 return value;
             }
@@ -312,7 +316,7 @@ logger.finer(String.format("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ delegate: %16x", t
             super(StatusProperty.values().length);
         }
 
-        public NSSpeechStatus(final NSMutableDictionary data) {
+        public NSSpeechStatus(NSMutableDictionary data) {
             super(data);
         }
 
@@ -350,6 +354,7 @@ logger.finer(String.format("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ delegate: %16x", t
             Count, OldestCode, OldestCharacterOffset, NewestCode, NewestCharacterOffset;
             private final NSString value = NSString.getGlobalString(NSSpeechError.class.getSimpleName() + name());
 
+            @Override
             public NSString getNativeValue() {
                 return value;
             }
@@ -359,7 +364,7 @@ logger.finer(String.format("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ delegate: %16x", t
             super(ErrorProperty.values().length);
         }
 
-        public NSSpeechError(final NSMutableDictionary data) {
+        public NSSpeechError(NSMutableDictionary data) {
             super(data);
         }
 
@@ -389,6 +394,7 @@ logger.finer(String.format("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ delegate: %16x", t
         Text, Phoneme, Normal, Literal;
         private final NSString value = NSString.getGlobalString(this.getClass().getSimpleName() + name());
 
+        @Override
         public NSString getNativeValue() {
             return value;
         }
@@ -465,6 +471,7 @@ logger.finer(String.format("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ delegate: %16x", t
             Identifier, Version;
             private final NSString value = NSString.getGlobalString(NSSpeechSynthesizerInfo.class.getSimpleName() + name());
 
+            @Override
             public NSString getNativeValue() {
                 return value;
             }
@@ -474,7 +481,7 @@ logger.finer(String.format("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ delegate: %16x", t
             super(SpeechSynthesizerInfoProperty.values().length);
         }
 
-        public NSSpeechSynthesizerInfo(final NSMutableDictionary data) {
+        public NSSpeechSynthesizerInfo(NSMutableDictionary data) {
             super(data);
         }
 
@@ -549,6 +556,7 @@ logger.finer(String.format("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ delegate: %16x", t
             Opcode, Symbol, Example, HiliteStart, HiliteEnd;
             private final NSString value = NSString.getGlobalString(NSSpeechPhonemeInfo.class.getSimpleName() + name());
 
+            @Override
             public NSString getNativeValue() {
                 return value;
             }
@@ -558,7 +566,7 @@ logger.finer(String.format("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ delegate: %16x", t
             super(PhonemeInfoProperty.values().length);
         }
 
-        public NSSpeechPhonemeInfo(final NSMutableDictionary data) {
+        public NSSpeechPhonemeInfo(NSMutableDictionary data) {
             super(data);
         }
 
@@ -637,6 +645,7 @@ logger.finer(String.format("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ delegate: %16x", t
             Prefix, Suffix;
             private final NSString value = NSString.getGlobalString(NSSpeechCommand.class.getSimpleName() + name());
 
+            @Override
             public NSString getNativeValue() {
                 return value;
             }
@@ -646,7 +655,7 @@ logger.finer(String.format("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ delegate: %16x", t
             super(CommandDelimiterProperty.values().length);
         }
 
-        public NSSpeechCommand(final NSMutableDictionary data) {
+        public NSSpeechCommand(NSMutableDictionary data) {
             super(data);
         }
 

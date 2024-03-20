@@ -34,6 +34,7 @@ import com.sun.jna.TypeConverter;
 class StringTypeConverter implements TypeConverter {
     private static final NativeMapped nativeLongConverter = new ID();
 
+    @Override
     public Class<?> nativeType() {
         // see NSObjectTypeConverter.nativeType
         return nativeLongConverter.nativeType();
@@ -41,6 +42,7 @@ class StringTypeConverter implements TypeConverter {
 
     // Takes an Integer or Long representing id (32 or 64 bit respectively)
     // and returns a java.lang.String
+    @Override
     public String fromNative(Object nativeValue, FromNativeContext context) {
         Number nativeValueAsNumber = (Number) nativeValue;
         if (nativeValueAsNumber == null) {
@@ -54,6 +56,7 @@ class StringTypeConverter implements TypeConverter {
     }
 
     // Takes java.lang.String and returns value of an id as Integer or Long
+    @Override
     public Object toNative(Object value, ToNativeContext context) {
         if (value == null) {
             return null;

@@ -9,7 +9,6 @@ package org.rococoa.cocoa.coregraphics;
 import java.util.Arrays;
 import java.util.List;
 
-import com.sun.jna.Pointer;
 import com.sun.jna.Structure;
 import org.rococoa.cocoa.CGFloat;
 

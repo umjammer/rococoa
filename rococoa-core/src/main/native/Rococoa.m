@@ -19,3 +19,21 @@ void callOnMainThread(void (*fn)(void), BOOL waitUntilDone) {
 } 
 
 @end
+
+#include <Block.h>
+
+const void* createObjCBlock() {
+    void (^block)() = ^{
+        fprintf(stderr, "hello block\n");
+        fflush(stderr);
+        // do nothing
+    };
+    void* r = Block_copy(block);
+fprintf(stderr, "hereC: %16lx, %16lx\n", block, r);
+fflush(stderr);
+    return r;
+}
+
+void releaseObjCBlock(void* block) {
+    Block_release(block);
+}

@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Logger;
 
+import com.sun.jna.Memory;
 import com.sun.jna.NativeLong;
 import com.sun.jna.Pointer;
 import com.sun.jna.Structure;
@@ -25,6 +26,11 @@ public class ObjCBlocks {
 
     private static final Logger logging = Logger.getLogger("org.rococoa.foundation");
 
+    //    2    2    2    1    1
+    //    8    4    0    6    2    8    4   10
+    // .... .... .... .... .... .... .... ....
+    //
+
     public static final int BLOCK_IS_NOESCAPE = 1 << 23;
     public static final int BLOCK_HAS_COPY_DISPOSE =  1 << 25;
     /** helpers have C++ code */
@@ -36,8 +42,10 @@ public class ObjCBlocks {
 
     /** utility conversion java closure to obj-c block */
     public static BlockLiteral block(ObjCBlock block) {
-        BlockLiteral literal = new BlockLiteral();
+        Memory m = new Memory(48);
+        BlockLiteral literal = new BlockLiteral(m);
         literal.flags = 0;
+logging.finer(String.format("block: %s, %08x", block, literal.flags));
         literal.invoke = block;
         literal.write();
         return literal;
@@ -57,15 +65,25 @@ public class ObjCBlocks {
 
     /** */
     public static class BlockLiteral extends Structure {
-        public Pointer isa;
+        public Pointer isa = Pointer.NULL;
         public int flags;
         public int reserved;
         public ObjCBlock invoke;
         public BlockDescriptor descriptor;
         public BlockLiteral() {}
+        public BlockLiteral(Pointer p) { super(p); }
         @Override
         protected List<String> getFieldOrder() {
             return Arrays.asList("isa", "flags", "reserved", "invoke", "descriptor");
         }
+    }
+
+    /** TODO doesn't work */
+    public static BlockLiteral block2(ObjCBlock block) {
+        BlockLiteral literal = new BlockLiteral(Foundation.getRococoaLibrary().createObjCBlock());
+        literal.flags = 0;
+        literal.invoke = block; // got error. Block_copy returns heap doesn't it?
+        literal.write();
+        return literal;
     }
 }

@@ -35,10 +35,10 @@ public class CIFilterOp implements BufferedImageOp {
     private RenderingHints hints;
 
     /**  */
-    private String filterName;
+    private final String filterName;
 
     /**  */
-    private Map<String, NSObject> options;
+    private final Map<String, NSObject> options;
 
     /**  */
     public CIFilterOp(String filterName, Map<String, NSObject> options) {

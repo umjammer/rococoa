@@ -700,13 +700,13 @@ public abstract class NSWindow extends NSResponder {
      * Original signature : <code>void miniaturize(id)</code><br>
      * <i>native declaration : :312</i>
      */
-    public abstract void miniaturize(final ID sender);
+    public abstract void miniaturize(ID sender);
 
     /**
      * Original signature : <code>void deminiaturize(id)</code><br>
      * <i>native declaration : :313</i>
      */
-    public abstract void deminiaturize(final ID sender);
+    public abstract void deminiaturize(ID sender);
 
     /**
      * Original signature : <code>BOOL isZoomed()</code><br>
@@ -718,7 +718,7 @@ public abstract class NSWindow extends NSResponder {
      * Original signature : <code>void zoom(id)</code><br>
      * <i>native declaration : :315</i>
      */
-    public abstract void zoom(final ID sender);
+    public abstract void zoom(ID sender);
 
     /**
      * Original signature : <code>BOOL isMiniaturized()</code><br>
@@ -814,25 +814,25 @@ public abstract class NSWindow extends NSResponder {
      * Original signature : <code>void makeKeyAndOrderFront(id)</code><br>
      * <i>native declaration : :343</i>
      */
-    public abstract void makeKeyAndOrderFront(final ID sender);
+    public abstract void makeKeyAndOrderFront(ID sender);
 
     /**
      * Original signature : <code>void orderFront(id)</code><br>
      * <i>native declaration : :344</i>
      */
-    public abstract void orderFront(final ID sender);
+    public abstract void orderFront(ID sender);
 
     /**
      * Original signature : <code>void orderBack(id)</code><br>
      * <i>native declaration : :345</i>
      */
-    public abstract void orderBack(final ID sender);
+    public abstract void orderBack(ID sender);
 
     /**
      * Original signature : <code>void orderOut(id)</code><br>
      * <i>native declaration : :346</i>
      */
-    public abstract void orderOut(final ID sender);
+    public abstract void orderOut(ID sender);
     /**
      * <i>native declaration : :347</i><br>
      * Conversion Error : /// Original signature : <code>void orderWindow(null, NSInteger)</code><br>
@@ -971,19 +971,19 @@ public abstract class NSWindow extends NSResponder {
      * Original signature : <code>void performClose(id)</code><br>
      * <i>native declaration : :376</i>
      */
-    public abstract void performClose(final ID sender);
+    public abstract void performClose(ID sender);
 
     /**
      * Original signature : <code>void performMiniaturize(id)</code><br>
      * <i>native declaration : :377</i>
      */
-    public abstract void performMiniaturize(final ID sender);
+    public abstract void performMiniaturize(ID sender);
 
     /**
      * Original signature : <code>void performZoom(id)</code><br>
      * <i>native declaration : :378</i>
      */
-    public abstract void performZoom(final ID sender);
+    public abstract void performZoom(ID sender);
 
     /**
      * Original signature : <code>NSInteger gState()</code><br>
@@ -1014,7 +1014,7 @@ public abstract class NSWindow extends NSResponder {
      * Original signature : <code>void print(id)</code><br>
      * <i>native declaration : :384</i>
      */
-    public abstract void print(final ID sender);
+    public abstract void print(ID sender);
 
     /**
      * Original signature : <code>void disableCursorRects()</code><br>
@@ -1527,13 +1527,13 @@ public abstract class NSWindow extends NSResponder {
      * Original signature : <code>void selectNextKeyView(id)</code><br>
      * <i>from NSKeyboardUI native declaration : :541</i>
      */
-    public abstract void selectNextKeyView(final ID sender);
+    public abstract void selectNextKeyView(ID sender);
 
     /**
      * Original signature : <code>void selectPreviousKeyView(id)</code><br>
      * <i>from NSKeyboardUI native declaration : :542</i>
      */
-    public abstract void selectPreviousKeyView(final ID sender);
+    public abstract void selectPreviousKeyView(ID sender);
 
     /**
      * Original signature : <code>void selectKeyViewFollowingView(NSView*)</code><br>
@@ -1618,13 +1618,13 @@ public abstract class NSWindow extends NSResponder {
      * Original signature : <code>void toggleToolbarShown(id)</code><br>
      * <i>from NSToolbarSupport native declaration : :560</i>
      */
-    public abstract void toggleToolbarShown(final ID sender);
+    public abstract void toggleToolbarShown(ID sender);
 
     /**
      * Original signature : <code>void runToolbarCustomizationPalette(id)</code><br>
      * <i>from NSToolbarSupport native declaration : :561</i>
      */
-    public abstract void runToolbarCustomizationPalette(final ID sender);
+    public abstract void runToolbarCustomizationPalette(ID sender);
 
     /**
      * Original signature : <code>void setShowsToolbarButton(BOOL)</code><br>
@@ -1703,7 +1703,7 @@ public abstract class NSWindow extends NSResponder {
      *
      * @param value A Boolean value that indicates whether the window prevents application termination when modal.
      */
-    public abstract void setPreventsApplicationTerminationWhenModal(final boolean value);
+    public abstract void setPreventsApplicationTerminationWhenModal(boolean value);
 
     /**
      * When the value of this property is true, the title bar does not draw its background, which allows all content
@@ -1712,5 +1712,5 @@ public abstract class NSWindow extends NSResponder {
      *
      * @param value A Boolean value that indicates whether the title bar draws its background.
      */
-    public abstract void setTitlebarAppearsTransparent(final boolean value);
+    public abstract void setTitlebarAppearsTransparent(boolean value);
 }

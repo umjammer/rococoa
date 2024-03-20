@@ -19,8 +19,6 @@
 
 package org.rococoa.cocoa.qtkit;
 
-import java.util.concurrent.Callable;
-
 import org.rococoa.Foundation;
 import org.rococoa.cocoa.foundation.NSObject;
 import org.rococoa.Rococoa;
@@ -34,10 +32,7 @@ public @RunOnMainThread abstract class QTMovieView extends NSObject {
 
     public static class _Class {
         public QTMovieView create() {
-            return Foundation.callOnMainThread(new Callable<QTMovieView>() {
-                public QTMovieView call() throws Exception {
-                    return Rococoa.create("QTMovieView", QTMovieView.class);
-                }});
+            return Foundation.callOnMainThread(() -> Rococoa.create("QTMovieView", QTMovieView.class));
         }
     }
 

@@ -91,12 +91,14 @@ public abstract class NSButtonCell extends NSActionCell {
      * Original signature : <code>NSString* title()</code><br>
      * <i>native declaration : :143</i>
      */
+    @Override
     public abstract String title();
 
     /**
      * Original signature : <code>void setTitle(NSString*)</code><br>
      * <i>native declaration : :144</i>
      */
+    @Override
     public abstract void setTitle(String aString);
 
     /**
@@ -232,7 +234,8 @@ public abstract class NSButtonCell extends NSActionCell {
      * Significant NSCell override, actually clicks itself.<br>
      * <i>native declaration : :175</i>
      */
-    public abstract void performClick(final ID sender);
+    @Override
+    public abstract void performClick(ID sender);
     /**
      * <i>native declaration : :178</i><br>
      * Conversion Error : /// Original signature : <code>void drawImage(NSImage*, null, NSView*)</code><br>
@@ -252,6 +255,7 @@ public abstract class NSButtonCell extends NSActionCell {
      * Original signature : <code>void setTitleWithMnemonic(NSString*)</code><br>
      * <i>from NSKeyboardUI native declaration : :185</i>
      */
+    @Override
     public abstract void setTitleWithMnemonic(String stringWithAmpersand);
 
     /**

@@ -8,7 +8,6 @@ package org.rococoa.cocoa.corefoundation;
 
 import com.sun.jna.Pointer;
 import com.sun.jna.PointerType;
-import org.rococoa.ID;
 
 
 public class CFAllocatorRef extends PointerType {

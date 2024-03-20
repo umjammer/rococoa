@@ -32,9 +32,9 @@ public abstract class NSOperationQueue extends NSObject {
     public static final _Class CLASS = Rococoa.createClass(NSOperationQueue.class.getSimpleName(), _Class.class);
     public static final int NSOperationQueueDefaultMaxConcurrentOperationCount = -1;
     public interface _Class extends ObjCClass {
-        public NSOperationQueue alloc();
-        public NSOperationQueue currentQueue();
-        public NSOperationQueue mainQueue();
+        NSOperationQueue alloc();
+        NSOperationQueue currentQueue();
+        NSOperationQueue mainQueue();
     }
 
     public abstract NSOperationQueue init();

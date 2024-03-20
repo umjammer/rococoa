@@ -20,12 +20,15 @@
 package org.rococoa.cocoa.foundation;
 
 
-import org.rococoa.cocoa.foundation.NSObject;
 import org.rococoa.Rococoa;
 
+
 public abstract class NSLocale extends NSObject {
-	public static final _Class CLASS = Rococoa.createClass("NSLocale", _Class.class);
-    public abstract class _Class extends NSObject._class_ {
+
+    public static final _Class CLASS = Rococoa.createClass("NSLocale", _Class.class);
+
+    public static abstract class _Class extends NSObject._class_ {
+
         public abstract NSLocale autoupdatingCurrentLocale();
     }
 }

@@ -104,6 +104,7 @@ Debug.printf("Found camera: %s, device = %s", camera, device);
             @Override public void windowClosing(WindowEvent e) { cdl.countDown(); }
         });
         JPanel panel = new JPanel() {
+            @Override
             public void paintComponent(Graphics g) {
                 if (image.get() != null) {
                     g.drawImage(image.get(), 0, 0, this);
@@ -157,6 +158,7 @@ Debug.printf("Found camera: %s, device = %s", camera, device);
             @Override public void windowClosing(WindowEvent e) { cdl.countDown(); }
         });
         JPanel panel = new JPanel() {
+            @Override
             public void paintComponent(Graphics g) {
                 if (image.get() != null) {
                     g.drawImage(image.get(), 0, 0, this);
