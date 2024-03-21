@@ -111,6 +111,7 @@ Debug.println("cgImage: " + filteredImage);
             @Override public void windowClosing(WindowEvent e) { cdl.countDown(); }
         });
         JPanel panel = new JPanel() {
+            @Override
             public void paintComponent(Graphics g) {
                 g.drawImage(image, 0, 0, this);
             }
@@ -128,8 +129,11 @@ Debug.println("cgImage: " + filteredImage);
     @EnabledIf("localPropertiesExists")
     @EnabledIfSystemProperty(named = "vavi.test", matches = "ide")
     void test2() throws Exception {
+        CountDownLatch cdl = new CountDownLatch(1);
         MLModel mlModel = MLModel.fromPath(model2);
+Debug.println(mlModel);
         VNCoreMLModel model = VNCoreMLModel.fromMLModel(mlModel);
+Debug.println(model);
 
         VNCoreMLRequest.CLASS.alloc().initWithModel_completionHandler(model,
                 block((VNCoreMLRequest.VNRequestCompletionHandler) (literal, requestId, errorRef) -> {
@@ -142,6 +146,7 @@ Debug.println("here1");
 Debug.println("request: " + request);
         }));
 Debug.println("here2");
+        cdl.await();
     }
 
     @Test
