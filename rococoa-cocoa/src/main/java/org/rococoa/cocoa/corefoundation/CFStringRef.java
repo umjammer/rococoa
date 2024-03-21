@@ -6,6 +6,8 @@
 
 package org.rococoa.cocoa.corefoundation;
 
+import java.lang.System.Logger;
+import java.lang.System.Logger.Level;
 import java.nio.ByteBuffer;
 
 import com.sun.jna.Native;
@@ -14,11 +16,14 @@ import com.sun.jna.Pointer;
 import com.sun.jna.PointerType;
 import org.rococoa.cocoa.CFIndex;
 
+import static java.lang.System.getLogger;
 import static org.rococoa.cocoa.corefoundation.CoreFoundation.kCFStringEncodingUTF8;
 import static org.rococoa.cocoa.corefoundation.CoreFoundation.library;
 
 
 public class CFStringRef extends PointerType {
+
+    private static final Logger logger = getLogger(CFStringRef.class.getName());
 
     public CFStringRef() {
     }
@@ -35,7 +40,8 @@ public class CFStringRef extends PointerType {
 
     @Override
     public String toString() {
-        int lengthInChars = library.CFStringGetLength(this).intValue();
+logger.log(Level.DEBUG, "CFStringRef: " + getPointer());
+        int lengthInChars = library.CFStringGetLength(getPointer()).intValue();
         NativeLong potentialLengthInBytes = new NativeLong(3L * lengthInChars + 1); // UTF8 fully escaped 16 bit chars, plus nul
 
         ByteBuffer buffer = ByteBuffer.allocate(potentialLengthInBytes.intValue());
