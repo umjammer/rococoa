@@ -67,13 +67,14 @@ public class GCDExecutorService extends AbstractExecutorService {
     private final Condition shutdownCondition = shutdownLock.newCondition();
     /**A Map used both to retain proxies for running tasks - so they are not collected - and to
      * support the shutdownNow() method*/
-    private final Map<ID, InvocationFutureTask<?>> tasks = new ConcurrentHashMap<ID, InvocationFutureTask<?>>();
+    private final Map<ID, InvocationFutureTask<?>> tasks = new ConcurrentHashMap<>();
 
     /** Construct a new instance of the code <code>ExecutorService</code>, with its own underlying <code>NSOperationQueue</code>*/
     public GCDExecutorService() {
         queue = NSOperationQueue.CLASS.alloc().init();
     }
 
+    @Override
     public void shutdown() {
         try {
             shutdownLock.lock();
@@ -84,40 +85,42 @@ public class GCDExecutorService extends AbstractExecutorService {
         }
     }
 
+    @Override
     public List<Runnable> shutdownNow() {
-        return doWithAutoreleasePool(new Callable<List<Runnable>>() {
-            public List<Runnable> call() {
-                try {
-                    shutdownLock.lock();
-                    state = State.SHUTDOWN;
-                    NSArray queuedTasks = queue.operations();
-                    List<Runnable> result = new ArrayList<Runnable>(queuedTasks.count());
-                    for (int i = 0; i < queuedTasks.count(); i++) {
-                        NSOperation o = Rococoa.cast(queuedTasks.objectAtIndex(i), NSOperation.class);
-                        InvocationFutureTask<?> task = tasks.get(o.id());
-                        if ( task != null && !(o.isFinished() || o.isCancelled()) ) {
-                            result.add(task.getOriginalRunnable());
-                        }
+        return doWithAutoreleasePool(() -> {
+            try {
+                shutdownLock.lock();
+                state = State.SHUTDOWN;
+                NSArray queuedTasks = queue.operations();
+                List<Runnable> result = new ArrayList<>(queuedTasks.count());
+                for (int i = 0; i < queuedTasks.count(); i++) {
+                    NSOperation o = Rococoa.cast(queuedTasks.objectAtIndex(i), NSOperation.class);
+                    InvocationFutureTask<?> task = tasks.get(o.id());
+                    if (task != null && !(o.isFinished() || o.isCancelled())) {
+                        result.add(task.getOriginalRunnable());
                     }
-                    queue.cancelAllOperations();
-                    tasks.clear();
-                    terminateIfDone(queue.operationCount().intValue() == 0);
-                    return result;
-                } finally {
-                    shutdownLock.unlock();
                 }
+                queue.cancelAllOperations();
+                tasks.clear();
+                terminateIfDone(queue.operationCount().intValue() == 0);
+                return result;
+            } finally {
+                shutdownLock.unlock();
             }
         });
     }
 
+    @Override
     public boolean isShutdown() {
         return state != State.RUNNING;
     }
 
+    @Override
     public boolean isTerminated() {
         return state == State.TERMINATED;
     }
 
+    @Override
     public boolean awaitTermination(long timeout, TimeUnit unit) throws InterruptedException {
         long wait = unit.toNanos(timeout);
         shutdownLock.lock();
@@ -135,6 +138,7 @@ public class GCDExecutorService extends AbstractExecutorService {
         }
     }
 
+    @Override
     public void execute(Runnable command) {
         if ( command == null ) {
             throw new NullPointerException("Tasks may not be null");
@@ -156,7 +160,7 @@ public class GCDExecutorService extends AbstractExecutorService {
 
     @Override
     protected <T> RunnableFuture<T> newTaskFor(Runnable runnable, T value) {
-        return new InvocationFutureTask<T>(runnable, value);
+        return new InvocationFutureTask<>(runnable, value);
     }
 
     @Override
@@ -185,7 +189,7 @@ public class GCDExecutorService extends AbstractExecutorService {
          */
         private final Runnable originalRunnable;
 
-        /** Create an new invocation based future task to run the given <code>Runnable</code>
+        /** Create a new invocation based future task to run the given <code>Runnable</code>
          *  @param r the <code>Runnable</code> to run
          *  @param result the result to return when the <code>Runnable</code> completes
          */
@@ -197,7 +201,7 @@ public class GCDExecutorService extends AbstractExecutorService {
             tasks.put(invocation.id(), this);
         }
 
-        /** Create an new invocation based future task to run the given <code>Callable</code>
+        /** Create a new invocation based future task to run the given <code>Callable</code>
          *  @param callable the <code>Callable</code> to run
          */
         public InvocationFutureTask(Callable<V> callable){
@@ -207,15 +211,13 @@ public class GCDExecutorService extends AbstractExecutorService {
             invocation = createInvocation(proxy);
             tasks.put(invocation.id(), this);
         }
-        private NSInvocationOperation createInvocation(final ObjCObject toInvoke) {
-            return doWithAutoreleasePool(new Callable<NSInvocationOperation> () {
-                public NSInvocationOperation call() {
-                    NSInvocationOperation result = NSInvocationOperation.CLASS.alloc();
-                    //when the NSOperationQueue executes the NSInvocationOperation, run() is
-                    //called on this object.
-                    result = result.initWithTarget_selector_object(toInvoke.id(), RUN_SELECTOR, null);
-                    return result;
-                }
+        private static NSInvocationOperation createInvocation(ObjCObject toInvoke) {
+            return doWithAutoreleasePool(() -> {
+                NSInvocationOperation result = NSInvocationOperation.CLASS.alloc();
+                //when the NSOperationQueue executes the NSInvocationOperation, run() is
+                //called on this object.
+                result = result.initWithTarget_selector_object(toInvoke.id(), RUN_SELECTOR, null);
+                return result;
             });
         }
         /** Get the <code>NSInvocationOperation</code> created to run this task.

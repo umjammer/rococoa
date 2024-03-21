@@ -9,6 +9,8 @@
 #import "test.h"
 #import <stdarg.h>
 #include <pthread/pthread.h>
+#include <AVFoundation/AVFoundation.h>
+#include <Block.h>
 
 TestIntDoubleStruct createIntDoubleStruct(int a, double b) {
 	TestIntDoubleStruct result = {a, b};
@@ -104,8 +106,7 @@ TestIntIntStruct createIntIntStruct(int a, int b) {
 	return f;
 }
 
-union floatint
-{
+union floatint {
    float f;
    int i;
 };
@@ -122,6 +123,67 @@ fflush(stderr);
 fprintf(stderr, "%3.1f\n", f);
 fflush(stderr);
 	return f == (float) 3.14;
+}
+
+- (int) testBlock: (int) number operation: (MyBlock) operationBlock {
+    int r = operationBlock(number);
+fprintf(stderr, "%s\n", "testBlock");
+fflush(stderr);
+    return r;
+}
+
+- (long) testBlockI: (id) id operation: (MyBlockI) operationBlock {
+    long r = operationBlock(id);
+fprintf(stderr, "%s\n", "testBlockI");
+fflush(stderr);
+    return r;
+}
+
+- (id) testBlockS: (NSString*) s operation: (MyBlockS) operationBlock {
+    id r = operationBlock(s);
+fprintf(stderr, "%s\n", "testBlockS");
+fflush(stderr);
+    return r;
+}
+
+- (id) testBlockS2: (id) s times: (int) n operation: (MyBlockS2) operationBlock {
+    id r = operationBlock(s, n);
+fprintf(stderr, "%s\n", "testBlockS2");
+fflush(stderr);
+    return r;
+}
+
+- (void) testBlockX {
+    AVSpeechSynthesizer* synthesizer = [[AVSpeechSynthesizer alloc] init];
+    AVSpeechSynthesisVoice* voice = [AVSpeechSynthesisVoice voiceWithLanguage: @"en-US"];
+    AVSpeechUtterance* *utterance = [[AVSpeechUtterance alloc] initWithString: @"she sells seashells by the seashore"];
+    [utterance setVoice: voice];
+    __block AVAudioFile *output = nil;
+    AVSpeechSynthesizerBufferCallback callback = ^(AVAudioBuffer* buffer) {
+        AVAudioPCMBuffer *pcmBuffer = (AVAudioPCMBuffer*) buffer;
+        if (!pcmBuffer) {
+            NSLog(@"Error");
+            return;
+        }
+        if (pcmBuffer.frameLength != 0) {
+            //append buffer to file
+            if (output == nil) {
+                output = [[AVAudioFile alloc] initForWriting: [NSURL fileURLWithPath: @"tmp/test.caf"]
+                                              settings: pcmBuffer.format.settings
+                                              commonFormat: AVAudioPCMFormatInt16
+                                              interleaved: NO error: nil];
+            }
+            [output writeFromBuffer:pcmBuffer error:nil];
+fprintf(stderr, "%s, %d\n", "testBlockX inner block", pcmBuffer.frameLength);
+fflush(stderr);
+        }
+    };
+//     struct block_literal* block = (struct block_literal*) &callback;
+// fprintf(stderr, "block->flags: %08x, %d\n", block->flags, block->descriptor->size);
+// fflush(stderr);
+    [synthesizer writeUtterance: utterance toBufferCallback: callback];
+fprintf(stderr, "%s\n", "testBlockX");
+fflush(stderr);
 }
 
 @end

@@ -20,7 +20,6 @@
 package org.rococoa.cocoa.qtkit;
 
 import java.io.File;
-import java.util.concurrent.Callable;
 
 import org.rococoa.Foundation;
 import org.rococoa.ID;
@@ -50,11 +49,7 @@ public @RunOnMainThread abstract class QTMovie extends NSObject {
 
     // Loading the QTMovie class has to happen on the main thread
     private static final _Class CLASS = 
-        Foundation.callOnMainThread(new Callable<_Class>() {
-            public _Class call() throws Exception {
-                return Rococoa.wrap(Foundation.getClass("QTMovie"), _Class.class);
-            }
-        });
+        Foundation.callOnMainThread(() -> Rococoa.wrap(Foundation.getClass("QTMovie"), _Class.class));
 
     // Creating instances has to happen on the main thread
     public static @RunOnMainThread abstract class _Class implements org.rococoa.ObjCClass {//extends NSObject._class_ {

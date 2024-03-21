@@ -83,6 +83,7 @@ public class NSVoice extends AbstractPropertyDictionary<NSVoice.VoiceProperty> {
         IndividuallySpokenCharacters,
         Language;
         private final NSString value =  NSString.getGlobalString(NSVoice.class.getSimpleName() + name());
+        @Override
         public NSString getNativeValue() {
             return value;
         }
@@ -101,7 +102,7 @@ public class NSVoice extends AbstractPropertyDictionary<NSVoice.VoiceProperty> {
         super(VoiceProperty.values().length);
     }
 
-    NSVoice(final NSMutableDictionary data) {
+    NSVoice(NSMutableDictionary data) {
         super(checkData(null, data));
     }
 
@@ -179,6 +180,7 @@ public class NSVoice extends AbstractPropertyDictionary<NSVoice.VoiceProperty> {
         Male,
         Female;
         private final NSString value =  NSString.getGlobalString("NS" + getClass().getSimpleName() + name());
+        @Override
         public NSString getNativeValue() {
             return value;
         }

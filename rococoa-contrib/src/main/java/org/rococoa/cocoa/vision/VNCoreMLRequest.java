@@ -10,8 +10,8 @@ import java.util.logging.Logger;
 
 import org.rococoa.ID;
 import org.rococoa.ObjCBlock;
+import org.rococoa.ObjCBlocks.BlockLiteral;
 import org.rococoa.ObjCClass;
-import org.rococoa.ObjCObjectByReference;
 import org.rococoa.Rococoa;
 
 
@@ -38,7 +38,7 @@ public abstract class VNCoreMLRequest extends VNImageBasedRequest {
      * Creates a model container to be used with VNCoreMLRequest
      * based on a Core ML model, with an optional completion handler.
      */
-    public abstract VNCoreMLRequest initWithModel_completionHandler(VNCoreMLModel model, ID/*VNRequestCompletionHandler*/ completionHandler);
+    public abstract VNCoreMLRequest initWithModel_completionHandler(VNCoreMLModel model, BlockLiteral /* ^VNRequestCompletionHandler */ completionHandler);
 
     /** utility */
     public static VNCoreMLRequest newRequest(VNCoreMLModel model) {
@@ -51,6 +51,6 @@ public abstract class VNCoreMLRequest extends VNImageBasedRequest {
     public abstract VNCoreMLModel model();
 
     public interface VNRequestCompletionHandler extends ObjCBlock {
-        void callback(ID id, ObjCObjectByReference error);
+        void callback(BlockLiteral literal, ID id, ID error);
     }
 }

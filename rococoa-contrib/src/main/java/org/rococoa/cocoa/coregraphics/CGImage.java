@@ -38,7 +38,7 @@ public class CGImage {
     private static final Logger logger = Logger.getLogger(CGImage.class.getName());
 
     /** CGImageRef */
-    private Pointer /* CGImageRef */ image;
+    private final Pointer /* CGImageRef */ image;
 
     /** utility NSImage -> CGImageRef */
     private static Pointer /* CGImageRef */ initFrom(InputStream stream) throws IOException {

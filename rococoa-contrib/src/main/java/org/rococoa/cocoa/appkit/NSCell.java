@@ -562,31 +562,31 @@ public abstract class NSCell extends NSObject implements NSCopying {
      * Original signature : <code>void takeIntValueFrom(id)</code><br>
      * <i>native declaration : :240</i>
      */
-    public abstract void takeIntValueFrom(final ID sender);
+    public abstract void takeIntValueFrom(ID sender);
 
     /**
      * Original signature : <code>void takeFloatValueFrom(id)</code><br>
      * <i>native declaration : :241</i>
      */
-    public abstract void takeFloatValueFrom(final ID sender);
+    public abstract void takeFloatValueFrom(ID sender);
 
     /**
      * Original signature : <code>void takeDoubleValueFrom(id)</code><br>
      * <i>native declaration : :242</i>
      */
-    public abstract void takeDoubleValueFrom(final ID sender);
+    public abstract void takeDoubleValueFrom(ID sender);
 
     /**
      * Original signature : <code>void takeStringValueFrom(id)</code><br>
      * <i>native declaration : :243</i>
      */
-    public abstract void takeStringValueFrom(final ID sender);
+    public abstract void takeStringValueFrom(ID sender);
 
     /**
      * Original signature : <code>void takeObjectValueFrom(id)</code><br>
      * <i>native declaration : :244</i>
      */
-    public abstract void takeObjectValueFrom(final ID sender);
+    public abstract void takeObjectValueFrom(ID sender);
 
     /**
      * Original signature : <code>NSImage* image()</code><br>
@@ -830,7 +830,7 @@ public abstract class NSCell extends NSObject implements NSCopying {
      * Original signature : <code>void takeIntegerValueFrom(id)</code><br>
      * <i>native declaration : :299</i>
      */
-    public abstract void takeIntegerValueFrom(final ID sender);
+    public abstract void takeIntegerValueFrom(ID sender);
 
     /**
      * Truncates and adds the ellipsis character to the last visible line if the text doesn't fit into the cell bounds. The setting is ignored if -lineBreakMode is neither NSLineBreakByWordWrapping nor NSLineBreakByCharWrapping.<br>
@@ -903,7 +903,7 @@ public abstract class NSCell extends NSObject implements NSCopying {
      * Original signature : <code>void performClick(id)</code><br>
      * <i>from NSKeyboardUI native declaration : :318</i>
      */
-    public abstract void performClick(final ID sender);
+    public abstract void performClick(ID sender);
     /**
      * <i>from NSKeyboardUI native declaration : :321</i><br>
      * Conversion Error : /// Original signature : <code>void setFocusRingType(null)</code><br>
@@ -976,7 +976,7 @@ public abstract class NSCell extends NSObject implements NSCopying {
 
     /**
      * Original signature : <code>NSInteger nextState()</code><br>
-     * get next state state in cycle<br>
+     * get next state in cycle<br>
      * <i>from NSCellMixedState native declaration : :343</i>
      */
     public abstract NSInteger nextState();

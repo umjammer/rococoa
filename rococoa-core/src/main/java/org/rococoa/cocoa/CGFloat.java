@@ -82,6 +82,7 @@ public class CGFloat extends Number implements NativeMapped {
     }
 
     // Native mapping
+    @Override
     public Object fromNative(Object o, FromNativeContext fromNativeContext) {
         return switch (SIZE) {
             case 4 -> new CGFloat((Float) o);
@@ -90,6 +91,7 @@ public class CGFloat extends Number implements NativeMapped {
         };
     }
 
+    @Override
     public Object toNative() {
         return switch (SIZE) {
             case 4 -> floatValue();
@@ -98,6 +100,7 @@ public class CGFloat extends Number implements NativeMapped {
         };
     }
 
+    @Override
     public Class<?> nativeType() {
         return switch (SIZE) {
             case 4 -> Float.class;

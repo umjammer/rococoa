@@ -24,7 +24,6 @@ import java.util.List;
 
 import io.github.artsok.RepeatedIfExceptionsTest;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import org.rococoa.Foundation;
 import org.rococoa.ObjCObject;
@@ -55,7 +54,7 @@ class NSOperationQueueTest extends RococoaTestCase {
             runnables = new ObjCObject[numItems];
             ops = new NSInvocationOperation[numItems];
             for(int i=0; i < ops.length; i++) {
-                final int j = i;
+                int j = i;
                 Runnable r = () -> {
                     synchronized(results) {
                         results[j] = true;

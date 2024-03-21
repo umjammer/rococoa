@@ -9,13 +9,8 @@ package org.rococoa.cocoa.appkit;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
-import java.util.Arrays;
-import java.util.NoSuchElementException;
 import java.util.concurrent.CountDownLatch;
 
-import com.sun.jna.Pointer;
-import com.sun.tools.attach.VirtualMachine;
-import com.sun.tools.attach.VirtualMachineDescriptor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,8 +18,6 @@ import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import org.rococoa.ID;
 import org.rococoa.ObjCObject;
 import org.rococoa.Rococoa;
-import org.rococoa.cocoa.CGFloat;
-import org.rococoa.cocoa.foundation.FoundationKitFunctions;
 import org.rococoa.cocoa.foundation.NSData;
 import org.rococoa.cocoa.foundation.NSPasteboard;
 import org.rococoa.cocoa.foundation.NSRect;
@@ -32,14 +25,6 @@ import vavi.util.Debug;
 import vavi.util.StringUtil;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.rococoa.cocoa.coregraphics.CoreGraphicsLibrary.kCGEventFlagMaskCommand;
-import static org.rococoa.cocoa.coregraphics.CoreGraphicsLibrary.kCGEventLeftMouseDown;
-import static org.rococoa.cocoa.coregraphics.CoreGraphicsLibrary.kCGEventLeftMouseUp;
-import static org.rococoa.cocoa.coregraphics.CoreGraphicsLibrary.kCGEventMouseMoved;
-import static org.rococoa.cocoa.coregraphics.CoreGraphicsLibrary.kCGEventSourceStateHIDSystemState;
-import static org.rococoa.cocoa.coregraphics.CoreGraphicsLibrary.kCGHIDEventTap;
-import static org.rococoa.cocoa.coregraphics.CoreGraphicsLibrary.kCGMouseButtonLeft;
-import static org.rococoa.cocoa.coregraphics.CoreGraphicsLibrary.library;
 
 
 /**

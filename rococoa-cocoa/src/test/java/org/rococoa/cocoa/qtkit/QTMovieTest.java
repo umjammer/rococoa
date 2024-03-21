@@ -91,7 +91,7 @@ public class QTMovieTest extends RococoaTestCase {
         assertEquals(testMovieTimeScale, Rococoa.cast(attribute, NSNumber.class).intValue());
     }
 
-    private QTMovie loadMovie(String filename) {
+    private static QTMovie loadMovie(String filename) {
 //        NSDictionary attributes = NSDictionary.CLASS.dictionaryWithObjectsAndKeys(
 //                NSString.CLASS.stringWithString(filename),
 //                NSString.CLASS.stringWithString(QTMovie.QTMovieFileNameAttribute),

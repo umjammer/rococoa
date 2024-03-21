@@ -5,16 +5,18 @@
 
 #  Welcome to Rococoa
 
+<img alt="rococoa" src="https://github.com/umjammer/rococoa/assets/493908/416ded41-08d0-4360-9163-0c594b1f554a" width="200" />
+
 Rococoa is a generic Java binding to the Mac Objective-C object system. It 
 allows the creation and use of Objective-C objects in Java, and the 
 implementation of Objective-C interfaces in Java.
 
-## ⚠ Caution
+### ⚠ Caution
 
  * this project will **quit** supporting **intel** chips
  * supported macos will be **after Ventura** also
 
-## Limitation
+### Limitation
 
 * ~~obj-c class's method call with float argument doesn't work~~ works → new limitation: arguments should be less equal 8
   * ~~[the reason](https://github.com/java-native-access/jna/issues/463#issuecomment-1286015013)~~ -> actually https://github.com/java-native-access/jna/issues/1476#issuecomment-1292804072
@@ -22,11 +24,13 @@ implementation of Objective-C interfaces in Java.
 * obj-c block
 * methods have **varargs don't** work (works less equal 8?)
 
-## Installation
+## Install
 
  * https://jitpack.io/#umjammer/rococoa
 
-## How To
+## Usage
+
+### How To
 
 * [Basics](rococoa-core/readme.md#How-To)
 * [CIFilter Java2D BufferedImageOp](rococoa-contrib/src/test/java/org/rococoa/cocoa/coreimage/CoreImageTest.java)
@@ -40,36 +44,8 @@ implementation of Objective-C interfaces in Java.
 * [KeyChain Java crypto Keystore SPI](https://github.com/umjammer/vavi-crypto-sandbox/tree/1.0.2/src/main/java/vavix/rococoa/keychain)
 * [Vision Detecting Human Body Poses in Images](rococoa-contrib/src/test/java/org/rococoa/cocoa/vision/VisionTest.java)
 
-## TODO
-
-* NSUrl tags (wip)
-* obj-block (wip)
-   * https://github.com/nativelibs4java/BridJ/
-   * http://cocoawithlove.com/2009/10/how-blocks-are-implemented-and.html
-   * http://www.opensource.apple.com/source/libclosure/libclosure-38/BlockImplementation.txt
-   * https://clang.llvm.org/docs/Block-ABI-Apple.html
-   * https://github.com/ronaldoussoren/pyobjc/blob/77b98382e52818690449111cd2e23cd469b53cf5/pyobjc-core/Modules/objc/block_support.m
-   * https://docs.rs/block/latest/block/
-* ~~CIFilter~~ (done)
-  * CGImage fails around density related 
-* ~~`cglib` is mostly [suspended](https://github.com/cglib/cglib#readme)~~
-   * ~~`cglib` recommends [ByteBuddy](https://bytebuddy.net/) that is based on `asm` same as the `cglib`~~ (done)
-   * cache classes (ByteBuddy)
-* ~~clean up logging~~
-* native library loading
-  * https://github.com/scijava/native-lib-loader
-* dynamic method creation
-  * invokedinamic?
-  * ByteBuddy's method interception???
-* CGController
-  * https://stackoverflow.com/a/65999820
-* activate application
-  * https://developer.apple.com/documentation/appkit/nsrunningapplication?language=objc
-* separate same parts of jna-platform (like jna-platform-extended)
-* deprecate rococoa-contrib
-
 ## References
- 
+
 * https://github.com/ibinti/bugvm
 * https://gitlab.com/axet/apple
 * https://github.com/multi-os-engine/moe-mac-core
@@ -80,6 +56,45 @@ implementation of Objective-C interfaces in Java.
   * http://eleccelerator.com/wiki/index.php?title=DualShock_4
   * https://github.com/born2snipe/gamepad4j/blob/master/gamepad4j-desktop/src/main/c/macos/Gamepad_macosx.c
   * port [hidapi](https://github.com/libusb/hidapi) mac part
+* obj-block
+  * https://github.com/nativelibs4java/BridJ/
+  * http://cocoawithlove.com/2009/10/how-blocks-are-implemented-and.html
+  * http://www.opensource.apple.com/source/libclosure/libclosure-38/BlockImplementation.txt
+  * https://clang.llvm.org/docs/Block-ABI-Apple.html
+  * https://github.com/ronaldoussoren/pyobjc/blob/77b98382e52818690449111cd2e23cd469b53cf5/pyobjc-core/Modules/objc/block_support.m
+    * `PyObjCFFI_MakeBlockFunction`
+  * https://docs.rs/block/latest/block/
+  * https://github.com/mikeash/MABlockClosure
+  * https://github.com/PsychoH13/C-ObjC-Blocks
+  * alternative
+    * https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/CustomizingExistingClasses/CustomizingExistingClasses.html
+
+## TODO
+
+* NSUrl tags (wip)
+* obj-block (wip)
+* ~~CIFilter~~ (done)
+  * CGImage fails around density related 
+* ~~`cglib` is mostly [suspended](https://github.com/cglib/cglib#readme)~~
+   * ~~`cglib` recommends [ByteBuddy](https://bytebuddy.net/) that is based on `asm` same as the `cglib`~~ (done)
+   * cache classes (ByteBuddy)
+* ~~clean up logging~~
+* ~~native library loading~~
+  * ~~https://github.com/scijava/native-lib-loader~~
+  * ~~i don't like to locate `librococoa.dylib` at `src/main/resources` for jitpack~~
+    * ~~copy to like `src/main/native-resource` (on only local not ci)~~
+    * ~~include it in jar-plugin (on jitpack)~~
+    * ~~OR set it as asset on github actions~~ 🎯
+    * ~~retrieve the asset by ant task?~~ 
+* dynamic method creation
+  * invokedinamic?
+  * ByteBuddy's method interception???
+* CGController
+  * https://stackoverflow.com/a/65999820
+* activate application
+  * https://developer.apple.com/documentation/appkit/nsrunningapplication?language=objc
+* separate same parts of jna-platform (like jna-platform-extended)
+* deprecate rococoa-contrib
 
 ----
 
@@ -105,3 +120,6 @@ any other problems.
  * [Quicktime](https://github.com/iterate-ch/rococoa/blob/wiki/Quicktime.md)
  * [Limitations](https://github.com/iterate-ch/rococoa/blob/wiki/Limitations.md)
  * [Help Wanted](https://github.com/iterate-ch/rococoa/blob/wiki/HelpWanted.md)
+
+---
+<sub>image by <a href="https://www.bing.com/">copilot</a></sub>

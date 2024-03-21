@@ -28,7 +28,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.logging.Logger;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -55,7 +54,7 @@ public class NSSpeechSynthesizerTest {
     private static final float VOLUME = 0.2f;
     private NSAutoreleasePool pool;
 
-    private static NSVoice testVoice = new NSVoice(NSVoice.VICTORIA);
+    private static final NSVoice testVoice = new NSVoice(NSVoice.VICTORIA);
 
     @BeforeEach
     public void preSetup() {
@@ -79,9 +78,9 @@ public class NSSpeechSynthesizerTest {
     @Test
     public void testAvailableVoices() {
         assertEquals(NSSpeechSynthesizer.CLASS.availableVoices().count(), NSSpeechSynthesizer.availableVoices().size());
-        assertTrue(NSSpeechSynthesizer.availableVoices().size() > 0);
+        assertTrue(!NSSpeechSynthesizer.availableVoices().isEmpty());
         assertNotNull(NSSpeechSynthesizer.availableVoices().get(0).getName());
-        assertTrue(NSSpeechSynthesizer.availableVoices().get(0).getName().length() > 0);
+        assertTrue(!NSSpeechSynthesizer.availableVoices().get(0).getName().isEmpty());
     }
  
     @Test
@@ -210,7 +209,7 @@ public class NSSpeechSynthesizerTest {
         sd.waitForSpeechDone(TIME_TO_WAIT, false);
         // don't want test case to be too timing dependent
         assertTrue(sd.getWordsSpoken().size() < 3, "Expected less than 3 words but got: " + sd.getWordsSpoken());
-        assertTrue(sd.getWordsSpoken().size() >= 1, "Expected at least one word but got: " + sd.getWordsSpoken());
+        assertTrue(!sd.getWordsSpoken().isEmpty(), "Expected at least one word but got: " + sd.getWordsSpoken());
 
         // near as I can tell, SentenceBoundary just doesn't work!
         sd.reset();
@@ -227,7 +226,7 @@ public class NSSpeechSynthesizerTest {
         ss.stopSpeakingAtBoundary(NSSpeechSynthesizer.NSSpeechBoundary.ImmediateBoundary);
         sd.waitForSpeechDone(TIME_TO_WAIT, false);
         assertTrue(sd.getWordsSpoken().size() < 3, "Expected less than 3 words but got: " + sd.getWordsSpoken());
-        assertTrue(sd.getWordsSpoken().size() > 0, "Expected at least one word but got: " + sd.getWordsSpoken());
+        assertTrue(!sd.getWordsSpoken().isEmpty(), "Expected at least one word but got: " + sd.getWordsSpoken());
     }
 
     @Test
@@ -511,8 +510,8 @@ public class NSSpeechSynthesizerTest {
     private static class SynthesizerDelegate implements NSSpeechSynthesizer.NSSpeechSynthesizerDelegate {
 
         private volatile boolean success = false;
-        private List<String> wordsSpoken = new ArrayList<>();
-        private List<String> phonemesSpoken = new ArrayList<>();
+        private final List<String> wordsSpoken = new ArrayList<>();
+        private final List<String> phonemesSpoken = new ArrayList<>();
         private String wordWaitingFor;
         private int position = -1;
         private String synchMark;
@@ -546,6 +545,7 @@ public class NSSpeechSynthesizerTest {
             return phonemesSpoken;
         }
 
+        @Override
         public void speechSynthesizer_didFinishSpeaking(NSSpeechSynthesizer sender, boolean success) {
             this.success = success;
             synchronized (speechDoneMonitor) {
@@ -574,7 +574,7 @@ public class NSSpeechSynthesizerTest {
             }
         }
                 
-        public void waitForWord(long interval, final String word) {
+        public void waitForWord(long interval, String word) {
             synchronized (waitForSpeechWordMonitor) {
                 wordWaitingFor = word;
                 try {
@@ -585,7 +585,7 @@ public class NSSpeechSynthesizerTest {
             }
         }
 
-        private String getCallerName() {
+        private static String getCallerName() {
             for (StackTraceElement ste : Thread.currentThread().getStackTrace()) {
                 if (ste.getMethodName().startsWith("test")) {
                     return ste.getMethodName();
@@ -594,6 +594,7 @@ public class NSSpeechSynthesizerTest {
             return "Unknown method";
         }
 
+        @Override
         public void speechSynthesizer_didEncounterErrorAtIndex_ofString_message(NSSpeechSynthesizer sender, Integer characterIndex, String text, String errorMessage) {
             position = characterIndex;
             this.errorMessage = errorMessage;
@@ -601,15 +602,18 @@ public class NSSpeechSynthesizerTest {
 //            System.out.println("In callback: " + sender.getError());
         }
 
+        @Override
         public void speechSynthesizer_didEncounterSyncMessage(NSSpeechSynthesizer sender, String synchMark) {
             this.synchMark = synchMark;
 //            System.out.println("In callback, sync: " + sender.getRecentSync());
         }
 
+        @Override
         public synchronized void speechSynthesizer_willSpeakPhoneme(NSSpeechSynthesizer sender, short phonemeOpcode) {
             phonemesSpoken.add(sender.opcodeToPhoneme(phonemeOpcode));
         }
 
+        @Override
         public void speechSynthesizer_willSpeakWord_ofString(NSSpeechSynthesizer sender, NSRange wordToSpeak, String text) {
             wordsSpoken.add(text.substring((int) wordToSpeak.getLocation(), (int) wordToSpeak.getEndLocation()));
             if ( wordWaitingFor == null || wordsSpoken.get(wordsSpoken.size()-1).equals(wordWaitingFor)) {

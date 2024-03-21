@@ -79,12 +79,12 @@ public class RococoaObjCObjectByReferenceTest extends RococoaTestCase {
     public void testDelegate() {
         NSAutoreleasePool pool = NSAutoreleasePool.new_();
         TestShunt shunt = Rococoa.create("TestShunt", TestShunt.class);
-        final CountDownLatch count = new CountDownLatch(1);
-        final ObjCObject callback = Rococoa.proxy((TestShuntDelegate) reference -> {
+        CountDownLatch count = new CountDownLatch(1);
+        ObjCObject callback = Rococoa.proxy((TestShuntDelegate) reference -> {
             // Success
             count.countDown();
         });
-        final ID delegate = callback.id();
+        ID delegate = callback.id();
         shunt.testCallbackWithReference(delegate);
         assertEquals(0, count.getCount(), "Callback to delegate failed");
         pool.drain();

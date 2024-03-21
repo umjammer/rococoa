@@ -27,7 +27,6 @@ import java.util.List;
 
 import com.sun.jna.Pointer;
 import com.sun.jna.Structure;
-import org.rococoa.cocoa.CGFloat;
 
 
 /**

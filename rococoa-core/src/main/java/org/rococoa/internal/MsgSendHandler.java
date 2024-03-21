@@ -57,13 +57,13 @@ import org.rococoa.Selector;
  * @see "http://developer.apple.com/mac/library/documentation/DeveloperTools/Conceptual/LowLevelABI/Mac_OS_X_ABI_Function_Calls.pdf"
  * @see "http://www.sealiesoftware.com/blog/archive/2008/10/30/objc_explain_objc_msgSend_stret.html"
  * <p>
- * Note also that there is a objc_msgSend_fret that is used supposed to be for
+ * Note also that there is an objc_msgSend_fret that is used supposed to be for
  * floating point return types, but that I haven't (yet) had to use.
  * @see "http://www.sealiesoftware.com/blog/archive/2008/11/16/objc_explain_objc_msgSend_fpret.html"
  */
 class MsgSendHandler implements InvocationHandler {
 
-    private static Logger logging = Logger.getLogger("org.rococoa.foundation");
+    private static final Logger logging = Logger.getLogger("org.rococoa.foundation");
 
     /**
      * @see "com.sun.jna.Function#OPTION_INVOKING_METHOD"
@@ -181,6 +181,7 @@ class MsgSendHandler implements InvocationHandler {
      *             2: selector
      *             3...: args, null terminated
      */
+    @Override
     public Object invoke(Object proxy, Method method, Object[] args) {
         String methodName = ((Selector) args[2]).getName();
         Object[] methodArgs = Arrays.copyOfRange(args, 3, args.length); // null terminated

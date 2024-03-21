@@ -85,19 +85,18 @@ public class AutoreleaseBatcherTest {
         ID idNSObject = Foundation.cfRetain(autoreleasedObject());
         assertRetainCount(2, idNSObject);
         
-        Thread thread = new Thread() {
-            public void run() {
-                try {
-                    AutoreleaseBatcher.forThread(1);
-                    ID idNSObject = Foundation.cfRetain(autoreleasedObject());
-                    assertRetainCount(2, idNSObject);
-    
-                    AutoreleaseBatcher.forThread(1).operate();
-                    assertRetainCount(1, idNSObject);
-                } catch (Throwable t) {
-                    thrown = t;
-                }
-            }};
+        Thread thread = new Thread(() -> {
+            try {
+                AutoreleaseBatcher.forThread(1);
+                ID idNSObject1 = Foundation.cfRetain(autoreleasedObject());
+                assertRetainCount(2, idNSObject1);
+
+                AutoreleaseBatcher.forThread(1).operate();
+                assertRetainCount(1, idNSObject1);
+            } catch (Throwable t) {
+                thrown = t;
+            }
+        });
         thread.run();
         thread.join();
         
@@ -106,7 +105,7 @@ public class AutoreleaseBatcherTest {
         assertNull(thrown);
     }
     
-    private ID autoreleasedObject() {
+    private static ID autoreleasedObject() {
         ID idNSObject = Foundation.sendReturnsID(Foundation.getClass("NSObject"), "new");
         return Foundation.sendReturnsID(idNSObject, "autorelease");
         

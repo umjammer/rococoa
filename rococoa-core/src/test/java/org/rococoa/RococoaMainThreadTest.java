@@ -30,9 +30,9 @@ import org.junit.jupiter.api.Test;
 public class RococoaMainThreadTest extends RococoaTestCase {
     private interface TestShunt extends ObjCObject {
         boolean isMainThread();
-    };
+    }
 
-    private @RunOnMainThread interface TestShuntOnMainThread extends TestShunt {};
+    private @RunOnMainThread interface TestShuntOnMainThread extends TestShunt {}
 
     @Test public void testNotMainThreadAtClassLevel() {
         TestShunt testShunt = Rococoa.create("TestShunt", TestShunt.class);
@@ -55,11 +55,13 @@ public class RococoaMainThreadTest extends RococoaTestCase {
     }
 
     private interface TestShuntAnnotatedMethod extends TestShunt {
+        @Override
         @RunOnMainThread
         boolean isMainThread();
     }
 
     private interface TestShuntUnAnnotatedMethod extends TestShunt {
+        @Override
         boolean isMainThread();
     }
 }

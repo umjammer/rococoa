@@ -165,7 +165,7 @@ public class JavaProxyTest extends RococoaTestCase {
         byte result = Foundation.send(proxy.id(), "takesStringReturnsByte:",
                 byte.class, Foundation.cfString("hello"));
         assertEquals(42, result);
-        assertEquals("hello", ((NSString) implementor.arg).toString());
+        assertEquals("hello", implementor.arg.toString());
     }
 
     @Test

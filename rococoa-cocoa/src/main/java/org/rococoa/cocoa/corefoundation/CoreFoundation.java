@@ -8,12 +8,12 @@ package org.rococoa.cocoa.corefoundation;
 
 import java.nio.ByteBuffer;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import com.sun.jna.Callback;
 import com.sun.jna.CallbackReference;
 import com.sun.jna.Library;
+import com.sun.jna.Memory;
 import com.sun.jna.Native;
 import com.sun.jna.NativeLibrary;
 import com.sun.jna.NativeLong;
@@ -21,9 +21,7 @@ import com.sun.jna.Pointer;
 import com.sun.jna.PointerType;
 import com.sun.jna.Structure;
 import com.sun.jna.ptr.ByReference;
-import com.sun.jna.ptr.PointerByReference;
 import org.rococoa.cocoa.CFIndex;
-import org.rococoa.internal.RococoaTypeMapper;
 
 
 /**
@@ -43,6 +41,7 @@ public interface CoreFoundation extends Library {
     int kCFStringEncodingUTF8 = 0x8000100;
 
     CFIndex CFStringGetLength(CFStringRef theString);
+    CFIndex CFStringGetLength(Pointer theString);
 
     boolean CFStringGetCString(CFStringRef theString, ByteBuffer buffer, NativeLong bufferSize, int encoding);
 
@@ -122,59 +121,23 @@ public interface CoreFoundation extends Library {
         public CFDictionaryEqualCallBack equal;
         public CFDictionaryHashCallBack hash;
 
+        Memory memory;
+
         public CFDictionaryKeyCallBacks() {
+            setAutoWrite(false);
+            memory = new Memory(8 * 6);
+            useMemory(memory);
         }
 
         public CFDictionaryKeyCallBacks(Pointer p) {
-            super(p);
-
+            this();
             version = getPointer().getNativeLong(0);
             retain = (CFDictionaryRetainCallBack) CallbackReference.getCallback(CFDictionaryRetainCallBack.class, p.getPointer(0x08));
             release = (CFDictionaryReleaseCallBack) CallbackReference.getCallback(CFDictionaryReleaseCallBack.class, p.getPointer(0x10));
             copyDescription = (CFDictionaryCopyDescriptionCallBack) CallbackReference.getCallback(CFDictionaryCopyDescriptionCallBack.class, p.getPointer(0x18));
             equal = (CFDictionaryEqualCallBack) CallbackReference.getCallback(CFDictionaryEqualCallBack.class, p.getPointer(0x20));
             hash = (CFDictionaryHashCallBack) CallbackReference.getCallback(CFDictionaryHashCallBack.class, p.getPointer(0x28));
-        }
-
-        public CFDictionaryKeyCallBacks(NativeLong version, CFDictionaryRetainCallBack retain, CFDictionaryReleaseCallBack release, CFDictionaryCopyDescriptionCallBack copyDescription, CFDictionaryEqualCallBack equal, CFDictionaryHashCallBack hash) {
-            this.version = version;
-            this.retain = retain;
-            this.release = release;
-            this.copyDescription = copyDescription;
-            this.equal = equal;
-            this.hash = hash;
-        }
-
-        protected ByReference newByReference() {
-            ByReference s = new ByReference();
-            s.useMemory(getPointer());
             write();
-            s.read();
-            return s;
-        }
-
-        protected ByValue newByValue() {
-            ByValue s = new ByValue();
-            s.useMemory(getPointer());
-            write();
-            s.read();
-            return s;
-        }
-
-        protected CFDictionaryKeyCallBacks newInstance() {
-            CFDictionaryKeyCallBacks s = new CFDictionaryKeyCallBacks();
-            s.useMemory(getPointer());
-            write();
-            s.read();
-            return s;
-        }
-
-        public static class ByReference extends CFDictionaryKeyCallBacks implements Structure.ByReference {
-
-        }
-
-        public static class ByValue extends CFDictionaryKeyCallBacks implements Structure.ByValue {
-
         }
 
         @Override
@@ -191,58 +154,22 @@ public interface CoreFoundation extends Library {
         public CFDictionaryCopyDescriptionCallBack copyDescription;
         public CFDictionaryEqualCallBack equal;
 
+        Memory memory;
+
         public CFDictionaryValueCallBacks() {
+            setAutoWrite(false);
+            memory = new Memory(8 * 5);
+            useMemory(memory);
         }
 
         public CFDictionaryValueCallBacks(Pointer p) {
-            super(p);
-
+            this();
             version = getPointer().getNativeLong(0);
             retain = (CFDictionaryRetainCallBack) CallbackReference.getCallback(CFDictionaryRetainCallBack.class, p.getPointer(0x08));
             release = (CFDictionaryReleaseCallBack) CallbackReference.getCallback(CFDictionaryReleaseCallBack.class, p.getPointer(0x10));
             copyDescription = (CFDictionaryCopyDescriptionCallBack) CallbackReference.getCallback(CFDictionaryCopyDescriptionCallBack.class, p.getPointer(0x18));
             equal = (CFDictionaryEqualCallBack) CallbackReference.getCallback(CFDictionaryEqualCallBack.class, p.getPointer(0x20));
-        }
-
-        public CFDictionaryValueCallBacks(NativeLong version, CFDictionaryRetainCallBack retain, CFDictionaryReleaseCallBack release, CFDictionaryCopyDescriptionCallBack copyDescription, CFDictionaryEqualCallBack equal) {
-            super();
-            this.version = version;
-            this.retain = retain;
-            this.release = release;
-            this.copyDescription = copyDescription;
-            this.equal = equal;
-        }
-
-        protected ByReference newByReference() {
-            ByReference s = new ByReference();
-            s.useMemory(getPointer());
             write();
-            s.read();
-            return s;
-        }
-
-        protected ByValue newByValue() {
-            ByValue s = new ByValue();
-            s.useMemory(getPointer());
-            write();
-            s.read();
-            return s;
-        }
-
-        protected CFDictionaryValueCallBacks newInstance() {
-            CFDictionaryValueCallBacks s = new CFDictionaryValueCallBacks();
-            s.useMemory(getPointer());
-            write();
-            s.read();
-            return s;
-        }
-
-        public static class ByReference extends CFDictionaryValueCallBacks implements Structure.ByReference {
-
-        }
-
-        public static class ByValue extends CFDictionaryValueCallBacks implements Structure.ByValue {
-
         }
 
         @Override

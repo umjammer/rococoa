@@ -19,7 +19,6 @@
 
 package org.rococoa.internal;
 
-
 import org.rococoa.cocoa.foundation.NSInvocation;
 
 import com.sun.jna.Memory;
@@ -28,7 +27,6 @@ import com.sun.jna.Memory;
  * Maps to and from bytes in an NSInvocation to Java types.
  * 
  * @author duncan
- *
  */
 public abstract class NSInvocationMapper {
 
@@ -51,9 +49,8 @@ public abstract class NSInvocationMapper {
     }
 
     protected Object readFrom(Memory buffer, Class<?> type) {
-        throw new Error("Should be overridden or bypassed");
+        throw new AssertionError("Should be overridden or bypassed");
     }
     
     public abstract Memory bufferForResult(Object methodCallResult);
-
 }

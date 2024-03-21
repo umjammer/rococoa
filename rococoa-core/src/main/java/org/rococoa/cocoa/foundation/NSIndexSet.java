@@ -171,6 +171,7 @@ public abstract class NSIndexSet extends org.rococoa.cocoa.foundation.NSObject i
          * + (id)indexSetWithIndexesInRange:(null)range; (Argument range cannot be converted)
          */
         /// <i>native declaration : NSIndexSet.h</i>
+        @Override
         public abstract org.rococoa.cocoa.foundation.NSIndexSet alloc();
 
         /// <i>native declaration : NSIndexSet.h</i>

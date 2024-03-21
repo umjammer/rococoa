@@ -54,7 +54,7 @@ import org.rococoa.internal.VarArgsUnpacker;
 @SuppressWarnings("nls")
 public abstract class Foundation {
 
-    private static Logger logging = Logger.getLogger("org.rococoa.foundation");
+    private static final Logger logging = Logger.getLogger("org.rococoa.foundation");
 
     private static final FoundationLibrary foundationLibrary;
     private static final MsgSendLibrary messageSendLibrary;
@@ -273,14 +273,14 @@ logging.finest(String.format("sending (%s) %s.%s(%s), %s", returnType.getSimpleN
     /**
      * Return the result of calling callable on the main Cococoa thread.
      */
-    public static <T> T callOnMainThread(final Callable<T> callable) {
+    public static <T> T callOnMainThread(Callable<T> callable) {
         return MainThreadUtils.callOnMainThread(rococoaLibrary, callable);
     }
 
     /**
      * Run runnable on the main Rococoa thread, waiting for completion.
      */
-    public static void runOnMainThread(final Runnable runnable) {
+    public static void runOnMainThread(Runnable runnable) {
         MainThreadUtils.runOnMainThread(rococoaLibrary, runnable, true);
     }
 

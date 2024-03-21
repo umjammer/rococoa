@@ -64,9 +64,11 @@ public abstract class NSMutableIndexSet extends org.rococoa.cocoa.foundation.NSI
 
     public static abstract class _class_ extends org.rococoa.cocoa.foundation.NSIndexSet._class_ {
         /// <i>native declaration : NSIndexSet.h</i>
+        @Override
         public abstract org.rococoa.cocoa.foundation.NSMutableIndexSet alloc();
 
         /// <i>native declaration : NSIndexSet.h</i>
+        @Override
         public abstract org.rococoa.cocoa.foundation.NSMutableIndexSet new_();
     }
 

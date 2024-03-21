@@ -36,7 +36,7 @@ public abstract class NSToolbar extends NSObject {
     }
 
     public interface Delegate {
-        boolean validateToolbarItem(final NSToolbarItem item);
+        boolean validateToolbarItem(NSToolbarItem item);
 
         /**
          * Original signature : <code>NSToolbarItem* toolbar(NSToolbar*, NSString*, BOOL)</code><br>
@@ -109,7 +109,7 @@ public abstract class NSToolbar extends NSObject {
      * Original signature : <code>void runCustomizationPalette(id)</code><br>
      * <i>native declaration : :83</i>
      */
-    public abstract void runCustomizationPalette(final ID sender);
+    public abstract void runCustomizationPalette(ID sender);
 
     /**
      * Original signature : <code>BOOL customizationPaletteIsRunning()</code><br>

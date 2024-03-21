@@ -22,7 +22,6 @@ import org.rococoa.cocoa.CGFloat;
 import org.rococoa.cocoa.corefoundation.CFStringRef;
 import org.rococoa.cocoa.corefoundation.CoreFoundation;
 
-import static org.rococoa.carbon.CarbonCoreLibrary.kTISPropertyUnicodeKeyLayoutData;
 import static org.rococoa.carbon.CarbonCoreLibrary.kUCKeyActionDisplay;
 import static org.rococoa.carbon.CarbonCoreLibrary.kUCKeyTranslateNoDeadKeysBit;
 import static org.rococoa.cocoa.corefoundation.CFAllocatorRef.kCFAllocatorDefault;
@@ -273,7 +272,8 @@ public interface CoreGraphicsLibrary extends Library {
      */
     private static CFStringRef createStringForKey(char /* CGKeyCode */ keyCode) {
         Pointer /* TISInputSourceRef */ currentKeyboard = CarbonCoreLibrary.library.TISCopyCurrentKeyboardInputSource();
-        Pointer /* CFDataRef */ layoutData = CarbonCoreLibrary.library.TISGetInputSourceProperty(currentKeyboard, kTISPropertyUnicodeKeyLayoutData);
+logger.fine("currentKeyboard: " + currentKeyboard);// + ", " + kTISPropertyUnicodeKeyLayoutData);
+        Pointer /* CFDataRef */ layoutData = CarbonCoreLibrary.library.TISGetInputSourceProperty(currentKeyboard, CFStringRef.toCFString("TISPropertyUnicodeKeyLayoutData"));
 logger.finer("layoutData: " + layoutData);
         Pointer /* UCKeyboardLayout */ keyboardLayout = CoreFoundation.library.CFDataGetBytePtr(layoutData);
 
@@ -307,10 +307,10 @@ logger.finer("layoutData: " + layoutData);
         // Generate table of keycodes and characters.
         if (charToCodeDict == null) {
             charToCodeDict = CoreFoundation.library.CFDictionaryCreateMutable(kCFAllocatorDefault,
-                    new NativeLong(128),
+                    new NativeLong(0), // must be 0 ???
                     CoreFoundation.library.kCFCopyStringDictionaryKeyCallBacks,
                     CoreFoundation.library.kCFTypeDictionaryValueCallBacks);
-            if (charToCodeDict == null) return Character.MAX_VALUE;
+            if (charToCodeDict == null) throw new IllegalStateException("cannot careate CFDictionaryCreateMutable");
 
             /* Loop through every keycode (0 - 127) to find its current mapping. */
             for (char i = 0; i < 128; i++) {
@@ -350,8 +350,8 @@ logger.finer("layoutData: " + layoutData);
     /** Returns a rectangle with the specified coordinate and size values. */
     CGRect CGRectMake(CGFloat x, CGFloat y, CGFloat width, CGFloat height);
 
-    /** Returns a point with the specified coordinates. */
-    CGPoint CGPointMake(CGFloat x, CGFloat y);
+//    /** Returns a point with the specified coordinates. */
+//    /* inline */ CGPoint CGPointMake(CGFloat x, CGFloat y);
 
     // CGMouseButton
     int kCGMouseButtonLeft = 0;

@@ -8,6 +8,20 @@
 
 #import <Cocoa/Cocoa.h>
 
+struct block_descriptor_basic {
+    unsigned long int reserved;
+    unsigned long int size;
+    void* _Nullable rest[1];
+};
+
+struct block_literal {
+    void* isa;
+    int   flags;
+    int   reserved;
+    void (*invoke)(void*, ...);
+    struct block_descriptor_basic* descriptor;
+};
+
 typedef struct TestIntDoubleStruct {
 	int anInt;
 	double aDouble;
@@ -42,6 +56,11 @@ TestIntDoubleStruct createIntDoubleStruct(int a, double b);
 
 double addFieldsOfStructByValue(TestIntDoubleStruct s);
 
+typedef int (^MyBlock)(int);
+typedef long (^MyBlockI)(id);
+typedef id (^MyBlockS)(id);
+typedef id (^MyBlockS2)(id, int);
+
 @interface TestShunt : NSObject
 
 - (TestIntDoubleStruct) testReturnStructByValue: (int) a and: (double) b;
@@ -59,5 +78,15 @@ double addFieldsOfStructByValue(TestIntDoubleStruct s);
 - (BOOL) valueIsNO:(BOOL) a;
 
 - (bool) isMainThread;
+
+- (int) testBlock: (int) number operation: (MyBlock) operationBlock;
+
+- (long) testBlockI: (id) id operation: (MyBlockI) operationBlock;
+
+- (id) testBlockS: (id) s operation: (MyBlockS) operationBlock;
+
+- (id) testBlockS2: (id) s times: (int) n operation: (MyBlockS2) operationBlock;
+
+- (void) testBlockX;
 
 @end

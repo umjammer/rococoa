@@ -35,6 +35,7 @@ public class NSUIntegerByReference extends NativeLongByReference {
         getPointer().setNativeLong(0, value);
     }
     
+    @Override
     public NSUInteger getValue() {
         return new NSUInteger(getPointer().getNativeLong(0));
     }

@@ -17,9 +17,6 @@
  * along with Rococoa.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/**
- * 
- */
 package org.rococoa.internal;
 
 import java.lang.reflect.Field;
@@ -36,6 +33,7 @@ import com.sun.jna.Native;
 import com.sun.jna.Pointer;
 import com.sun.jna.Structure;
 
+
 class NSInvocationStructureMapper extends NSInvocationMapper {
 
     @SuppressWarnings("unchecked")
@@ -49,7 +47,7 @@ class NSInvocationStructureMapper extends NSInvocationMapper {
             result.append('^'); // pointer to
         }
         result.append('{').append(clas.getSimpleName()).append('=');
-        for (Field f : collectStructFields(clas, new ArrayList<Field>())) {
+        for (Field f : collectStructFields(clas, new ArrayList<>())) {
             result.append(NSInvocationMapperLookup.stringForType(f.getType()));
         }
         return result.append('}').toString();
@@ -103,9 +101,9 @@ class NSInvocationStructureMapper extends NSInvocationMapper {
     }
 
     @SuppressWarnings("unchecked")
-    private <T> T newInstance(Class<?> clas) {
+    private static <T> T newInstance(Class<?> clas) {
         try {
-            return (T) clas.newInstance();
+            return (T) clas.getDeclaredConstructor().newInstance();
         } catch (Exception e) {
             throw new RococoaException("Could not instantiate " + clas,  e);
         }
@@ -126,25 +124,25 @@ class NSInvocationStructureMapper extends NSInvocationMapper {
         return buffer;
     }
 
-    private Memory bufferForStructureByReference(Structure methodCallResult) {
+    private static Memory bufferForStructureByReference(Structure methodCallResult) {
         methodCallResult.write();
         Memory buffer = new Memory(Native.POINTER_SIZE);
         buffer.setPointer(0, methodCallResult.getPointer());
         return buffer;
     }
 
-    private void memcpy(Pointer dest, Pointer src, int byteCount) {
+    private static void memcpy(Pointer dest, Pointer src, int byteCount) {
         memcpyViaByteBuffer(dest, src, byteCount);
     }
 
     @SuppressWarnings("unused") // kept as naive implementation
-    private void memcpyViaArray(Pointer dest, Pointer src, int byteCount) {
+    private static void memcpyViaArray(Pointer dest, Pointer src, int byteCount) {
         byte[] structBytes = new byte[byteCount];
         src.read(0, structBytes, 0, byteCount);
         dest.write(0, structBytes, 0, byteCount);
     }
 
-    private void memcpyViaByteBuffer(Pointer dest, Pointer src, int byteCount) {
+    private static void memcpyViaByteBuffer(Pointer dest, Pointer src, int byteCount) {
         ByteBuffer destBuffer = dest.getByteBuffer(0, byteCount);
         ByteBuffer srcBuffer = src.getByteBuffer(0, byteCount);
         destBuffer.put(srcBuffer);

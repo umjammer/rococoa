@@ -52,6 +52,7 @@ public class NSSpeechDictionary extends AbstractPropertyDictionary<NSSpeechDicti
         Pronunciations, 
         Abbreviations;
         private final NSString value =  NSString.getGlobalString(NSSpeechDictionary.class.getSimpleName() + name());
+        @Override
         public NSString getNativeValue() {
             return value;
         }
@@ -65,7 +66,7 @@ public class NSSpeechDictionary extends AbstractPropertyDictionary<NSSpeechDicti
     /** Construct a new SpecchDictionary from existing data
      *  @param data used to initialize the speech dictionary, must contain valid keys and values for a speech dictionary
      */
-    public NSSpeechDictionary(final NSMutableDictionary data) {
+    public NSSpeechDictionary(NSMutableDictionary data) {
         super(data);
     }
 
@@ -99,7 +100,7 @@ public class NSSpeechDictionary extends AbstractPropertyDictionary<NSSpeechDicti
 
     public List<Entry> getPronunciations() {
         NSMutableArray pronounciations = getValueAsType(Pronunciations, NSMutableArray.class);
-        List<Entry> result = new ArrayList<Entry>(pronounciations.count());
+        List<Entry> result = new ArrayList<>(pronounciations.count());
         for (int i=0; i < pronounciations.count(); i++) {
             result.add(new Entry(Rococoa.cast(pronounciations.objectAtIndex(i), NSMutableDictionary.class)));
         }
@@ -125,7 +126,7 @@ public class NSSpeechDictionary extends AbstractPropertyDictionary<NSSpeechDicti
 
     public List<Entry> getAbbreviations() {
         NSMutableArray abbreviations = getValueAsType(Abbreviations, NSMutableArray.class);
-        List<Entry> result = new ArrayList<Entry>(abbreviations.count());
+        List<Entry> result = new ArrayList<>(abbreviations.count());
         for (int i=0; i < abbreviations.count(); i++) {
             result.add(new Entry(Rococoa.cast(abbreviations.objectAtIndex(i), NSMutableDictionary.class)));
         }
@@ -163,6 +164,7 @@ public class NSSpeechDictionary extends AbstractPropertyDictionary<NSSpeechDicti
             Spelling, 
             Phonemes;
             private final NSString value =  NSString.getGlobalString(NSSpeechDictionary.class.getSimpleName() + "Entry" + name());
+            @Override
             public NSString getNativeValue() {
                 return value;
             }
@@ -170,10 +172,10 @@ public class NSSpeechDictionary extends AbstractPropertyDictionary<NSSpeechDicti
         public Entry() {
             super(DictionaryEntryProperty.values().length);
         }
-        public Entry(final NSMutableDictionary data) {
+        public Entry(NSMutableDictionary data) {
             super(data);
         }
-        public Entry(final String spelling, final String phonemes) {
+        public Entry(String spelling, String phonemes) {
             this(NSMutableDictionary.dictionaryWithObjectsAndKeys(
                     NSString.stringWithString(phonemes), DictionaryEntryProperty.Phonemes.getNativeValue(),
                     NSString.stringWithString(spelling), DictionaryEntryProperty.Spelling.getNativeValue(),

@@ -6,5 +6,3 @@ void callOnMainThread(void (*fn)(void), BOOL waitUntilDone);
 @interface RococoaHelper : NSObject
 + (void) callback: (NSValue*) fn;
 @end
-
-

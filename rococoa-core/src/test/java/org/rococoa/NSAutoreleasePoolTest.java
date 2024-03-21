@@ -29,14 +29,14 @@ import org.rococoa.test.RococoaTestCase;
  * <p/>
  * Mike Swingler - "NSAutoreleasePools are magical, and are not actually
  * allocated or released objects (though you get a point(er) to an id that does
- * respond to selectors...but that's no different than an @"some string" constant."
+ * respond to selectors...but that's no different from an @"some string" constant."
  * <p/>
  * This test documents the observed behaviour.
  */
 public class NSAutoreleasePoolTest {
 
-    private NSAutoreleasePool pool;
-    private ID idString;
+    private final NSAutoreleasePool pool;
+    private final ID idString;
 
     @Test
     public void nothingAffectsReferenceCount() {
@@ -86,6 +86,7 @@ public class NSAutoreleasePoolTest {
         // if you create a Foundation-only application or if you detach a thread—you need to create
         // your own autorelease pool.
         Thread thread = new Thread("test") {
+            @Override
             public void run() {
                 NSAutoreleasePool second = NSAutoreleasePool.new_();
                 second.drain();

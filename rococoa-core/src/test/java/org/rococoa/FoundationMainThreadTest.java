@@ -23,15 +23,18 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.CyclicBarrier;
+import java.util.logging.Level;
 
 import org.junit.jupiter.api.Test;
 import org.rococoa.test.RococoaTestCase;
+import vavi.util.Debug;
+
 
 @SuppressWarnings("nls")
 public class FoundationMainThreadTest extends RococoaTestCase {
     
-    private ID idNSThreadClass = Foundation.getClass("NSThread");
-    private Selector isMainThreadSelector = Foundation.selector("isMainThread");
+    private final ID idNSThreadClass = Foundation.getClass("NSThread");
+    private final Selector isMainThreadSelector = Foundation.selector("isMainThread");
     
     private boolean nsThreadSaysIsMainThread() {
         return Foundation.send(idNSThreadClass, isMainThreadSelector, boolean.class);
@@ -40,58 +43,50 @@ public class FoundationMainThreadTest extends RococoaTestCase {
     @Test public void mainThreadChanges() {
         // Not sure that I understand this result
         assertFalse(nsThreadSaysIsMainThread());
-        Thread t1 = Foundation.callOnMainThread(new Callable<Thread>() {
-            public Thread call() throws Exception {
-                assertTrue(nsThreadSaysIsMainThread());
-                return Thread.currentThread();
-            }});
-        Thread t2 = Foundation.callOnMainThread(new Callable<Thread>() {
-            public Thread call() throws Exception {
-                assertTrue(nsThreadSaysIsMainThread());
-                return Thread.currentThread();
-            }});
+        Thread t1 = Foundation.callOnMainThread(() -> {
+            assertTrue(nsThreadSaysIsMainThread());
+            return Thread.currentThread();
+        });
+        Thread t2 = Foundation.callOnMainThread(() -> {
+            assertTrue(nsThreadSaysIsMainThread());
+            return Thread.currentThread();
+        });
         assertNotSame(t1, Thread.currentThread());
         assertNotSame(t1, t2);
-        assertFalse(t1.equals(t2));
+        assertNotEquals(t1, t2);
         assertSame(t1.getThreadGroup(), t2.getThreadGroup());
         assertNotSame(Thread.currentThread().getThreadGroup(), t1.getThreadGroup());
     }
     
     @Test public void testCallOnMainThreadFromMainThread() {
         // Weird 
-        Thread mainThread = Foundation.callOnMainThread(new Callable<Thread> (){
-            public Thread call() throws Exception {
-                assertTrue(nsThreadSaysIsMainThread());
-                
-                Thread insideThread = Foundation.callOnMainThread(new Callable<Thread> (){
-                    public Thread call() throws Exception {
-                        assertTrue(nsThreadSaysIsMainThread());
-                        return Thread.currentThread();
-                    }});
+        Thread mainThread = Foundation.callOnMainThread(() -> {
+            assertTrue(nsThreadSaysIsMainThread());
 
-                assertSame(Thread.currentThread(), insideThread);
-                return insideThread;
-            }});
+            Thread insideThread = Foundation.callOnMainThread(() -> {
+                assertTrue(nsThreadSaysIsMainThread());
+                return Thread.currentThread();
+            });
+
+            assertSame(Thread.currentThread(), insideThread);
+            return insideThread;
+        });
         assertNotSame(mainThread, Thread.currentThread());
     }
     
     @Test public void isMainThread() {
         assertFalse(Foundation.isMainThread());
-        assertTrue(Foundation.callOnMainThread(new Callable<Boolean>() {
-            public Boolean call() throws Exception {
-                return Foundation.isMainThread();
-            }}));
+        assertTrue(Foundation.callOnMainThread(() -> Foundation.isMainThread()));
     }
     
     @Test public void testCallOnMainThread() {
-        Callable<Double> callable = new Callable<Double>() {
-            public Double call() throws Exception {
-                assertTrue(nsThreadSaysIsMainThread());
-                ID clas = Foundation.getClass("NSNumber");
-                ID aDouble = Foundation.sendReturnsID(clas, "numberWithDouble:", Math.E);
-                Object[] args = {};
-                return Foundation.send(aDouble, Foundation.selector("doubleValue"), double.class, args);
-            }};
+        Callable<Double> callable = () -> {
+            assertTrue(nsThreadSaysIsMainThread());
+            ID clas = Foundation.getClass("NSNumber");
+            ID aDouble = Foundation.sendReturnsID(clas, "numberWithDouble:", Math.E);
+            Object[] args = {};
+            return Foundation.send(aDouble, Foundation.selector("doubleValue"), double.class, args);
+        };
 
         assertEquals(Math.E, Foundation.callOnMainThread(callable), 0.001);
     }
@@ -127,15 +122,14 @@ public class FoundationMainThreadTest extends RococoaTestCase {
     }
     
     @Test public void runOnMainThread() {
-        final double[] result = new double[1];
-        Runnable runnable = new Runnable() {
-            public void run() {
-                assertTrue(nsThreadSaysIsMainThread());
-                ID clas = Foundation.getClass("NSNumber");
-                ID aDouble = Foundation.sendReturnsID(clas, "numberWithDouble:", Math.E);
-                Object[] args = {};
-                result[0] =  Foundation.send(aDouble, Foundation.selector("doubleValue"), double.class, args);
-            }};
+        double[] result = new double[1];
+        Runnable runnable = () -> {
+            assertTrue(nsThreadSaysIsMainThread());
+            ID clas = Foundation.getClass("NSNumber");
+            ID aDouble = Foundation.sendReturnsID(clas, "numberWithDouble:", Math.E);
+            Object[] args = {};
+            result[0] =  Foundation.send(aDouble, Foundation.selector("doubleValue"), double.class, args);
+        };
         Foundation.runOnMainThread(runnable);    
         assertEquals(Math.E, result[0], 0.001);        
     }
@@ -161,34 +155,32 @@ public class FoundationMainThreadTest extends RococoaTestCase {
     }
 
     @Test public void runOnMainThreadNoWait() throws Exception {
-        final Throwable[] throwable = new Throwable[1];
-        final CyclicBarrier barrier = new CyclicBarrier(2);
-        Runnable runnable = new Runnable() {
-            public void run() {
-                try {
-                    assertTrue(nsThreadSaysIsMainThread());
-                    barrier.await();
-                } catch (Throwable t) {
-                    throwable[0] = t;
-                }
-            }};
+        Throwable[] throwable = new Throwable[1];
+        CyclicBarrier barrier = new CyclicBarrier(2);
+        Runnable runnable = () -> {
+            try {
+                assertTrue(nsThreadSaysIsMainThread());
+                barrier.await();
+            } catch (Throwable t) {
+                throwable[0] = t;
+            }
+        };
         Foundation.runOnMainThread(runnable, false);
         barrier.await();
         assertNull(throwable[0]);
     }
     
     @Test public void runOnMainThreadNoWaitThrows() throws Exception {
-        final Throwable[] throwable = new Throwable[1];
-        final CyclicBarrier barrier = new CyclicBarrier(2);
-        Runnable runnable = new Runnable() {
-            public void run() {
-                try {
-                    barrier.await();
-                } catch (Throwable t) {
-                    throwable[0] = t;
-                }
-                throw new Error("deliberate");
-            }};
+        Throwable[] throwable = new Throwable[1];
+        CyclicBarrier barrier = new CyclicBarrier(2);
+        Runnable runnable = () -> {
+            try {
+                barrier.await();
+            } catch (Throwable t) {
+                throwable[0] = t;
+            }
+            throw new Error("deliberate");
+        };
         Foundation.runOnMainThread(runnable, false); // Exception is just logged
         barrier.await();
     }
@@ -198,27 +190,25 @@ public class FoundationMainThreadTest extends RococoaTestCase {
         // could be gc'd before the call had happened, if waitUntilDone == false
         
         // First block the Cocoa main thread
-        final CyclicBarrier barrier1 = new CyclicBarrier(2);
-        final CyclicBarrier barrier2 = new CyclicBarrier(2);
-        Runnable mainThreadBlocker = new Runnable() {
-            public void run() {
-                try {
-                    barrier1.await();
-                    barrier2.await();
-                } catch (Throwable t) { System.out.println(t); }             
-            }};
+        CyclicBarrier barrier1 = new CyclicBarrier(2);
+        CyclicBarrier barrier2 = new CyclicBarrier(2);
+        Runnable mainThreadBlocker = () -> {
+            try {
+                barrier1.await();
+                barrier2.await();
+            } catch (Throwable t) { Debug.println(Level.SEVERE, t); }
+        };
         Foundation.runOnMainThread(mainThreadBlocker, false);
         barrier1.await();
         // Now we know the main thread is stalled inside run
 
         // now set up another runnable
-        final CyclicBarrier barrier3 = new CyclicBarrier(2);
-        Runnable actualRunnable = new Runnable() {
-            public void run() {
-                try {
-                    barrier3.await();
-                } catch (Throwable t) { System.out.println(t); }             
-            }};
+        CyclicBarrier barrier3 = new CyclicBarrier(2);
+        Runnable actualRunnable = () -> {
+            try {
+                barrier3.await();
+            } catch (Throwable t) { Debug.println(Level.SEVERE, t); }
+        };
         Foundation.runOnMainThread(actualRunnable, false);
 
         // Give the internal callback a chance to be gc'd
@@ -232,21 +222,19 @@ public class FoundationMainThreadTest extends RococoaTestCase {
         barrier3.await();
     }
     
-    private void throwOnMainThreadViaCallable(final Throwable x) {
-        Callable<Double> callable = new Callable<Double>() {
-            public Double call() throws Exception {
-                if (x instanceof Error) throw (Error) x;
-                else throw (Exception) x;
-            }};
+    private static void throwOnMainThreadViaCallable(Throwable x) {
+        Callable<Double> callable = () -> {
+            if (x instanceof Error) throw (Error) x;
+            else throw (Exception) x;
+        };
         Foundation.callOnMainThread(callable);
     }
 
-    private void throwOnMainThreadViaRunnable(final Throwable x) {
-        Runnable runnable = new Runnable() {
-            public void run() {
-                if (x instanceof Error) throw (Error) x;
-                else throw (RuntimeException) x;
-            }};
+    private static void throwOnMainThreadViaRunnable(Throwable x) {
+        Runnable runnable = () -> {
+            if (x instanceof Error) throw (Error) x;
+            else throw (RuntimeException) x;
+        };
         Foundation.runOnMainThread(runnable);
     }
     

@@ -31,7 +31,6 @@ public abstract class NSWorkspace extends NSObject {
     }
 
     /** The shared workspace object. */
-
     public static NSWorkspace sharedWorkspace() {
         return CLASS.sharedWorkspace();
     }

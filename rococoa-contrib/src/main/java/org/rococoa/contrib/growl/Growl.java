@@ -19,8 +19,6 @@
 
 package org.rococoa.contrib.growl;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.rococoa.cocoa.appkit.NSApplication;
@@ -83,7 +81,7 @@ public final class Growl {
     // "Application" Name
     private String appName;
     // "application" Icon
-    private NSImage appImage;
+    private final NSImage appImage;
     // All notifications
     private List<String> allNotes;
     // Default enabled notifications
@@ -395,7 +393,7 @@ public final class Growl {
      * @param inAppName The Application Name
      * @throws IllegalStateException if already registered
      */
-    public void setApplicationName(final String inAppName) {
+    public void setApplicationName(String inAppName) {
         if (registered) {
             throw new IllegalStateException("Already registered");
         }
@@ -409,12 +407,12 @@ public final class Growl {
      * @param inAllNotes The array of allowed Notifications
      * @throws IllegalStateException if already registered
      */
-    public void setAllowedNotifications(final List<String> inAllNotes) {
+    public void setAllowedNotifications(List<String> inAllNotes) {
         if (registered) {
             throw new IllegalStateException("Already registered");
         }
 
-        allNotes = Collections.unmodifiableList(new ArrayList<String>(inAllNotes));
+        allNotes = List.copyOf(inAllNotes);
     }
 
 
@@ -426,7 +424,7 @@ public final class Growl {
      *                                  allowedNotifications
      * @throws IllegalStateException    if already registered
      */
-    public void setDefaultNotifications(final List<String> inDefNotes) {
+    public void setDefaultNotifications(List<String> inDefNotes) {
         if (registered) {
             throw new IllegalStateException("Already registered");
         }
@@ -438,6 +436,6 @@ public final class Growl {
             }
         }
 
-        defNotes = Collections.unmodifiableList(new ArrayList<String>(inDefNotes));
+        defNotes = List.copyOf(inDefNotes);
     }
 }

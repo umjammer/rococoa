@@ -11,7 +11,6 @@ import java.util.logging.Logger;
 import com.sun.jna.Pointer;
 import com.sun.jna.ptr.PointerByReference;
 import org.rococoa.ObjCClass;
-import org.rococoa.ObjCObject;
 import org.rococoa.Rococoa;
 import org.rococoa.cocoa.corevideo.VideoToolboxLibrary;
 import org.rococoa.cocoa.foundation.NSObject;

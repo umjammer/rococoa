@@ -111,7 +111,7 @@ public final class NSInvocationMapperLookup {
             }
             @Override public Memory bufferForResult(Object methodCallResult) {
                 Memory result = new Memory(1);
-                result.setByte(0, ((Byte) methodCallResult).byteValue());
+                result.setByte(0, (Byte) methodCallResult);
                 return result;
             }
         });
@@ -154,7 +154,7 @@ public final class NSInvocationMapperLookup {
                 Memory result = new Memory(8);
                 result.setLong(0, (Long) methodCallResult);
                 return result;
-            };
+            }
         });
         addToLookup(new NSInvocationMapper("f", float.class) {
             @Override public Object readFrom(Memory buffer, Class<?> type) {

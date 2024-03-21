@@ -8,7 +8,6 @@ package org.rococoa.cocoa.vision;
 
 import java.util.logging.Logger;
 
-import com.sun.jna.Pointer;
 import org.rococoa.ObjCClass;
 import org.rococoa.Rococoa;
 

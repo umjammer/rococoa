@@ -23,7 +23,6 @@ import com.sun.jna.Callback;
 import com.sun.jna.Library;
 import com.sun.jna.Pointer;
 import org.rococoa.ID;
-import org.rococoa.ObjCBlock;
 
 
 /**
@@ -64,12 +63,13 @@ public interface RococoaLibrary extends Library {
      */
     void callOnMainThread(RococoaLibrary.VoidCallback callback, boolean waitUntilDone);
 
-    /** for block */
-    Pointer createObjCBlockWithFunctionPointer(ID pcb);
+//#region Block
 
-    /** for block */
-    ObjCBlock getObjCBlockFunctionPointer(Pointer blockPtr);
+    /** */
+    Pointer createObjCBlock();
 
-    /** for block */
+    /** */
     void releaseObjCBlock(Pointer blockPtr);
+
+//#endregion Block
 }

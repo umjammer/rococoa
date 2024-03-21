@@ -66,7 +66,7 @@ public class QTTimeByReference extends Structure {
         if(getClass() != obj.getClass()) {
             return false;
         }
-        final QTTime other = (QTTime) obj;
+        QTTime other = (QTTime) obj;
         if(!flags.equals(other.flags)) {
             return false;
         }

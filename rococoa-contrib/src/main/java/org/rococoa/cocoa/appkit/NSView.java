@@ -978,7 +978,7 @@ public abstract class NSView extends NSResponder {
      * Original signature : <code>void print(id)</code><br>
      * <i>from NSPrinting native declaration : :370</i>
      */
-    public abstract void print(final ID sender);
+    public abstract void print(ID sender);
     /**
      * <i>from NSPrinting native declaration : :373</i><br>
      * Conversion Error : /**<br>

@@ -36,6 +36,7 @@ public class NSIntegerByReference extends NativeLongByReference {
         getPointer().setNativeLong(0, value);
     }
 
+    @Override
     public NSInteger getValue() {
         return new NSInteger(getPointer().getNativeLong(0));
     }

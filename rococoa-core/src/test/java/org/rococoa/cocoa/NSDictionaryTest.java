@@ -64,7 +64,7 @@ public class NSDictionaryTest extends RococoaTestCase {
         check(dictionary);
     }
 
-    private void check(NSDictionary dictionary) {
+    private static void check(NSDictionary dictionary) {
         assertEquals(2, dictionary.count());
 
         NSString value = Rococoa.cast(

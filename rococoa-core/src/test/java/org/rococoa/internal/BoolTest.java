@@ -34,7 +34,7 @@ public class BoolTest extends RococoaTestCase {
         boolean valueIsNO(boolean a);
     }
 
-    private TestShunt testShunt = Rococoa.create("TestShunt", TestShunt.class);
+    private final TestShunt testShunt = Rococoa.create("TestShunt", TestShunt.class);
 
     @Test public void test() {
         assertTrue(testShunt.valueIsYES(true));

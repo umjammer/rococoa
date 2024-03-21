@@ -52,6 +52,7 @@ public class NSPoint extends Structure implements Structure.ByValue {
         return new Point2D.Double(x.doubleValue(), y.doubleValue());
     }
 
+    @Override
     protected List<String> getFieldOrder() {
         return Arrays.asList("x", "y");
     }

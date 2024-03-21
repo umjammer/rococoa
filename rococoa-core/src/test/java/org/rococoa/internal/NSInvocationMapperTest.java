@@ -109,7 +109,7 @@ public class NSInvocationMapperTest {
         check("d", double.class);
     }
 
-    private void check(String expected, Class<?> javaType) {
+    private static void check(String expected, Class<?> javaType) {
         assertEquals(expected,  NSInvocationMapperLookup.stringForType(javaType), javaType.toString());
     }
 }

@@ -11,13 +11,9 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import org.rococoa.ObjCClass;
-import org.rococoa.ObjCObjectByReference;
 import org.rococoa.Rococoa;
-import org.rococoa.cocoa.coreml.MLModel;
 import org.rococoa.cocoa.foundation.NSArray;
-import org.rococoa.cocoa.foundation.NSError;
 import org.rococoa.cocoa.foundation.NSObject;
-import org.rococoa.cocoa.vision.VisionLibrary;
 
 
 /**

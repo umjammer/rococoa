@@ -34,9 +34,11 @@ public abstract class NSMutableArray extends NSArray {
         return CLASS.array();
     }
 
+    @Override
     public abstract int count();
     public abstract void addObject(NSObject anObject);
     public abstract void addObject(String string);
 
+    @Override
     public abstract NSObject objectAtIndex(int index);
 }

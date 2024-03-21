@@ -80,7 +80,7 @@ public class RococoaObjectOwnershipTest extends RococoaTestCase {
         NSObject create();
     }
 
-    private void check(boolean expectedAutorelease, Factory factory) {
+    private static void check(boolean expectedAutorelease, Factory factory) {
         int expectedInitialRetainCount = expectedAutorelease ? 2 : 1;
         // that will decrease the count IF it was pooled
         int expectedFinalRetainCount = expectedAutorelease ?

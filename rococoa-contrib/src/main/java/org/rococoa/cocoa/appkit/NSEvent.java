@@ -1,7 +1,6 @@
 package org.rococoa.cocoa.appkit;
 
 import com.sun.jna.Pointer;
-import org.rococoa.ID;
 import org.rococoa.ObjCClass;
 import org.rococoa.Rococoa;
 import org.rococoa.cocoa.CGFloat;

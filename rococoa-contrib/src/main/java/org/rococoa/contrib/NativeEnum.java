@@ -29,11 +29,11 @@ public interface NativeEnum<N extends NSObject> {
     /** Get the native value associated with this enum value
      *  @return the native value associated with this enum value
      */
-    public N getNativeValue();
+    N getNativeValue();
 
     /** Given a native value, resolve the corresponding enum entry.
      */
-    public static final class Resolver {
+    final class Resolver {
         private Resolver() {}
         /** Given an enum class that implements NativeEnum, resolve the Java enum
          *  value that corresponds to the native value <code>value</code>
@@ -58,6 +58,6 @@ public interface NativeEnum<N extends NSObject> {
             }
             throw new IllegalArgumentException("Unknown value " + value + " for " + nativeEnum.getSimpleName());
         }
-    };
+    }
 }
 

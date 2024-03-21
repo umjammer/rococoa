@@ -1,51 +1,89 @@
 /*
- * BridJ - Dynamic and blazing-fast native interop for Java.
- * http://bridj.googlecode.com/
+ * Copyright (c) 2024 by Naohide Sano, All rights reserved.
  *
- * Copyright (c) 2010-2015, Olivier Chafik (http://ochafik.com/)
- * All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- *
- *     * Redistributions of source code must retain the above copyright
- *       notice, this list of conditions and the following disclaimer.
- *     * Redistributions in binary form must reproduce the above copyright
- *       notice, this list of conditions and the following disclaimer in the
- *       documentation and/or other materials provided with the distribution.
- *     * Neither the name of Olivier Chafik nor the
- *       names of its contributors may be used to endorse or promote products
- *       derived from this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY OLIVIER CHAFIK AND CONTRIBUTORS ``AS IS'' AND ANY
- * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE REGENTS AND CONTRIBUTORS BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
- * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * Programmed by Naohide Sano
  */
 
 package org.rococoa;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.logging.Logger;
 
+import com.sun.jna.Memory;
+import com.sun.jna.NativeLong;
 import com.sun.jna.Pointer;
+import com.sun.jna.Structure;
 
 
+/**
+ * ObjCBlocks.
+ *
+ * @author <a href="mailto:umjammer@gmail.com">Naohide Sano</a> (nsano)
+ * @version 0.00 2024/02/26 nsano initial version <br>
+ */
 public class ObjCBlocks {
 
     private static final Logger logging = Logger.getLogger("org.rococoa.foundation");
 
-    public static ID block(ObjCBlock instance) {
-        ID id = Rococoa.proxy(instance).id();
-logging.info(String.format("instance: %s, %16x", instance, id.longValue()));
-        Pointer pBlock = Foundation.getRococoaLibrary().createObjCBlockWithFunctionPointer(id);
-logging.info("pBlock: " + pBlock);
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> Foundation.getRococoaLibrary().releaseObjCBlock(pBlock)));
-        return ID.fromLong(Pointer.nativeValue(pBlock));
+    //    2    2    2    1    1
+    //    8    4    0    6    2    8    4   10
+    // .... .... .... .... .... .... .... ....
+    //
+
+    public static final int BLOCK_IS_NOESCAPE = 1 << 23;
+    public static final int BLOCK_HAS_COPY_DISPOSE =  1 << 25;
+    /** helpers have C++ code */
+    public static final int BLOCK_HAS_CTOR = 1 << 26;
+    public static final int BLOCK_IS_GLOBAL = 1 << 28;
+    /** IFF BLOCK_HAS_SIGNATURE */
+    public static final int BLOCK_HAS_STRET = 1 << 29;
+    public static final int BLOCK_HAS_SIGNATURE = 1 << 30;
+
+    /** utility conversion java closure to obj-c block */
+    public static BlockLiteral block(ObjCBlock block) {
+        Memory m = new Memory(48);
+        BlockLiteral literal = new BlockLiteral(m);
+        literal.flags = 0;
+logging.finer(String.format("block: %s, %08x", block, literal.flags));
+        literal.invoke = block;
+        literal.write();
+        return literal;
+    }
+
+    /** */
+    public static class BlockDescriptor extends Structure {
+        public NativeLong reserved;
+        public NativeLong block_size;
+        public Pointer rest;
+        public BlockDescriptor() {}
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("reserved", "block_size", "rest");
+        }
+    }
+
+    /** */
+    public static class BlockLiteral extends Structure {
+        public Pointer isa = Pointer.NULL;
+        public int flags;
+        public int reserved;
+        public ObjCBlock invoke;
+        public BlockDescriptor descriptor;
+        public BlockLiteral() {}
+        public BlockLiteral(Pointer p) { super(p); }
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("isa", "flags", "reserved", "invoke", "descriptor");
+        }
+    }
+
+    /** TODO doesn't work */
+    public static BlockLiteral block2(ObjCBlock block) {
+        BlockLiteral literal = new BlockLiteral(Foundation.getRococoaLibrary().createObjCBlock());
+        literal.flags = 0;
+        literal.invoke = block; // got error. Block_copy returns heap doesn't it?
+        literal.write();
+        return literal;
     }
 }

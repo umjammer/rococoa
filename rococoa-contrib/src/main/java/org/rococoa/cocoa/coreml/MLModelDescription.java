@@ -9,7 +9,6 @@ package org.rococoa.cocoa.coreml;
 import java.util.logging.Logger;
 
 import org.rococoa.ObjCClass;
-import org.rococoa.ObjCObjectByReference;
 import org.rococoa.Rococoa;
 import org.rococoa.cocoa.foundation.NSObject;
 

@@ -30,7 +30,7 @@ import org.rococoa.Selector;
 public abstract class NSInvocationOperation extends NSOperation {
     public static final _Class CLASS = Rococoa.createClass(NSInvocationOperation.class.getSimpleName(), _Class.class);
     public interface _Class extends ObjCClass {
-        public NSInvocationOperation alloc();
+        NSInvocationOperation alloc();
     }
 
     public abstract NSInvocationOperation initWithTarget_selector_object(ID target, Selector sel, ID arg);

@@ -28,24 +28,23 @@ import org.rococoa.test.RococoaTestCase;
 
 import com.sun.jna.TypeMapper;
 
-@SuppressWarnings({ "unchecked", "cast" })
+@SuppressWarnings({"cast" })
 public class RococoaTypeMapperTest extends RococoaTestCase {
     
-    private TypeMapper typeMapper = new RococoaTypeMapper();
+    private final TypeMapper typeMapper = new RococoaTypeMapper();
     
     @Test public void testString() {
-	assertTrue(typeMapper.getToNativeConverter(String.class) instanceof StringTypeConverter);
-	assertTrue(typeMapper.getFromNativeConverter(String.class) instanceof StringTypeConverter);
+        assertInstanceOf(StringTypeConverter.class, typeMapper.getToNativeConverter(String.class));
+        assertInstanceOf(StringTypeConverter.class, typeMapper.getFromNativeConverter(String.class));
     }
     
     @Test public void testObjCObject() {
-	// ToNative only has to get the ID, so it only has to know about ObjCObject
-        ObjCObjectTypeConverter<?> toNativeConverter = (ObjCObjectTypeConverter) typeMapper.getToNativeConverter(NSNumber.class);
-	assertTrue(toNativeConverter.convertsJavaType(ObjCObject.class));
+        // ToNative only has to get the ID, so it only has to know about ObjCObject
+        ObjCObjectTypeConverter<?> toNativeConverter = (ObjCObjectTypeConverter<?>) typeMapper.getToNativeConverter(NSNumber.class);
+        assertTrue(toNativeConverter.convertsJavaType(ObjCObject.class));
 
-	// FromNative needs to know the actual type so that it can create the right Java subclass of ObjCObject
-	ObjCObjectTypeConverter<?> fromNativeConverter = (ObjCObjectTypeConverter) typeMapper.getFromNativeConverter(NSNumber.class);
-	assertTrue(fromNativeConverter.convertsJavaType(NSNumber.class));
+        // FromNative needs to know the actual type so that it can create the right Java subclass of ObjCObject
+        ObjCObjectTypeConverter<?> fromNativeConverter = (ObjCObjectTypeConverter<?>) typeMapper.getFromNativeConverter(NSNumber.class);
+        assertTrue(fromNativeConverter.convertsJavaType(NSNumber.class));
     }
-
 }

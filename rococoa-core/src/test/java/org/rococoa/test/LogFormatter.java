@@ -30,7 +30,7 @@ import java.util.logging.LogRecord;
  */
 public class LogFormatter extends Formatter
 {
-    private String lineSeparator = System.getProperty("line.separator");
+    private final String lineSeparator = System.getProperty("line.separator");
 
     /**
      * Format the given LogRecord.
@@ -39,6 +39,7 @@ public class LogFormatter extends Formatter
      *            the log record to be formatted.
      * @return a formatted log record
      */
+    @Override
     public synchronized String format(LogRecord record)
     {
         StringBuffer sb = new StringBuffer();
@@ -78,7 +79,7 @@ public class LogFormatter extends Formatter
         return sb.toString();
     }
 
-    private String shortName(Thread thread) {
+    private static String shortName(Thread thread) {
 	String name = thread.getName();
 	return name.length() <= 7 ? name : name.substring(0, 7);
     }

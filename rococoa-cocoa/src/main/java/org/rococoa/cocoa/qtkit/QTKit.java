@@ -26,6 +26,6 @@ import com.sun.jna.Native;
 @Deprecated
 public interface QTKit extends Library {
 
-    public static QTKit instance = (QTKit) Native.loadLibrary("QTKit", QTKit.class);
+    QTKit instance = Native.loadLibrary("QTKit", QTKit.class);
 
 }

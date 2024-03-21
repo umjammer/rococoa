@@ -29,7 +29,7 @@ import org.rococoa.cocoa.CFRange;
  */
 public class NSRange extends CFRange {
     public NSRange() {}
-    public NSRange(final CFIndex location, final CFIndex length) {
+    public NSRange(CFIndex location, CFIndex length) {
         super(location, length);
     }
 }

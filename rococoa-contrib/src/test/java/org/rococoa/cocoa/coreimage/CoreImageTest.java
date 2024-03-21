@@ -119,7 +119,7 @@ Debug.println("cgImageX: " + cgImageX.getWidth() + ", " + cgImageX.getHeight());
         show(image);
     }
 
-    NSRect convertRectToBacking(NSRect rect) { // TODO this doesn't help
+    static NSRect convertRectToBacking(NSRect rect) { // TODO this doesn't help
         NSRect rect2 = new NSRect();
         rect2.origin.x = new CGFloat(10);
         rect2.origin.y = new CGFloat(10 );
@@ -137,6 +137,7 @@ Debug.println("cgImageX: " + cgImageX.getWidth() + ", " + cgImageX.getHeight());
             @Override public void windowClosing(WindowEvent e) { cdl.countDown(); }
         });
         JPanel panel = new JPanel() {
+            @Override
             public void paintComponent(Graphics g) {
                 g.drawImage(image, 0, 0, this);
             }
