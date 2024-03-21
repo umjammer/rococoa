@@ -127,6 +127,7 @@
                          dest="${project.build.outputDirectory}"
                          usetimestamp="true"/>
                   </target>
+                  <failOnError>true</failOnError>
                 </configuration>
               </execution>
             </executions>
