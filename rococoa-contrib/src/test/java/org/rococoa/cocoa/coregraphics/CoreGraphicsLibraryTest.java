@@ -9,24 +9,33 @@ package org.rococoa.cocoa.coregraphics;
 import java.util.Arrays;
 import java.util.NoSuchElementException;
 import java.util.logging.Level;
+import java.util.stream.IntStream;
 
 import com.sun.jna.Pointer;
+import com.sun.jna.platform.mac.CoreFoundation.CFArrayRef;
+import com.sun.jna.platform.mac.CoreFoundation.CFDictionaryRef;
 import com.sun.tools.attach.VirtualMachine;
 import com.sun.tools.attach.VirtualMachineDescriptor;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.rococoa.Foundation;
 import org.rococoa.Rococoa;
 import org.rococoa.cocoa.appkit.NSRunningApplication;
 import org.rococoa.cocoa.appkit.NSWorkspace;
 import org.rococoa.cocoa.corefoundation.CoreFoundation;
 import org.rococoa.cocoa.coreimage.CIImage;
+import org.rococoa.cocoa.foundation.NSDictionary;
+import org.rococoa.cocoa.foundation.NSRect;
+import org.rococoa.cocoa.foundation.NSString;
 import vavi.util.Debug;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.rococoa.cocoa.coregraphics.CoreGraphicsLibrary.kCGEventFlagMaskCommand;
 import static org.rococoa.cocoa.coregraphics.CoreGraphicsLibrary.kCGEventSourceStateHIDSystemState;
 import static org.rococoa.cocoa.coregraphics.CoreGraphicsLibrary.kCGHIDEventTap;
+import static org.rococoa.cocoa.coregraphics.CoreGraphicsLibrary.kCGNullWindowID;
+import static org.rococoa.cocoa.coregraphics.CoreGraphicsLibrary.kCGWindowListOptionOnScreenOnly;
 import static org.rococoa.cocoa.coregraphics.CoreGraphicsLibrary.keyCodeForChar;
 import static org.rococoa.cocoa.coregraphics.CoreGraphicsLibrary.library;
 
@@ -110,9 +119,8 @@ Debug.println("w: " + w + ", h: " + h);
         CoreFoundation.library.CFRelease(src);
     }
 
-    // NOT rococoa
     @Test
-    @DisplayName("list jvms")
+    @DisplayName("list jvms: NOT rococoa")
     void test5() throws Exception {
         for (VirtualMachineDescriptor descriptor : VirtualMachine.list()) {
             System.out.println(descriptor.id() + ", " + descriptor.displayName());
@@ -146,6 +154,7 @@ Debug.println("w: " + w + ", h: " + h);
     }
 
     @Test
+    @DisplayName("NSRunningApplication")
     void test62() throws Exception {
         try {
             NSRunningApplication a = getMinecraft();
@@ -161,10 +170,28 @@ Debug.println(Level.WARNING, "run minecraft before running this test");
     }
 
     @Test
-    @Disabled("TODO cause crash")
+    @DisplayName("CGKeyCode")
     void test7() throws Exception {
-        char c = 'a';
-        char code = keyCodeForChar(c);
-Debug.printf("code for '%x': %02x", c, code);
+        char[] cc = { 'a', '[', ']' };
+        IntStream.range(0, cc.length).mapToObj(i -> cc[i]).forEach(c -> {
+            char code = keyCodeForChar(c);
+Debug.printf("code for '%c': %02x", c, (int) code);
+        });
+    }
+
+    @Test
+    @DisplayName("CGWindowListCopyWindowInfo")
+    void test8() throws Exception {
+        CFArrayRef array = library.CGWindowListCopyWindowInfo(kCGWindowListOptionOnScreenOnly, kCGNullWindowID);
+Debug.println("windows: " + array.getCount());
+        NSRunningApplication a = getMinecraft();
+        for (int i = 0; i < array.getCount(); i++) {
+            NSDictionary dic = Rococoa.toNSDictionary(array.getValueAtIndex(i));
+            if (Integer.parseInt(dic.get(NSString.stringWithString("kCGWindowOwnerPID")).toString()) == a.processIdentifier().intValue()) {
+Debug.println(dic);
+                NSDictionary rect = Rococoa.cast(dic.get(NSString.stringWithString("kCGWindowBounds")), NSDictionary.class);
+Debug.println(rect);
+            }
+        }
     }
 }
