@@ -6,6 +6,8 @@
 
 package org.rococoa.cocoa.coregraphics;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import com.sun.jna.Callback;
@@ -13,9 +15,9 @@ import com.sun.jna.Library;
 import com.sun.jna.Native;
 import com.sun.jna.NativeLong;
 import com.sun.jna.Pointer;
+import com.sun.jna.platform.mac.CoreFoundation.CFArrayRef;
 import com.sun.jna.ptr.IntByReference;
 import com.sun.jna.ptr.NativeLongByReference;
-import com.sun.jna.ptr.ShortByReference;
 import org.rococoa.carbon.CarbonCoreLibrary;
 import org.rococoa.cocoa.CFIndex;
 import org.rococoa.cocoa.CGFloat;
@@ -188,6 +190,9 @@ public interface CoreGraphicsLibrary extends Library {
 
     // enum CGEventFlags
     long kCGEventFlagMaskCommand = NX_COMMANDMASK;
+    long kCGEventFlagMaskAlternate = NX_ALTERNATEMASK;
+    long kCGEventFlagMaskControl = NX_CONTROLMASK;
+    long kCGEventFlagMaskShift = NX_SHIFTMASK;
 
     long kCGEventMaskForAllEvents = 0xFFFF_FFFF_FFFF_FFFFL;
 
@@ -262,7 +267,19 @@ public interface CoreGraphicsLibrary extends Library {
     /** Returns a Quartz event source created with a specified source state. */
     Pointer /* CGEventSourceRef */ CGEventSourceCreate(int /* CGEventSourceStateID */ stateID);
 
-    // CGKeyCode
+    int kCGMouseEventDeltaX = 4;
+    int kCGMouseEventDeltaY = 5;
+
+    /* Sets the integer value of a field in a Quartz event. */
+    void CGEventSetIntegerValueField(Pointer /* CGEventRef */ event, int /* CGEventField */ field, long value);
+
+    int kCGWindowListOptionOnScreenOnly = 1 << 0;
+    int kCGNullWindowID = 0;
+
+    /** Generates and returns information about the selected windows in the current user session. */
+    CFArrayRef CGWindowListCopyWindowInfo(int /* CGWindowListOption */ option, int /* CGWindowID */ relativeToWindow);
+
+//#region CGKeyCode
 
     /**
      * Returns string representation of key, if it is printable.
@@ -271,10 +288,10 @@ public interface CoreGraphicsLibrary extends Library {
      * @see "https://stackoverflow.com/a/1971027"
      */
     private static CFStringRef createStringForKey(char /* CGKeyCode */ keyCode) {
-        Pointer /* TISInputSourceRef */ currentKeyboard = CarbonCoreLibrary.library.TISCopyCurrentKeyboardInputSource();
-logger.fine("currentKeyboard: " + currentKeyboard);// + ", " + kTISPropertyUnicodeKeyLayoutData);
+        Pointer /* TISInputSourceRef */ currentKeyboard = CarbonCoreLibrary.library.TISCopyCurrentKeyboardLayoutInputSource(); // must be *Layout*
+logger.finest("currentKeyboard: " + currentKeyboard);// + ", " + kTISPropertyUnicodeKeyLayoutData);
         Pointer /* CFDataRef */ layoutData = CarbonCoreLibrary.library.TISGetInputSourceProperty(currentKeyboard, CFStringRef.toCFString("TISPropertyUnicodeKeyLayoutData"));
-logger.finer("layoutData: " + layoutData);
+logger.finest("layoutData: " + layoutData);
         Pointer /* UCKeyboardLayout */ keyboardLayout = CoreFoundation.library.CFDataGetBytePtr(layoutData);
 
         IntByReference keysDown = new IntByReference(0);
@@ -296,47 +313,36 @@ logger.finer("layoutData: " + layoutData);
         return CoreFoundation.library.CFStringCreateWithCharacters(kCFAllocatorDefault, chars, CFIndex.of(1));
     }
 
+    /** key code, char map */
+    Map <String, Character> charToCodeDict = new HashMap<>(128);
+
     /**
-     * Returns key code for given character via the above function, or Character.MAX_VALUE (UINT16_MAX)
-     * on error.
+     * Returns key code for given character via the above function.
      */
     static char /* CGKeyCode */ keyCodeForChar(char c) {
-        Pointer /* CFMutableDictionaryRef */ charToCodeDict = null;
-        char[] /* UniChar */ character = new char[] { c };
-
         // Generate table of keycodes and characters.
-        if (charToCodeDict == null) {
-            charToCodeDict = CoreFoundation.library.CFDictionaryCreateMutable(kCFAllocatorDefault,
-                    new NativeLong(0), // must be 0 ???
-                    CoreFoundation.library.kCFCopyStringDictionaryKeyCallBacks,
-                    CoreFoundation.library.kCFTypeDictionaryValueCallBacks);
-            if (charToCodeDict == null) throw new IllegalStateException("cannot careate CFDictionaryCreateMutable");
-
+        if (charToCodeDict.isEmpty()) {
             /* Loop through every keycode (0 - 127) to find its current mapping. */
             for (char i = 0; i < 128; i++) {
                 CFStringRef string = createStringForKey(/* CGKeyCode */ i);
+logger.finest("key: " + (int) i + ", 0x" + Integer.toHexString(i) + ", string: " + string + (string != null && !string.toString().isEmpty() ? ", 0x" + Integer.toHexString(string.toString().charAt(0)) : "null"));
                 if (string != null) {
-                    IntByReference iRef = new IntByReference(i);
-                    CoreFoundation.library.CFDictionaryAddValue(charToCodeDict, string, iRef.getPointer());
+                    charToCodeDict.put(string.toString(), i);
                     CoreFoundation.library.CFRelease(string);
                 }
             }
         }
 
+        char[] /* UniChar */ character = new char[] { c };
         CFStringRef charStr = CoreFoundation.library.CFStringCreateWithCharacters(kCFAllocatorDefault, character, CFIndex.of(1));
-
         /* Our values may be NULL (0), so we need to use this function. */
-        char code;
-        ShortByReference /* CGKeyCode */ codeRef = new ShortByReference();
-        if (!CoreFoundation.library.CFDictionaryGetValueIfPresent(charToCodeDict, charStr.getPointer(), codeRef)) {
-            code = Character.MAX_VALUE;
-        } else {
-            code = (char) codeRef.getValue();
-        }
-
+        char code = charToCodeDict.getOrDefault(charStr.toString(), Character.MAX_VALUE);
         CoreFoundation.library.CFRelease(charStr);
+
         return code;
     }
+
+//#endregion
 
     /** Returns a new Quartz keyboard event. */
     Pointer /* CGEventRef */ CGEventCreateKeyboardEvent(Pointer /* CGEventSourceRef */ source, char /* CGKeyCode */ virtualKey, boolean keyDown);
@@ -352,6 +358,9 @@ logger.finer("layoutData: " + layoutData);
 
 //    /** Returns a point with the specified coordinates. */
 //    /* inline */ CGPoint CGPointMake(CGFloat x, CGFloat y);
+
+    /** Sets the event type of a Quartz event (left mouse down, for example). */
+    void CGEventSetType(Pointer /* CGEventRef */ event, int /* CGEventType */ type);
 
     // CGMouseButton
     int kCGMouseButtonLeft = 0;
@@ -373,4 +382,10 @@ logger.finer("layoutData: " + layoutData);
 
     /** Returns a new Quartz mouse event. */
     Pointer /* CGEventRef */ CGEventCreateMouseEvent(Pointer /* CGEventSourceRef */ source, int /* CGEventType */ mouseType, CGPoint mouseCursorPosition, int /* CGMouseButton */ mouseButton);
+
+    int kCGScrollEventUnitPixel = 0;
+    int kCGScrollEventUnitLine = 1;
+
+    /** Returns a new Quartz scrolling event. */
+    Pointer /* CGEventRef */ CGEventCreateScrollWheelEvent2(Pointer /* CGEventSourceRef */ source, int /* CGScrollEventUnit */ units, int wheelCount, int wheel1, int wheel2, int wheel3);
 }

@@ -72,4 +72,14 @@ public interface RococoaLibrary extends Library {
     void releaseObjCBlock(Pointer blockPtr);
 
 //#endregion Block
+
+//#region bridge
+
+    /** */
+    ID bridgeArray(Pointer dic);
+
+    /** */
+    ID bridgeDictionary(Pointer dic);
+
+//#endregion bridge
 }

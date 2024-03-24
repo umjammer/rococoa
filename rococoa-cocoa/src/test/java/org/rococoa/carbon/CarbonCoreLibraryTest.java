@@ -13,6 +13,7 @@ import org.rococoa.cocoa.corefoundation.CFStringRef;
 import vavi.util.Debug;
 import vavi.util.StringUtil;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.rococoa.carbon.CarbonCoreLibrary.kTISPropertyUnicodeKeyLayoutData;
 import static org.rococoa.carbon.CarbonCoreLibrary.library;
 
@@ -27,16 +28,18 @@ Debug.println("LMGetKbdType: " + r);
 
     @Test
     void test2() throws Exception {
-        Pointer s = library.TISCopyCurrentKeyboardInputSource();
+        Pointer s = library.TISCopyCurrentKeyboardLayoutInputSource();
 Debug.println("TISCopyCurrentKeyboardInputSource: " + s);
         Pointer p = library.TISGetInputSourceProperty(s, kTISPropertyUnicodeKeyLayoutData);
-Debug.println("TISGetInputSourceProperty: " + p); // TODO null
+Debug.println("TISGetInputSourceProperty: " + p);
+        assertNotNull(p);
     }
 
     @Test
     void test3() throws Exception {
         PointerByReference pp = new PointerByReference(CarbonCoreLibrary.NATIVE_LIBRARY.getGlobalVariableAddress("kTISPropertyUnicodeKeyLayoutData"));
         Pointer p = pp.getValue().getPointer(0);
+        assertNotNull(p);
 Debug.printf("pointer: %s", p);
 Debug.printf("pointer: %s", new CFStringRef(p));
         byte[] bytes = new byte[32];
@@ -49,9 +52,10 @@ Debug.println("\n" + StringUtil.getDump(bytes));
         PointerByReference pp = new PointerByReference(CarbonCoreLibrary.NATIVE_LIBRARY.getGlobalVariableAddress("kTISPropertyUnicodeKeyLayoutData"));
         Pointer kTISPropertyUnicodeKeyLayoutData = pp.getValue().getPointer(0);
 Debug.println("kTISPropertyUnicodeKeyLayoutData: " + kTISPropertyUnicodeKeyLayoutData);
-        Pointer s = library.TISCopyCurrentKeyboardInputSource();
+        Pointer s = library.TISCopyCurrentKeyboardLayoutInputSource();
 Debug.println("TISCopyCurrentKeyboardInputSource: " + s);
         Pointer p = library.TISGetInputSourceProperty(s, new CFStringRef(kTISPropertyUnicodeKeyLayoutData));
-Debug.println("TISGetInputSourceProperty: " + p); // TODO null
+Debug.println("TISGetInputSourceProperty: " + p);
+        assertNotNull(p);
     }
 }
