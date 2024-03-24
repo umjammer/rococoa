@@ -11,6 +11,16 @@ void callOnMainThread(void (*fn)(void), BOOL waitUntilDone) {
 	[pool release];
 }
 
+id bridgeArray(CFArrayRef* cfarray) {
+    NSArray* nsarray = (__bridge NSArray*) cfarray;
+    return (id) nsarray;
+}
+
+id bridgeDictionary(CFDictionaryRef* cfdic) {
+    NSDictionary* nsdic = (__bridge NSDictionary*) cfdic;
+    return (id) nsdic;
+}
+
 @implementation RococoaHelper : NSObject
 
 + (void) callback: (NSValue*) fnAsValue {

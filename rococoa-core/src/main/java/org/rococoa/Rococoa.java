@@ -24,10 +24,13 @@ import java.lang.reflect.Proxy;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.sun.jna.Pointer;
 import net.bytebuddy.ByteBuddy;
 import net.bytebuddy.implementation.MethodDelegation;
 import net.bytebuddy.matcher.ElementMatchers;
 import org.rococoa.cocoa.CFIndex;
+import org.rococoa.cocoa.foundation.NSArray;
+import org.rococoa.cocoa.foundation.NSDictionary;
 import org.rococoa.internal.OCInvocationCallbacks;
 import org.rococoa.internal.ObjCObjectInvocationHandler;
 import org.rococoa.internal.VarArgsUnpacker;
@@ -206,6 +209,18 @@ logging.finest("createProxy: ByteBuddy: " + type);
         if (retainCount.intValue() != expected) {
             logging.warning("Created an object which had a retain count of " + retainCount + " not " + expected);
         }
+    }
+
+    /** __bridge */
+    public static NSArray toNSArray(Pointer p) {
+        ID id = Foundation.getRococoaLibrary().bridgeArray(p);
+        return wrap(id, NSArray.class);
+    }
+
+    /** __bridge */
+    public static NSDictionary toNSDictionary(Pointer p) {
+        ID id = Foundation.getRococoaLibrary().bridgeDictionary(p);
+        return wrap(id, NSDictionary.class);
     }
 
     /**
