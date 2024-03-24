@@ -6,6 +6,8 @@
 
 package org.rococoa.cocoa.coregraphics;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import com.sun.jna.Callback;
@@ -296,47 +298,36 @@ logger.finer("layoutData: " + layoutData);
         return CoreFoundation.library.CFStringCreateWithCharacters(kCFAllocatorDefault, chars, CFIndex.of(1));
     }
 
+    /** key code, char map */
+    Map <String, Character> charToCodeDict = new HashMap<>(128);
+
     /**
-     * Returns key code for given character via the above function, or Character.MAX_VALUE (UINT16_MAX)
-     * on error.
+     * Returns key code for given character via the above function.
      */
     static char /* CGKeyCode */ keyCodeForChar(char c) {
-        Pointer /* CFMutableDictionaryRef */ charToCodeDict = null;
-        char[] /* UniChar */ character = new char[] { c };
-
         // Generate table of keycodes and characters.
-        if (charToCodeDict == null) {
-            charToCodeDict = CoreFoundation.library.CFDictionaryCreateMutable(kCFAllocatorDefault,
-                    new NativeLong(0), // must be 0 ???
-                    CoreFoundation.library.kCFCopyStringDictionaryKeyCallBacks,
-                    CoreFoundation.library.kCFTypeDictionaryValueCallBacks);
-            if (charToCodeDict == null) throw new IllegalStateException("cannot careate CFDictionaryCreateMutable");
-
+        if (charToCodeDict.isEmpty()) {
             /* Loop through every keycode (0 - 127) to find its current mapping. */
             for (char i = 0; i < 128; i++) {
                 CFStringRef string = createStringForKey(/* CGKeyCode */ i);
+logger.finest("key: " + (int) i + ", 0x" + Integer.toHexString(i) + ", string: " + string + (string != null && !string.toString().isEmpty() ? ", 0x" + Integer.toHexString(string.toString().charAt(0)) : "null"));
                 if (string != null) {
-                    IntByReference iRef = new IntByReference(i);
-                    CoreFoundation.library.CFDictionaryAddValue(charToCodeDict, string, iRef.getPointer());
+                    charToCodeDict.put(string.toString(), i);
                     CoreFoundation.library.CFRelease(string);
                 }
             }
         }
 
+        char[] /* UniChar */ character = new char[] { c };
         CFStringRef charStr = CoreFoundation.library.CFStringCreateWithCharacters(kCFAllocatorDefault, character, CFIndex.of(1));
-
         /* Our values may be NULL (0), so we need to use this function. */
-        char code;
-        ShortByReference /* CGKeyCode */ codeRef = new ShortByReference();
-        if (!CoreFoundation.library.CFDictionaryGetValueIfPresent(charToCodeDict, charStr.getPointer(), codeRef)) {
-            code = Character.MAX_VALUE;
-        } else {
-            code = (char) codeRef.getValue();
-        }
-
+        char code = charToCodeDict.getOrDefault(charStr.toString(), Character.MAX_VALUE);
         CoreFoundation.library.CFRelease(charStr);
+
         return code;
     }
+
+//#endregion
 
     /** Returns a new Quartz keyboard event. */
     Pointer /* CGEventRef */ CGEventCreateKeyboardEvent(Pointer /* CGEventSourceRef */ source, char /* CGKeyCode */ virtualKey, boolean keyDown);

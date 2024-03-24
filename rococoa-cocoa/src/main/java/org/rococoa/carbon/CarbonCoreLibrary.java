@@ -7,8 +7,8 @@
 package org.rococoa.carbon;
 
 import java.awt.event.KeyEvent;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.sun.jna.Library;
 import com.sun.jna.Native;
@@ -52,6 +52,8 @@ public interface CarbonCoreLibrary extends Library {
 
     CFStringRef kTISPropertyUnicodeKeyLayoutData = new CFStringRef(new PointerByReference(NATIVE_LIBRARY.getGlobalVariableAddress("kTISPropertyUnicodeKeyLayoutData")).getValue().getPointer(0));
 
+    Pointer /* TISInputSourceRef */ TISCopyCurrentKeyboardLayoutInputSource();
+
     Pointer /* TISInputSourceRef */ TISCopyCurrentKeyboardInputSource();
 
     Pointer TISGetInputSourceProperty(Pointer /* TISInputSourceRef */ source, CFStringRef key);
@@ -60,8 +62,140 @@ public interface CarbonCoreLibrary extends Library {
 
 //#region HIToolbox
 
+    /*
+key: 0, 0x0, string: a, 0x61
+key: 1, 0x1, string: s, 0x73
+key: 2, 0x2, string: d, 0x64
+key: 3, 0x3, string: f, 0x66
+key: 4, 0x4, string: h, 0x68
+key: 5, 0x5, string: g, 0x67
+key: 6, 0x6, string: z, 0x7a
+key: 7, 0x7, string: x, 0x78
+key: 8, 0x8, string: c, 0x63
+key: 9, 0x9, string: v, 0x76
+key: 10, 0xa, string: §, 0xa7
+key: 11, 0xb, string: b, 0x62
+key: 12, 0xc, string: q, 0x71
+key: 13, 0xd, string: w, 0x77
+key: 14, 0xe, string: e, 0x65
+key: 15, 0xf, string: r, 0x72
+key: 16, 0x10, string: y, 0x79
+key: 17, 0x11, string: t, 0x74
+key: 18, 0x12, string: 1, 0x31
+key: 19, 0x13, string: 2, 0x32
+key: 20, 0x14, string: 3, 0x33
+key: 21, 0x15, string: 4, 0x34
+key: 22, 0x16, string: 6, 0x36
+key: 23, 0x17, string: 5, 0x35
+key: 24, 0x18, string: ^, 0x5e
+key: 25, 0x19, string: 9, 0x39
+key: 26, 0x1a, string: 7, 0x37
+key: 27, 0x1b, string: -, 0x2d
+key: 28, 0x1c, string: 8, 0x38
+key: 29, 0x1d, string: 0, 0x30
+key: 30, 0x1e, string: [, 0x5b
+key: 31, 0x1f, string: o, 0x6f
+key: 32, 0x20, string: u, 0x75
+key: 33, 0x21, string: @, 0x40
+key: 34, 0x22, string: i, 0x69
+key: 35, 0x23, string: p, 0x70
+key: 36, 0x23, string: ???, 0xd
+key: 37, 0x25, string: l, 0x6c
+key: 38, 0x26, string: j, 0x6a
+key: 39, 0x27, string: :, 0x3a
+key: 40, 0x28, string: k, 0x6b
+key: 41, 0x29, string: ;, 0x3b
+key: 42, 0x2a, string: ], 0x5d
+key: 43, 0x2b, string: ,, 0x2c
+key: 44, 0x2c, string: /, 0x2f
+key: 45, 0x2d, string: n, 0x6e
+key: 46, 0x2e, string: m, 0x6d
+key: 47, 0x2f, string: ., 0x2e
+key: 48, 0x30, string: 	, 0x9
+key: 49, 0x31, string:  , 0x20
+key: 50, 0x32, string: `, 0x60
+key: 51, 0x33, string:, 0x8
+key: 52, 0x34, string: , 0x3
+key: 53, 0x35, string: , 0x1b
+key: 54, 0x36, string: null
+key: 55, 0x37, string: null
+key: 56, 0x38, string: null
+key: 57, 0x39, string: null
+key: 58, 0x3a, string: null
+key: 59, 0x3b, string: null
+key: 60, 0x3c, string: null
+key: 61, 0x3d, string: null
+key: 62, 0x3e, string: null
+key: 63, 0x3f, string: null
+key: 64, 0x40, string: null
+key: 65, 0x41, string: ., 0x2e
+key: 66, 0x42, string: , 0x1d
+key: 67, 0x43, string: *, 0x2a
+key: 68, 0x44, string: null
+key: 69, 0x45, string: +, 0x2b
+key: 70, 0x46, string: , 0x1c
+key: 71, 0x47, string: , 0x1b
+key: 72, 0x48, string: , 0x1f
+key: 73, 0x49, string: null
+key: 74, 0x4a, string: null
+key: 75, 0x4b, string: /, 0x2f
+key: 76, 0x4c, string: , 0x3
+key: 77, 0x4d, string: , 0x1e
+key: 78, 0x4e, string: -, 0x2d
+key: 79, 0x4f, string: null
+key: 80, 0x50, string: null
+key: 81, 0x51, string: =, 0x3d
+key: 82, 0x52, string: 0, 0x30
+key: 83, 0x53, string: 1, 0x31
+key: 84, 0x54, string: 2, 0x32
+key: 85, 0x55, string: 3, 0x33
+key: 86, 0x56, string: 4, 0x34
+key: 87, 0x57, string: 5, 0x35
+key: 88, 0x58, string: 6, 0x36
+key: 89, 0x59, string: 7, 0x37
+key: 90, 0x5a, string: null
+key: 91, 0x5b, string: 8, 0x38
+key: 92, 0x5c, string: 9, 0x39
+key: 93, 0x5d, string: ¥, 0xa5
+key: 94, 0x5e, string: _, 0x5f
+key: 95, 0x5f, string: ,, 0x2c
+key: 96, 0x60, string: , 0x10
+key: 97, 0x61, string: , 0x10
+key: 98, 0x62, string: , 0x10
+key: 99, 0x63, string: , 0x10
+key: 100, 0x64, string: , 0x10
+key: 101, 0x65, string: , 0x10
+key: 102, 0x66, string:  , 0x20
+key: 103, 0x67, string: , 0x10
+key: 104, 0x68, string:  , 0x20
+key: 105, 0x69, string: , 0x10
+key: 106, 0x6a, string: , 0x10
+key: 107, 0x6b, string: , 0x10
+key: 108, 0x6c, string: , 0x10
+key: 109, 0x6d, string: , 0x10
+key: 110, 0x6e, string: , 0x10
+key: 111, 0x6f, string: , 0x10
+key: 112, 0x70, string: , 0x10
+key: 113, 0x71, string: , 0x10
+key: 114, 0x72, string: , 0x5
+key: 115, 0x73, string: , 0x1
+key: 116, 0x74, string: , 0xb
+key: 117, 0x75, string: , 0x7f
+key: 118, 0x76, string: , 0x10
+key: 119, 0x77, string: , 0x4
+key: 120, 0x78, string: , 0x10
+key: 121, 0x79, string: , 0xc
+key: 122, 0x7a, string: , 0x10
+key: 123, 0x7b, string: , 0x1c
+key: 124, 0x7c, string: , 0x1d
+key: 125, 0x7d, string: , 0x1f
+key: 126, 0x7e, string: , 0x1e
+key: 127, 0x7f, string: null
+     */
+
     // TODO on mac studio m2, some key name is not matched
     //  karabiner-elements event viewer also
+    // https://qiita.com/nak435/items/37cf3352b4d77585c38e
 
     int kVK_ANSI_A                    = 0x00;
     int kVK_ANSI_S                    = 0x01;
@@ -192,127 +326,129 @@ public interface CarbonCoreLibrary extends Library {
     int kVK_JIS_Eisu                  = 0x66;
     int kVK_JIS_Kana                  = 0x68;
 
-    /** java to native conversion */
-    Map<Integer, Integer> javaNativeMap = new HashMap<>() {{
-        put(KeyEvent.VK_A, kVK_ANSI_A);
-        put(KeyEvent.VK_S, kVK_ANSI_S);
-        put(KeyEvent.VK_D, kVK_ANSI_D);
-        put(KeyEvent.VK_F, kVK_ANSI_F);
-        put(KeyEvent.VK_H, kVK_ANSI_H);
-        put(KeyEvent.VK_G, kVK_ANSI_G);
-        put(KeyEvent.VK_Z, kVK_ANSI_Z);
-        put(KeyEvent.VK_X, kVK_ANSI_X);
-        put(KeyEvent.VK_C, kVK_ANSI_C);
-        put(KeyEvent.VK_V, kVK_ANSI_V);
-        put(KeyEvent.VK_B, kVK_ANSI_B);
-        put(KeyEvent.VK_Q, kVK_ANSI_Q);
-        put(KeyEvent.VK_W, kVK_ANSI_W);
-        put(KeyEvent.VK_E, kVK_ANSI_E);
-        put(KeyEvent.VK_R, kVK_ANSI_R);
-        put(KeyEvent.VK_Y, kVK_ANSI_Y);
-        put(KeyEvent.VK_T, kVK_ANSI_T);
-        put(KeyEvent.VK_1, kVK_ANSI_1);
-        put(KeyEvent.VK_2, kVK_ANSI_2);
-        put(KeyEvent.VK_3, kVK_ANSI_3);
-        put(KeyEvent.VK_4, kVK_ANSI_4);
-        put(KeyEvent.VK_6, kVK_ANSI_6);
-        put(KeyEvent.VK_5, kVK_ANSI_5);
-        put(KeyEvent.VK_EQUALS, kVK_ANSI_Equal);
-        put(KeyEvent.VK_9, kVK_ANSI_9);
-        put(KeyEvent.VK_7, kVK_ANSI_7);
-        put(KeyEvent.VK_MINUS, kVK_ANSI_Minus);
-        put(KeyEvent.VK_8, kVK_ANSI_8);
-        put(KeyEvent.VK_0, kVK_ANSI_0);
-        put(KeyEvent.VK_RIGHT_PARENTHESIS, kVK_ANSI_RightBracket);
-        put(KeyEvent.VK_O, kVK_ANSI_O);
-        put(KeyEvent.VK_U, kVK_ANSI_U);
-        put(KeyEvent.VK_LEFT_PARENTHESIS, kVK_ANSI_LeftBracket);
-        put(KeyEvent.VK_I, kVK_ANSI_I);
-        put(KeyEvent.VK_P, kVK_ANSI_P);
-        put(KeyEvent.VK_L, kVK_ANSI_L);
-        put(KeyEvent.VK_J, kVK_ANSI_J);
-        put(KeyEvent.VK_QUOTE, kVK_ANSI_Quote);
-        put(KeyEvent.VK_K, kVK_ANSI_K);
-        put(KeyEvent.VK_SEMICOLON, kVK_ANSI_Semicolon);
-        put(KeyEvent.VK_BACK_SLASH, kVK_ANSI_Backslash);
-        put(KeyEvent.VK_COMMA, kVK_ANSI_Comma);
-        put(KeyEvent.VK_SLASH, kVK_ANSI_Slash);
-        put(KeyEvent.VK_N, kVK_ANSI_N);
-        put(KeyEvent.VK_M, kVK_ANSI_M);
-        put(KeyEvent.VK_PERIOD, kVK_ANSI_Period);
-        put(KeyEvent.VK_DEAD_GRAVE, kVK_ANSI_Grave);
-        put(KeyEvent.VK_DECIMAL, kVK_ANSI_KeypadDecimal);
-        put(KeyEvent.VK_MULTIPLY, kVK_ANSI_KeypadMultiply);
-        put(KeyEvent.VK_PLUS, kVK_ANSI_KeypadPlus);
-        put(KeyEvent.VK_CLEAR, kVK_ANSI_KeypadClear);
-        put(KeyEvent.VK_DIVIDE, kVK_ANSI_KeypadDivide);
-//        put(KeyEvent.VK_ENTER, kVK_ANSI_KeypadEnter);
-//        put(KeyEvent.VK_MINUS, kVK_ANSI_KeypadMinus);
-//        put(KeyEvent.VK_EQUALS, kVK_ANSI_KeypadEquals);
-        put(KeyEvent.VK_NUMPAD0, kVK_ANSI_Keypad0);
-        put(KeyEvent.VK_NUMPAD1, kVK_ANSI_Keypad1);
-        put(KeyEvent.VK_NUMPAD2, kVK_ANSI_Keypad2);
-        put(KeyEvent.VK_NUMPAD3, kVK_ANSI_Keypad3);
-        put(KeyEvent.VK_NUMPAD4, kVK_ANSI_Keypad4);
-        put(KeyEvent.VK_NUMPAD5, kVK_ANSI_Keypad5);
-        put(KeyEvent.VK_NUMPAD6, kVK_ANSI_Keypad6);
-        put(KeyEvent.VK_NUMPAD7, kVK_ANSI_Keypad7);
-        put(KeyEvent.VK_NUMPAD8, kVK_ANSI_Keypad8);
-        put(KeyEvent.VK_NUMPAD9, kVK_ANSI_Keypad9);
-        put(KeyEvent.VK_ENTER, kVK_Return);
-        put(KeyEvent.VK_TAB, kVK_Tab);
-        put(KeyEvent.VK_SPACE, kVK_Space);
-        put(KeyEvent.VK_DELETE, kVK_Delete);
-        put(KeyEvent.VK_ESCAPE, kVK_Escape);
-        put(KeyEvent.VK_META, kVK_Command);
-        put(KeyEvent.VK_SHIFT, kVK_Shift);
-        put(KeyEvent.VK_CAPS_LOCK, kVK_CapsLock);
-        put(KeyEvent.VK_ALT, kVK_Option);
-        put(KeyEvent.VK_CONTROL, kVK_Control);
-//        put(KeyEvent.VK_META, kVK_RightCommand);
-//        put(KeyEvent.VK_SHIFT, kVK_RightShift);
-//        put(KeyEvent.VK_ALT, kVK_RightOption);
-//        put(KeyEvent.VK_CONTROL, kVK_RightControl);
-//        put(KeyEvent.VK_???, kVK_Function);
-        put(KeyEvent.VK_F17, kVK_F17);
-//        put(KeyEvent.VK_???, kVK_VolumeUp);
-//        put(KeyEvent.VK_???, kVK_VolumeDown);
-//        put(KeyEvent.VK_???, kVK_Mute);
-        put(KeyEvent.VK_F18, kVK_F18);
-        put(KeyEvent.VK_F19, kVK_F19);
-        put(KeyEvent.VK_F20, kVK_F20);
-        put(KeyEvent.VK_F5, kVK_F5);
-        put(KeyEvent.VK_F6, kVK_F6);
-        put(KeyEvent.VK_F7, kVK_F7);
-        put(KeyEvent.VK_F3, kVK_F3);
-        put(KeyEvent.VK_F8, kVK_F8);
-        put(KeyEvent.VK_F9, kVK_F9);
-        put(KeyEvent.VK_F11, kVK_F11);
-        put(KeyEvent.VK_F13, kVK_F13);
-        put(KeyEvent.VK_F16, kVK_F16);
-        put(KeyEvent.VK_F14, kVK_F14);
-        put(KeyEvent.VK_F10, kVK_F10);
-        put(KeyEvent.VK_F12, kVK_F12);
-        put(KeyEvent.VK_F15, kVK_F15);
-        put(KeyEvent.VK_HELP, kVK_Help);
-        put(KeyEvent.VK_HOME, kVK_Home);
-        put(KeyEvent.VK_PAGE_UP, kVK_PageUp);
-//        put(KeyEvent.VK_DELETE, kVK_ForwardDelete);
-        put(KeyEvent.VK_F4, kVK_F4);
-        put(KeyEvent.VK_END, kVK_End);
-        put(KeyEvent.VK_F2, kVK_F2);
-        put(KeyEvent.VK_PAGE_DOWN, kVK_PageDown);
-        put(KeyEvent.VK_F1, kVK_F1);
-        put(KeyEvent.VK_LEFT, kVK_LeftArrow);
-        put(KeyEvent.VK_RIGHT, kVK_RightArrow);
-        put(KeyEvent.VK_DOWN, kVK_DownArrow);
-        put(KeyEvent.VK_UP, kVK_UpArrow);
-//        put(KeyEvent.VK_???, kVK_ISO_Section);
-//        put(KeyEvent.VK_BACK_SLASH, kVK_JIS_Yen);
-        put(KeyEvent.VK_UNDERSCORE, kVK_JIS_Underscore);
-//        put(KeyEvent.VK_COMMA, kVK_JIS_KeypadComma);
-        put(KeyEvent.VK_ALPHANUMERIC, kVK_JIS_Eisu);
-        put(KeyEvent.VK_HIRAGANA, kVK_JIS_Kana);
+    record JavaNativePair(int java, int carbon) {}
+
+    /** TODO java to native conversion */
+    List<JavaNativePair> javaNativeMap = new ArrayList<>() {{
+        add(new JavaNativePair(KeyEvent.VK_A, kVK_ANSI_A));
+        add(new JavaNativePair(KeyEvent.VK_S, kVK_ANSI_S));
+        add(new JavaNativePair(KeyEvent.VK_D, kVK_ANSI_D));
+        add(new JavaNativePair(KeyEvent.VK_F, kVK_ANSI_F));
+        add(new JavaNativePair(KeyEvent.VK_H, kVK_ANSI_H));
+        add(new JavaNativePair(KeyEvent.VK_G, kVK_ANSI_G));
+        add(new JavaNativePair(KeyEvent.VK_Z, kVK_ANSI_Z));
+        add(new JavaNativePair(KeyEvent.VK_X, kVK_ANSI_X));
+        add(new JavaNativePair(KeyEvent.VK_C, kVK_ANSI_C));
+        add(new JavaNativePair(KeyEvent.VK_V, kVK_ANSI_V));
+        add(new JavaNativePair(KeyEvent.VK_B, kVK_ANSI_B));
+        add(new JavaNativePair(KeyEvent.VK_Q, kVK_ANSI_Q));
+        add(new JavaNativePair(KeyEvent.VK_W, kVK_ANSI_W));
+        add(new JavaNativePair(KeyEvent.VK_E, kVK_ANSI_E));
+        add(new JavaNativePair(KeyEvent.VK_R, kVK_ANSI_R));
+        add(new JavaNativePair(KeyEvent.VK_Y, kVK_ANSI_Y));
+        add(new JavaNativePair(KeyEvent.VK_T, kVK_ANSI_T));
+        add(new JavaNativePair(KeyEvent.VK_1, kVK_ANSI_1));
+        add(new JavaNativePair(KeyEvent.VK_2, kVK_ANSI_2));
+        add(new JavaNativePair(KeyEvent.VK_3, kVK_ANSI_3));
+        add(new JavaNativePair(KeyEvent.VK_4, kVK_ANSI_4));
+        add(new JavaNativePair(KeyEvent.VK_6, kVK_ANSI_6));
+        add(new JavaNativePair(KeyEvent.VK_5, kVK_ANSI_5));
+        add(new JavaNativePair(KeyEvent.VK_EQUALS, kVK_ANSI_Equal));
+        add(new JavaNativePair(KeyEvent.VK_9, kVK_ANSI_9));
+        add(new JavaNativePair(KeyEvent.VK_7, kVK_ANSI_7));
+        add(new JavaNativePair(KeyEvent.VK_MINUS, kVK_ANSI_Minus));
+        add(new JavaNativePair(KeyEvent.VK_8, kVK_ANSI_8));
+        add(new JavaNativePair(KeyEvent.VK_0, kVK_ANSI_0));
+        add(new JavaNativePair(KeyEvent.VK_RIGHT_PARENTHESIS, kVK_ANSI_RightBracket));
+        add(new JavaNativePair(KeyEvent.VK_O, kVK_ANSI_O));
+        add(new JavaNativePair(KeyEvent.VK_U, kVK_ANSI_U));
+        add(new JavaNativePair(KeyEvent.VK_LEFT_PARENTHESIS, kVK_ANSI_LeftBracket));
+        add(new JavaNativePair(KeyEvent.VK_I, kVK_ANSI_I));
+        add(new JavaNativePair(KeyEvent.VK_P, kVK_ANSI_P));
+        add(new JavaNativePair(KeyEvent.VK_L, kVK_ANSI_L));
+        add(new JavaNativePair(KeyEvent.VK_J, kVK_ANSI_J));
+        add(new JavaNativePair(KeyEvent.VK_QUOTE, kVK_ANSI_Quote));
+        add(new JavaNativePair(KeyEvent.VK_K, kVK_ANSI_K));
+        add(new JavaNativePair(KeyEvent.VK_SEMICOLON, kVK_ANSI_Semicolon));
+        add(new JavaNativePair(KeyEvent.VK_BACK_SLASH, kVK_ANSI_Backslash));
+        add(new JavaNativePair(KeyEvent.VK_COMMA, kVK_ANSI_Comma));
+        add(new JavaNativePair(KeyEvent.VK_SLASH, kVK_ANSI_Slash));
+        add(new JavaNativePair(KeyEvent.VK_N, kVK_ANSI_N));
+        add(new JavaNativePair(KeyEvent.VK_M, kVK_ANSI_M));
+        add(new JavaNativePair(KeyEvent.VK_PERIOD, kVK_ANSI_Period));
+        add(new JavaNativePair(KeyEvent.VK_DEAD_GRAVE, kVK_ANSI_Grave));
+        add(new JavaNativePair(KeyEvent.VK_DECIMAL, kVK_ANSI_KeypadDecimal));
+        add(new JavaNativePair(KeyEvent.VK_MULTIPLY, kVK_ANSI_KeypadMultiply));
+        add(new JavaNativePair(KeyEvent.VK_PLUS, kVK_ANSI_KeypadPlus));
+        add(new JavaNativePair(KeyEvent.VK_CLEAR, kVK_ANSI_KeypadClear));
+        add(new JavaNativePair(KeyEvent.VK_DIVIDE, kVK_ANSI_KeypadDivide));
+//        add(new JavaNativePair(KeyEvent.VK_ENTER, kVK_ANSI_KeypadEnter));
+//        add(new JavaNativePair(KeyEvent.VK_MINUS, kVK_ANSI_KeypadMinus));
+//        add(new JavaNativePair(KeyEvent.VK_EQUALS, kVK_ANSI_KeypadEquals));
+        add(new JavaNativePair(KeyEvent.VK_NUMPAD0, kVK_ANSI_Keypad0));
+        add(new JavaNativePair(KeyEvent.VK_NUMPAD1, kVK_ANSI_Keypad1));
+        add(new JavaNativePair(KeyEvent.VK_NUMPAD2, kVK_ANSI_Keypad2));
+        add(new JavaNativePair(KeyEvent.VK_NUMPAD3, kVK_ANSI_Keypad3));
+        add(new JavaNativePair(KeyEvent.VK_NUMPAD4, kVK_ANSI_Keypad4));
+        add(new JavaNativePair(KeyEvent.VK_NUMPAD5, kVK_ANSI_Keypad5));
+        add(new JavaNativePair(KeyEvent.VK_NUMPAD6, kVK_ANSI_Keypad6));
+        add(new JavaNativePair(KeyEvent.VK_NUMPAD7, kVK_ANSI_Keypad7));
+        add(new JavaNativePair(KeyEvent.VK_NUMPAD8, kVK_ANSI_Keypad8));
+        add(new JavaNativePair(KeyEvent.VK_NUMPAD9, kVK_ANSI_Keypad9));
+        add(new JavaNativePair(KeyEvent.VK_ENTER, kVK_Return));
+        add(new JavaNativePair(KeyEvent.VK_TAB, kVK_Tab));
+        add(new JavaNativePair(KeyEvent.VK_SPACE, kVK_Space));
+        add(new JavaNativePair(KeyEvent.VK_DELETE, kVK_Delete));
+        add(new JavaNativePair(KeyEvent.VK_ESCAPE, kVK_Escape));
+        add(new JavaNativePair(KeyEvent.VK_META, kVK_Command));
+        add(new JavaNativePair(KeyEvent.VK_SHIFT, kVK_Shift));
+        add(new JavaNativePair(KeyEvent.VK_CAPS_LOCK, kVK_CapsLock));
+        add(new JavaNativePair(KeyEvent.VK_ALT, kVK_Option));
+        add(new JavaNativePair(KeyEvent.VK_CONTROL, kVK_Control));
+//        add(new JavaNativePair(KeyEvent.VK_META, kVK_RightCommand));
+//        add(new JavaNativePair(KeyEvent.VK_SHIFT, kVK_RightShift));
+//        add(new JavaNativePair(KeyEvent.VK_ALT, kVK_RightOption));
+//        add(new JavaNativePair(KeyEvent.VK_CONTROL, kVK_RightControl));
+//        add(new JavaNativePair(KeyEvent.VK_???, kVK_Function));
+        add(new JavaNativePair(KeyEvent.VK_F17, kVK_F17));
+//        add(new JavaNativePair(KeyEvent.VK_???, kVK_VolumeUp));
+//        add(new JavaNativePair(KeyEvent.VK_???, kVK_VolumeDown));
+//        add(new JavaNativePair(KeyEvent.VK_???, kVK_Mute));
+        add(new JavaNativePair(KeyEvent.VK_F18, kVK_F18));
+        add(new JavaNativePair(KeyEvent.VK_F19, kVK_F19));
+        add(new JavaNativePair(KeyEvent.VK_F20, kVK_F20));
+        add(new JavaNativePair(KeyEvent.VK_F5, kVK_F5));
+        add(new JavaNativePair(KeyEvent.VK_F6, kVK_F6));
+        add(new JavaNativePair(KeyEvent.VK_F7, kVK_F7));
+        add(new JavaNativePair(KeyEvent.VK_F3, kVK_F3));
+        add(new JavaNativePair(KeyEvent.VK_F8, kVK_F8));
+        add(new JavaNativePair(KeyEvent.VK_F9, kVK_F9));
+        add(new JavaNativePair(KeyEvent.VK_F11, kVK_F11));
+        add(new JavaNativePair(KeyEvent.VK_F13, kVK_F13));
+        add(new JavaNativePair(KeyEvent.VK_F16, kVK_F16));
+        add(new JavaNativePair(KeyEvent.VK_F14, kVK_F14));
+        add(new JavaNativePair(KeyEvent.VK_F10, kVK_F10));
+        add(new JavaNativePair(KeyEvent.VK_F12, kVK_F12));
+        add(new JavaNativePair(KeyEvent.VK_F15, kVK_F15));
+        add(new JavaNativePair(KeyEvent.VK_HELP, kVK_Help));
+        add(new JavaNativePair(KeyEvent.VK_HOME, kVK_Home));
+        add(new JavaNativePair(KeyEvent.VK_PAGE_UP, kVK_PageUp));
+//        add(new JavaNativePair(KeyEvent.VK_DELETE, kVK_ForwardDelete));
+        add(new JavaNativePair(KeyEvent.VK_F4, kVK_F4));
+        add(new JavaNativePair(KeyEvent.VK_END, kVK_End));
+        add(new JavaNativePair(KeyEvent.VK_F2, kVK_F2));
+        add(new JavaNativePair(KeyEvent.VK_PAGE_DOWN, kVK_PageDown));
+        add(new JavaNativePair(KeyEvent.VK_F1, kVK_F1));
+        add(new JavaNativePair(KeyEvent.VK_LEFT, kVK_LeftArrow));
+        add(new JavaNativePair(KeyEvent.VK_RIGHT, kVK_RightArrow));
+        add(new JavaNativePair(KeyEvent.VK_DOWN, kVK_DownArrow));
+        add(new JavaNativePair(KeyEvent.VK_UP, kVK_UpArrow));
+//        add(new JavaNativePair(KeyEvent.VK_???, kVK_ISO_Section));
+//        add(new JavaNativePair(KeyEvent.VK_BACK_SLASH, kVK_JIS_Yen));
+        add(new JavaNativePair(KeyEvent.VK_UNDERSCORE, kVK_JIS_Underscore));
+//        add(new JavaNativePair(KeyEvent.VK_COMMA, kVK_JIS_KeypadComma));
+        add(new JavaNativePair(KeyEvent.VK_ALPHANUMERIC, kVK_JIS_Eisu));
+        add(new JavaNativePair(KeyEvent.VK_HIRAGANA, kVK_JIS_Kana));
     }};
 
 //#endregion
