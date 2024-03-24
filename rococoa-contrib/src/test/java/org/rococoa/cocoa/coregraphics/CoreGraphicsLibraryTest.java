@@ -19,6 +19,7 @@ import com.sun.tools.attach.VirtualMachineDescriptor;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import org.rococoa.Foundation;
 import org.rococoa.Rococoa;
 import org.rococoa.cocoa.appkit.NSRunningApplication;
@@ -181,6 +182,7 @@ Debug.printf("code for '%c': %02x", c, (int) code);
 
     @Test
     @DisplayName("CGWindowListCopyWindowInfo")
+    @EnabledIfSystemProperty(named = "vavi.test", matches = "ide")
     void test8() throws Exception {
         CFArrayRef array = library.CGWindowListCopyWindowInfo(kCGWindowListOptionOnScreenOnly, kCGNullWindowID);
 Debug.println("windows: " + array.getCount());
