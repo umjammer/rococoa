@@ -9,8 +9,8 @@ package org.rococoa.cocoa.gamecontroller;
 import java.util.concurrent.CountDownLatch;
 
 import com.sun.jna.Callback;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import org.rococoa.Foundation;
 import org.rococoa.ObjCObject;
 import org.rococoa.Rococoa;
@@ -18,6 +18,7 @@ import org.rococoa.Selector;
 import org.rococoa.cocoa.foundation.NSBundle;
 import org.rococoa.cocoa.foundation.NSNotification;
 import org.rococoa.cocoa.foundation.NSNotificationCenter;
+import org.rococoa.cocoa.foundation.NSString;
 import vavi.util.Debug;
 
 
@@ -45,7 +46,7 @@ Debug.println("controllerDidDisconnect");
     }
 
     @Test
-    @Disabled("wip")
+    @EnabledIfSystemProperty(named = "vavi.test", matches = "ide")
     void test1() throws Exception {
 Debug.println(NSBundle.mainBundle().bundleIdentifier());
         GCController.controllers().forEach(System.err::println);
@@ -53,11 +54,15 @@ Debug.println("here");
         GCController controller = GCController.controllers().get(0);
 
         ObjCObject proxy = Rococoa.proxy(new MyObserver());
-        Selector sel1 = Foundation.selector("controllerDidConnect");
-        Selector sel2 = Foundation.selector("controllerDidDisconnect");
+        Selector sel1 = Foundation.selector("controllerDidConnect:");
+        Selector sel2 = Foundation.selector("controllerDidDisconnect:");
 
         NSNotificationCenter notificationCenter = NSNotificationCenter.CLASS.defaultCenter();
         notificationCenter.addObserver_selector_name_object(proxy.id(), sel1, GCController.GCControllerDidConnectNotification, null);
+
+        // fake notification
+        NSNotification notification = NSNotification.CLASS.notificationWithName_object(GCController.GCControllerDidConnectNotification, NSString.stringWithString("hello world"));
+        notificationCenter.postNotification(notification);
 
         cdl.await();
     }

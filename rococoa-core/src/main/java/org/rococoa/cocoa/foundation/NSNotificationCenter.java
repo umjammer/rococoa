@@ -32,7 +32,7 @@ public abstract class NSNotificationCenter extends NSObject {
     }
 
     public abstract void addObserver_selector_name_object(ID notificationObserver,
-            Selector notificationSelector,
+            Selector notificationSelector, // works! don't touch
             String notificationName,
             NSObject notificationSender);
 

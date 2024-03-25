@@ -95,6 +95,7 @@ implementation of Objective-C interfaces in Java.
   * https://developer.apple.com/documentation/appkit/nsrunningapplication?language=objc
 * separate same parts of jna-platform (like jna-platform-extended)
 * deprecate rococoa-contrib
+* ~~selector and java method binding for notification~~
 
 ----
 

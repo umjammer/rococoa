@@ -211,13 +211,16 @@ logging.finest("createProxy: ByteBuddy: " + type);
         }
     }
 
-    /** __bridge */
+    /**
+     * Toll-Free Bridging __bridge
+     * @see "https://developer.apple.com/library/archive/documentation/General/Conceptual/CocoaEncyclopedia/Toll-FreeBridgin/Toll-FreeBridgin.html#//apple_ref/doc/uid/TP40010810-CH2"
+     */
     public static NSArray toNSArray(Pointer p) {
         ID id = Foundation.getRococoaLibrary().bridgeArray(p);
         return wrap(id, NSArray.class);
     }
 
-    /** __bridge */
+    /** Toll-Free Bridging __bridge */
     public static NSDictionary toNSDictionary(Pointer p) {
         ID id = Foundation.getRococoaLibrary().bridgeDictionary(p);
         return wrap(id, NSDictionary.class);

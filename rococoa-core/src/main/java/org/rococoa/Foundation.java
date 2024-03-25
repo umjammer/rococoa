@@ -193,6 +193,9 @@ public abstract class Foundation {
         return foundationLibrary.objc_getClass(className);
     }
 
+    /**
+     * @param selectorName colon ended function name e.g. {@code "selector:"}
+     */
     public static Selector selector(String selectorName) {
         Selector cached = selectorCache.get(selectorName);
         if (cached != null) {
