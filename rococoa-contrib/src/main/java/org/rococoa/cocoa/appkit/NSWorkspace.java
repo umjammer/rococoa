@@ -6,11 +6,10 @@
 
 package org.rococoa.cocoa.appkit;
 
-import java.util.logging.Logger;
-
 import org.rococoa.ObjCClass;
 import org.rococoa.Rococoa;
 import org.rococoa.cocoa.foundation.NSArray;
+import org.rococoa.cocoa.foundation.NSNotificationCenter;
 import org.rococoa.cocoa.foundation.NSObject;
 
 
@@ -21,8 +20,6 @@ import org.rococoa.cocoa.foundation.NSObject;
  * @version 0.00 2023-12-20 nsano initial version <br>
  */
 public abstract class NSWorkspace extends NSObject {
-
-    private static final Logger logger = Logger.getLogger(NSWorkspace.class.getName());
 
     public static final _Class CLASS = Rococoa.createClass("NSWorkspace", _Class.class);
 
@@ -35,9 +32,18 @@ public abstract class NSWorkspace extends NSObject {
         return CLASS.sharedWorkspace();
     }
 
+    /** The notification center for workspace notifications. */
+    public abstract NSNotificationCenter notificationCenter();
+
     /** Returns an array of running apps. */
     public abstract NSArray /* NSRunningApplication */ runningApplications();
 
     /** Returns the frontmost app, which is the app that receives key events. */
     public abstract NSRunningApplication frontmostApplication();
+
+    /** Returns the app that owns the currently displayed menu bar. */
+    public abstract NSRunningApplication menuBarOwningApplication();
+
+    public static final String NSWorkspaceDidActivateApplicationNotification = "NSWorkspaceDidActivateApplicationNotification";
+    public static final String NSWorkspaceDidDeactivateApplicationNotification = "NSWorkspaceDidDeactivateApplicationNotification";
 }

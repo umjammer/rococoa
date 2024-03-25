@@ -8,27 +8,34 @@ package org.rococoa.cocoa.coregraphics;
 
 import java.util.Arrays;
 import java.util.NoSuchElementException;
+import java.util.concurrent.CountDownLatch;
 import java.util.logging.Level;
 import java.util.stream.IntStream;
 
+import com.sun.jna.Callback;
 import com.sun.jna.Pointer;
 import com.sun.jna.platform.mac.CoreFoundation.CFArrayRef;
-import com.sun.jna.platform.mac.CoreFoundation.CFDictionaryRef;
 import com.sun.tools.attach.VirtualMachine;
 import com.sun.tools.attach.VirtualMachineDescriptor;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import org.rococoa.Foundation;
+import org.rococoa.ObjCObject;
 import org.rococoa.Rococoa;
+import org.rococoa.Selector;
 import org.rococoa.cocoa.appkit.NSRunningApplication;
 import org.rococoa.cocoa.appkit.NSWorkspace;
 import org.rococoa.cocoa.corefoundation.CoreFoundation;
 import org.rococoa.cocoa.coreimage.CIImage;
+import org.rococoa.cocoa.foundation.NSBundle;
 import org.rococoa.cocoa.foundation.NSDictionary;
-import org.rococoa.cocoa.foundation.NSRect;
+import org.rococoa.cocoa.foundation.NSNotification;
+import org.rococoa.cocoa.foundation.NSNotificationCenter;
+import org.rococoa.cocoa.foundation.NSObject;
 import org.rococoa.cocoa.foundation.NSString;
+import org.rococoa.cocoa.gamecontroller.GCController;
 import vavi.util.Debug;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -156,6 +163,7 @@ Debug.println("w: " + w + ", h: " + h);
 
     @Test
     @DisplayName("NSRunningApplication")
+    @EnabledIfSystemProperty(named = "vavi.test", matches = "ide")
     void test62() throws Exception {
         try {
             NSRunningApplication a = getMinecraft();
@@ -195,5 +203,36 @@ Debug.println(dic);
 Debug.println(rect);
             }
         }
+    }
+
+    CountDownLatch cdl = new CountDownLatch(1);
+
+    class MyObserver implements Callback {
+
+        public void applicationWasActivated(NSNotification notification) {
+            NSWorkspace workspace = Rococoa.cast(notification.object(), NSWorkspace.class);
+            NSRunningApplication a = workspace.frontmostApplication();
+Debug.println("applicationWasActivated: " + a.bundleIdentifier() + ":" + a.processIdentifier());
+        }
+
+        public void applicationWasDeactivated(NSNotification notification) {
+            NSWorkspace workspace = Rococoa.cast(notification.object(), NSWorkspace.class);
+            NSRunningApplication a = workspace.frontmostApplication();
+Debug.println("applicationWasDeactivated: " + a.bundleIdentifier() + ":" + a.processIdentifier());
+        }
+    }
+
+    @Test
+    @EnabledIfSystemProperty(named = "vavi.test", matches = "ide")
+    void test9() throws Exception {
+        ObjCObject proxy = Rococoa.proxy(new CoreGraphicsLibraryTest.MyObserver());
+        Selector sel1 = Foundation.selector("applicationWasActivated:");
+        Selector sel2 = Foundation.selector("applicationWasDeactivated:");
+
+        NSNotificationCenter notificationCenter = NSWorkspace.sharedWorkspace().notificationCenter();
+        notificationCenter.addObserver_selector_name_object(proxy.id(), sel1, NSWorkspace.NSWorkspaceDidActivateApplicationNotification, null);
+        notificationCenter.addObserver_selector_name_object(proxy.id(), sel2, NSWorkspace.NSWorkspaceDidActivateApplicationNotification, null);
+
+        cdl.await();
     }
 }
