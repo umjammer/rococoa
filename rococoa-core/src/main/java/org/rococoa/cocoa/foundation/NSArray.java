@@ -69,7 +69,7 @@ public abstract class NSArray extends NSEnumerator implements List<NSObject> {
     @SuppressWarnings("unchecked")
     public <T extends NSObject> List<T> toList() {
         List<NSObject> result = new ArrayList<>();
-        for (int i = 0; i <this.count(); i++) {
+        for (int i = 0; i < this.count(); i++) {
             result.add(this.objectAtIndex(i));
         }
         return (List<T>) result;

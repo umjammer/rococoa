@@ -10,7 +10,6 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicReference;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.DisabledIfEnvironmentVariable;
 import org.rococoa.cocoa.foundation.NSString;
@@ -20,28 +19,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 /**
- * Test1.
+ * Integration Test.
  *
  * @author <a href="mailto:umjammer@gmail.com">Naohide Sano</a> (nsano)
  * @version 0.00 2023-06-30 nsano initial version <br>
  */
 public class Test1 {
-
-    @Test
-    @Disabled
-    void test1() throws Exception {
-//        MethodHandle methodHandleFieldDirect = lookup.unreflectGetter(fieldName);
-//        CallSite callSiteField = new ConstantCallSite(methodHandleFieldDirect);
-//        methodHandleFieldDirect = callSiteField.dynamicInvoker();
-//        name = (String) methodHandleFieldDirect.invokeExact(new Employee());
-//
-//
-////Lookup invoke dynamic
-//        methodType = MethodType.methodType(String.class);
-//        methodHandle = lookup.findVirtual(Employee.class, "getName", methodType);
-//        CallSite callSiteMethod = new ConstantCallSite(methodHandleFieldDirect);
-//        methodHandle = callSiteMethod.dynamicInvoker();
-    }
 
     @Test
     @DisabledIfEnvironmentVariable(named = "GITHUB_WORKFLOW", matches = ".*")
