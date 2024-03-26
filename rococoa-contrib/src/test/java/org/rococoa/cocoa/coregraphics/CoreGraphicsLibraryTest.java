@@ -19,7 +19,6 @@ import com.sun.tools.attach.VirtualMachine;
 import com.sun.tools.attach.VirtualMachineDescriptor;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import org.rococoa.Foundation;
 import org.rococoa.ObjCObject;
@@ -29,13 +28,10 @@ import org.rococoa.cocoa.appkit.NSRunningApplication;
 import org.rococoa.cocoa.appkit.NSWorkspace;
 import org.rococoa.cocoa.corefoundation.CoreFoundation;
 import org.rococoa.cocoa.coreimage.CIImage;
-import org.rococoa.cocoa.foundation.NSBundle;
 import org.rococoa.cocoa.foundation.NSDictionary;
 import org.rococoa.cocoa.foundation.NSNotification;
 import org.rococoa.cocoa.foundation.NSNotificationCenter;
-import org.rococoa.cocoa.foundation.NSObject;
 import org.rococoa.cocoa.foundation.NSString;
-import org.rococoa.cocoa.gamecontroller.GCController;
 import vavi.util.Debug;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -171,8 +167,6 @@ Debug.println("MC App: " + a);
             if (!a.active()) {
                 a.activateWithOptions(0);
             }
-            RococaRobot ide = new RococaRobot();
-//        ide.keyClick(kVK_ANSI_);
         } catch (NoSuchElementException e) {
 Debug.println(Level.WARNING, "run minecraft before running this test");
         }
@@ -207,7 +201,7 @@ Debug.println(rect);
 
     CountDownLatch cdl = new CountDownLatch(1);
 
-    class MyObserver implements Callback {
+    static class MyObserver implements Callback {
 
         public void applicationWasActivated(NSNotification notification) {
             NSWorkspace workspace = Rococoa.cast(notification.object(), NSWorkspace.class);
@@ -225,7 +219,7 @@ Debug.println("applicationWasDeactivated: " + a.bundleIdentifier() + ":" + a.pro
     @Test
     @EnabledIfSystemProperty(named = "vavi.test", matches = "ide")
     void test9() throws Exception {
-        ObjCObject proxy = Rococoa.proxy(new CoreGraphicsLibraryTest.MyObserver());
+        ObjCObject proxy = Rococoa.proxy(new MyObserver());
         Selector sel1 = Foundation.selector("applicationWasActivated:");
         Selector sel2 = Foundation.selector("applicationWasDeactivated:");
 
