@@ -28,6 +28,7 @@ import java.util.Arrays;
 import java.util.ConcurrentModificationException;
 import java.util.List;
 import java.util.concurrent.Callable;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.sun.jna.Pointer;
@@ -170,7 +171,12 @@ logging.finest(String.format("ByteBuddyProxy:invoking [%s %s].%s(%s)", javaClass
         if (!Modifier.isAbstract(method.getModifiers())) {
             // method is not abstract, so a Java override has been provided, which we call
 logging.finest(String.format("superMethod.invoke [%s %s].%s(%s)", javaClassName, ocInstance, method.getName(), new VarArgsUnpacker(args)));
-            return superMethod.invoke(proxy, args);
+            try {
+                return superMethod.invoke(proxy, args);
+            } catch (Throwable t) {
+logging.log(Level.WARNING, String.format("superMethod.invoke [%s %s].%s(%s) failure", javaClassName, ocInstance, method.getName(), new VarArgsUnpacker(args)), t);
+                throw t;
+            }
         }
         // normal case
         return invokeCocoa(method, args);

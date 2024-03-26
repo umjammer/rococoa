@@ -96,6 +96,8 @@ implementation of Objective-C interfaces in Java.
 * separate same parts of jna-platform (like jna-platform-extended)
 * deprecate rococoa-contrib
 * ~~selector and java method binding for notification~~
+* exception in callback method cannot be shown as reason, shown as "Exception calling method for selector foo:"
+  * `OCInvocationCallbacks.java:170`
 
 ----
 
