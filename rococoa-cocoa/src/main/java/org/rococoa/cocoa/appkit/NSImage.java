@@ -91,7 +91,7 @@ public abstract class NSImage extends NSObject implements NSCopying {
         return CLASS.alloc().initWithContentsOfFile(filename);
     }
 
-    public static NSImage initWithCGImageSize(Pointer/*CGImageRef*/ cgImage, NSSize size) {
+    public static NSImage initWithCGImageSize(Pointer /* CGImageRef */ cgImage, NSSize size) {
         return CLASS.alloc().initWithCGImage_size(cgImage, size);
     }
 
@@ -200,8 +200,8 @@ public abstract class NSImage extends NSObject implements NSCopying {
      */
     public abstract NSImage initWithPasteboard(NSPasteboard pasteboard);
 
-    /** */
-    public abstract NSImage initWithCGImage_size(Pointer/*CGImageRef*/ cgImage, NSSize size);
+    /** Creates a new image using the contents of the provided image. */
+    public abstract NSImage initWithCGImage_size(Pointer /* CGImageRef */ cgImage, NSSize size);
 
     /**
      * <i>native declaration : :88</i><br>
@@ -514,7 +514,7 @@ public abstract class NSImage extends NSObject implements NSCopying {
     public abstract void setTemplate(boolean isTemplate);
 
     /** */
-    public abstract Pointer/*CGImageRef*/ CGImageForProposedRect_context_hints(
+    public abstract Pointer /* CGImageRef */ CGImageForProposedRect_context_hints(
             Structure.ByReference proposedDestRect,
             NSGraphicsContext referenceContext,
             NSDictionary hints);

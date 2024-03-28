@@ -75,6 +75,7 @@ implementation of Objective-C interfaces in Java.
 * obj-block (wip)
 * ~~CIFilter~~ (done)
   * CGImage fails around density related 
+  * ~~tall free bridging?~~ none
 * ~~`cglib` is mostly [suspended](https://github.com/cglib/cglib#readme)~~
    * ~~`cglib` recommends [ByteBuddy](https://bytebuddy.net/) that is based on `asm` same as the `cglib`~~ (done)
    * cache classes (ByteBuddy)

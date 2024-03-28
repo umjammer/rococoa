@@ -28,5 +28,6 @@ public abstract class CIContext extends NSObject {
         CIContext contextWithOptions(NSDictionary options);
     }
 
-    public abstract Pointer/*CGImageRef*/ createCGImage_fromRect(CIImage image, CGRect fromRect);
+    /** Creates a Quartz 2D image from a region of a Core Image image object. */
+    public abstract Pointer /* CGImageRef */ createCGImage_fromRect(CIImage image, CGRect fromRect);
 }

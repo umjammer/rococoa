@@ -23,6 +23,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import org.rococoa.cocoa.CGFloat;
+import org.rococoa.cocoa.appkit.NSImage;
 import org.rococoa.cocoa.appkit.NSScreen;
 import org.rococoa.cocoa.coregraphics.CGImage;
 import org.rococoa.cocoa.coregraphics.CGRect;
@@ -31,6 +32,7 @@ import org.rococoa.cocoa.foundation.NSArray;
 import org.rococoa.cocoa.foundation.NSNumber;
 import org.rococoa.cocoa.foundation.NSObject;
 import org.rococoa.cocoa.foundation.NSRect;
+import org.rococoa.cocoa.foundation.NSSize;
 import vavi.util.Debug;
 
 import static org.rococoa.cocoa.foundation.FoundationKitFunctions.NSRectFromCGRect;
@@ -87,7 +89,9 @@ Debug.println("extent: " + extent.getPointer() + ", " + extent);
 
         NSScreen screen = NSScreen.mainScreen();
 Debug.println("screen: " + screen);
-Debug.println("userSpaceScaleFactor: " + screen.userSpaceScaleFactor());
+//Debug.println("userSpaceScaleFactor: " + screen.userSpaceScaleFactor());
+
+Debug.println("------------------------------------------------------------");
 
         //  it doesn't make sense
 
@@ -102,7 +106,7 @@ Debug.println("userSpaceScaleFactor: " + screen.userSpaceScaleFactor());
         CGRect extent2 = NSRectToCGRect(screen.convertRectToBacking(NSRectFromCGRect(extent))); // TODO wtf return value
 //        CGRect extent2 = NSRectToCGRect(convertRectToBacking(NSRectFromCGRect(extent)));
 Debug.println("extent2: " + extent2.getPointer() + ", " + extent2);
-        Pointer/*CGImageRef*/ cgImage2 = context.createCGImage_fromRect(result, extent2); // TODO why returns nil
+        Pointer /* CGImageRef */ cgImage2 = context.createCGImage_fromRect(result, extent2); // TODO why returns nil
 Debug.println("createCGImage:fromRect: " + cgImage2);
 
 //        NSImage nsImage = NSImage.initWithCGImageSize(cgImage2, extent2.size.toNSSize());
@@ -115,6 +119,11 @@ Debug.println("cgImageX: " + cgImageX.getWidth() + ", " + cgImageX.getHeight());
 
 //        BufferedImage image = nsImage.toBufferedImage();
         BufferedImage image = cgImageX.toBufferedImage();
+
+        // *** NSImage ***
+//        CGImage cgImage3 = new CGImage(context.createCGImage_fromRect(result, extent));
+//Debug.println("cgImage3: " + cgImage3.getWidth() + ", " + cgImage3.getHeight());
+//        BufferedImage image3 = NSImage.initWithCGImageSize(cgImage3.pointer(), NSSize.NSZeroSize).toBufferedImage();
 
         show(image);
     }
