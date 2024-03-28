@@ -92,6 +92,8 @@ implementation of Objective-C interfaces in Java.
   * ByteBuddy's method interception???
 * CGController
   * https://stackoverflow.com/a/65999820
+  * works on 14.3.1
+  * using block? avoidable?
 * activate application
   * https://developer.apple.com/documentation/appkit/nsrunningapplication?language=objc
 * separate same parts of jna-platform (like jna-platform-extended)
