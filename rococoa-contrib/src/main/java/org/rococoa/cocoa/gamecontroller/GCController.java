@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
+import com.sun.jna.Pointer;
+import com.sun.jna.platform.win32.WinDef.BOOL;
 import org.rococoa.ObjCClass;
 import org.rococoa.Rococoa;
 import org.rococoa.cocoa.foundation.NSArray;
@@ -34,16 +36,20 @@ public abstract class GCController extends NSObject {
     public static final _Class CLASS = Rococoa.createClass("GCController", _Class.class);
 
     public interface _Class extends ObjCClass {
-        NSArray controllers();
         GCController alloc();
+        NSArray controllers();
+        boolean supportsHIDDevice(Pointer /* IOHIDDeviceRef */ device);
     }
 
     public abstract GCController init();
 
+    /** A notification that posts when a controller becomes the current controller. */
     public static final String GCControllerDidConnectNotification = "GCControllerDidConnectNotification";
 
-    public static final String GCControllerDidDisconnectNotification = "GCControllerDidDisconnectNotification";
+    /** A notification that posts when a controller stops being the current controller. */
+     public static final String GCControllerDidDisconnectNotification = "GCControllerDidDisconnectNotification";
 
+    /** Returns cast ready controllers list. */
     public static List<GCController> controllers() {
         List<GCController> result = new ArrayList<>();
         NSArray a = GCController.CLASS.controllers();
@@ -53,4 +59,20 @@ logger.fine("controllers: " + a.count());
         }
         return result;
     }
+
+    /** Returns the connected controllers for the device. */
+    public abstract GCExtendedGamepad extendedGamepad();
+
+    /** The most recently used game controller. */
+    public abstract GCController current();
+
+    /** The motion input profile. */
+    public abstract GCMotion motion();
+
+    /** The controller’s battery information. */
+    public abstract GCDeviceBattery battery();
+    /** The controller’s haptics information. */
+    public abstract GCDeviceHaptics haptics();
+    /** The controller’s light settings. */
+    public abstract GCDeviceLight light();
 }
