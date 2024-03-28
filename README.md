@@ -3,11 +3,11 @@
 [![CodeQL](https://github.com/umjammer/rococoa/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/umjammer/rococoa/actions/workflows/codeql-analysis.yml)
 ![Java](https://img.shields.io/badge/Java-17-b07219)
 
-#  Welcome to Rococoa
+# Rococoa
 
 <img alt="rococoa" src="https://github.com/umjammer/rococoa/assets/493908/416ded41-08d0-4360-9163-0c594b1f554a" width="200" />
 
-Rococoa is a generic Java binding to the Mac Objective-C object system. It 
+ Rococoa is a generic Java binding to the Mac Objective-C object system. It 
 allows the creation and use of Objective-C objects in Java, and the 
 implementation of Objective-C interfaces in Java.
 
@@ -55,7 +55,7 @@ implementation of Objective-C interfaces in Java.
 * gamepad
   * http://eleccelerator.com/wiki/index.php?title=DualShock_4
   * https://github.com/born2snipe/gamepad4j/blob/master/gamepad4j-desktop/src/main/c/macos/Gamepad_macosx.c
-  * port [hidapi](https://github.com/libusb/hidapi) mac part
+  * back port [hidapi](https://github.com/libusb/hidapi) mac part
 * obj-block
   * https://github.com/nativelibs4java/BridJ/
   * http://cocoawithlove.com/2009/10/how-blocks-are-implemented-and.html
@@ -73,6 +73,7 @@ implementation of Objective-C interfaces in Java.
 
 * NSUrl tags (wip)
 * obj-block (wip)
+  * how about panama?
 * ~~CIFilter~~ (done)
   * CGImage fails around density related 
   * ~~tall free bridging?~~ none
