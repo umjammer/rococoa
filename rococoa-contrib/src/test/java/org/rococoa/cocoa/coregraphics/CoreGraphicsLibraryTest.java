@@ -27,6 +27,7 @@ import org.rococoa.Selector;
 import org.rococoa.cocoa.appkit.NSRunningApplication;
 import org.rococoa.cocoa.appkit.NSWorkspace;
 import org.rococoa.cocoa.corefoundation.CoreFoundation;
+import org.rococoa.cocoa.coregraphics.CGPoint.CGMutableFloat;
 import org.rococoa.cocoa.coreimage.CIImage;
 import org.rococoa.cocoa.foundation.NSDictionary;
 import org.rococoa.cocoa.foundation.NSNotification;
@@ -228,5 +229,24 @@ Debug.println("applicationWasDeactivated: " + a.bundleIdentifier() + ":" + a.pro
         notificationCenter.addObserver_selector_name_object(proxy.id(), sel2, NSWorkspace.NSWorkspaceDidActivateApplicationNotification, null);
 
         cdl.await();
+    }
+
+    @Test
+    @EnabledIfSystemProperty(named = "vavi.test", matches = "ide")
+    void test10() throws Exception {
+        long t = System.currentTimeMillis();
+        long times = 1000000L;
+        for (long i = 0; i < times; i++) {
+            new CGPoint(100, 100);
+        }
+Debug.println("new: " + (System.currentTimeMillis() - t) + " ms");
+        CGPoint p = new CGPoint(new CGMutableFloat(), new CGMutableFloat());
+        t = System.currentTimeMillis();
+        for (long i = 0; i < times; i++) {
+            p.update(111, 222);
+        }
+Debug.println("update: " + (System.currentTimeMillis() - t) + " ms");
+        assertEquals(111, p.x.intValue());
+        assertEquals(222, p.y.intValue());
     }
 }
