@@ -30,6 +30,7 @@ import com.sun.jna.NativeMapped;
  * @author duncan
  */
 public class CGFloat extends Number implements NativeMapped {
+
     // Inspired by JNA NativeLong and IntegerType
     public static final int SIZE = Native.LONG_SIZE;
 
@@ -65,9 +66,7 @@ public class CGFloat extends Number implements NativeMapped {
 
     @Override
     public int hashCode() {
-        // From Double.hashCode
-        long bits = Double.doubleToLongBits(value);
-        return (int)(bits ^ (bits >>> 32));
+        return Double.hashCode(value);
     }
 
     @Override
