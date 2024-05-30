@@ -6,8 +6,6 @@
 
 package org.rococoa.cocoa.vision;
 
-import java.util.logging.Logger;
-
 import org.rococoa.ID;
 import org.rococoa.ObjCBlock;
 import org.rococoa.ObjCBlocks.BlockLiteral;
@@ -22,8 +20,6 @@ import org.rococoa.Rococoa;
  * @version 0.00 2022-10-15 nsano initial version <br>
  */
 public abstract class VNCoreMLRequest extends VNImageBasedRequest {
-
-    private static final Logger logger = Logger.getLogger(VNCoreMLRequest.class.getName());
 
     public static final _Class CLASS = Rococoa.createClass("VNCoreMLRequest", _Class.class);
 

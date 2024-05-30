@@ -6,8 +6,6 @@
 
 package org.rococoa.cocoa.vision;
 
-import java.util.logging.Logger;
-
 import org.rococoa.ObjCClass;
 import org.rococoa.Rococoa;
 
@@ -23,8 +21,6 @@ public abstract class VNDetectHumanBodyPoseRequest extends VNImageBasedRequest {
     static {
         VisionLibrary.library.toString();
     }
-
-    private static final Logger logger = Logger.getLogger(VNDetectHumanBodyPoseRequest.class.getName());
 
     public static final _Class CLASS = Rococoa.createClass("VNDetectHumanBodyPoseRequest", _Class.class);
 

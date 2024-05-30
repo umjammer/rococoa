@@ -19,13 +19,13 @@
 
 package org.rococoa.internal;
 
+import org.junit.jupiter.api.Test;
 import org.rococoa.ObjCObject;
 import org.rococoa.Rococoa;
 import org.rococoa.test.RococoaTestCase;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class BoolTest extends RococoaTestCase {
 

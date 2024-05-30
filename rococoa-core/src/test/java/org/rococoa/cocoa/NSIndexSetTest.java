@@ -19,13 +19,14 @@
 
 package org.rococoa.cocoa;
 
+import org.junit.jupiter.api.Test;
 import org.rococoa.cocoa.foundation.NSMutableIndexSet;
 import org.rococoa.cocoa.foundation.NSUInteger;
 import org.rococoa.test.RococoaTestCase;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * @author David Kocher

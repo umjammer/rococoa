@@ -1,10 +1,9 @@
 package org.rococoa.cocoa.appkit;
 
 import org.rococoa.ObjCClass;
+import org.rococoa.cocoa.foundation.NSAttributedString;
 import org.rococoa.cocoa.foundation.NSRect;
 import org.rococoa.cocoa.foundation.NSUInteger;
-
-import org.rococoa.cocoa.foundation.NSAttributedString;
 
 /// <i>native declaration : :15</i>
 public abstract class NSButton extends NSControl {

@@ -51,7 +51,7 @@ public class QTTimeByReference extends Structure {
         int result = super.hashCode();
         result = prime * result + flags.intValue();
         result = prime * result + timeScale.intValue();
-        result = prime * result + (int) (timeValue ^ (timeValue >>> 32));
+        result = prime * result + Long.hashCode(timeValue);
         return result;
     }
 

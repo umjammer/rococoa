@@ -6,16 +6,18 @@
 
 package org.rococoa.cocoa.gamecontroller;
 
+import java.lang.System.Logger;
+import java.lang.System.Logger.Level;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 import com.sun.jna.Pointer;
-import com.sun.jna.platform.win32.WinDef.BOOL;
 import org.rococoa.ObjCClass;
 import org.rococoa.Rococoa;
 import org.rococoa.cocoa.foundation.NSArray;
 import org.rococoa.cocoa.foundation.NSObject;
+
+import static java.lang.System.getLogger;
 
 
 /**
@@ -31,7 +33,7 @@ public abstract class GCController extends NSObject {
         GameControllerLibrary.library.toString();
     }
 
-    private static final Logger logger = Logger.getLogger(GCController.class.getName());
+    private static final Logger logger = getLogger(GCController.class.getName());
 
     public static final _Class CLASS = Rococoa.createClass("GCController", _Class.class);
 
@@ -53,7 +55,7 @@ public abstract class GCController extends NSObject {
     public static List<GCController> controllers() {
         List<GCController> result = new ArrayList<>();
         NSArray a = GCController.CLASS.controllers();
-logger.fine("controllers: " + a.count());
+logger.log(Level.DEBUG, "controllers: " + a.count());
         for (int i = 0; i < a.count(); i++) {
             result.add(Rococoa.cast(a.objectAtIndex(i), GCController.class));
         }

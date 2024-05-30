@@ -20,11 +20,12 @@
 package org.rococoa;
 
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.rococoa.test.RococoaTestCase.assertRetainCount;
-
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.rococoa.test.RococoaTestCase.assertRetainCount;
 
 
 /**
@@ -122,7 +123,7 @@ public class FoundationMemoryAssumptionsTest {
         assertRetainCount(1, idNSObject);
 
         Foundation.cfRelease(idNSObject);
-        Foundation.cfRelease(idNSObject); // crash, but with stderr logging
+        Foundation.cfRelease(idNSObject); // crash, but with stderr logger
     }
 
     @Test

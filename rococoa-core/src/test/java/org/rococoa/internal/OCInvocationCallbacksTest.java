@@ -19,16 +19,16 @@
  
 package org.rococoa.internal;
 
-import static org.junit.jupiter.api.Assertions.*;
-
+import com.sun.jna.Native;
+import com.sun.jna.NativeLong;
 import org.junit.jupiter.api.Test;
 import org.rococoa.ID;
 import org.rococoa.TestStruct;
 import org.rococoa.cocoa.foundation.NSObject;
 import org.rococoa.cocoa.foundation.NSString;
 
-import com.sun.jna.Native;
-import com.sun.jna.NativeLong;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class OCInvocationCallbacksTest {
 

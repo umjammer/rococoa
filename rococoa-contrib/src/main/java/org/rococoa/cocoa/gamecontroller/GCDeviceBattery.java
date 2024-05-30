@@ -6,8 +6,6 @@
 
 package org.rococoa.cocoa.gamecontroller;
 
-import java.util.logging.Logger;
-
 import org.rococoa.ObjCClass;
 import org.rococoa.Rococoa;
 import org.rococoa.cocoa.foundation.NSInteger;
@@ -25,8 +23,6 @@ public abstract class GCDeviceBattery extends NSObject {
     static {
         GameControllerLibrary.library.toString();
     }
-
-    private static final Logger logger = Logger.getLogger(GCDeviceBattery.class.getName());
 
     public static final _Class CLASS = Rococoa.createClass("GCDeviceBattery", _Class.class);
 

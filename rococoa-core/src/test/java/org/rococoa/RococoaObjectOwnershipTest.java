@@ -19,8 +19,6 @@
 
 package org.rococoa;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import java.lang.ref.WeakReference;
 
 import org.junit.jupiter.api.Disabled;
@@ -31,6 +29,8 @@ import org.rococoa.cocoa.foundation.NSDate;
 import org.rococoa.cocoa.foundation.NSNumber;
 import org.rococoa.cocoa.foundation.NSObject;
 import org.rococoa.test.RococoaTestCase;
+
+import static org.junit.jupiter.api.Assertions.assertSame;
 
 @Disabled("by vavi because of error")
 public class RococoaObjectOwnershipTest extends RococoaTestCase {

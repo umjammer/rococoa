@@ -12,7 +12,6 @@ import com.sun.jna.Callback;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import org.rococoa.Foundation;
-import org.rococoa.ObjCBlocks.BlockLiteral;
 import org.rococoa.ObjCObject;
 import org.rococoa.Rococoa;
 import org.rococoa.Selector;
@@ -20,11 +19,9 @@ import org.rococoa.cocoa.foundation.NSBundle;
 import org.rococoa.cocoa.foundation.NSNotification;
 import org.rococoa.cocoa.foundation.NSNotificationCenter;
 import org.rococoa.cocoa.foundation.NSString;
-import org.rococoa.cocoa.gamecontroller.GCControllerButtonInput.GCControllerButtonValueChangedHandler;
 import vavi.util.Debug;
 
 import static org.junit.jupiter.api.Assertions.fail;
-import static org.rococoa.ObjCBlocks.block;
 
 
 /**

@@ -19,9 +19,9 @@
 
 package org.rococoa.internal;
 
-import com.sun.jna.Function;
-
 import java.lang.reflect.Method;
+
+import com.sun.jna.Function;
 
 public class MethodFunctionPair {
 

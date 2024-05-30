@@ -6,7 +6,8 @@
 
 package org.rococoa.cocoa.coreml;
 
-import java.util.logging.Logger;
+import java.lang.System.Logger;
+import java.lang.System.Logger.Level;
 
 import org.rococoa.ObjCClass;
 import org.rococoa.ObjCObjectByReference;
@@ -14,6 +15,8 @@ import org.rococoa.Rococoa;
 import org.rococoa.cocoa.foundation.NSError;
 import org.rococoa.cocoa.foundation.NSObject;
 import org.rococoa.cocoa.foundation.NSURL;
+
+import static java.lang.System.getLogger;
 
 
 /**
@@ -28,7 +31,7 @@ public abstract class MLModel extends NSObject {
         CoreMLLibrary.library.toString();
     }
 
-    private static final Logger logger = Logger.getLogger(MLModel.class.getName());
+    private static final Logger logger = getLogger(MLModel.class.getName());
 
     public static final _Class CLASS = Rococoa.createClass("MLModel", _Class.class);
 
@@ -79,7 +82,7 @@ public abstract class MLModel extends NSObject {
     public static MLModel fromPath(String path) {
         NSURL url = NSURL.fileURLWithPath(path);
         NSURL compiledUrl = MLModel.compileModelAtURL(url);
-logger.fine("compiledUrl: " + compiledUrl);
+logger.log(Level.DEBUG, "compiledUrl: " + compiledUrl);
         return MLModel.modelWithContentsOfURL(compiledUrl);
     }
 }

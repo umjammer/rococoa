@@ -18,10 +18,14 @@
  */
 
 package org.rococoa.internal;
+
+import java.lang.System.Logger;
+import java.lang.System.Logger.Level;
+
 import org.rococoa.cocoa.foundation.NSAutoreleasePool;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import static java.lang.System.getLogger;
+
 
 /**
  * Used by NSObjectInvocationHandler to make sure that there is an NSAutoreleasePool
@@ -35,7 +39,7 @@ import java.util.logging.Logger;
  */
 public class AutoreleaseBatcher extends OperationBatcher {
     
-    private static final Logger logging = Logger.getLogger("org.rococoa");
+    private static final Logger logger = getLogger("org.rococoa");
 
     private static final ThreadLocal<AutoreleaseBatcher> threadLocal = new ThreadLocal<>();
 
@@ -54,8 +58,8 @@ public class AutoreleaseBatcher extends OperationBatcher {
 
     @Override
     protected void operation() {
-        if (logging.isLoggable(Level.FINE)) {
-            logging.fine("Draining autorelease pool");
+        if (logger.isLoggable(Level.DEBUG)) {
+            logger.log(Level.DEBUG, "Draining autorelease pool");
         }
         pool.drain();        
     }

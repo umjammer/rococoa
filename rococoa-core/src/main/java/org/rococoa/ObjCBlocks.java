@@ -6,14 +6,18 @@
 
 package org.rococoa;
 
+import java.lang.System.Logger;
+import java.lang.System.Logger.Level;
 import java.util.Arrays;
 import java.util.List;
-import java.util.logging.Logger;
 
 import com.sun.jna.Memory;
+import com.sun.jna.NativeLibrary;
 import com.sun.jna.NativeLong;
 import com.sun.jna.Pointer;
 import com.sun.jna.Structure;
+
+import static java.lang.System.getLogger;
 
 
 /**
@@ -24,8 +28,9 @@ import com.sun.jna.Structure;
  */
 public class ObjCBlocks {
 
-    private static final Logger logging = Logger.getLogger("org.rococoa.foundation");
+    private static final Logger logger = getLogger("org.rococoa.foundation");
 
+    //    ↓    ↓    ↓    ↓    ↓    ↓    ↓   ↓↓
     //    2    2    2    1    1
     //    8    4    0    6    2    8    4   10
     // .... .... .... .... .... .... .... ....
@@ -45,7 +50,7 @@ public class ObjCBlocks {
         Memory m = new Memory(48);
         BlockLiteral literal = new BlockLiteral(m);
         literal.flags = 0;
-logging.finer(String.format("block: %s, %08x", block, literal.flags));
+logger.log(Level.TRACE, String.format("block: %s, %08x", block, literal.flags));
         literal.invoke = block;
         literal.write();
         return literal;
@@ -75,6 +80,16 @@ logging.finer(String.format("block: %s, %08x", block, literal.flags));
         @Override
         protected List<String> getFieldOrder() {
             return Arrays.asList("isa", "flags", "reserved", "invoke", "descriptor");
+        }
+
+        /** by GPTo: doesn't work */
+        public void retain() {
+            NativeLibrary.getInstance("objc").getFunction("objc_retain").invoke(Void.class, new Object[] {this});
+        }
+
+        /** by GPTo: doesn't work */
+        public void release() {
+            NativeLibrary.getInstance("objc").getFunction("objc_release").invoke(Void.class, new Object[] {this});
         }
     }
 

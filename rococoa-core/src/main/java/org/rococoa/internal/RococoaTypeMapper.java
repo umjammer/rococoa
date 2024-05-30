@@ -19,11 +19,10 @@
 
 package org.rococoa.internal;
 
-import org.rococoa.ObjCObject;
-import org.rococoa.cocoa.foundation.NSObject;
-
 import com.sun.jna.DefaultTypeMapper;
 import com.sun.jna.FromNativeConverter;
+import org.rococoa.ObjCObject;
+import org.rococoa.cocoa.foundation.NSObject;
 
 
 /**

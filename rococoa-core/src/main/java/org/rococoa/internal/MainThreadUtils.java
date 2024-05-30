@@ -19,6 +19,8 @@
 
 package org.rococoa.internal;
 
+import java.lang.System.Logger;
+import java.lang.System.Logger.Level;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.Callable;
@@ -28,8 +30,7 @@ import org.rococoa.ID;
 import org.rococoa.RococoaException;
 import org.rococoa.Selector;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import static java.lang.System.getLogger;
 
 /**
  * Exists just to tidy up Foundation.
@@ -38,7 +39,7 @@ import java.util.logging.Logger;
  */
 public abstract class MainThreadUtils {
 
-    private static final Logger logging = Logger.getLogger("org.rococoa.foundation");
+    private static final Logger logger = getLogger("org.rococoa.foundation");
 
     private static final ID idNSThreadClass = Foundation.getClass("NSThread");
     private static final Selector isMainThreadSelector = Foundation.selector("isMainThread");
@@ -88,7 +89,7 @@ public abstract class MainThreadUtils {
                     if (waitUntilDone) {
                         thrown[0] = t;
                     } else {
-                        logging.log(Level.SEVERE, "Lost exception on main thread", t);
+                        logger.log(Level.ERROR, "Lost exception on main thread", t);
                     }
                 } finally {
                     if (!waitUntilDone) {

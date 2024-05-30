@@ -10,7 +10,8 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.logging.Logger;
+import java.lang.System.Logger;
+import java.lang.System.Logger.Level;
 
 import com.sun.jna.Pointer;
 import org.rococoa.ObjCClass;
@@ -23,6 +24,8 @@ import org.rococoa.cocoa.foundation.NSDictionary;
 import org.rococoa.cocoa.foundation.NSObject;
 import org.rococoa.cocoa.foundation.NSURL;
 
+import static java.lang.System.getLogger;
+
 
 /**
  * CIImage.
@@ -32,7 +35,7 @@ import org.rococoa.cocoa.foundation.NSURL;
  */
 public abstract class CIImage extends NSObject {
 
-    private static final Logger logger = Logger.getLogger(CIImage.class.getName());
+    private static final Logger logger = getLogger(CIImage.class.getName());
 
     public static final _Class CLASS = Rococoa.createClass("CIImage", _Class.class);
 
@@ -89,11 +92,11 @@ public abstract class CIImage extends NSObject {
     /** */
     public BufferedImage toBufferedImage() {
         Pointer cgImage = CGImage();
-logger.finer("cgImage1: " + cgImage);
+logger.log(Level.TRACE, "cgImage1: " + cgImage);
         if (cgImage == Pointer.NULL) {
             CIContext context = CIContext.CLASS.contextWithOptions(null);
             cgImage = context.createCGImage_fromRect(this, extent());
-logger.finer("cgImage2: " + cgImage);
+logger.log(Level.TRACE, "cgImage2: " + cgImage);
         }
         return new CGImage(cgImage).toBufferedImage();
     }

@@ -97,7 +97,7 @@ public abstract class NSWindow extends NSResponder {
     /**
      * You may specify at most one of NSWindowCollectionBehaviorManaged, NSWindowCollectionBehaviorTransient, or
      * NSWindowCollectionBehaviorStationary.  If unspecified, the window gets the default behavior determined by its
-     * window level<br> participates in spaces, expos\u00e9.  Default behavior if windowLevel ==
+     * window level<br> participates in spaces, exposé.  Default behavior if windowLevel ==
      * NSNormalWindowLevel<br>
      * <i>native declaration : line 86</i>
      */
@@ -105,7 +105,7 @@ public abstract class NSWindow extends NSResponder {
     /**
      * You may specify at most one of NSWindowCollectionBehaviorManaged, NSWindowCollectionBehaviorTransient, or
      * NSWindowCollectionBehaviorStationary.  If unspecified, the window gets the default behavior determined by its
-     * window level<br> floats in spaces, hidden by expos\u00e9.  Default behavior if windowLevel !=
+     * window level<br> floats in spaces, hidden by exposé.  Default behavior if windowLevel !=
      * NSNormalWindowLevel<br>
      * <i>native declaration : line 87</i>
      */
@@ -113,7 +113,7 @@ public abstract class NSWindow extends NSResponder {
     /**
      * You may specify at most one of NSWindowCollectionBehaviorManaged, NSWindowCollectionBehaviorTransient, or
      * NSWindowCollectionBehaviorStationary.  If unspecified, the window gets the default behavior determined by its
-     * window level<br> unaffected by expos\u00e9.  Stays visible and stationary, like desktop window<br>
+     * window level<br> unaffected by exposé.  Stays visible and stationary, like desktop window<br>
      * <i>native declaration : line 88</i>
      */
     public static final int NSWindowCollectionBehaviorStationary = 1 << 4;

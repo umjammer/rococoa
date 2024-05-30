@@ -25,6 +25,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIf;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
+import org.rococoa.ObjCBlocks.BlockLiteral;
 import org.rococoa.Rococoa;
 import org.rococoa.cocoa.coregraphics.CGImage;
 import org.rococoa.cocoa.foundation.NSError;
@@ -135,8 +136,7 @@ Debug.println(mlModel);
         VNCoreMLModel model = VNCoreMLModel.fromMLModel(mlModel);
 Debug.println(model);
 
-        VNCoreMLRequest.CLASS.alloc().initWithModel_completionHandler(model,
-                block((VNCoreMLRequest.VNRequestCompletionHandler) (literal, requestId, errorRef) -> {
+        BlockLiteral block = block((VNCoreMLRequest.VNRequestCompletionHandler) (literal, requestId, errorRef) -> {
             NSError error = Rococoa.wrap(errorRef, NSError.class);
             if (error != null) {
                 throw new IllegalStateException(error.description());
@@ -144,7 +144,8 @@ Debug.println(model);
 Debug.println("here1");
             VNCoreMLRequest request = Rococoa.wrap(requestId, VNCoreMLRequest.class);
 Debug.println("request: " + request);
-        }));
+        });
+        VNCoreMLRequest.CLASS.alloc().initWithModel_completionHandler(model, block);
 Debug.println("here2");
         cdl.await();
     }

@@ -23,9 +23,8 @@ import java.awt.geom.Point2D;
 import java.util.Arrays;
 import java.util.List;
 
-import org.rococoa.cocoa.CGFloat;
-
 import com.sun.jna.Structure;
+import org.rococoa.cocoa.CGFloat;
 
 /**
  * @author <a href="mailto:harald.kuhr@gmail.com">Harald Kuhr</a>

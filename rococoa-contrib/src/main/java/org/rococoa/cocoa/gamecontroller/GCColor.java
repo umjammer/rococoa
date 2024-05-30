@@ -6,8 +6,6 @@
 
 package org.rococoa.cocoa.gamecontroller;
 
-import java.util.logging.Logger;
-
 import org.rococoa.ObjCClass;
 import org.rococoa.Rococoa;
 import org.rococoa.cocoa.foundation.NSObject;
@@ -24,8 +22,6 @@ public abstract class GCColor extends NSObject {
     static {
         GameControllerLibrary.library.toString();
     }
-
-    private static final Logger logger = Logger.getLogger(GCColor.class.getName());
 
     public static final _Class CLASS = Rococoa.createClass("GCDeviceLight", _Class.class);
 

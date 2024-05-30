@@ -22,8 +22,9 @@ package org.rococoa.test;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.System.Logger;
+import java.lang.System.Logger.Level;
 import java.util.logging.LogManager;
-import java.util.logging.Logger;
 
 import com.sun.jna.Native;
 import org.junit.jupiter.api.AfterEach;
@@ -33,6 +34,7 @@ import org.rococoa.ID;
 import org.rococoa.cocoa.foundation.NSAutoreleasePool;
 import org.rococoa.cocoa.foundation.NSObject;
 
+import static java.lang.System.getLogger;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -48,11 +50,11 @@ public abstract class RococoaTestCase {
     // stress our memory management
     public static boolean gcAfterTest = true;
 
-    protected final static Logger logging;
+    protected final static Logger logger;
 
     static {
         initializeLogging();
-        logging = Logger.getLogger("org.rococoa.RococoaTestCase");
+        logger = getLogger("org.rococoa.RococoaTestCase");
         logVersions();
     }
 
@@ -60,16 +62,16 @@ public abstract class RococoaTestCase {
         try {
             try (InputStream is = RococoaTestCase.class.getResourceAsStream("/test-logging.properties")) {
                 if (is == null)
-                    throw new FileNotFoundException("Cannot find test-logging.properties");
+                    throw new FileNotFoundException("Cannot find test-logger.properties");
                 LogManager.getLogManager().readConfiguration(is);
             }
         } catch (IOException x) {
-            throw new RuntimeException("Could not initialize logging", x);
+            throw new RuntimeException("Could not initialize logger", x);
         }
     }
 
     private static void logVersions() {
-        logging.info(String.format("Running with JAVA_HOME = %s, java.version = %s, sizeof(Pointer) = %d",
+        logger.log(Level.INFO, String.format("Running with JAVA_HOME = %s, java.version = %s, sizeof(Pointer) = %d",
                                    System.getenv("JAVA_HOME"),
                                    System.getProperty("java.version"),
                                    Native.POINTER_SIZE));

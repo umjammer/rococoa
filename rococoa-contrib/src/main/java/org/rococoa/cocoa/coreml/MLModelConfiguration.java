@@ -6,8 +6,6 @@
 
 package org.rococoa.cocoa.coreml;
 
-import java.util.logging.Logger;
-
 import org.rococoa.ObjCClass;
 import org.rococoa.Rococoa;
 import org.rococoa.cocoa.foundation.NSDictionary;
@@ -25,8 +23,6 @@ public abstract class MLModelConfiguration extends NSObject {
     static {
         CoreMLLibrary.library.toString();
     }
-
-    private static final Logger logger = Logger.getLogger(MLModelConfiguration.class.getName());
 
     public static final _Class CLASS = Rococoa.createClass("MLModelConfiguration", _Class.class);
 

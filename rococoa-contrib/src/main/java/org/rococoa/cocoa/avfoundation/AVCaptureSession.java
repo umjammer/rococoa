@@ -6,8 +6,6 @@
 
 package org.rococoa.cocoa.avfoundation;
 
-import java.util.logging.Logger;
-
 import org.rococoa.ObjCClass;
 import org.rococoa.Rococoa;
 import org.rococoa.cocoa.foundation.NSObject;
@@ -20,8 +18,6 @@ import org.rococoa.cocoa.foundation.NSObject;
  * @version 0.00 2023-12-18 nsano initial version <br>
  */
 public abstract class AVCaptureSession extends NSObject {
-
-    private static final Logger logger = Logger.getLogger(AVCaptureSession.class.getName());
 
     public static final _Class CLASS = Rococoa.createClass("AVCaptureSession", _Class.class);
 

@@ -6,8 +6,6 @@
 
 package org.rococoa.cocoa.gamecontroller;
 
-import java.util.logging.Logger;
-
 import org.rococoa.ObjCClass;
 import org.rococoa.Rococoa;
 import org.rococoa.cocoa.foundation.NSObject;
@@ -25,13 +23,11 @@ public abstract class GCDeviceHaptics extends NSObject {
         GameControllerLibrary.library.toString();
     }
 
-    private static final Logger logger = Logger.getLogger(GCDeviceHaptics.class.getName());
-
     public static final _Class CLASS = Rococoa.createClass("GCDeviceHaptics", _Class.class);
 
     public interface _Class extends ObjCClass {
         GCDeviceHaptics alloc();
     }
 
-    //public abstract CHHapticEngine createEngineWithLocality(GCHapticsLocality locality);
+//    public abstract CHHapticEngine createEngineWithLocality(GCHapticsLocality locality);
 }

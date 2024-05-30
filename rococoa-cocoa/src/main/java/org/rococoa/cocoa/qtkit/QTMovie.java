@@ -21,19 +21,17 @@ package org.rococoa.cocoa.qtkit;
 
 import java.io.File;
 
+import com.sun.jna.Pointer;
 import org.rococoa.Foundation;
 import org.rococoa.ID;
-
-import org.rococoa.cocoa.foundation.NSObject;
 import org.rococoa.ObjCObjectByReference;
 import org.rococoa.Rococoa;
 import org.rococoa.RunOnMainThread;
 import org.rococoa.cocoa.appkit.NSImage;
 import org.rococoa.cocoa.foundation.NSArray;
 import org.rococoa.cocoa.foundation.NSDictionary;
+import org.rococoa.cocoa.foundation.NSObject;
 import org.rococoa.cocoa.foundation.NSString;
-
-import com.sun.jna.Pointer;
 
 /**
  * Wrapper for QTKit QTMovie.

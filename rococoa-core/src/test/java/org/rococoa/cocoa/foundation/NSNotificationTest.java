@@ -24,5 +24,3 @@ public class NSNotificationTest {
 System.err.println("done");
     }
 }
-
-/* */

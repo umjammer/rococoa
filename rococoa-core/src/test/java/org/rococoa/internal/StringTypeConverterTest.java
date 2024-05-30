@@ -19,14 +19,14 @@
 
 package org.rococoa.internal;
 
-import static org.junit.jupiter.api.Assertions.*;
-
+import com.sun.jna.NativeLong;
 import org.junit.jupiter.api.Test;
 import org.rococoa.Foundation;
 import org.rococoa.ID;
 import org.rococoa.test.RococoaTestCase;
 
-import com.sun.jna.NativeLong;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 @SuppressWarnings({ "nls", "unchecked", "cast" })
 public class StringTypeConverterTest extends RococoaTestCase {

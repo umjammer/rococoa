@@ -19,13 +19,12 @@
 
 package org.rococoa.internal;
 
-import org.rococoa.Foundation;
-import org.rococoa.ID;
-
 import com.sun.jna.FromNativeContext;
 import com.sun.jna.NativeMapped;
 import com.sun.jna.ToNativeContext;
 import com.sun.jna.TypeConverter;
+import org.rococoa.Foundation;
+import org.rococoa.ID;
 
 /**
  * Converts between java.lang.String and Cocooa id, which it needs to return

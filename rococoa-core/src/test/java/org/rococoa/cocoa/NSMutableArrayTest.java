@@ -19,14 +19,14 @@
  
 package org.rococoa.cocoa;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.Test;
 import org.rococoa.Rococoa;
 import org.rococoa.cocoa.foundation.NSMutableArray;
 import org.rococoa.cocoa.foundation.NSObject;
 import org.rococoa.cocoa.foundation.NSString;
 import org.rococoa.test.RococoaTestCase;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class NSMutableArrayTest extends RococoaTestCase {
 

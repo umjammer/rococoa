@@ -20,9 +20,9 @@
 package org.rococoa.cocoa.qtkit;
 
 import org.rococoa.Foundation;
-import org.rococoa.cocoa.foundation.NSObject;
 import org.rococoa.Rococoa;
 import org.rococoa.RunOnMainThread;
+import org.rococoa.cocoa.foundation.NSObject;
 
 
 @Deprecated

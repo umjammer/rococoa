@@ -19,8 +19,6 @@
  
 package org.rococoa;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import java.util.concurrent.Callable;
 import java.util.concurrent.CyclicBarrier;
 import java.util.logging.Level;
@@ -28,6 +26,15 @@ import java.util.logging.Level;
 import org.junit.jupiter.api.Test;
 import org.rococoa.test.RococoaTestCase;
 import vavi.util.Debug;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 
 @SuppressWarnings("nls")
@@ -76,7 +83,7 @@ public class FoundationMainThreadTest extends RococoaTestCase {
     
     @Test public void isMainThread() {
         assertFalse(Foundation.isMainThread());
-        assertTrue(Foundation.callOnMainThread(() -> Foundation.isMainThread()));
+        assertTrue(Foundation.callOnMainThread(Foundation::isMainThread));
     }
     
     @Test public void testCallOnMainThread() {
@@ -237,5 +244,4 @@ public class FoundationMainThreadTest extends RococoaTestCase {
         };
         Foundation.runOnMainThread(runnable);
     }
-    
 }

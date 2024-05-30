@@ -15,10 +15,13 @@ import java.awt.image.BufferedImageOp;
 import java.awt.image.ColorModel;
 import java.io.IOException;
 import java.io.UncheckedIOException;
+import java.lang.System.Logger;
+import java.lang.System.Logger.Level;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import org.rococoa.cocoa.foundation.NSObject;
+
+import static java.lang.System.getLogger;
 
 
 /**
@@ -30,7 +33,7 @@ import org.rococoa.cocoa.foundation.NSObject;
  */
 public class CIFilterOp implements BufferedImageOp {
 
-    private static final Logger logger = Logger.getLogger(CIFilterOp.class.getName());
+    private static final Logger logger = getLogger(CIFilterOp.class.getName());
 
     private RenderingHints hints;
 
@@ -54,9 +57,9 @@ public class CIFilterOp implements BufferedImageOp {
             CIFilter filter = CIFilter.of(filterName);
 
             filter.setValue_forKey(ciImage, CIImage.kCIInputImageKey);
-            logger.fine("option: " + CIImage.kCIInputImageKey + " = " + ciImage);
+            logger.log(Level.DEBUG, "option: " + CIImage.kCIInputImageKey + " = " + ciImage);
             options.forEach((k, v) -> {
-                logger.fine("option: " + k + " = " + v);
+                logger.log(Level.DEBUG, "option: " + k + " = " + v);
                 filter.setValue_forKey(v, k);
             });
 

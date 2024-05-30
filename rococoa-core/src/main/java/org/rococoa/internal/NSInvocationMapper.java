@@ -19,9 +19,8 @@
 
 package org.rococoa.internal;
 
-import org.rococoa.cocoa.foundation.NSInvocation;
-
 import com.sun.jna.Memory;
+import org.rococoa.cocoa.foundation.NSInvocation;
 
 /**
  * Maps to and from bytes in an NSInvocation to Java types.

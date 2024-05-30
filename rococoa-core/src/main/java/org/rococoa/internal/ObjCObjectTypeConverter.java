@@ -22,17 +22,16 @@
  */
 package org.rococoa.internal;
 
-import org.rococoa.Foundation;
-import org.rococoa.ID;
-import org.rococoa.ObjCObject;
-import org.rococoa.Rococoa;
-import org.rococoa.Selector;
-
 import com.sun.jna.FromNativeContext;
 import com.sun.jna.FunctionResultContext;
 import com.sun.jna.NativeMapped;
 import com.sun.jna.ToNativeContext;
 import com.sun.jna.TypeConverter;
+import org.rococoa.Foundation;
+import org.rococoa.ID;
+import org.rococoa.ObjCObject;
+import org.rococoa.Rococoa;
+import org.rococoa.Selector;
 
 /**
  * A JNA TypeConverter that gets the ID from an NSObject when passing it into 

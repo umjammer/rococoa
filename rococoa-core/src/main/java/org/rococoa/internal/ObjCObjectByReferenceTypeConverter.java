@@ -22,12 +22,11 @@
  */
 package org.rococoa.internal;
 
-import org.rococoa.IDByReference;
-import org.rococoa.ObjCObject;
-
 import com.sun.jna.FromNativeContext;
 import com.sun.jna.ToNativeContext;
 import com.sun.jna.TypeConverter;
+import org.rococoa.IDByReference;
+import org.rococoa.ObjCObject;
 
 /**
  * Work in progress. I think that this needs a bit of JNA help to get off the ground.

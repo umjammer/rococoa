@@ -49,55 +49,55 @@ public interface FoundationKitFunctions extends Library {
      * enum values
      */
     interface NSSearchPathDirectory {
-        /// supported applications (Applications)
+        /** supported applications (Applications) */
         int NSApplicationDirectory = 1;
-        /// unsupported applications, demonstration versions (Demos)
+        /** unsupported applications, demonstration versions (Demos) */
         int NSDemoApplicationDirectory = 2;
-        /// developer applications (Developer/Applications). DEPRECATED - there is no one single Developer directory.
+        /** developer applications (Developer/Applications). DEPRECATED - there is no one single Developer directory. */
         int NSDeveloperApplicationDirectory = 3;
-        /// system and network administration applications (Administration)
+        /** system and network administration applications (Administration) */
         int NSAdminApplicationDirectory = 4;
-        /// various user-visible documentation, support, and configuration files, resources (Library)
+        /** various user-visible documentation, support, and configuration files, resources (Library) */
         int NSLibraryDirectory = 5;
-        /// developer resources (Developer) DEPRECATED - there is no one single Developer directory.
+        /** developer resources (Developer) DEPRECATED - there is no one single Developer directory. */
         int NSDeveloperDirectory = 6;
-        /// user home directories (Users)
+        /** user home directories (Users) */
         int NSUserDirectory = 7;
-        /// documentation (Documentation)
+        /** documentation (Documentation) */
         int NSDocumentationDirectory = 8;
-        /// documents (Documents)
+        /** documents (Documents) */
         int NSDocumentDirectory = 9;
-        /// location of CoreServices directory (System/Library/CoreServices)
+        /** location of CoreServices directory (System/Library/CoreServices) */
         int NSCoreServiceDirectory = 10;
-        /// location of autosaved documents (Documents/Autosaved)
+        /** location of autosaved documents (Documents/Autosaved) */
         int NSAutosavedInformationDirectory = 11;
-        /// location of user's desktop
+        /** location of user's desktop */
         int NSDesktopDirectory = 12;
-        /// location of discardable cache files (Library/Caches)
+        /** location of discardable cache files (Library/Caches) */
         int NSCachesDirectory = 13;
-        /// location of application support files (plug-ins, etc) (Library/Application Support)
+        /** location of application support files (plug-ins, etc) (Library/Application Support) */
         int NSApplicationSupportDirectory = 14;
-        /// location of the user's "Downloads" directory
+        /** location of the user's "Downloads" directory */
         int NSDownloadsDirectory = 15;
-        /// input methods (Library/Input Methods)
+        /** input methods (Library/Input Methods) */
         int NSInputMethodsDirectory = 16;
-        /// location of user's Movies directory (~/Movies)
+        /** location of user's Movies directory (~/Movies) */
         int NSMoviesDirectory = 17;
-        /// location of user's Music directory (~/Music)
+        /** location of user's Music directory (~/Music) */
         int NSMusicDirectory = 18;
-        /// location of user's Pictures directory (~/Pictures)
+        /** location of user's Pictures directory (~/Pictures) */
         int NSPicturesDirectory = 19;
-        /// location of system's PPDs directory (Library/Printers/PPDs)
+        /** location of system's PPDs directory (Library/Printers/PPDs) */
         int NSPrinterDescriptionDirectory = 20;
-        /// location of user's Public sharing directory (~/Public)
+        /** location of user's Public sharing directory (~/Public) */
         int NSSharedPublicDirectory = 21;
-        /// location of the PreferencePanes directory for use with System Preferences (Library/PreferencePanes)
+        /** location of the PreferencePanes directory for use with System Preferences (Library/PreferencePanes) */
         int NSPreferencePanesDirectory = 22;
-        /// For use with NSFileManager's URLForDirectory:inDomain:appropriateForURL:create:error:
+        /** For use with NSFileManager's URLForDirectory:inDomain:appropriateForURL:create:error: */
         int NSItemReplacementDirectory = 99;
-        /// all directories where applications can occur
+        /** all directories where applications can occur */
         int NSAllApplicationsDirectory = 100;
-        /// all directories where resources can occur
+        /** all directories where resources can occur */
         int NSAllLibrariesDirectory = 101;
     }
 
@@ -106,15 +106,15 @@ public interface FoundationKitFunctions extends Library {
      * enum values
      */
     interface NSSearchPathDomainMask {
-        /// user's home directory --- place to install user's personal items (~)
+        /** user's home directory --- place to install user's personal items (~) */
         int NSUserDomainMask = 1;
-        /// local to the current machine --- place to install items available to everyone on this machine (/Library)
+        /** local to the current machine --- place to install items available to everyone on this machine (/Library) */
         int NSLocalDomainMask = 2;
-        /// publically available location in the local area network --- place to install items available on the network (/Network)
+        /** publically available location in the local area network --- place to install items available on the network (/Network) */
         int NSNetworkDomainMask = 4;
-        /// provided by Apple, unmodifiable (/System)
+        /** provided by Apple, unmodifiable (/System) */
         int NSSystemDomainMask = 8;
-        /// all domains: all of the above and future items
+        /** all domains: all of the above and future items */
         int NSAllDomainsMask = 65535;
     }
 

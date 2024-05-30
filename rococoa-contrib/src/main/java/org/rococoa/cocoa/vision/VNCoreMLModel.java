@@ -6,8 +6,6 @@
 
 package org.rococoa.cocoa.vision;
 
-import java.util.logging.Logger;
-
 import org.rococoa.ObjCClass;
 import org.rococoa.ObjCObjectByReference;
 import org.rococoa.Rococoa;
@@ -27,8 +25,6 @@ public abstract class VNCoreMLModel extends NSObject {
     static {
         VisionLibrary.library.toString();
     }
-
-    private static final Logger logger = Logger.getLogger(VNCoreMLModel.class.getName());
 
     public static final _Class CLASS = Rococoa.createClass("VNCoreMLModel", _Class.class);
 

@@ -19,11 +19,11 @@
  
 package org.rococoa;
 
+import org.junit.jupiter.api.Test;
 import org.rococoa.test.RococoaTestCase;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 @SuppressWarnings("nls")

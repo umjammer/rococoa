@@ -3,9 +3,8 @@ package org.rococoa.cocoa.appkit;
 import org.rococoa.ID;
 import org.rococoa.ObjCClass;
 import org.rococoa.cocoa.CGFloat;
-import org.rococoa.cocoa.foundation.NSUInteger;
-
 import org.rococoa.cocoa.foundation.NSAttributedString;
+import org.rococoa.cocoa.foundation.NSUInteger;
 
 public abstract class NSButtonCell extends NSActionCell {
     private static final _Class CLASS = org.rococoa.Rococoa.createClass("NSButtonCell", _Class.class);

@@ -2,11 +2,11 @@ package org.rococoa.cocoa.appkit;
 
 import org.rococoa.ID;
 import org.rococoa.Selector;
+import org.rococoa.cocoa.foundation.NSAttributedString;
 import org.rococoa.cocoa.foundation.NSFormatter;
 import org.rococoa.cocoa.foundation.NSInteger;
 import org.rococoa.cocoa.foundation.NSObject;
 import org.rococoa.cocoa.foundation.NSRect;
-import org.rococoa.cocoa.foundation.NSAttributedString;
 
 /// <i>native declaration : :10</i>
 public abstract class NSControl extends NSView {

@@ -6,13 +6,16 @@
 
 package org.rococoa.internal;
 
-import java.util.logging.Logger;
+import java.lang.System.Logger;
+import java.lang.System.Logger.Level;
 
 import com.sun.jna.FromNativeContext;
 import com.sun.jna.FromNativeConverter;
 import com.sun.jna.ToNativeContext;
 import com.sun.jna.ToNativeConverter;
 import org.rococoa.cocoa.CGFloat;
+
+import static java.lang.System.getLogger;
 
 
 /**
@@ -27,15 +30,15 @@ import org.rococoa.cocoa.CGFloat;
  */
 public class FloatConverter implements ToNativeConverter, FromNativeConverter {
 
-    private static final Logger logger = Logger.getLogger(FloatConverter.class.getName());
+    private static final Logger logger = getLogger(FloatConverter.class.getName());
 
     @Override
     public Object toNative(Object value, ToNativeContext context) {
-logger.fine("toNative: " + value + ", " + context);
+logger.log(Level.DEBUG, "toNative: " + value + ", " + context);
         return switch (CGFloat.SIZE) {
             case 4 -> value;
             case 8 -> {
-                logger.fine("toNative: " + value + " -> " + value);
+                logger.log(Level.DEBUG, "toNative: " + value + " -> " + value);
                 yield (double) value;
             }
             default -> throw new AssertionError("Unknown Native.LONG_SIZE: " + CGFloat.SIZE);
@@ -47,7 +50,7 @@ logger.fine("toNative: " + value + ", " + context);
         return switch (CGFloat.SIZE) {
             case 4 -> value;
             case 8 -> {
-                logger.fine("fromNative: " + value + " -> " + ((Double) value).floatValue());
+                logger.log(Level.DEBUG, "fromNative: " + value + " -> " + ((Double) value).floatValue());
                 yield ((Double) value).floatValue();
             }
             default -> throw new AssertionError("Unknown Native.LONG_SIZE: " + CGFloat.SIZE);

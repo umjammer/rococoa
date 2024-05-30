@@ -23,11 +23,14 @@ import java.util.Locale;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.rococoa.cocoa.foundation.NSArray;
 import org.rococoa.cocoa.appkit.NSVoice.VoiceGender;
+import org.rococoa.cocoa.foundation.NSArray;
 import org.rococoa.test.RococoaTestCase;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Simple tests for functionality of the voice class

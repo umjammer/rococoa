@@ -175,7 +175,7 @@ public class GCDExecutorService extends AbstractExecutorService {
     private class InvocationFutureTask<V> extends FutureTask<V> {
         /** The NSInvocationOperation that will be enqueued and executed*/
         private final NSInvocationOperation invocation;
-        /** A reference to the Java proxy object created to allow Objective C
+        /** A reference to the Java proxy object created to allow Objective-C
          *  to callback methods on this class. It must be held because a crash
          *  will occur if the Java proxy is collected and Objective-C attempts
          *  to use it.

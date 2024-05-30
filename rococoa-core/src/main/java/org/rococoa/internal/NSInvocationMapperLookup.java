@@ -22,6 +22,10 @@ package org.rococoa.internal;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.sun.jna.Memory;
+import com.sun.jna.Native;
+import com.sun.jna.NativeLong;
+import com.sun.jna.Structure;
 import org.rococoa.Foundation;
 import org.rococoa.ID;
 import org.rococoa.ObjCObject;
@@ -29,11 +33,6 @@ import org.rococoa.Rococoa;
 import org.rococoa.cocoa.CGFloat;
 import org.rococoa.cocoa.foundation.NSInteger;
 import org.rococoa.cocoa.foundation.NSUInteger;
-
-import com.sun.jna.Memory;
-import com.sun.jna.Native;
-import com.sun.jna.NativeLong;
-import com.sun.jna.Structure;
 
 /**
  * Look up how to map from and from NSInvocation and Java objects.

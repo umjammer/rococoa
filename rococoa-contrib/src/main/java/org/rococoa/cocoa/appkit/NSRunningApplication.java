@@ -6,8 +6,6 @@
 
 package org.rococoa.cocoa.appkit;
 
-import java.util.logging.Logger;
-
 import com.sun.jna.NativeLong;
 import org.rococoa.ObjCClass;
 import org.rococoa.Rococoa;
@@ -23,8 +21,6 @@ import org.rococoa.cocoa.foundation.NSURL;
  * @version 0.00 2023-12-20 nsano initial version <br>
  */
 public abstract class NSRunningApplication extends NSObject {
-
-    private static final Logger logger = Logger.getLogger(NSRunningApplication.class.getName());
 
     public static final _Class CLASS = Rococoa.createClass("NSRunningApplication", _Class.class);
 
