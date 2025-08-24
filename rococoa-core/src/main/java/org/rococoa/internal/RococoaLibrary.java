@@ -63,15 +63,13 @@ public interface RococoaLibrary extends Library {
      */
     void callOnMainThread(RococoaLibrary.VoidCallback callback, boolean waitUntilDone);
 
-//#region Block
+    //-region Block
+    Pointer get_NSConcreteStackBlock();
 
-    /** */
-    Pointer createObjCBlock();
+    Pointer get_block_copy_helper();
 
-    /** */
-    void releaseObjCBlock(Pointer blockPtr);
-
-//#endregion Block
+    Pointer get_block_dispose_helper();
+    //-endregion Block
 
 //#region bridge
 

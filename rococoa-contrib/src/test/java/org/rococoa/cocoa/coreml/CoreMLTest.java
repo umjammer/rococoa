@@ -20,7 +20,6 @@ import javax.swing.JScrollPane;
 
 import com.sun.jna.Pointer;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIf;
@@ -32,10 +31,9 @@ import org.rococoa.cocoa.vision.VNCoreMLModel;
 import org.rococoa.cocoa.vision.VNCoreMLRequest;
 import org.rococoa.cocoa.vision.VNImageRequestHandler;
 import vavi.util.Debug;
+import org.rococoa.Block;
 import vavi.util.properties.annotation.Property;
 import vavi.util.properties.annotation.PropsEntity;
-
-import static org.rococoa.ObjCBlocks.block;
 
 
 /**
@@ -125,7 +123,6 @@ Debug.println("cgImage: " + filteredImage);
     }
 
     @Test
-    @Disabled("crash")
     @EnabledIf("localPropertiesExists")
     @EnabledIfSystemProperty(named = "vavi.test", matches = "ide")
     void test2() throws Exception {
@@ -135,16 +132,16 @@ Debug.println(mlModel);
         VNCoreMLModel model = VNCoreMLModel.fromMLModel(mlModel);
 Debug.println(model);
 
-        VNCoreMLRequest.CLASS.alloc().initWithModel_completionHandler(model,
-                block((VNCoreMLRequest.VNRequestCompletionHandler) (literal, requestId, errorRef) -> {
+        VNCoreMLRequest.VNRequestCompletionHandler handler = (literal, requestId, errorRef) -> {
             NSError error = Rococoa.wrap(errorRef, NSError.class);
             if (error != null) {
                 throw new IllegalStateException(error.description());
             }
-Debug.println("here1");
+            Debug.println("here1");
             VNCoreMLRequest request = Rococoa.wrap(requestId, VNCoreMLRequest.class);
-Debug.println("request: " + request);
-        }));
+            Debug.println("request: " + request);
+        };
+        VNCoreMLRequest.CLASS.alloc().initWithModel_completionHandler(model, new Block(handler).getLiteral());
 Debug.println("here2");
         cdl.await();
     }
