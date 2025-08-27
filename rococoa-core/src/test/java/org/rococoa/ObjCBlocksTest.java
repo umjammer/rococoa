@@ -55,6 +55,17 @@ class ObjCBlocksTest {
 
     static TestShunt shunt;
 
+    static MyBlock myBlock = (l, n) -> 1000 + n;
+    static MyBlockI myBlockI = (l, i) -> i.longValue();
+    static MyBlockS myBlockS = (l, i) -> {
+        NSString s = Rococoa.wrap(i, NSString.class);
+        return NSString.stringWithString(s.toString() + "++").id();
+    };
+    static MyBlockS2 myBlockS2 = (l, i, n) -> {
+        NSString s = Rococoa.wrap(i, NSString.class);
+        return NSString.stringWithString(s.toString().repeat(n)).id();
+    };
+
     @BeforeAll
     static void setup() {
         shunt = Rococoa.create("TestShunt", TestShunt.class);
@@ -74,7 +85,6 @@ class ObjCBlocksTest {
 
     @Test
     public void testBlock2() {
-        MyBlock myBlock = (l, n) -> 1000 + n;
         int r = shunt.testBlock_operation(234, block(myBlock));
 Debug.println(r);
         assertEquals(1234, r);
@@ -83,7 +93,6 @@ Debug.println(r);
     @Test
     public void testBlockI() {
         ID id = new ID(314159265358979L);
-        MyBlockI myBlockI = (l, i) -> i.longValue();
         long r = shunt.testBlockI_operation(id, block(myBlockI));
 Debug.println(r);
         assertEquals(314159265358979L, r);
@@ -91,10 +100,6 @@ Debug.println(r);
 
     @Test
     public void testBlockS() {
-        MyBlockS myBlockS = (l, i) -> {
-            NSString s = Rococoa.wrap(i, NSString.class);
-            return NSString.stringWithString(s.toString() + "++").id();
-        };
         ID r = shunt.testBlockS_operation("umjammer", block(myBlockS));
 Debug.println(Rococoa.wrap(r, NSString.class).toString());
         assertEquals("umjammer++", Rococoa.wrap(r, NSString.class).toString());
@@ -102,10 +107,6 @@ Debug.println(Rococoa.wrap(r, NSString.class).toString());
 
     @Test
     public void testBlockS2() {
-        MyBlockS2 myBlockS2 = (l, i, n) -> {
-            NSString s = Rococoa.wrap(i, NSString.class);
-            return NSString.stringWithString(s.toString().repeat(n)).id();
-        };
         ID r = shunt.testBlockS2_times_operation("vavi", 3, block(myBlockS2));
 Debug.println(Rococoa.wrap(r, NSString.class).toString());
         assertEquals("vavivavivavi", Rococoa.wrap(r, NSString.class).toString());
