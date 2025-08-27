@@ -36,10 +36,7 @@
               <compilerProvider>generic-classic</compilerProvider>
               <compilerStartOptions>
                 <compilerStartOption>-g -Wall -O2 -fomit-frame-pointer -fPIC</compilerStartOption>
-                <compilerStartOption>-arch x86_64 -arch arm64
-                  -I${java.home}/include
-                  -I${java.home}/include/darwin
-                </compilerStartOption>
+                <compilerStartOption>-arch x86_64 -arch arm64</compilerStartOption>
               </compilerStartOptions>
               <linkerStartOptions>
                 <linkerStartOption>-dynamiclib -arch x86_64 -arch arm64

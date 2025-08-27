@@ -11,7 +11,10 @@ import org.rococoa.ObjCBlocks.BlockLiteral;
 
 /**
  * Represents an Objective-C block.
- *
+ * <p>
+ * IMPORTANT: you must maintain a strong reference to the {@link Block} instance
+ * as long as the native code might call the block.
+ * </p>
  * @author <a href="mailto:umjammer@gmail.com">Naohide Sano</a> (nsano)
  * @version 0.00 2024/03/12 nsano initial version <br>
  */

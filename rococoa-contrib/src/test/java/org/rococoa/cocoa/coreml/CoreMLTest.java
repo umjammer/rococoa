@@ -141,7 +141,8 @@ Debug.println(model);
             VNCoreMLRequest request = Rococoa.wrap(requestId, VNCoreMLRequest.class);
             Debug.println("request: " + request);
         };
-        VNCoreMLRequest.CLASS.alloc().initWithModel_completionHandler(model, new Block(handler).getLiteral());
+        Block block = new Block(handler);
+        VNCoreMLRequest.CLASS.alloc().initWithModel_completionHandler(model, block.getLiteral());
 Debug.println("here2");
         cdl.await();
     }
