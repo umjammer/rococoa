@@ -9,7 +9,6 @@ package org.rococoa;
 import com.sun.jna.NativeLong;
 import com.sun.jna.Pointer;
 import com.sun.jna.Structure;
-import org.rococoa.internal.RococoaNative;
 
 import java.util.Arrays;
 import java.util.List;
@@ -35,22 +34,6 @@ public class ObjCBlocks {
     public static final int BLOCK_HAS_STRET = 1 << 29;
     public static final int BLOCK_HAS_SIGNATURE = 1 << 30;
 
-    /** utility conversion java closure to obj-c block */
-    public static BlockLiteral block(ObjCBlock block) {
-        BlockLiteral literal = new BlockLiteral();
-        literal.isa = Foundation.getRococoaLibrary().get_NSConcreteStackBlock();
-        literal.flags = BLOCK_HAS_COPY_DISPOSE;
-        literal.reserved = 0;
-        literal.invoke = block;
-        literal.descriptor.reserved = new NativeLong(0);
-        literal.descriptor.block_size = new NativeLong(literal.size());
-        literal.descriptor.copy_helper = Foundation.getRococoaLibrary().get_block_copy_helper();
-        literal.descriptor.dispose_helper = Foundation.getRococoaLibrary().get_block_dispose_helper();
-        literal.javaCallback = RococoaNative.getJObject(block);
-        literal.write();
-        return literal;
-    }
-
     /** */
     public static class BlockDescriptor extends Structure {
         public NativeLong reserved;
@@ -72,7 +55,7 @@ public class ObjCBlocks {
         public int flags;
         public int reserved;
         public ObjCBlock invoke;
-        public BlockDescriptor descriptor = new BlockDescriptor();
+        public Pointer descriptor;
         public Pointer javaCallback;
 
         public BlockLiteral() {}

@@ -13,7 +13,6 @@ import org.rococoa.cocoa.foundation.NSString;
 import vavi.util.Debug;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.rococoa.ObjCBlocks.block;
 
 
 /**
@@ -72,20 +71,8 @@ class ObjCBlocksTest {
     }
 
     @Test
-    public void testBlock() {
-        BlockLiteral literal = new BlockLiteral();
-//Debug.println(literal);
-//Debug.println(literal.descriptor);
-        literal.flags = ObjCBlocks.BLOCK_HAS_COPY_DISPOSE;
-        literal.invoke = (MyBlock) ((l, n) -> { Debug.println("hello block " + n); return 1000 * n; });
-        literal.write();
-        int r = shunt.testBlock_operation(40, literal);
-        assertEquals(40000, r);
-    }
-
-    @Test
     public void testBlock2() {
-        int r = shunt.testBlock_operation(234, block(myBlock));
+        int r = shunt.testBlock_operation(234, new Block(myBlock).getLiteral());
 Debug.println(r);
         assertEquals(1234, r);
     }
@@ -93,21 +80,21 @@ Debug.println(r);
     @Test
     public void testBlockI() {
         ID id = new ID(314159265358979L);
-        long r = shunt.testBlockI_operation(id, block(myBlockI));
+        long r = shunt.testBlockI_operation(id, new Block(myBlockI).getLiteral());
 Debug.println(r);
         assertEquals(314159265358979L, r);
     }
 
     @Test
     public void testBlockS() {
-        ID r = shunt.testBlockS_operation("umjammer", block(myBlockS));
+        ID r = shunt.testBlockS_operation("umjammer", new Block(myBlockS).getLiteral());
 Debug.println(Rococoa.wrap(r, NSString.class).toString());
         assertEquals("umjammer++", Rococoa.wrap(r, NSString.class).toString());
     }
 
     @Test
     public void testBlockS2() {
-        ID r = shunt.testBlockS2_times_operation("vavi", 3, block(myBlockS2));
+        ID r = shunt.testBlockS2_times_operation("vavi", 3, new Block(myBlockS2).getLiteral());
 Debug.println(Rococoa.wrap(r, NSString.class).toString());
         assertEquals("vavivavivavi", Rococoa.wrap(r, NSString.class).toString());
     }
