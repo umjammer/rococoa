@@ -66,10 +66,7 @@ public interface RococoaLibrary extends Library {
 //#region Block
 
     /** */
-    Pointer createObjCBlock();
-
-    /** */
-    void releaseObjCBlock(Pointer blockPtr);
+    Pointer getNSConcreteStackBlock();
 
 //#endregion Block
 

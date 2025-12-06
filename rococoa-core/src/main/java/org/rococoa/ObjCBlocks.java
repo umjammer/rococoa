@@ -44,8 +44,8 @@ public class ObjCBlocks {
     public static BlockLiteral block(ObjCBlock block) {
         Memory m = new Memory(48);
         BlockLiteral literal = new BlockLiteral(m);
+        literal.isa = Foundation.getRococoaLibrary().getNSConcreteStackBlock();
         literal.flags = 0;
-logging.finer(String.format("block: %s, %08x", block, literal.flags));
         literal.invoke = block;
         literal.write();
         return literal;
@@ -78,12 +78,4 @@ logging.finer(String.format("block: %s, %08x", block, literal.flags));
         }
     }
 
-    /** TODO doesn't work */
-    public static BlockLiteral block2(ObjCBlock block) {
-        BlockLiteral literal = new BlockLiteral(Foundation.getRococoaLibrary().createObjCBlock());
-        literal.flags = 0;
-        literal.invoke = block; // got error. Block_copy returns heap doesn't it?
-        literal.write();
-        return literal;
-    }
 }
