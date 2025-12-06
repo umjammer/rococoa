@@ -32,6 +32,8 @@ id bridgeDictionary(CFDictionaryRef* cfdic) {
 
 #include <Block.h>
 
+extern void * _NSConcreteStackBlock[32];
+
 void* getNSConcreteStackBlock() {
-    return (void*) &_NSConcreteStackBlock;
+    return (void*) _NSConcreteStackBlock;
 }

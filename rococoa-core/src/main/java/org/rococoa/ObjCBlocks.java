@@ -42,11 +42,16 @@ public class ObjCBlocks {
 
     /** utility conversion java closure to obj-c block */
     public static BlockLiteral block(ObjCBlock block) {
-        Memory m = new Memory(48);
-        BlockLiteral literal = new BlockLiteral(m);
+        BlockLiteral literal = new BlockLiteral();
         literal.isa = Foundation.getRococoaLibrary().getNSConcreteStackBlock();
         literal.flags = 0;
         literal.invoke = block;
+        BlockDescriptor.ByReference descriptor = new BlockDescriptor.ByReference();
+        descriptor.reserved = new NativeLong(0);
+        descriptor.block_size = new NativeLong(literal.size());
+        descriptor.rest = Pointer.NULL;
+        literal.descriptor = descriptor;
+        descriptor.write();
         literal.write();
         return literal;
     }
@@ -57,6 +62,7 @@ public class ObjCBlocks {
         public NativeLong block_size;
         public Pointer rest;
         public BlockDescriptor() {}
+        public static class ByReference extends BlockDescriptor implements Structure.ByReference {}
         @Override
         protected List<String> getFieldOrder() {
             return Arrays.asList("reserved", "block_size", "rest");
@@ -64,12 +70,12 @@ public class ObjCBlocks {
     }
 
     /** */
-    public static class BlockLiteral extends Structure {
+    public static class BlockLiteral extends Structure implements Structure.ByReference {
         public Pointer isa = Pointer.NULL;
         public int flags;
         public int reserved;
         public ObjCBlock invoke;
-        public BlockDescriptor descriptor;
+        public BlockDescriptor.ByReference descriptor;
         public BlockLiteral() {}
         public BlockLiteral(Pointer p) { super(p); }
         @Override
