@@ -132,26 +132,32 @@ Debug.println("cgImage: " + filteredImage);
     void test2() throws Exception {
         CountDownLatch cdl = new CountDownLatch(1);
         MLModel mlModel = MLModel.fromPath(model2);
-Debug.println(mlModel);
+//Debug.println(mlModel);
         VNCoreMLModel model = VNCoreMLModel.fromMLModel(mlModel);
-Debug.println(model);
+//Debug.println(model);
 
         BlockLiteral block = block((VNCoreMLRequest.VNRequestCompletionHandler) (literal, requestId, errorRef) -> {
             NSError error = Rococoa.wrap(errorRef, NSError.class);
             if (error != null) {
+Debug.println("error: " + error.description());
+                cdl.countDown();
                 throw new IllegalStateException(error.description());
             }
-Debug.println("here1");
             VNCoreMLRequest request = Rococoa.wrap(requestId, VNCoreMLRequest.class);
 Debug.println("request: " + request);
+            cdl.countDown();
         });
+
         try {
-            VNCoreMLRequest.CLASS.alloc().initWithModel_completionHandler(model, block);
+            VNCoreMLRequest request = VNCoreMLRequest.CLASS.alloc().initWithModel_completionHandler(model, block);
+            CGImage cgImage = new CGImage(Files.newInputStream(Paths.get(image)));
+            VNImageRequestHandler handler = VNImageRequestHandler.initWithCGImage(cgImage.pointer());
+            handler.performRequests(request);
+Debug.println("done");
+            cdl.await();
         } finally {
             Foundation.getRococoaLibrary().releaseObjCBlock(block.getPointer());
         }
-Debug.println("here2");
-        cdl.await();
     }
 
     @Test
