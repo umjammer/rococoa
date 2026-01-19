@@ -62,12 +62,7 @@ class ObjCBlocksTest {
 
     @Test
     public void testBlock() {
-        BlockLiteral literal = new BlockLiteral();
-//Debug.println(literal);
-//Debug.println(literal.descriptor);
-        literal.flags = ObjCBlocks.BLOCK_HAS_COPY_DISPOSE;
-        literal.invoke = (MyBlock) ((l, n) -> { Debug.println("hello block " + n); return 1000 * n; });
-        literal.write();
+        BlockLiteral literal = block((MyBlock) ((l, n) -> { Debug.println("hello block " + n); return 1000 * n; }));
         int r = shunt.testBlock_operation(40, literal);
         assertEquals(40000, r);
     }

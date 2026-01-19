@@ -17,14 +17,9 @@ import java.util.concurrent.CountDownLatch;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-
 import com.sun.jna.Pointer;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.condition.EnabledIf;
-import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
+
+import org.rococoa.Foundation;
 import org.rococoa.ObjCBlocks.BlockLiteral;
 import org.rococoa.Rococoa;
 import org.rococoa.cocoa.coregraphics.CGImage;
@@ -35,6 +30,12 @@ import org.rococoa.cocoa.vision.VNImageRequestHandler;
 import vavi.util.Debug;
 import vavi.util.properties.annotation.Property;
 import vavi.util.properties.annotation.PropsEntity;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledIf;
+import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 
 import static org.rococoa.ObjCBlocks.block;
 
@@ -126,7 +127,6 @@ Debug.println("cgImage: " + filteredImage);
     }
 
     @Test
-    @Disabled("crash")
     @EnabledIf("localPropertiesExists")
     @EnabledIfSystemProperty(named = "vavi.test", matches = "ide")
     void test2() throws Exception {
@@ -145,7 +145,11 @@ Debug.println("here1");
             VNCoreMLRequest request = Rococoa.wrap(requestId, VNCoreMLRequest.class);
 Debug.println("request: " + request);
         });
-        VNCoreMLRequest.CLASS.alloc().initWithModel_completionHandler(model, block);
+        try {
+            VNCoreMLRequest.CLASS.alloc().initWithModel_completionHandler(model, block);
+        } finally {
+            Foundation.getRococoaLibrary().releaseObjCBlock(block.getPointer());
+        }
 Debug.println("here2");
         cdl.await();
     }
