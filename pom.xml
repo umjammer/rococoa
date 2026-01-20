@@ -76,7 +76,7 @@
   </licenses>
 
   <properties>
-    <jna.version>5.14.0</jna.version>
+    <jna.version>5.17.0</jna.version>
   </properties>
 
   <distributionManagement>
@@ -92,7 +92,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-compiler-plugin</artifactId>
-          <version>3.11.0</version>
+          <version>3.12.1</version>
           <configuration>
             <release>17</release>
             <compilerArgs>
@@ -105,7 +105,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-surefire-plugin</artifactId>
-          <version>3.2.2</version>
+          <version>3.2.5</version>
         </plugin>
       </plugins>
     </pluginManagement>
@@ -191,15 +191,21 @@
       <dependency>
         <groupId>net.bytebuddy</groupId>
         <artifactId>byte-buddy</artifactId>
-        <version>1.14.8</version>
+        <version>1.17.8</version>
       </dependency>
 
       <dependency>
         <groupId>org.junit</groupId>
         <artifactId>junit-bom</artifactId>
-        <version>5.10.2</version>
+        <version>5.14.1</version>
         <type>pom</type>
         <scope>import</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>com.github.umjammer</groupId>
+        <artifactId>vavi-commons</artifactId>
+        <version>1.1.16</version>
       </dependency>
     </dependencies>
   </dependencyManagement>

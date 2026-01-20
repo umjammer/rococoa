@@ -5,13 +5,13 @@
 
 # Rococoa
 
-<img alt="rococoa" src="https://github.com/umjammer/rococoa/assets/493908/416ded41-08d0-4360-9163-0c594b1f554a" width="200" />
+<img alt="rococoa" src="duke_rococoa.png" width="200" />
 
  Rococoa is a generic Java binding to the Mac Objective-C object system. It 
 allows the creation and use of Objective-C objects in Java, and the 
 implementation of Objective-C interfaces in Java.
 
-### ⚠ Caution
+### ⚠️ Caution
 
  * this project will **quit** supporting **intel** chips
  * supported macos will be **after Ventura** also
@@ -19,10 +19,10 @@ implementation of Objective-C interfaces in Java.
 ### Limitation
 
 * ~~obj-c class's method call with float argument doesn't work~~ works → new limitation: arguments should be less equal 8
-  * ~~[the reason](https://github.com/java-native-access/jna/issues/463#issuecomment-1286015013)~~ -> actually https://github.com/java-native-access/jna/issues/1476#issuecomment-1292804072
+  * ~~[the reason](https://github.com/java-native-access/jna/issues/463#issuecomment-1286015013)~~ → actually https://github.com/java-native-access/jna/issues/1476#issuecomment-1292804072
   * https://www.mikeash.com/pyblog/objc_msgsends-new-prototype.html
-* obj-c block
-* methods have **varargs don't** work (works less equal 8?)
+* ~~obj-c block~~ **now obj-c block works!**
+* methods have **varargs don't** work (it may work that has args less equal 8)
 
 ## Install
 
@@ -39,7 +39,7 @@ implementation of Objective-C interfaces in Java.
 * [AudioUnit Java MIDI SPI synthesizer](https://github.com/umjammer/vavi-sound-sandbox/tree/master/src/main/java/vavi/sound/midi/rococoa)
 * [CoreMidi Java MIDI SPI](https://github.com/umjammer/osxmidi4j)
 * [AVSpeechSynthesizer Java Speech API](https://github.com/umjammer/vavi-speech2/tree/master/src/main/java/vavi/speech/rococoa/jsapi2)
-* [HEIF Java ImageIO SPI](https://github.com/umjammer/vavi-image-sandbox/tree/master/src/main/java/vavix/imageio/rococoa)
+* [HEIF/AVIF Java ImageIO SPI](https://github.com/umjammer/vavi-image-sandbox/tree/master/src/main/java/vavix/imageio/rococoa)
 * [MTLibrary](https://github.com/umjammer/vavi-apps-padsynth/tree/main/src/main/java/vavix/rococoa/multitouch)
 * [KeyChain Java crypto Keystore SPI](https://github.com/umjammer/vavi-crypto-sandbox/tree/1.0.2/src/main/java/vavix/rococoa/keychain)
 * [Vision Detecting Human Body Poses in Images](rococoa-contrib/src/test/java/org/rococoa/cocoa/vision/VisionTest.java)
@@ -56,7 +56,7 @@ implementation of Objective-C interfaces in Java.
   * http://eleccelerator.com/wiki/index.php?title=DualShock_4
   * https://github.com/born2snipe/gamepad4j/blob/master/gamepad4j-desktop/src/main/c/macos/Gamepad_macosx.c
   * back port [hidapi](https://github.com/libusb/hidapi) mac part
-* obj-block
+* objc-block
   * https://github.com/nativelibs4java/BridJ/
   * http://cocoawithlove.com/2009/10/how-blocks-are-implemented-and.html
   * http://www.opensource.apple.com/source/libclosure/libclosure-38/BlockImplementation.txt
@@ -68,6 +68,9 @@ implementation of Objective-C interfaces in Java.
   * https://github.com/PsychoH13/C-ObjC-Blocks
   * alternative
     * https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/CustomizingExistingClasses/CustomizingExistingClasses.html
+  * https://wiki.openjdk.org/display/MacOSXPort/ObjC+Memory+Management+and+JNI
+* widget
+  * https://github.com/gao-sun/eul
 
 ## TODO
 
@@ -129,4 +132,5 @@ any other problems.
  * [Help Wanted](https://github.com/iterate-ch/rococoa/blob/wiki/HelpWanted.md)
 
 ---
-<sub>image by <a href="https://www.bing.com/">copilot</a></sub>
+
+<sub>image designed by @umjammer, drawn by nano banana</sub>
