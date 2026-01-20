@@ -3,13 +3,13 @@ package org.rococoa.cocoa.appkit;
 import org.rococoa.ID;
 import org.rococoa.ObjCClass;
 import org.rococoa.Selector;
+import org.rococoa.cocoa.foundation.NSAttributedString;
 import org.rococoa.cocoa.foundation.NSCopying;
 import org.rococoa.cocoa.foundation.NSInteger;
 import org.rococoa.cocoa.foundation.NSObject;
 import org.rococoa.cocoa.foundation.NSSize;
 import org.rococoa.cocoa.foundation.NSString;
 import org.rococoa.cocoa.foundation.NSUInteger;
-import org.rococoa.cocoa.foundation.NSAttributedString;
 
 public abstract class NSCell extends NSObject implements NSCopying {
 

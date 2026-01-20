@@ -6,9 +6,10 @@
 
 package org.rococoa.cocoa.coregraphics;
 
+import java.lang.System.Logger;
+import java.lang.System.Logger.Level;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import com.sun.jna.Callback;
 import com.sun.jna.Library;
@@ -24,6 +25,7 @@ import org.rococoa.cocoa.CGFloat;
 import org.rococoa.cocoa.corefoundation.CFStringRef;
 import org.rococoa.cocoa.corefoundation.CoreFoundation;
 
+import static java.lang.System.getLogger;
 import static org.rococoa.carbon.CarbonCoreLibrary.kUCKeyActionDisplay;
 import static org.rococoa.carbon.CarbonCoreLibrary.kUCKeyTranslateNoDeadKeysBit;
 import static org.rococoa.cocoa.corefoundation.CFAllocatorRef.kCFAllocatorDefault;
@@ -37,7 +39,7 @@ import static org.rococoa.cocoa.corefoundation.CFAllocatorRef.kCFAllocatorDefaul
  */
 public interface CoreGraphicsLibrary extends Library {
 
-    Logger logger = Logger.getLogger(CoreGraphicsLibrary.class.getName());
+    Logger logger = getLogger(CoreGraphicsLibrary.class.getName());
 
     CoreGraphicsLibrary library = Native.load("CoreGraphics", CoreGraphicsLibrary.class);
 
@@ -289,9 +291,9 @@ public interface CoreGraphicsLibrary extends Library {
      */
     private static CFStringRef createStringForKey(char /* CGKeyCode */ keyCode) {
         Pointer /* TISInputSourceRef */ currentKeyboard = CarbonCoreLibrary.library.TISCopyCurrentKeyboardLayoutInputSource(); // must be *Layout*
-logger.finest("currentKeyboard: " + currentKeyboard);// + ", " + kTISPropertyUnicodeKeyLayoutData);
+logger.log(Level.TRACE, "currentKeyboard: " + currentKeyboard);// + ", " + kTISPropertyUnicodeKeyLayoutData);
         Pointer /* CFDataRef */ layoutData = CarbonCoreLibrary.library.TISGetInputSourceProperty(currentKeyboard, CFStringRef.toCFString("TISPropertyUnicodeKeyLayoutData"));
-logger.finest("layoutData: " + layoutData);
+logger.log(Level.TRACE, "layoutData: " + layoutData);
         Pointer /* UCKeyboardLayout */ keyboardLayout = CoreFoundation.library.CFDataGetBytePtr(layoutData);
 
         IntByReference keysDown = new IntByReference(0);
@@ -325,7 +327,7 @@ logger.finest("layoutData: " + layoutData);
             /* Loop through every keycode (0 - 127) to find its current mapping. */
             for (char i = 0; i < 128; i++) {
                 CFStringRef string = createStringForKey(/* CGKeyCode */ i);
-logger.finest("key: " + (int) i + ", 0x" + Integer.toHexString(i) + ", string: " + string + (string != null && !string.toString().isEmpty() ? ", 0x" + Integer.toHexString(string.toString().charAt(0)) : "null"));
+logger.log(Level.TRACE, "key: " + (int) i + ", 0x" + Integer.toHexString(i) + ", string: " + string + (string != null && !string.toString().isEmpty() ? ", 0x" + Integer.toHexString(string.toString().charAt(0)) : "null"));
                 if (string != null) {
                     charToCodeDict.put(string.toString(), i);
                     CoreFoundation.library.CFRelease(string);

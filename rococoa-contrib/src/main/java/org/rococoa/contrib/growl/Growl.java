@@ -40,14 +40,17 @@ import org.rococoa.cocoa.foundation.NSString;
  * @version $Id: Growl.java,v 1.0 Mar 26, 2009 12:24:28 PM haraldk Exp$
  */
 public final class Growl {
+
     // TODO: Consider allowing Icon/(Buffered)Image to be passed instead of NSImage
     // TODO: Consider using Map instead of NSDictionary
 
     // defines
+
     /** The name of the growl registration notification for DNC. */
     public static final String GROWL_APP_REGISTRATION = "GrowlApplicationRegistrationNotification";
 
     //  Ticket Defines
+
     /** Ticket key for the application name. */
     public static final String GROWL_APP_NAME = "ApplicationName";
     /** Ticket key for the application icon. */
@@ -58,6 +61,7 @@ public final class Growl {
     public static final String GROWL_NOTIFICATIONS_ALL = "AllNotifications";
 
     //  Notification Defines
+
     /** The name of the growl notification for DNC. */
     public static final String GROWL_NOTIFICATION = "GrowlNotification";
     /** Notification key for the name. */
@@ -76,18 +80,19 @@ public final class Growl {
     public static final String GROWL_NOTIFICATION_IDENTIFIER = "GrowlNotificationIdentifier";
 
     // Actual instance data
-    // We should only register once
+
+    /** We should only register once */
     private boolean registered;
-    // "Application" Name
+    /** "Application" Name */
     private String appName;
-    // "application" Icon
+    /** "application" Icon*/
     private final NSImage appImage;
-    // All notifications
+    /** All notifications*/
     private List<String> allNotes;
-    // Default enabled notifications
+    /** Default enabled notifications*/
     private List<String> defNotes;
 
-    // The notification center
+    /** The notification center */
     private final NSDistributedNotificationCenter theCenter;
 
     private static NSArray toNSArray(List<String> strings) {
@@ -115,12 +120,13 @@ public final class Growl {
 //        NSDictionary dictionary = NSDictionary.dictionaryWithObjects_forKeys(objects, keys);
 //        return dictionary;
 //    }
-//
+
 //    private static NSImage toNSImage(final Image image) {
 //        return null;
 //    }
 
-    //************  Constructors **************//
+    // Constructors
+
     /**
      * Convenience method to contruct a growl instance, defers to Growl(String
      * inAppName, NSData inImageData, NSArray inAllNotes, NSArray inDefNotes,
@@ -177,7 +183,7 @@ public final class Growl {
         }
     }
 
-    //************  Commonly Used Methods **************//
+    // Commonly Used Methods
 
     // TODO: What's the point of this return value? It's always true...
 
@@ -295,7 +301,6 @@ public final class Growl {
         postNotification(inNotificationName, inIcon, inTitle, inDescription, inExtraInfo, inSticky, null);
     }
 
-
     /**
      * Convenience method that defers to postNotificationGrowlOf(String inNotificationName,
      * NSData inIconData, String inTitle, String inDescription,
@@ -355,8 +360,7 @@ public final class Growl {
         postNotification(inNotificationName, null, inTitle, inDescription, null, inSticky, null);
     }
 
-
-    //************  Accessors **************//
+    // Accessors
 
     /**
      * Accessor for The currently set "Application" Name
@@ -370,7 +374,7 @@ public final class Growl {
     /**
      * Accessor for the Array of allowed Notifications returned an NSArray
      *
-     * @return the array of allowed notifications.
+     * @return the list of allowed notifications.
      */
     public List<String> allowedNotifications() {
         return allNotes;
@@ -379,13 +383,13 @@ public final class Growl {
     /**
      * Accessor for the Array of default Notifications returned as an NSArray
      *
-     * @return the array of default notifications.
+     * @return the list of default notifications.
      */
     public List<String> defaultNotifications() {
         return defNotes;
     }
 
-    //************  Mutators **************//
+    // Mutators
 
     /**
      * Sets The name of the Application talking to growl
@@ -414,7 +418,6 @@ public final class Growl {
 
         allNotes = List.copyOf(inAllNotes);
     }
-
 
     /**
      * Set the list of Default Notfiications

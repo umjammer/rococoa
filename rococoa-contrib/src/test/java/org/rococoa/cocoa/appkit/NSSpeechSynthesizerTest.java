@@ -78,9 +78,9 @@ public class NSSpeechSynthesizerTest {
     @Test
     public void testAvailableVoices() {
         assertEquals(NSSpeechSynthesizer.CLASS.availableVoices().count(), NSSpeechSynthesizer.availableVoices().size());
-        assertTrue(!NSSpeechSynthesizer.availableVoices().isEmpty());
+        assertFalse(NSSpeechSynthesizer.availableVoices().isEmpty());
         assertNotNull(NSSpeechSynthesizer.availableVoices().get(0).getName());
-        assertTrue(!NSSpeechSynthesizer.availableVoices().get(0).getName().isEmpty());
+        assertFalse(NSSpeechSynthesizer.availableVoices().get(0).getName().isEmpty());
     }
  
     @Test
@@ -209,7 +209,7 @@ public class NSSpeechSynthesizerTest {
         sd.waitForSpeechDone(TIME_TO_WAIT, false);
         // don't want test case to be too timing dependent
         assertTrue(sd.getWordsSpoken().size() < 3, "Expected less than 3 words but got: " + sd.getWordsSpoken());
-        assertTrue(!sd.getWordsSpoken().isEmpty(), "Expected at least one word but got: " + sd.getWordsSpoken());
+        assertFalse(sd.getWordsSpoken().isEmpty(), "Expected at least one word but got: " + sd.getWordsSpoken());
 
         // near as I can tell, SentenceBoundary just doesn't work!
         sd.reset();
@@ -226,7 +226,7 @@ public class NSSpeechSynthesizerTest {
         ss.stopSpeakingAtBoundary(NSSpeechSynthesizer.NSSpeechBoundary.ImmediateBoundary);
         sd.waitForSpeechDone(TIME_TO_WAIT, false);
         assertTrue(sd.getWordsSpoken().size() < 3, "Expected less than 3 words but got: " + sd.getWordsSpoken());
-        assertTrue(!sd.getWordsSpoken().isEmpty(), "Expected at least one word but got: " + sd.getWordsSpoken());
+        assertFalse(sd.getWordsSpoken().isEmpty(), "Expected at least one word but got: " + sd.getWordsSpoken());
     }
 
     @Test
@@ -246,7 +246,7 @@ public class NSSpeechSynthesizerTest {
         assertEquals(status.isOutputBusy(), ss.isSpeaking());
         assertFalse(status.isOutputPaused());
         assertTrue(status.getNumberOfCharactersLeft() > 0, "Should have characters left");
-        //assertTrue("Opcode should not be zero", status.getPhonemeCode() != 0); always zero... seems to have word granularity
+//        assertTrue(status.getPhonemeCode() != 0), "Opcode should not be zero"; always zero... seems to have word granularity
         sd.waitForSpeechDone(TIME_TO_WAIT, true);
     }
 

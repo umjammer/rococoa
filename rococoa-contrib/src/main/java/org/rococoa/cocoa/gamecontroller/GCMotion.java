@@ -6,13 +6,12 @@
 
 package org.rococoa.cocoa.gamecontroller;
 
-import java.util.logging.Logger;
+import java.lang.System.Logger;
 
-import org.rococoa.ID;
-import org.rococoa.ObjCBlock;
-import org.rococoa.ObjCBlocks.BlockLiteral;
 import org.rococoa.ObjCClass;
 import org.rococoa.Rococoa;
+
+import static java.lang.System.getLogger;
 
 
 /**
@@ -27,7 +26,7 @@ public abstract class GCMotion extends GCControllerElement {
         GameControllerLibrary.library.toString();
     }
 
-    private static final Logger logger = Logger.getLogger(GCMotion.class.getName());
+    private static final Logger logger = getLogger(GCMotion.class.getName());
 
     public static final _Class CLASS = Rococoa.createClass("GCMotion", _Class.class);
 
@@ -35,6 +34,7 @@ public abstract class GCMotion extends GCControllerElement {
         GCMotion alloc();
     }
 
+    @Override
     public abstract GCMotion init();
 
     /** A Boolean value that indicates whether the controller provides attitude data. */

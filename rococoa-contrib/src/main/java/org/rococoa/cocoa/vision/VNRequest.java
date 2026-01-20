@@ -6,14 +6,17 @@
 
 package org.rococoa.cocoa.vision;
 
+import java.lang.System.Logger;
+import java.lang.System.Logger.Level;
 import java.util.ServiceLoader;
 import java.util.function.Consumer;
-import java.util.logging.Logger;
 
 import org.rococoa.ObjCClass;
 import org.rococoa.Rococoa;
 import org.rococoa.cocoa.foundation.NSArray;
 import org.rococoa.cocoa.foundation.NSObject;
+
+import static java.lang.System.getLogger;
 
 
 /**
@@ -24,7 +27,7 @@ import org.rococoa.cocoa.foundation.NSObject;
  */
 public abstract class VNRequest extends NSObject {
 
-    private static final Logger logger = Logger.getLogger(VNRequest.class.getName());
+    private static final Logger logger = getLogger(VNRequest.class.getName());
 
     public static final _Class CLASS = Rococoa.createClass("VNRequest", _Class.class);
 
@@ -46,14 +49,14 @@ public abstract class VNRequest extends NSObject {
     /** utility for only 1st */
     public Object result(Object... args) {
         NSArray results = results();
-logger.finer("result: " + results.count());
+logger.log(Level.TRACE, "result: " + results.count());
         return each(results.firstObject(), args);
     }
 
     /** utility conversion */
     @SuppressWarnings({"rawtypes", "unchecked"})
     private static Object each(NSObject object, Object... args) {
-logger.finer("result each: " + object);
+logger.log(Level.TRACE, "result each: " + object);
         for (VNRequestConvertible convertible : convertibles) {
             if (convertible.isKindOfClass(object)) {
                 return convertible.convert(convertible.cast(object), args);
@@ -75,7 +78,7 @@ logger.finer("result each: " + object);
     /** utility for each */
     public void result(Consumer<Object> c, Object... args) {
         NSArray results = results();
-logger.finer("result: " + results.count());
+logger.log(Level.TRACE, "result: " + results.count());
         for (int i = 0; i < results.count(); i++) {
             c.accept(each(results.objectAtIndex(i), args));
         }

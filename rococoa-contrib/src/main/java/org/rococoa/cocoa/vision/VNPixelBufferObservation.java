@@ -6,8 +6,6 @@
 
 package org.rococoa.cocoa.vision;
 
-import java.util.logging.Logger;
-
 import com.sun.jna.Pointer;
 import com.sun.jna.ptr.PointerByReference;
 import org.rococoa.ObjCClass;
@@ -23,8 +21,6 @@ import org.rococoa.cocoa.foundation.NSObject;
  * @version 0.00 2022-10-15 nsano initial version <br>
  */
 public abstract class VNPixelBufferObservation extends VNObservation {
-
-    private static final Logger logger = Logger.getLogger(VNPixelBufferObservation.class.getName());
 
     public static final _Class CLASS = Rococoa.createClass("VNPixelBufferObservation", _Class.class);
 

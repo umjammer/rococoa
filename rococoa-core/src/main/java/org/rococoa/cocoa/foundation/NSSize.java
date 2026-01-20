@@ -23,9 +23,8 @@ import java.awt.geom.Dimension2D;
 import java.util.Arrays;
 import java.util.List;
 
-import org.rococoa.cocoa.CGFloat;
-
 import com.sun.jna.Structure;
+import org.rococoa.cocoa.CGFloat;
 
 public class NSSize extends Structure implements Structure.ByValue {
 

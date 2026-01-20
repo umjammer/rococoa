@@ -19,23 +19,27 @@
 
 package org.rococoa.cocoa.qtkit;
 
-import com.sun.jna.Platform;
-import static org.junit.jupiter.api.Assertions.*;
-
 import java.io.File;
 
-import org.rococoa.cocoa.foundation.NSObject;
-import org.rococoa.ObjCObjectByReference;
+import com.sun.jna.Platform;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.rococoa.ObjCClass;
+import org.rococoa.ObjCObjectByReference;
 import org.rococoa.Rococoa;
 import org.rococoa.cocoa.foundation.NSArray;
 import org.rococoa.cocoa.foundation.NSError;
 import org.rococoa.cocoa.foundation.NSMutableDictionary;
 import org.rococoa.cocoa.foundation.NSNumber;
+import org.rococoa.cocoa.foundation.NSObject;
 import org.rococoa.cocoa.foundation.NSString;
 import org.rococoa.test.RococoaTestCase;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 @SuppressWarnings("deprecation")

@@ -19,8 +19,9 @@
  
 package org.rococoa.internal;
 
-import static org.junit.jupiter.api.Assertions.*;
-
+import com.sun.jna.FromNativeConverter;
+import com.sun.jna.NativeLong;
+import com.sun.jna.ToNativeConverter;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.rococoa.Foundation;
@@ -31,9 +32,8 @@ import org.rococoa.cocoa.foundation.NSNumber;
 import org.rococoa.cocoa.foundation.NSObject;
 import org.rococoa.test.RococoaTestCase;
 
-import com.sun.jna.FromNativeConverter;
-import com.sun.jna.NativeLong;
-import com.sun.jna.ToNativeConverter;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 @SuppressWarnings({ "nls", "unchecked", "cast" })
 public class ObjCObjectTypeConverterTest extends RococoaTestCase {

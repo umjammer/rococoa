@@ -6,8 +6,9 @@
 
 package org.rococoa.cocoa.vision;
 
+import java.lang.System.Logger;
+import java.lang.System.Logger.Level;
 import java.util.Arrays;
-import java.util.logging.Logger;
 import java.util.stream.IntStream;
 
 import org.rococoa.ObjCClass;
@@ -18,6 +19,8 @@ import org.rococoa.cocoa.foundation.NSArray;
 import org.rococoa.cocoa.foundation.NSDictionary;
 import org.rococoa.cocoa.foundation.NSError;
 import org.rococoa.cocoa.foundation.NSObject;
+
+import static java.lang.System.getLogger;
 
 
 /**
@@ -32,7 +35,7 @@ public abstract class VNHumanHandPoseObservation extends VNRecognizedPointsObser
         VisionLibrary.library.toString();
     }
 
-    private static final Logger logger = Logger.getLogger(VNHumanHandPoseObservation.class.getName());
+    private static final Logger logger = getLogger(VNHumanHandPoseObservation.class.getName());
 
     public static final _Class CLASS = Rococoa.createClass("VNHumanHandPoseObservation", _Class.class);
 
@@ -94,11 +97,11 @@ public abstract class VNHumanHandPoseObservation extends VNRecognizedPointsObser
         if (done) return;
         NSArray names = availableJointNames();
         for (int i = 0; i < names.count(); i++) {
-logger.fine("joint key: " + names.objectAtIndex(i));
+logger.log(Level.DEBUG, "joint key: " + names.objectAtIndex(i));
         }
         names = availableJointsGroupNames();
         for (int i = 0; i < names.count(); i++) {
-logger.fine("group key: " + names.objectAtIndex(i));
+logger.log(Level.DEBUG, "group key: " + names.objectAtIndex(i));
         }
         done = true;
     }

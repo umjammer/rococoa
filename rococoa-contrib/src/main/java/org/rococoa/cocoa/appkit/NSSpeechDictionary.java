@@ -19,7 +19,6 @@
 
 package org.rococoa.cocoa.appkit;
 
-import org.rococoa.contrib.AbstractPropertyDictionary;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -27,13 +26,18 @@ import java.util.List;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import org.rococoa.contrib.NativeEnum;
-import org.rococoa.Rococoa;
 
+import org.rococoa.Rococoa;
 import org.rococoa.cocoa.foundation.NSMutableArray;
 import org.rococoa.cocoa.foundation.NSMutableDictionary;
 import org.rococoa.cocoa.foundation.NSString;
-import static org.rococoa.cocoa.appkit.NSSpeechDictionary.SpeechDictionaryProperty.*;
+import org.rococoa.contrib.AbstractPropertyDictionary;
+import org.rococoa.contrib.NativeEnum;
+
+import static org.rococoa.cocoa.appkit.NSSpeechDictionary.SpeechDictionaryProperty.Abbreviations;
+import static org.rococoa.cocoa.appkit.NSSpeechDictionary.SpeechDictionaryProperty.LocaleIdentifier;
+import static org.rococoa.cocoa.appkit.NSSpeechDictionary.SpeechDictionaryProperty.ModificationDate;
+import static org.rococoa.cocoa.appkit.NSSpeechDictionary.SpeechDictionaryProperty.Pronunciations;
 
 /** NSVoice encapsulates the properties of a speech synthesis dictionary, and can be
  *  used with NSSpeechSynthesizer to change the way words are pronounced.

@@ -57,20 +57,6 @@ import static org.rococoa.cocoa.vision.VNHumanHandPoseObservation.ThumbTip;
 public class TestWebCam {
 
     static {
-        // TODO move to pom.xml
-        System.setProperty("vavi.util.logging.VaviFormatter.extraClassMethod",
-                "(" +
-                        "org\\.slf4j\\.impl\\.JDK14LoggerAdapter#(log|info|warn)" +
-                        "|" +
-                        "sun\\.util\\.logging\\.LoggingSupport#log" +
-                        "|" +
-                        "sun\\.util\\.logging\\.PlatformLogger#fine" +
-                        "|" +
-                        "jdk\\.internal\\.event\\.EventHelper#logX509CertificateEvent" +
-                        "|" +
-                        "sun\\.util\\.logging\\.PlatformLogger.JavaLoggerProxy#doLog" +
-                        ")");
-
         Webcam.setDriver(new NativeDriver());
     }
 

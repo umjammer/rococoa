@@ -19,13 +19,13 @@
 
 package org.rococoa.internal;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.rococoa.test.RococoaTestCase.assertRetainCount;
-
 import org.junit.jupiter.api.Test;
 import org.rococoa.Foundation;
 import org.rococoa.ID;
 import org.rococoa.test.RococoaTestCase;
+
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.rococoa.test.RococoaTestCase.assertRetainCount;
 
 
 public class AutoreleaseBatcherTest {

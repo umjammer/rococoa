@@ -19,6 +19,8 @@
 
 package org.rococoa.internal;
 
+import java.lang.System.Logger;
+import java.lang.System.Logger.Level;
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -28,8 +30,6 @@ import java.util.Arrays;
 import java.util.ConcurrentModificationException;
 import java.util.List;
 import java.util.concurrent.Callable;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import com.sun.jna.Pointer;
 import net.bytebuddy.implementation.bind.annotation.AllArguments;
@@ -49,6 +49,8 @@ import org.rococoa.Rococoa;
 import org.rococoa.RococoaException;
 import org.rococoa.RunOnMainThread;
 
+import static java.lang.System.getLogger;
+
 
 /**
  * Listens to invocations of methods on a Java NSObject, and forwards them to
@@ -61,7 +63,7 @@ public class ObjCObjectInvocationHandler implements InvocationHandler {
 
     private static final int FINALIZE_AUTORELEASE_BATCH_SIZE = 1000;
 
-    private static final Logger logging = Logger.getLogger("org.rococoa.proxy");
+    private static final Logger logger = getLogger("org.rococoa.proxy");
 
     static final Method OBJECT_TOSTRING;
     static final Method OBJECT_HASHCODE;
@@ -99,7 +101,7 @@ public class ObjCObjectInvocationHandler implements InvocationHandler {
         invokeAllMethodsOnMainThread = shouldInvokeMethodsOnMainThread(javaClass);
         boolean releaseOnFinalize = shouldReleaseInFinalize(javaClass);
 
-logging.finest(String.format("Creating NSObjectInvocationHandler for id %s, javaclass %s. retain = %s, retainCount = %s",
+logger.log(Level.TRACE, String.format("Creating NSObjectInvocationHandler for id %s, javaclass %s. retain = %s, retainCount = %s",
  ocInstance, javaClass, retain, Foundation.cfGetRetainCount(ocInstance).intValue()));
 
         if (ocInstance.isNull()) {
@@ -127,7 +129,7 @@ logging.finest(String.format("Creating NSObjectInvocationHandler for id %s, java
         });
     }
 
-    private boolean shouldReleaseInFinalize(Class<? extends ObjCObject> javaClass) {
+    private static boolean shouldReleaseInFinalize(Class<? extends ObjCObject> javaClass) {
         // Almost everything should be released in finalize, except wrappers for
         // NSAutoreleasePool.
         ReleaseInFinalize annotation = javaClass.getAnnotation(ReleaseInFinalize.class);
@@ -142,7 +144,7 @@ logging.finest(String.format("Creating NSObjectInvocationHandler for id %s, java
         if (ocInstance.isNull()) {
             return;
         }
-logging.finest(String.format("finalizing [%s %s], releasing with retain count = %s",
+logger.log(Level.TRACE, String.format("finalizing [%s %s], releasing with retain count = %s",
  javaClassName, ocInstance, Foundation.cfGetRetainCount(ocInstance).intValue()));
         Foundation.cfRelease(ocInstance);
     }
@@ -152,7 +154,7 @@ logging.finest(String.format("finalizing [%s %s], releasing with retain count = 
      */
     @Override
     public Object invoke(Object proxy, Method method, Object[] args)  throws Exception {
-logging.finest(String.format("JavaProxy:invoking [%s %s].%s(%s)", javaClassName, ocInstance, method.getName(), new VarArgsUnpacker(args)));
+logger.log(Level.TRACE, String.format("JavaProxy:invoking [%s %s].%s(%s)", javaClassName, ocInstance, method.getName(), new VarArgsUnpacker(args)));
         if (isSpecialMethod(method)) {
             return invokeSpecialMethod(method, args);
         }
@@ -164,17 +166,17 @@ logging.finest(String.format("JavaProxy:invoking [%s %s].%s(%s)", javaClassName,
      */
     @RuntimeType
     public Object intercept(@This Object proxy, @Origin Method method, @AllArguments Object[] args, @SuperMethod(nullIfImpossible = true) Method superMethod, @Empty Object defaultValue) throws Throwable {
-logging.finest(String.format("ByteBuddyProxy:invoking [%s %s].%s(%s)", javaClassName, ocInstance, method.getName(), new VarArgsUnpacker(args)));
+logger.log(Level.TRACE, String.format("ByteBuddyProxy:invoking [%s %s].%s(%s)", javaClassName, ocInstance, method.getName(), new VarArgsUnpacker(args)));
         if (isSpecialMethod(method)) {
             return invokeSpecialMethod(method, args);
         }
         if (!Modifier.isAbstract(method.getModifiers())) {
             // method is not abstract, so a Java override has been provided, which we call
-logging.finest(String.format("superMethod.invoke [%s %s].%s(%s)", javaClassName, ocInstance, method.getName(), new VarArgsUnpacker(args)));
+logger.log(Level.TRACE, String.format("superMethod.invoke [%s %s].%s(%s)", javaClassName, ocInstance, method.getName(), new VarArgsUnpacker(args)));
             try {
                 return superMethod.invoke(proxy, args);
             } catch (Throwable t) {
-logging.log(Level.WARNING, String.format("superMethod.invoke [%s %s].%s(%s) failure", javaClassName, ocInstance, method.getName(), new VarArgsUnpacker(args)), t);
+logger.log(Level.WARNING, String.format("superMethod.invoke [%s %s].%s(%s) failure", javaClassName, ocInstance, method.getName(), new VarArgsUnpacker(args)), t);
                 throw t;
             }
         }
@@ -182,14 +184,14 @@ logging.log(Level.WARNING, String.format("superMethod.invoke [%s %s].%s(%s) fail
         return invokeCocoa(method, args);
     }
 
-    private boolean isSpecialMethod(Method method) {
+    private static boolean isSpecialMethod(Method method) {
         return (OBJECT_TOSTRING.equals(method) ||
                 OBJECT_EQUALS.equals(method) ||
                 OCOBJECT_ID.equals(method));
     }
 
     private Object invokeSpecialMethod(Method method, Object[] args) {
-logging.finest(String.format("invokeSpecialMethod [%s %s].%s(%s)", javaClassName, ocInstance, method.getName(), new VarArgsUnpacker(args)));
+logger.log(Level.TRACE, String.format("invokeSpecialMethod [%s %s].%s(%s)", javaClassName, ocInstance, method.getName(), new VarArgsUnpacker(args)));
         if (OBJECT_TOSTRING.equals(method)) {
             return invokeDescription();
         }
@@ -217,7 +219,7 @@ logging.finest(String.format("invokeSpecialMethod [%s %s].%s(%s)", javaClassName
     }
 
     private Object invokeCocoa(Method method, Object[] args) {
-logging.finest(String.format("invokeCocoa [%s %s].%s(%s)", javaClassName, ocInstance, method.getName(), new VarArgsUnpacker(args)));
+logger.log(Level.TRACE, String.format("invokeCocoa [%s %s].%s(%s)", javaClassName, ocInstance, method.getName(), new VarArgsUnpacker(args)));
         String selectorName = selectorNameFor(method);
         Class<?> returnType = returnTypeFor(method);
         Object[] marshalledArgs = marshallArgsFor(args);
@@ -263,7 +265,7 @@ logging.finest(String.format("invokeCocoa [%s %s].%s(%s)", javaClassName, ocInst
      * We need to make sure that we have filled in all NSObjectByReferences
      * so that they are retained.
      */
-    private void fillInReferences(Object[] args, Object[] marshalledArgs) {
+    private static void fillInReferences(Object[] args, Object[] marshalledArgs) {
         if (args == null) {
             return;
         }
@@ -272,7 +274,7 @@ logging.finest(String.format("invokeCocoa [%s %s].%s(%s)", javaClassName, ocInst
             Object marshalled = marshalledArgs[i];
             if (marshalled instanceof IDByReference) {
                 if (!(original instanceof ObjCObjectByReference)) {
-                    logging.severe("Bad marshalling");
+                    logger.log(Level.ERROR, "Bad marshalling");
                     continue;
                 }
                 ((ObjCObjectByReference) original).setObject(
@@ -281,7 +283,7 @@ logging.finest(String.format("invokeCocoa [%s %s].%s(%s)", javaClassName, ocInst
         }
     }
 
-    private Class<?> returnTypeFor(Method method) {
+    private static Class<?> returnTypeFor(Method method) {
         ReturnType annotation = method.getAnnotation(ReturnType.class);
         if (annotation == null) {
             return method.getReturnType();
@@ -291,7 +293,7 @@ logging.finest(String.format("invokeCocoa [%s %s].%s(%s)", javaClassName, ocInst
         }
     }
 
-    private Object[] marshallArgsFor(Object[] args) {
+    private static Object[] marshallArgsFor(Object[] args) {
         if (args == null) {
             return null;
         }
@@ -308,7 +310,7 @@ logging.finest(String.format("invokeCocoa [%s %s].%s(%s)", javaClassName, ocInst
         return result.toArray(new Object[0]);
     }
 
-    private Object marshall(Object arg) {
+    private static Object marshall(Object arg) {
         // Note that this is not the only marshalling that is done.
         // RococoaTypeMapper also gets involved.
         if (arg == null) {
@@ -326,7 +328,7 @@ logging.finest(String.format("invokeCocoa [%s %s].%s(%s)", javaClassName, ocInst
         return arg;
     }
 
-    private String selectorNameFor(Method method) {
+    private static String selectorNameFor(Method method) {
         String methodName = method.getName();
         if (methodName.endsWith("_")) {
             // lets us append _ to allow Java keywords as method names
@@ -343,7 +345,7 @@ logging.finest(String.format("invokeCocoa [%s %s].%s(%s)", javaClassName, ocInst
         return result.toString();
     }
     
-    private boolean shouldInvokeMethodsOnMainThread(AnnotatedElement element) {
+    private static boolean shouldInvokeMethodsOnMainThread(AnnotatedElement element) {
         return element != null && element.getAnnotation(RunOnMainThread.class) != null;
     }
 

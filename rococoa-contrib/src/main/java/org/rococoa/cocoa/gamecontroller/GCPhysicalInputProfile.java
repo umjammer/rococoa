@@ -6,13 +6,8 @@
 
 package org.rococoa.cocoa.gamecontroller;
 
-import java.util.logging.Logger;
-
-import javax.crypto.Mac;
-
 import org.rococoa.ObjCClass;
 import org.rococoa.Rococoa;
-import org.rococoa.cocoa.foundation.NSArray;
 import org.rococoa.cocoa.foundation.NSDictionary;
 import org.rococoa.cocoa.foundation.NSObject;
 import org.rococoa.cocoa.foundation.NSSet;
@@ -30,8 +25,6 @@ public abstract class GCPhysicalInputProfile extends NSObject {
     static {
         GameControllerLibrary.library.toString();
     }
-
-    private static final Logger logger = Logger.getLogger(GCPhysicalInputProfile.class.getName());
 
     public static final _Class CLASS = Rococoa.createClass("GCPhysicalInputProfile", _Class.class);
 

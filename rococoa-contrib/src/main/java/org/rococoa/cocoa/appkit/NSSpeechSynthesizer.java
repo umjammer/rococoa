@@ -20,10 +20,11 @@
 package org.rococoa.cocoa.appkit;
 
 import java.io.Serial;
+import java.lang.System.Logger;
+import java.lang.System.Logger.Level;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 import org.rococoa.ID;
 import org.rococoa.ObjCClass;
@@ -43,6 +44,8 @@ import org.rococoa.cocoa.foundation.NSURL;
 import org.rococoa.contrib.AbstractPropertyDictionary;
 import org.rococoa.contrib.NativeEnum;
 
+import static java.lang.System.getLogger;
+
 
 /**
  * Provides access to Cocoa NSSpeechSynthesizer.
@@ -51,7 +54,7 @@ import org.rococoa.contrib.NativeEnum;
  */
 public abstract class NSSpeechSynthesizer extends NSObject {
 
-    private static final Logger logger = Logger.getLogger(NSSpeechSynthesizer.class.getName());
+    private static final Logger logger = getLogger(NSSpeechSynthesizer.class.getName());
 
     /**
      * Defines the properties associated with a speech synthesizer. Getters and setters have been provided for most of these,
@@ -189,7 +192,7 @@ public abstract class NSSpeechSynthesizer extends NSObject {
         if (delegate != null) {
             this.delegate = delegate;
             delegateProxy = Rococoa.proxy(delegate);
-logger.finer(String.format("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ delegate: %16x", this.delegateProxy.id().longValue()));
+logger.log(Level.TRACE, String.format("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ delegate: %16x", this.delegateProxy.id().longValue()));
             setDelegate(this.delegateProxy.id());
         }
     }

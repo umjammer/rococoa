@@ -19,9 +19,8 @@
  
 package org.rococoa.cocoa.foundation;
 
-import org.rococoa.ReturnType;
-
 import com.sun.jna.Pointer;
+import org.rococoa.ReturnType;
 
 public abstract class NSMethodSignature extends NSObject {
 

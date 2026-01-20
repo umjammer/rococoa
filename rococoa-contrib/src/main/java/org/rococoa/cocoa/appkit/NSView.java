@@ -4,13 +4,13 @@ import org.rococoa.ID;
 import org.rococoa.ObjCClass;
 import org.rococoa.cocoa.CGFloat;
 import org.rococoa.cocoa.foundation.NSArray;
+import org.rococoa.cocoa.foundation.NSAttributedString;
 import org.rococoa.cocoa.foundation.NSDictionary;
 import org.rococoa.cocoa.foundation.NSObject;
 import org.rococoa.cocoa.foundation.NSPoint;
 import org.rococoa.cocoa.foundation.NSRect;
 import org.rococoa.cocoa.foundation.NSSize;
 import org.rococoa.cocoa.foundation.NSUInteger;
-import org.rococoa.cocoa.foundation.NSAttributedString;
 
 public abstract class NSView extends NSResponder {
     private static final NSView._Class CLASS = org.rococoa.Rococoa.createClass("NSView", NSView._Class.class);

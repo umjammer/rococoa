@@ -22,20 +22,21 @@ package org.rococoa.cocoa;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-
 import javax.swing.JFrame;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import org.rococoa.ID;
-import org.rococoa.Rococoa;
 import org.rococoa.ObjCObject;
+import org.rococoa.Rococoa;
 import org.rococoa.cocoa.appkit.NSOpenPanel;
 import org.rococoa.cocoa.foundation.NSURL;
 import org.rococoa.test.RococoaTestCase;
 import vavi.util.Debug;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 public class NSOpenPanelTest extends RococoaTestCase {

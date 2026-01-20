@@ -6,8 +6,6 @@
 
 package org.rococoa.cocoa.vision;
 
-import java.util.logging.Logger;
-
 import org.rococoa.ObjCClass;
 import org.rococoa.Rococoa;
 import org.rococoa.cocoa.coregraphics.CGPoint;
@@ -21,8 +19,6 @@ import org.rococoa.cocoa.foundation.NSObject;
  * @version 0.00 2022-10-16 nsano initial version <br>
  */
 public abstract class VNPoint extends NSObject {
-
-    private static final Logger logger = Logger.getLogger(VNPoint.class.getName());
 
     public static final _Class CLASS = Rococoa.createClass("VNPoint", _Class.class);
 

@@ -19,6 +19,8 @@
 
 package org.rococoa.internal;
 
+import java.lang.System.Logger;
+import java.lang.System.Logger.Level;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -26,7 +28,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import com.sun.jna.Library;
 import com.sun.jna.NativeLibrary;
@@ -35,6 +36,8 @@ import com.sun.jna.Structure;
 import org.rococoa.ID;
 import org.rococoa.RococoaException;
 import org.rococoa.Selector;
+
+import static java.lang.System.getLogger;
 
 
 /**
@@ -63,7 +66,7 @@ import org.rococoa.Selector;
  */
 class MsgSendHandler implements InvocationHandler {
 
-    private static final Logger logging = Logger.getLogger("org.rococoa.foundation");
+    private static final Logger logger = getLogger("org.rococoa.foundation");
 
     /**
      * @see "com.sun.jna.Function#OPTION_INVOKING_METHOD"
@@ -186,7 +189,7 @@ class MsgSendHandler implements InvocationHandler {
         String methodName = ((Selector) args[2]).getName();
         Object[] methodArgs = Arrays.copyOfRange(args, 3, args.length); // null terminated
         Class<?> returnTypeForThisCall = (Class<?>) args[0];
-logging.finest("invoke: " + returnTypeForThisCall.getSimpleName() + " " + methodName + "(" + Arrays.toString(methodArgs) + "), " + methodArgs.length + ", " + method);
+logger.log(Level.TRACE, "invoke: " + returnTypeForThisCall.getSimpleName() + " " + methodName + "(" + Arrays.toString(methodArgs) + "), " + methodArgs.length + ", " + method);
         MethodFunctionPair invocation = this.invocationFor(returnTypeForThisCall, methodArgs);
         Map<String, Object> options = new HashMap<>(Collections.singletonMap(Library.OPTION_TYPE_MAPPER, rococoaTypeMapper));
         options.put(OPTION_INVOKING_METHOD, invocation.method);
@@ -195,7 +198,7 @@ logging.finest("invoke: " + returnTypeForThisCall.getSimpleName() + " " + method
 
     private MethodFunctionPair invocationFor(Class<?> returnTypeForThisCall, Object[] args) {
         if (AARCH64) {
-logging.finest("AARCH64: " + returnTypeForThisCall.getName() + ", " + (args.length - 1));
+logger.log(Level.TRACE, "AARCH64: " + returnTypeForThisCall.getName() + ", " + (args.length - 1));
             return switch (args.length) {
                 case 0 -> objc_msgSend_Args0_Pair;
                 case 1 -> objc_msgSend_Args1_Pair;

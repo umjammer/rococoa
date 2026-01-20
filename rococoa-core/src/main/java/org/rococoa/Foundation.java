@@ -19,13 +19,13 @@
 
 package org.rococoa;
 
+import java.lang.System.Logger;
+import java.lang.System.Logger.Level;
 import java.lang.reflect.Method;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Callable;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import com.sun.jna.Library;
 import com.sun.jna.Native;
@@ -38,6 +38,8 @@ import org.rococoa.internal.MsgSendLibrary;
 import org.rococoa.internal.OCInvocationCallbacks;
 import org.rococoa.internal.RococoaLibrary;
 import org.rococoa.internal.VarArgsUnpacker;
+
+import static java.lang.System.getLogger;
 
 
 /**
@@ -54,7 +56,7 @@ import org.rococoa.internal.VarArgsUnpacker;
 @SuppressWarnings("nls")
 public abstract class Foundation {
 
-    private static final Logger logging = Logger.getLogger("org.rococoa.foundation");
+    private static final Logger logger = getLogger("org.rococoa.foundation");
 
     private static final FoundationLibrary foundationLibrary;
     private static final MsgSendLibrary messageSendLibrary;
@@ -63,7 +65,7 @@ public abstract class Foundation {
     private static final Map<String, Selector> selectorCache = new HashMap<>();
 
     static {
-        logging.finest("Initializing Foundation");
+        logger.log(Level.TRACE, "Initializing Foundation");
 
         // Set JNA to convert java.lang.String to char* using UTF-8, and match that with
         // the way we tell CF to interpret our char*
@@ -76,7 +78,7 @@ public abstract class Foundation {
 
         foundationLibrary = Native.load("Foundation", FoundationLibrary.class);
         rococoaLibrary = Native.load("rococoa", RococoaLibrary.class);
-        logging.finest("exit initializing Foundation");
+        logger.log(Level.TRACE, "exit initializing Foundation");
     }
 
     private Foundation() {
@@ -134,8 +136,8 @@ public abstract class Foundation {
      * Retain the NSObject with id
      */
     public static ID cfRetain(ID id) {
-        if (logging.isLoggable(Level.FINEST)) {
-            logging.finest(String.format("calling cfRetain(%s)", id));
+        if (logger.isLoggable(Level.TRACE)) {
+            logger.log(Level.TRACE, String.format("calling cfRetain(%s)", id));
         }
         return foundationLibrary.CFRetain(id);
     }
@@ -144,8 +146,8 @@ public abstract class Foundation {
      * Release the NSObject with id
      */
     public static void cfRelease(ID id) {
-        if (logging.isLoggable(Level.FINEST)) {
-            logging.finest(String.format("calling cfRelease(%s)", id));
+        if (logger.isLoggable(Level.TRACE)) {
+            logger.log(Level.TRACE, String.format("calling cfRelease(%s)", id));
         }
         foundationLibrary.CFRelease(id);
     }
@@ -187,8 +189,8 @@ public abstract class Foundation {
      * Get the ID of the NSClass with className
      */
     public static ID getClass(String className) {
-        if (logging.isLoggable(Level.FINEST)) {
-            logging.finest(String.format("calling objc_getClass(%s)", className));
+        if (logger.isLoggable(Level.TRACE)) {
+            logger.log(Level.TRACE, String.format("calling objc_getClass(%s)", className));
         }
         return foundationLibrary.objc_getClass(className);
     }
@@ -234,7 +236,7 @@ public abstract class Foundation {
      */
     @SuppressWarnings("unchecked")
     public static <T> T send(ID receiver, Selector selector, Class<T> returnType, Method method, Object... args) {
-logging.finest(String.format("sending (%s) %s.%s(%s), %s", returnType.getSimpleName(), receiver, selector.getName(), new VarArgsUnpacker(args), method != null && method.isVarArgs()));
+logger.log(Level.TRACE, String.format("sending (%s) %s.%s(%s), %s", returnType.getSimpleName(), receiver, selector.getName(), new VarArgsUnpacker(args), method != null && method.isVarArgs()));
         if (method != null && method.isVarArgs()) {
             return (T) messageSendLibrary.syntheticSendVarArgsMessage(returnType, receiver, selector, args);
         } else {

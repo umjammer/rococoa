@@ -6,8 +6,6 @@
 
 package org.rococoa.cocoa.gamecontroller;
 
-import java.util.logging.Logger;
-
 import org.rococoa.ID;
 import org.rococoa.ObjCBlock;
 import org.rococoa.ObjCBlocks.BlockLiteral;
@@ -27,14 +25,13 @@ public abstract class GCControllerAxisInput extends GCControllerElement {
         GameControllerLibrary.library.toString();
     }
 
-    private static final Logger logger = Logger.getLogger(GCControllerAxisInput.class.getName());
-
     public static final _Class CLASS = Rococoa.createClass("GCControllerAxisInput", _Class.class);
 
     public interface _Class extends ObjCClass {
         GCControllerAxisInput alloc();
     }
 
+    @Override
     public abstract GCControllerAxisInput init();
 
     // Accessing the input values

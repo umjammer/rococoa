@@ -19,10 +19,10 @@
 
 package org.rococoa;
 
+import java.lang.System.Logger;
+import java.lang.System.Logger.Level;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Proxy;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import com.sun.jna.Pointer;
 import net.bytebuddy.ByteBuddy;
@@ -35,6 +35,8 @@ import org.rococoa.internal.OCInvocationCallbacks;
 import org.rococoa.internal.ObjCObjectInvocationHandler;
 import org.rococoa.internal.VarArgsUnpacker;
 
+import static java.lang.System.getLogger;
+
 
 /**
  * Static factory for creating Java wrappers for Objective-C instances, and Objective-C
@@ -44,7 +46,7 @@ import org.rococoa.internal.VarArgsUnpacker;
  */
 public abstract class Rococoa  {
 
-    private static final Logger logging = Logger.getLogger("org.rococoa.proxy");
+    private static final Logger logger = getLogger("org.rococoa.proxy");
 
     /**
      * Create a Java NSClass representing the Objective-C class with ocClassName
@@ -82,7 +84,7 @@ public abstract class Rococoa  {
             String ocFactoryName, 
             boolean retain,
             Object... args) {
-logging.finest(String.format("creating [%s (%s)].%s(%s)", ocClassName, javaClass.getName(), ocFactoryName, new VarArgsUnpacker(args)));
+logger.log(Level.TRACE, String.format("creating [%s (%s)].%s(%s)", ocClassName, javaClass.getName(), ocFactoryName, new VarArgsUnpacker(args)));
         ID ocClass = Foundation.getClass(ocClassName);
         ID ocInstance = Foundation.send(ocClass, ocFactoryName, ID.class, args);
         CFIndex initialRetainCount = Foundation.cfGetRetainCount(ocInstance);
@@ -166,12 +168,12 @@ logging.finest(String.format("creating [%s (%s)].%s(%s)", ocClassName, javaClass
     @SuppressWarnings("unchecked")
     private static <T> T createProxy(Class<T> type, ObjCObjectInvocationHandler invocationHandler) {
         if (type.isInterface()) {
-logging.finest("createProxy: java: " + type);
+logger.log(Level.TRACE, "createProxy: java: " + type);
             return (T) Proxy.newProxyInstance(
                 invocationHandler.getClass().getClassLoader(), 
                 new Class[] {type}, invocationHandler);
         } else {
-logging.finest("createProxy: ByteBuddy: " + type);
+logger.log(Level.TRACE, "createProxy: ByteBuddy: " + type);
             try {
                 // TODO cache, TypeCache breaks instance individuality
                 return new ByteBuddy()
@@ -182,7 +184,7 @@ logging.finest("createProxy: ByteBuddy: " + type);
                         .load(type.getClassLoader())
                         .getLoaded().getDeclaredConstructor().newInstance();
             } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
-                logging.log(Level.SEVERE, e.getMessage(), e);
+                logger.log(Level.ERROR, e.getMessage(), e);
                 throw new IllegalStateException(e);
             }
         }
@@ -207,7 +209,7 @@ logging.finest("createProxy: ByteBuddy: " + type);
     private static void checkRetainCount(ID ocInstance, int expected) {
         CFIndex retainCount = Foundation.cfGetRetainCount(ocInstance);
         if (retainCount.intValue() != expected) {
-            logging.warning("Created an object which had a retain count of " + retainCount + " not " + expected);
+            logger.log(Level.WARNING, "Created an object which had a retain count of " + retainCount + " not " + expected);
         }
     }
 

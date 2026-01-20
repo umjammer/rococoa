@@ -19,8 +19,6 @@
 
 package org.rococoa.internal;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import java.lang.ref.WeakReference;
 
 import org.junit.jupiter.api.Test;
@@ -30,6 +28,10 @@ import org.rococoa.cocoa.foundation.NSDictionary;
 import org.rococoa.cocoa.foundation.NSObject;
 import org.rococoa.cocoa.foundation.NSString;
 import org.rococoa.test.RococoaTestCase;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * @version $Id$
@@ -64,7 +66,7 @@ public static abstract class NSImage extends NSObject {
      * <p/>
      * Summary: If nil is returned from a initializer, one must assume the object is already released
      *
-     * @see org.rococoa.internal.ObjCObjectInvocationHandler#invokeCocoa(java.lang.reflect.Method, Object[])
+     * @see "org.rococoa.internal.ObjCObjectInvocationHandler#invokeCocoa(java.lang.reflect.Method, Object[])"
      * @see "http://developer.apple.com/mac/library/documentation/Cocoa/Conceptual/ObjectiveC/Articles/ocAllocInit.html#//apple_ref/doc/uid/TP30001163-CH22-105952"
      */
     @Test

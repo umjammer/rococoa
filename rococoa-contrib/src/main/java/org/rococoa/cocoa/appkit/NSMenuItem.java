@@ -2,9 +2,9 @@ package org.rococoa.cocoa.appkit;
 
 import org.rococoa.ObjCClass;
 import org.rococoa.Selector;
+import org.rococoa.cocoa.foundation.NSAttributedString;
 import org.rococoa.cocoa.foundation.NSCopying;
 import org.rococoa.cocoa.foundation.NSObject;
-import org.rococoa.cocoa.foundation.NSAttributedString;
 
 
 /// <i>native declaration : :14</i>

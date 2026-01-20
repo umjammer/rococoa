@@ -12,8 +12,8 @@ import java.awt.image.DataBufferByte;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.logging.Logger;
-
+import java.lang.System.Logger;
+import java.lang.System.Logger.Level;
 import javax.imageio.ImageIO;
 
 import com.sun.jna.NativeLong;
@@ -23,6 +23,7 @@ import org.rococoa.cocoa.coreimage.CIImage;
 import org.rococoa.cocoa.foundation.NSData;
 import org.rococoa.cocoa.vision.VisionLibrary;
 
+import static java.lang.System.getLogger;
 import static org.rococoa.cocoa.coregraphics.CoreGraphicsLibrary.library;
 
 
@@ -35,7 +36,7 @@ import static org.rococoa.cocoa.coregraphics.CoreGraphicsLibrary.library;
  */
 public class CGImage {
 
-    private static final Logger logger = Logger.getLogger(CGImage.class.getName());
+    private static final Logger logger = getLogger(CGImage.class.getName());
 
     /** CGImageRef */
     private final Pointer /* CGImageRef */ image;
@@ -76,7 +77,7 @@ public class CGImage {
         this.image = cgImageRef;
         int cBits = CoreGraphicsLibrary.library.CGImageGetBitsPerComponent(image);
         int bits = CoreGraphicsLibrary.library.CGImageGetBitsPerPixel(image);
-logger.finer(String.format("cgImage: %dx%d, cb:%d, b:%d%n", getWidth(), getHeight(), cBits, bits));
+logger.log(Level.TRACE, String.format("cgImage: %dx%d, cb:%d, b:%d%n", getWidth(), getHeight(), cBits, bits));
     }
 
     @Override
@@ -109,7 +110,7 @@ logger.finer(String.format("cgImage: %dx%d, cb:%d, b:%d%n", getWidth(), getHeigh
         int stride = library.CGImageGetBytesPerRow(image);
         Pointer colorSpace = library.CGImageGetColorSpace(image);
         int colorModel = library.CGColorSpaceGetModel(colorSpace);
-logger.fine(String.format("cgImage: %dx%d, cBits:%d, bits:%d, stride:%d, cm:%d%n", width, height, cBits, bits, stride, colorModel));
+logger.log(Level.DEBUG, String.format("cgImage: %dx%d, cBits:%d, bits:%d, stride:%d, cm:%d%n", width, height, cBits, bits, stride, colorModel));
 
         Pointer dataProvider = library.CGImageGetDataProvider(image);
         Pointer data = library.CGDataProviderCopyData(dataProvider);

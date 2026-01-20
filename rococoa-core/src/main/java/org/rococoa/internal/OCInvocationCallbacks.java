@@ -19,19 +19,19 @@
 
 package org.rococoa.internal;
 
+import java.lang.System.Logger;
+import java.lang.System.Logger.Level;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import com.sun.jna.Memory;
 import org.rococoa.ID;
 import org.rococoa.Rococoa;
 import org.rococoa.RococoaException;
 import org.rococoa.cocoa.foundation.NSInvocation;
 import org.rococoa.cocoa.foundation.NSMethodSignature;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import com.sun.jna.Memory;
+import static java.lang.System.getLogger;
 
 /**
  * Holds the callbacks called when a method is invoked on an Objective-C proxy
@@ -51,7 +51,7 @@ import com.sun.jna.Memory;
 @SuppressWarnings("nls")
 public class OCInvocationCallbacks {
 
-    private static final Logger logging = Logger.getLogger("org.rococoa.callback");
+    private static final Logger logger = getLogger("org.rococoa.callback");
 
     private final Object javaObject;
 
@@ -62,9 +62,7 @@ public class OCInvocationCallbacks {
      */
     public final RococoaLibrary.MethodSignatureCallback methodSignatureCallback =
             selectorName -> {
-                if (logging.isLoggable(Level.FINEST)) {
-                    logging.finest(String.format("callback wanting methodSignature for selector %s", selectorName));
-                }
+                logger.log(Level.TRACE, String.format("callback wanting methodSignature for selector %s", selectorName));
                 return methodSignatureForSelector(selectorName);
             };
 
@@ -75,8 +73,8 @@ public class OCInvocationCallbacks {
         new RococoaLibrary.SelectorInvokedCallback() {
             @Override
             public void callback(String selectorName, ID nsInvocation) {
-                if (logging.isLoggable(Level.FINEST)) {
-                    logging.finest(String.format("callback invoking %s on %s", selectorName, javaObject));
+                if (logger.isLoggable(Level.TRACE)) {
+                    logger.log(Level.TRACE, String.format("callback invoking %s on %s", selectorName, javaObject));
                 }
                 callMethod(javaObject, selectorName, Rococoa.wrap(nsInvocation, NSInvocation.class));
             }
@@ -95,7 +93,7 @@ public class OCInvocationCallbacks {
 
     protected Method methodForSelector(String selectorName) {
         if (null == selectorName) {
-            logging.severe("methodForSelector called with null selectorName");
+            logger.log(Level.ERROR, "methodForSelector called with null selectorName");
             return null;
         }
         int parameterCount = countColons(selectorName);
@@ -118,10 +116,10 @@ public class OCInvocationCallbacks {
                     }
                 }
             }
-            logging.fine("No method " + methodName + " for selector:" + selectorName);
+            logger.log(Level.DEBUG, "No method " + methodName + " for selector:" + selectorName);
             return null;
         } catch (Exception e) {
-            logging.log(Level.SEVERE, "Exception finding methodForSelector", e);
+            logger.log(Level.ERROR, "Exception finding methodForSelector", e);
             return null;
         }
     }
@@ -166,10 +164,10 @@ public class OCInvocationCallbacks {
             Object result  = method.invoke(o, marshalledArgs);
             putResultIntoInvocation(invocation, typeToReturnToObjC, result);
         } catch (InvocationTargetException e) {
-            logging.log(Level.SEVERE, "Exception calling method for selector " + selectorName, e);
+            logger.log(Level.ERROR, "Exception calling method for selector " + selectorName, e);
             throw new RococoaException("Exception calling method for selector " + selectorName, e.getCause());
         } catch (Exception e) {
-            logging.log(Level.SEVERE, "Exception calling method for selector " + selectorName, e);
+            logger.log(Level.ERROR, "Exception calling method for selector " + selectorName, e);
             throw new RococoaException("Exception calling method for selector " + selectorName, e);
         }
     }
@@ -248,7 +246,7 @@ public class OCInvocationCallbacks {
     private static String stringForType(Class<?> clas) {
         NSInvocationMapper result = NSInvocationMapperLookup.mapperForType(clas);
         if (result == null) {
-            logging.warning("Unable to give Objective-C type string for Java type " + clas);
+            logger.log(Level.WARNING, "Unable to give Objective-C type string for Java type " + clas);
             return null;
         }
         return result.typeString();

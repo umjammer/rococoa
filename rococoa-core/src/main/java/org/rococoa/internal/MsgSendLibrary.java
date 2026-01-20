@@ -19,11 +19,10 @@
 
 package org.rococoa.internal;
 
-import org.rococoa.ID;
-import org.rococoa.Selector;
-
 import com.sun.jna.Library;
 import com.sun.jna.Structure;
+import org.rococoa.ID;
+import org.rococoa.Selector;
 
 
 /**

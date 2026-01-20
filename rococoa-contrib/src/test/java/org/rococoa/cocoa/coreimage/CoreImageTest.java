@@ -23,7 +23,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import org.rococoa.cocoa.CGFloat;
-import org.rococoa.cocoa.appkit.NSImage;
 import org.rococoa.cocoa.appkit.NSScreen;
 import org.rococoa.cocoa.coregraphics.CGImage;
 import org.rococoa.cocoa.coregraphics.CGRect;
@@ -32,7 +31,6 @@ import org.rococoa.cocoa.foundation.NSArray;
 import org.rococoa.cocoa.foundation.NSNumber;
 import org.rococoa.cocoa.foundation.NSObject;
 import org.rococoa.cocoa.foundation.NSRect;
-import org.rococoa.cocoa.foundation.NSSize;
 import vavi.util.Debug;
 
 import static org.rococoa.cocoa.foundation.FoundationKitFunctions.NSRectFromCGRect;

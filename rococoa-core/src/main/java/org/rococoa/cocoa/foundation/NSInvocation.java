@@ -19,12 +19,11 @@
 
 package org.rococoa.cocoa.foundation;
 
+import com.sun.jna.Memory;
+import com.sun.jna.Pointer;
 import org.rococoa.ID;
 import org.rococoa.ObjCObjectByReference;
 import org.rococoa.Selector;
-
-import com.sun.jna.Memory;
-import com.sun.jna.Pointer;
 
 public abstract class NSInvocation extends NSObject {
 

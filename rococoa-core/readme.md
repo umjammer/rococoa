@@ -69,6 +69,13 @@ public abstract class FooClass extends NSObject {
         FooObjcObject fooObjcObject = Rococoa.cast(objcObject, FooObjcClass.class);
 ```
 
+### ID to Object convetion
+
+```java
+    FooObjcObject fooObjcObject = Rococoa.wrap(id, FooObjcClass.class);
+```
+
+
 ## References
 
  * https://github.com/java-native-access/jna/tree/master/contrib/platform/src/com/sun/jna/platform/mac

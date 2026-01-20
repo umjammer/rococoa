@@ -6,8 +6,6 @@
 
 package org.rococoa.cocoa.vision;
 
-import java.util.logging.Logger;
-
 import com.sun.jna.Pointer;
 import org.rococoa.ObjCClass;
 import org.rococoa.ObjCObjectByReference;
@@ -23,8 +21,6 @@ import org.rococoa.cocoa.foundation.NSObject;
  * @version 0.00 2023-12-18 nsano initial version <br>
  */
 public abstract class VNSequenceRequestHandler extends NSObject {
-
-    private static final Logger logger = Logger.getLogger(VNSequenceRequestHandler.class.getName());
 
     public static final _Class CLASS = Rococoa.createClass("VNSequenceRequestHandler", _Class.class);
 

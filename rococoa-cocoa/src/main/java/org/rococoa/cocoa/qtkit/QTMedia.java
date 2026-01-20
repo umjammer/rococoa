@@ -19,12 +19,11 @@
  
 package org.rococoa.cocoa.qtkit;
 
+import com.sun.jna.Pointer;
 import org.rococoa.ID;
-import org.rococoa.cocoa.foundation.NSObject;
 import org.rococoa.RunOnMainThread;
 import org.rococoa.cocoa.foundation.NSDictionary;
-
-import com.sun.jna.Pointer;
+import org.rococoa.cocoa.foundation.NSObject;
 
 @SuppressWarnings("nls")
 @Deprecated

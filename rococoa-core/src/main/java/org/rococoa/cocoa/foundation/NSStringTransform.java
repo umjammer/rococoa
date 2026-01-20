@@ -33,5 +33,3 @@ public abstract class NSStringTransform extends NSString {
 
     public static final NSStringTransform NSStringTransformLatinToHiragana = stringWithString(FoundationLibrary.kCFStringTransformLatinHiragana);
 }
-
-/* */

@@ -6,8 +6,6 @@
 
 package org.rococoa.cocoa.gamecontroller;
 
-import java.util.logging.Logger;
-
 import org.rococoa.ID;
 import org.rococoa.ObjCBlock;
 import org.rococoa.ObjCBlocks.BlockLiteral;
@@ -27,14 +25,13 @@ public abstract class GCControllerButtonInput extends GCControllerElement {
         GameControllerLibrary.library.toString();
     }
 
-    private static final Logger logger = Logger.getLogger(GCControllerButtonInput.class.getName());
-
     public static final _Class CLASS = Rococoa.createClass("GCControllerButtonInput", _Class.class);
 
     public interface _Class extends ObjCClass {
         GCControllerButtonInput alloc();
     }
 
+    @Override
     public abstract GCControllerButtonInput init();
 
     /** A Boolean value that indicates whether the user is touching the button. */

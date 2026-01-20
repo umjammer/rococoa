@@ -19,11 +19,10 @@
 
 package org.rococoa.cocoa.foundation;
 
+import com.sun.jna.Structure;
 import org.rococoa.ObjCClass;
 import org.rococoa.Rococoa;
 import org.rococoa.internal.NSInvocationMapperLookup;
-
-import com.sun.jna.Structure;
 
 public abstract class NSValue extends NSObject {
 

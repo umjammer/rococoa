@@ -19,12 +19,13 @@
 
 package org.rococoa;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.rococoa.cocoa.foundation.NSObject;
 import org.rococoa.test.RococoaTestCase;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
 
 
 public class RococoaAbstractClassTest extends RococoaTestCase {

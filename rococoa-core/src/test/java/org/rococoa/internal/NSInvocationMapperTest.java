@@ -19,15 +19,14 @@
 
 package org.rococoa.internal;
 
-import static org.junit.jupiter.api.Assertions.*;
-
+import com.sun.jna.Native;
+import com.sun.jna.NativeLong;
 import org.junit.jupiter.api.Test;
 import org.rococoa.cocoa.CGFloat;
 import org.rococoa.cocoa.foundation.NSInteger;
 import org.rococoa.cocoa.foundation.NSUInteger;
 
-import com.sun.jna.Native;
-import com.sun.jna.NativeLong;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class NSInvocationMapperTest {
 

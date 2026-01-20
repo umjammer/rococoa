@@ -6,8 +6,6 @@
 
 package org.rococoa.cocoa.avfoundation;
 
-import java.util.logging.Logger;
-
 import org.rococoa.ObjCClass;
 import org.rococoa.Rococoa;
 import org.rococoa.cocoa.coreanimation.CALayer;
@@ -20,8 +18,6 @@ import org.rococoa.cocoa.coreanimation.CALayer;
  * @version 0.00 2023-12-18 nsano initial version <br>
  */
 public abstract class AVCaptureVideoPreviewLayer extends CALayer {
-
-    private static final Logger logger = Logger.getLogger(AVCaptureVideoPreviewLayer.class.getName());
 
     public static final _Class CLASS = Rococoa.createClass("AVCaptureVideoPreviewLayer", _Class.class);
 

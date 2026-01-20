@@ -6,8 +6,6 @@
 
 package org.rococoa.cocoa.appkit;
 
-import java.util.logging.Logger;
-
 import org.rococoa.ObjCBlock;
 import org.rococoa.ObjCClass;
 import org.rococoa.ObjCObjectByReference;
@@ -24,8 +22,6 @@ import org.rococoa.cocoa.foundation.NSURL;
  * @version 0.00 2023-12-20 nsano initial version <br>
  */
 public abstract class NSTask extends NSObject {
-
-    private static final Logger logger = Logger.getLogger(NSTask.class.getName());
 
     public static final _Class CLASS = Rococoa.createClass("NSTask", _Class.class);
 

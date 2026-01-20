@@ -6,8 +6,6 @@
 
 package org.rococoa.cocoa.vision;
 
-import java.util.logging.Logger;
-
 import org.rococoa.ObjCClass;
 import org.rococoa.Rococoa;
 import org.rococoa.cocoa.foundation.NSObject;
@@ -20,8 +18,6 @@ import org.rococoa.cocoa.foundation.NSObject;
  * @version 0.00 2022-10-15 nsano initial version <br>
  */
 public abstract class VNObservation extends NSObject {
-
-    private static final Logger logger = Logger.getLogger(VNObservation.class.getName());
 
     public static final _Class CLASS = Rococoa.createClass("VNObservation", _Class.class);
 

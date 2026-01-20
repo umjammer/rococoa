@@ -25,13 +25,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.rococoa.RococoaException;
-import org.rococoa.cocoa.foundation.NSInvocation;
-
 import com.sun.jna.Memory;
 import com.sun.jna.Native;
 import com.sun.jna.Pointer;
 import com.sun.jna.Structure;
+import org.rococoa.RococoaException;
+import org.rococoa.cocoa.foundation.NSInvocation;
 
 
 class NSInvocationStructureMapper extends NSInvocationMapper {
@@ -66,8 +65,7 @@ class NSInvocationStructureMapper extends NSInvocationMapper {
     @Override public Object readArgumentFrom(NSInvocation invocation, int index, Class<?> type) {
         if (Structure.ByValue.class.isAssignableFrom(type)) {
             return readStructureByValue(invocation, index, (Class<? extends Structure>) type);
-        }
-        else {
+        } else {
             return readStructureByReference(invocation, index, (Class<? extends Structure>) type);
         }
     }
@@ -81,18 +79,16 @@ class NSInvocationStructureMapper extends NSInvocationMapper {
         }
     }
     
-    private Structure readStructureByValue(NSInvocation invocation, int index, 
-            Class<? extends Structure> type)
-    {
+    private static Structure readStructureByValue(NSInvocation invocation, int index,
+                                                  Class<? extends Structure> type) {
         Structure result = newInstance(type);
         Memory buffer = new Memory(result.size());
         invocation.getArgument_atIndex(buffer, index);
         return copyBufferToStructure(buffer, result);
     }
     
-    private Structure readStructureByReference(NSInvocation invocation, int index, 
-            Class<? extends Structure> type)
-    {
+    private static Structure readStructureByReference(NSInvocation invocation, int index,
+                                                      Class<? extends Structure> type) {
         Memory buffer = new Memory(Native.POINTER_SIZE);
         invocation.getArgument_atIndex(buffer, index);
         Pointer pointerToResult = buffer.getPointer(0);
@@ -109,14 +105,14 @@ class NSInvocationStructureMapper extends NSInvocationMapper {
         }
     }
 
-    private Structure copyBufferToStructure(Pointer buffer, Structure structure) {
+    private static Structure copyBufferToStructure(Pointer buffer, Structure structure) {
         int byteCount = structure.size();
         memcpy(structure.getPointer(), buffer, byteCount);
         structure.read();
         return structure;
     }
     
-    private Memory bufferForStructureByValue(Structure methodCallResult) {
+    private static Memory bufferForStructureByValue(Structure methodCallResult) {
         methodCallResult.write();
         int byteCount = methodCallResult.size();
         Memory buffer = new Memory(byteCount);

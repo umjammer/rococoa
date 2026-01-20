@@ -6,8 +6,6 @@
 
 package org.rococoa.cocoa.vision;
 
-import java.util.logging.Logger;
-
 import org.rococoa.ObjCClass;
 import org.rococoa.Rococoa;
 
@@ -19,8 +17,6 @@ import org.rococoa.Rococoa;
  * @version 0.00 2022-10-16 nsano initial version <br>
  */
 public abstract class VNRecognizedPointsObservation extends VNObservation {
-
-    private static final Logger logger = Logger.getLogger(VNRecognizedPointsObservation.class.getName());
 
     public static final _Class CLASS = Rococoa.createClass("VNRecognizedPointsObservation", _Class.class);
 

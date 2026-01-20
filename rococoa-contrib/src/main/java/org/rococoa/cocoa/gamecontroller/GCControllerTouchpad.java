@@ -6,13 +6,6 @@
 
 package org.rococoa.cocoa.gamecontroller;
 
-import java.util.logging.Logger;
-
-import javax.crypto.Mac;
-
-import org.rococoa.ID;
-import org.rococoa.ObjCBlock;
-import org.rococoa.ObjCBlocks.BlockLiteral;
 import org.rococoa.ObjCClass;
 import org.rococoa.Rococoa;
 import org.rococoa.cocoa.foundation.NSInteger;
@@ -30,8 +23,6 @@ public abstract class GCControllerTouchpad extends GCControllerElement {
         GameControllerLibrary.library.toString();
     }
 
-    private static final Logger logger = Logger.getLogger(GCControllerTouchpad.class.getName());
-
     public static final _Class CLASS = Rococoa.createClass("GCControllerTouchpad", _Class.class);
 
     public interface _Class extends ObjCClass {
@@ -39,6 +30,7 @@ public abstract class GCControllerTouchpad extends GCControllerElement {
         GCControllerTouchpad alloc();
     }
 
+    @Override
     public abstract GCControllerTouchpad init();
 
     /** The element that represents the state of the user’s touch on the surface of the touchpad. */

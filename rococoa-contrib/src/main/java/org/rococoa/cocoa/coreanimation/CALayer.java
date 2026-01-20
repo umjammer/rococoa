@@ -6,8 +6,6 @@
 
 package org.rococoa.cocoa.coreanimation;
 
-import java.util.logging.Logger;
-
 import org.rococoa.ID;
 import org.rococoa.ObjCClass;
 import org.rococoa.Rococoa;
@@ -21,8 +19,6 @@ import org.rococoa.cocoa.foundation.NSObject;
  * @version 0.00 2023-12-18 nsano initial version <br>
  */
 public abstract class CALayer extends NSObject {
-
-    private static final Logger logger = Logger.getLogger(CALayer.class.getName());
 
     public static final _Class CLASS = Rococoa.createClass("CALayer", _Class.class);
 

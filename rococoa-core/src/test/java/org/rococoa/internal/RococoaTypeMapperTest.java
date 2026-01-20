@@ -19,14 +19,14 @@
  
 package org.rococoa.internal;
 
-import static org.junit.jupiter.api.Assertions.*;
-
+import com.sun.jna.TypeMapper;
 import org.junit.jupiter.api.Test;
 import org.rococoa.ObjCObject;
 import org.rococoa.cocoa.foundation.NSNumber;
 import org.rococoa.test.RococoaTestCase;
 
-import com.sun.jna.TypeMapper;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SuppressWarnings({"cast" })
 public class RococoaTypeMapperTest extends RococoaTestCase {

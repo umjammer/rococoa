@@ -19,13 +19,13 @@
 
 package org.rococoa;
 
+import java.lang.ref.WeakReference;
+import java.util.concurrent.CyclicBarrier;
+
 import org.junit.jupiter.api.Test;
 import org.rococoa.cocoa.foundation.NSAutoreleasePool;
 import org.rococoa.test.RococoaTestCase;
 import vavi.util.Debug;
-
-import java.lang.ref.WeakReference;
-import java.util.concurrent.CyclicBarrier;
 
 /**
  * NSAutoreleasePool's behaviour wrt threads is interesting. It seems that if

@@ -6,21 +6,15 @@
 
 package org.rococoa.cocoa.gamecontroller;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Logger;
-
-import javax.crypto.Mac;
+import java.lang.System.Logger;
 
 import org.rococoa.ID;
 import org.rococoa.ObjCBlock;
 import org.rococoa.ObjCBlocks.BlockLiteral;
 import org.rococoa.ObjCClass;
 import org.rococoa.Rococoa;
-import org.rococoa.cocoa.foundation.NSArray;
-import org.rococoa.cocoa.foundation.NSDictionary;
-import org.rococoa.cocoa.foundation.NSObject;
-import org.rococoa.cocoa.foundation.NSString;
+
+import static java.lang.System.getLogger;
 
 
 /**
@@ -35,7 +29,7 @@ public abstract class GCExtendedGamepad extends GCPhysicalInputProfile {
         GameControllerLibrary.library.toString();
     }
 
-    private static final Logger logger = Logger.getLogger(GCExtendedGamepad.class.getName());
+    private static final Logger logger = getLogger(GCExtendedGamepad.class.getName());
 
     public static final _Class CLASS = Rococoa.createClass("GCExtendedGamepad", _Class.class);
 
@@ -43,6 +37,7 @@ public abstract class GCExtendedGamepad extends GCPhysicalInputProfile {
         GCExtendedGamepad alloc();
     }
 
+    @Override
     public abstract GCExtendedGamepad init();
 
     /** The controller for the profile. */
