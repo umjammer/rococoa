@@ -84,7 +84,7 @@
     <dependency>
       <groupId>com.github.eduramiba</groupId>
       <artifactId>webcam-capture-driver-native</artifactId>
-      <version>dc4b67c6cc</version>
+      <version>1.2.2</version>
       <scope>test</scope>
     </dependency>
 
