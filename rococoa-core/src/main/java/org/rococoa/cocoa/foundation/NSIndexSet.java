@@ -152,7 +152,7 @@ public abstract class NSIndexSet extends org.rococoa.cocoa.foundation.NSObject i
      */
     public abstract boolean containsIndexes(org.rococoa.cocoa.foundation.NSIndexSet indexSet);
 
-    public static abstract class _class_ extends org.rococoa.cocoa.foundation.NSObject._class_ {
+    protected static abstract class _class_ extends org.rococoa.cocoa.foundation.NSObject._class_ {
         /**
          * Original signature : <code>+(id)indexSet</code><br>
          * <i>native declaration : NSIndexSet.h:51</i>
@@ -178,7 +178,7 @@ public abstract class NSIndexSet extends org.rococoa.cocoa.foundation.NSObject i
         public abstract org.rococoa.cocoa.foundation.NSIndexSet new_();
     }
 
-    public static _class_ getNSClass() {
+    private static _class_ getNSClass() {
         if (_NSCLASS_ == null)
             _NSCLASS_ = org.rococoa.Rococoa.createClass("NSIndexSet", _class_.class);
         return _NSCLASS_;

@@ -35,7 +35,7 @@ public abstract class NSPasteboard extends NSObject {
         return CLASS.pasteboardWithName(name);
     }
 
-    public interface _Class extends ObjCClass {
+    private interface _Class extends ObjCClass {
         /**
          * Original signature : <code>NSPasteboard* generalPasteboard()</code><br>
          * <i>native declaration : :65</i>

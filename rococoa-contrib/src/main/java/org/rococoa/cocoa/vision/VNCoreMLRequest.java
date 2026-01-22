@@ -21,10 +21,14 @@ import org.rococoa.Rococoa;
  */
 public abstract class VNCoreMLRequest extends VNImageBasedRequest {
 
-    public static final _Class CLASS = Rococoa.createClass("VNCoreMLRequest", _Class.class);
+    private static final _Class CLASS = Rococoa.createClass("VNCoreMLRequest", _Class.class);
 
-    public interface _Class extends ObjCClass {
+    private interface _Class extends ObjCClass {
         VNCoreMLRequest alloc();
+    }
+
+    public static VNCoreMLRequest alloc() {
+        return CLASS.alloc();
     }
 
     /** Creates a model container to be used with VNCoreMLRequest based on a Core ML model. */

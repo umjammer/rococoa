@@ -23,9 +23,9 @@ import org.rococoa.cocoa.foundation.NSURL;
  */
 public abstract class NSTask extends NSObject {
 
-    public static final _Class CLASS = Rococoa.createClass("NSTask", _Class.class);
+    private static final _Class CLASS = Rococoa.createClass("NSTask", _Class.class);
 
-    public interface _Class extends ObjCClass {
+    private interface _Class extends ObjCClass {
         /** Creates and runs a task with a specified executable and arguments. */
         NSTask launchedTaskWithExecutableURL_arguments_error_terminationHandler(
                 NSURL url,

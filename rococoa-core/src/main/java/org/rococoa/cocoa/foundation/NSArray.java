@@ -33,9 +33,9 @@ import org.rococoa.Rococoa;
  */
 public abstract class NSArray extends NSEnumerator implements List<NSObject> {
 
-    public static final _Class CLASS = Rococoa.createClass("NSArray", _Class.class);
+    private static final _Class CLASS = Rococoa.createClass("NSArray", _Class.class);
 
-    public interface _Class extends ObjCClass {
+    private interface _Class extends ObjCClass {
         /** Creates and returns an empty array. */
         NSArray array();
         /**
@@ -50,13 +50,17 @@ public abstract class NSArray extends NSEnumerator implements List<NSObject> {
         NSArray arrayWithArray(NSArray array);
     }
 
+    public static NSArray arrayWithArray(NSArray array) {
+        return CLASS.arrayWithArray(array);
+    }
+
     /** */
     public static NSArray arrayWithObjects(NSObject...objects) {
         return CLASS.arrayWithArray(toArray(objects));
     }
 
     static NSMutableArray toArray(NSObject...objects) {
-        NSMutableArray array = NSMutableArray.CLASS.array();
+        NSMutableArray array = NSMutableArray.array();
         for (NSObject o : objects) {
             if (o == null) {
                 break;

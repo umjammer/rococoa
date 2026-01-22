@@ -26,9 +26,9 @@ public abstract class GCPhysicalInputProfile extends NSObject {
         GameControllerLibrary.library.toString();
     }
 
-    public static final _Class CLASS = Rococoa.createClass("GCPhysicalInputProfile", _Class.class);
+    private static final _Class CLASS = Rococoa.createClass("GCPhysicalInputProfile", _Class.class);
 
-    public interface _Class extends ObjCClass {
+    private interface _Class extends ObjCClass {
         GCPhysicalInputProfile alloc();
     }
 

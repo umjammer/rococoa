@@ -24,9 +24,22 @@ import org.rococoa.Rococoa;
 
 
 public abstract class NSDate extends NSObject {
-    public static final _Class CLASS = Rococoa.createClass("NSDate",  _Class.class);
-    public interface _Class extends ObjCClass {
+
+    private static final _Class CLASS = Rococoa.createClass("NSDate",  _Class.class);
+
+    private interface _Class extends ObjCClass {
+
         NSDate dateWithTimeIntervalSince1970(double d);
+
+        NSDate dateWithTimeIntervalSinceNow(double d);
+    }
+
+    public static NSDate dateWithTimeIntervalSince1970(double d) {
+        return CLASS.dateWithTimeIntervalSince1970(d);
+    }
+
+    public static NSDate dateWithTimeIntervalSinceNow(double d) {
+        return CLASS.dateWithTimeIntervalSinceNow(d);
     }
 
     public static NSDate from(double d) {

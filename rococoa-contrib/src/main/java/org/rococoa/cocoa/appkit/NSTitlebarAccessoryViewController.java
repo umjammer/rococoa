@@ -21,7 +21,7 @@ import org.rococoa.cocoa.foundation.NSInteger;
 public abstract class NSTitlebarAccessoryViewController extends NSResponder {
     private static final NSTitlebarAccessoryViewController._Class CLASS = org.rococoa.Rococoa.createClass("NSTitlebarAccessoryViewController", NSTitlebarAccessoryViewController._Class.class);
 
-    public interface _Class extends ObjCClass {
+    private interface _Class extends ObjCClass {
         NSTitlebarAccessoryViewController alloc();
     }
 

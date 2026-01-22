@@ -61,12 +61,12 @@ Debug.println("controller: " + controller);
             Selector sel1 = Foundation.selector("controllerDidConnect:");
             Selector sel2 = Foundation.selector("controllerDidDisconnect:");
 
-            NSNotificationCenter notificationCenter = NSNotificationCenter.CLASS.defaultCenter();
+            NSNotificationCenter notificationCenter = NSNotificationCenter.defaultCenter();
             notificationCenter.addObserver_selector_name_object(proxy.id(), sel1, GCController.GCControllerDidConnectNotification, null);
             notificationCenter.addObserver_selector_name_object(proxy.id(), sel2, GCController.GCControllerDidDisconnectNotification, null);
 
             // fake notification
-            NSNotification notification = NSNotification.CLASS.notificationWithName_object(GCController.GCControllerDidConnectNotification, NSString.stringWithString("hello world"));
+            NSNotification notification = NSNotification.init(GCController.GCControllerDidConnectNotification, "hello world");
             notificationCenter.postNotification(notification);
 
             cdl.await();

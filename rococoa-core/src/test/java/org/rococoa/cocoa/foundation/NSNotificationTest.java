@@ -16,9 +16,9 @@ package org.rococoa.cocoa.foundation;
 public class NSNotificationTest {
 
     public static void main(String[] args) throws Exception {
-        NSNotificationCenter notificationCenter = NSNotificationCenter.CLASS.defaultCenter();
+        NSNotificationCenter notificationCenter = NSNotificationCenter.defaultCenter();
 
-        NSNotification notification = NSNotification.CLASS.notificationWithName_object("vavi", NSString.stringWithString("hello world"));
+        NSNotification notification = NSNotification.init("vavi", "hello world");
 
         notificationCenter.postNotification(notification);
 System.err.println("done");

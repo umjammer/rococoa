@@ -21,9 +21,9 @@ import org.rococoa.internal.FoundationLibrary;
  */
 public abstract class NSStringTransform extends NSString {
 
-    public static _Class CLASS = Rococoa.createClass("NSString", _Class.class);
+    private static _Class CLASS = Rococoa.createClass("NSString", _Class.class);
 
-    public interface _Class extends ObjCClass {
+    private interface _Class extends ObjCClass {
         NSStringTransform stringWithString(String string);
     }
 

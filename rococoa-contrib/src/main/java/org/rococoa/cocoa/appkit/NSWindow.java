@@ -1,11 +1,14 @@
 package org.rococoa.cocoa.appkit;
 
+import com.sun.jna.platform.win32.WinDef.BOOL;
+
 import org.rococoa.Foundation;
 import org.rococoa.ID;
 import org.rococoa.ObjCClass;
 import org.rococoa.Rococoa;
 import org.rococoa.cocoa.CGFloat;
 import org.rococoa.cocoa.foundation.NSArray;
+import org.rococoa.cocoa.foundation.NSAutoreleasePool;
 import org.rococoa.cocoa.foundation.NSDate;
 import org.rococoa.cocoa.foundation.NSDictionary;
 import org.rococoa.cocoa.foundation.NSInteger;
@@ -20,7 +23,16 @@ import org.rococoa.cocoa.foundation.NSURL;
 
 /// <i>native declaration : :119</i>
 public abstract class NSWindow extends NSResponder {
+
     private static final _Class CLASS = org.rococoa.Rococoa.createClass("NSWindow", _Class.class);
+
+    public static NSWindow alloc() {
+        return CLASS.alloc();
+    }
+
+    public static NSWindow windowWithContentViewController(NSViewController contentViewController) {
+        return CLASS.windowWithContentViewController(contentViewController);
+    }
 
     /// <i>native declaration : line 22</i>
     public static final int NSBorderlessWindowMask = 0;
@@ -132,6 +144,8 @@ public abstract class NSWindow extends NSResponder {
      */
     public static final int NSWindowCollectionBehaviorIgnoresCycle = 1 << 6;
 
+    public static final int NSBackingStoreBuffered = 2;
+
     /// enum values
     public interface NSWindowLevel {
         int NSNormalWindowLevel = 0;
@@ -199,7 +213,13 @@ public abstract class NSWindow extends NSResponder {
         int NSTitlebarSeparatorStyleShadow = 3;
     }
 
-    public interface _Class extends ObjCClass {
+    private interface _Class extends ObjCClass {
+
+        NSWindow alloc();
+
+        /** Creates a titled window that contains the specified content view controller. */
+        NSWindow windowWithContentViewController(NSViewController contentViewController);
+
         /**
          * <i>native declaration : :217</i><br>
          * Conversion Error : NSRect
@@ -338,6 +358,10 @@ public abstract class NSWindow extends NSResponder {
     public static NSRect frameRectForContentRect_styleMask(NSRect cRect, NSUInteger aStyle) {
         return CLASS.frameRectForContentRect_styleMask(cRect, aStyle);
     }
+
+    public abstract NSWindow init();
+
+    public abstract NSWindow initWithContentRect_styleMask_backing_defer(NSRect contentRect, int /* NSWindowStyleMask */ style, int /* NSBackingStoreType */ backingStoreType, boolean backing);
 
     /**
      * <i>native declaration : :227</i><br>

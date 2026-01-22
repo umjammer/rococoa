@@ -19,7 +19,7 @@ public abstract class NSMenuItem extends NSObject implements NSCopying, NSValida
         return CLASS.alloc().initWithTitle_action_keyEquivalent(title, selector, charCode);
     }
 
-    public interface _Class extends ObjCClass {
+    private interface _Class extends ObjCClass {
         /**
          * Original signature : <code>void setUsesUserKeyEquivalents(BOOL)</code><br>
          * <i>native declaration : :44</i>

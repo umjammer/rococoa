@@ -41,7 +41,7 @@ public class StructsInObjectsTest extends RococoaTestCase {
 
     @Test public void test() throws Exception {
         NSSize aSize = new NSSize(1f, 3f);
-        NSValue value = NSValue.CLASS.valueWithSize(aSize);
+        NSValue value = NSValue.valueWithSize(aSize);
         
         
         Foundation.send(value.id(), Foundation.selector("sizeValue"), NSSize.class);

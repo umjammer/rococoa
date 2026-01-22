@@ -37,7 +37,7 @@ public abstract class NSButton extends NSControl {
     public static final int NSRecessedBezelStyle = 13;
     public static final int NSRoundedDisclosureBezelStyle = 14;
 
-    public interface _Class extends ObjCClass {
+    private interface _Class extends ObjCClass {
         NSButton alloc();
     }
 

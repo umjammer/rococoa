@@ -4,9 +4,10 @@ import org.rococoa.ObjCClass;
 import org.rococoa.Rococoa;
 
 public abstract class NSProcessInfo extends NSObject {
-    public static _class_ CLASS = Rococoa.createClass("NSProcessInfo", _class_.class);
 
-    public static abstract class _class_ implements ObjCClass {
+    private static _class_ CLASS = Rococoa.createClass("NSProcessInfo", _class_.class);
+
+    private static abstract class _class_ implements ObjCClass {
         public abstract NSProcessInfo processInfo();
     }
 

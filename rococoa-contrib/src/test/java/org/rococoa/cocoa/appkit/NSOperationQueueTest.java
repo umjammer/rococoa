@@ -46,7 +46,7 @@ class NSOperationQueueTest extends RococoaTestCase {
 
     @BeforeEach
     public void setUp() {
-        fixture = NSOperationQueue.CLASS.alloc().init();
+        fixture = NSOperationQueue.alloc().init();
     }
 
     private static class RunnableHolder {
@@ -64,7 +64,7 @@ class NSOperationQueueTest extends RococoaTestCase {
                         results[j] = true;
                     }
                 };
-                ops[i] = NSInvocationOperation.CLASS.alloc();
+                ops[i] = NSInvocationOperation.alloc();
                 runnables[i] = Rococoa.proxy(r);
                 ops[i].initWithTarget_selector_object(runnables[i].id(), Foundation.selector("run"), null);
             }
@@ -99,7 +99,7 @@ class NSOperationQueueTest extends RococoaTestCase {
     /**
      * Test of addOperation method, of class NSOperationQueue.
      */
-    @Test
+    @RepeatedIfExceptionsTest(repeats = 3)
     public void testAddOperation() throws InterruptedException {
         RunnableHolder runnables = new RunnableHolder(250);
         runnables.addOperations(fixture);

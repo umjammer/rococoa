@@ -26,9 +26,9 @@ import org.rococoa.Rococoa;
 
 public abstract class NSString extends NSObject {
 
-    public static _Class CLASS = Rococoa.createClass("NSString", _Class.class);
+    private static _Class CLASS = Rococoa.createClass("NSString", _Class.class);
 
-    public interface _Class extends ObjCClass {
+    private interface _Class extends ObjCClass {
         NSString stringWithString(String string);
         @Deprecated(since = "aarch64")
         NSString stringWithFormat(String string, NSObject...objects);

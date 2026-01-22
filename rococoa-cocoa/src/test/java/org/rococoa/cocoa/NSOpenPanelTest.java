@@ -46,7 +46,7 @@ public class NSOpenPanelTest extends RococoaTestCase {
     @EnabledIfSystemProperty(named = "vavi.test", matches = "ide")
     public void testShow() {
         new JFrame().setVisible(true); // otherwise no panel
-        NSOpenPanel panel = NSOpenPanel.CLASS.openPanel();
+        NSOpenPanel panel = NSOpenPanel.openPanel();
         
         // Keep this reference!
         ObjCObject ocProxy = Rococoa.proxy(new Object() {
@@ -63,7 +63,7 @@ Debug.println("proxy: " + ocProxy);
         panel.setDelegate(ocProxy.id());
         int button = panel.runModalForTypes(null);
 //              or, eg        
-//                NSArray.CLASS.arrayWithObjects(
+//                NSArray.arrayWithObjects(
 //                    NSString.stringWithString("txt"), null));
         String filename = panel.filename();
 Debug.println("filename: " + filename);

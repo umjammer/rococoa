@@ -112,7 +112,7 @@ public class NSSpeechDictionary extends AbstractPropertyDictionary<NSSpeechDicti
     }
 
     public void setPronunciations(List<Entry> pronounciations) {
-        NSMutableArray pronounciationDicts = NSMutableArray.CLASS.arrayWithCapacity(pronounciations.size());
+        NSMutableArray pronounciationDicts = NSMutableArray.arrayWithCapacity(pronounciations.size());
         for (Entry e : pronounciations) {
             pronounciationDicts.addObject(e.getData());
         }
@@ -122,7 +122,7 @@ public class NSSpeechDictionary extends AbstractPropertyDictionary<NSSpeechDicti
     public void addPronounciation(Entry pronounciation) {
         NSMutableArray pronounciations = getValueAsType(Pronunciations, NSMutableArray.class);
         if ( pronounciations == null ) {
-            pronounciations = NSMutableArray.CLASS.arrayWithCapacity(1);
+            pronounciations = NSMutableArray.arrayWithCapacity(1);
         }
         pronounciations.addObject(pronounciation.getData());
         setValue(Pronunciations, pronounciations);
@@ -138,7 +138,7 @@ public class NSSpeechDictionary extends AbstractPropertyDictionary<NSSpeechDicti
     }
 
     public void setAbbreviations(List<Entry> abbreviations) {
-        NSMutableArray abbreviationDicts = NSMutableArray.CLASS.arrayWithCapacity(abbreviations.size());
+        NSMutableArray abbreviationDicts = NSMutableArray.arrayWithCapacity(abbreviations.size());
         for (Entry e : abbreviations) {
             abbreviationDicts.addObject(e.getData());
         }
@@ -148,7 +148,7 @@ public class NSSpeechDictionary extends AbstractPropertyDictionary<NSSpeechDicti
     public void addAbbreviation(Entry abbreviation) {
         NSMutableArray abbreviations = getValueAsType(Abbreviations, NSMutableArray.class);
         if ( abbreviations == null ) {
-            abbreviations = NSMutableArray.CLASS.arrayWithCapacity(1);
+            abbreviations = NSMutableArray.arrayWithCapacity(1);
         }
         abbreviations.addObject(abbreviation.getData());
         setValue(Abbreviations, abbreviations);

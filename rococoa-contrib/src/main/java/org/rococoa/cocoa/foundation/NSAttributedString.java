@@ -41,7 +41,7 @@ public abstract class NSAttributedString extends NSObject {
         return CLASS.alloc().initWithString_attributes(str, attrs);
     }
 
-    public interface _Class extends ObjCClass {
+    private interface _Class extends ObjCClass {
         /**
          * Methods to determine what types can be loaded as NSAttributedStrings.<br>
          * Original signature : <code>NSArray* textTypes()</code><br>

@@ -113,7 +113,7 @@ public final class Growl {
             types.addObject(NSString.stringWithString(string));
         }
 
-        return NSArray.CLASS.arrayWithArray(types);
+        return NSArray.arrayWithArray(types);
     }
 
 //    private static NSDictionary toNSDictionary(final Map<?, ?> map) {
@@ -192,18 +192,18 @@ public final class Growl {
      *
      * @return <code>true</code>.
      */
-    public final boolean register() {
+    public boolean register() {
         if (!registered) {
             // Construct our dictionary
             // Make the arrays of objects then keys
-            NSArray objects = NSArray.CLASS.arrayWithObjects(
+            NSArray objects = NSArray.arrayWithObjects(
                     NSString.stringWithString(appName),
                     toNSArray(allNotes),
                     toNSArray(defNotes),
                     appImage != null ? appImage.TIFFRepresentation() : null
             );
 
-            NSArray keys = NSArray.CLASS.arrayWithObjects(
+            NSArray keys = NSArray.arrayWithObjects(
                     NSString.stringWithString(GROWL_APP_NAME),
                     NSString.stringWithString(GROWL_NOTIFICATIONS_ALL),
                     NSString.stringWithString(GROWL_NOTIFICATIONS_DEFAULT),
@@ -262,7 +262,7 @@ public final class Growl {
         }
 
         if (inSticky) {
-            noteDict.setValue_forKey(NSNumber.CLASS.numberWithInt(1), GROWL_NOTIFICATION_STICKY);
+            noteDict.setValue_forKey(NSNumber.numberWithInt(1), GROWL_NOTIFICATION_STICKY);
         }
 
         if (inIdentifier != null) {

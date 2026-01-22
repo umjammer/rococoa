@@ -35,7 +35,7 @@ public class NSDictionaryTest extends RococoaTestCase {
     @Test public void testDictionaryWithObjects_forKeys() {
         NSArray objects = NSArray.arrayWithObjects(
                 NSString.stringWithString("string value"),
-                NSNumber.CLASS.numberWithInt(42));
+                NSNumber.numberWithInt(42));
         NSArray keys = NSArray.arrayWithObjects(
                 NSString.stringWithString("string key"),
                 NSString.stringWithString("int key"));
@@ -47,7 +47,7 @@ public class NSDictionaryTest extends RococoaTestCase {
     @Test public void testDictionaryWithObjectsAndKeys() {
         NSDictionary dictionary = NSDictionary.dictionaryWithObjectsAndKeys(
                 NSString.stringWithString("string value"), NSString.stringWithString("string key"),
-                NSNumber.CLASS.numberWithInt(42), NSString.stringWithString("int key"));
+                NSNumber.numberWithInt(42), NSString.stringWithString("int key"));
 
         check(dictionary);
     }
@@ -59,7 +59,7 @@ public class NSDictionaryTest extends RococoaTestCase {
         dictionary.setValue_forKey(
                 NSString.stringWithString("string value"), NSString.stringWithString("string key"));
         dictionary.setValue_forKey(
-                NSNumber.CLASS.numberWithInt(42), "int key");
+                NSNumber.numberWithInt(42), "int key");
 
         check(dictionary);
     }

@@ -23,9 +23,9 @@ public abstract class GCDeviceHaptics extends NSObject {
         GameControllerLibrary.library.toString();
     }
 
-    public static final _Class CLASS = Rococoa.createClass("GCDeviceHaptics", _Class.class);
+    private static final _Class CLASS = Rococoa.createClass("GCDeviceHaptics", _Class.class);
 
-    public interface _Class extends ObjCClass {
+    private interface _Class extends ObjCClass {
         GCDeviceHaptics alloc();
     }
 

@@ -25,9 +25,9 @@ public abstract class GCControllerDirectionPad extends GCControllerElement {
         GameControllerLibrary.library.toString();
     }
 
-    public static final _Class CLASS = Rococoa.createClass("GCControllerDirectionPad", _Class.class);
+    private static final _Class CLASS = Rococoa.createClass("GCControllerDirectionPad", _Class.class);
 
-    public interface _Class extends ObjCClass {
+    private interface _Class extends ObjCClass {
         GCControllerDirectionPad alloc();
     }
 

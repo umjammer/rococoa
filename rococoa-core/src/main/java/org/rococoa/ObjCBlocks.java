@@ -14,7 +14,6 @@ import com.sun.jna.Pointer;
 import com.sun.jna.Structure;
 
 
-
 /**
  * ObjCBlocks.
  *
@@ -74,7 +73,6 @@ public class ObjCBlocks {
         public NativeLong block_size;
         public String signature;
         
-
         public BlockDescriptor() {}
         public BlockDescriptor(Pointer p) { super(p); }
         
@@ -98,16 +96,6 @@ public class ObjCBlocks {
         @Override
         protected List<String> getFieldOrder() {
             return Arrays.asList("isa", "flags", "reserved", "invoke", "descriptor");
-        }
-
-        /** by GPTo: doesn't work */
-        public void retain() {
-            NativeLibrary.getInstance("objc").getFunction("objc_retain").invoke(Void.class, new Object[] {this});
-        }
-
-        /** by GPTo: doesn't work */
-        public void release() {
-            NativeLibrary.getInstance("objc").getFunction("objc_release").invoke(Void.class, new Object[] {this});
         }
     }
 }

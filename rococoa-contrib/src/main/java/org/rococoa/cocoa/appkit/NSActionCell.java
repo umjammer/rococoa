@@ -24,7 +24,7 @@ import org.rococoa.ObjCClass;
 /// <i>native declaration : :10</i>
 public abstract class NSActionCell extends NSCell {
 
-    public interface _Class extends ObjCClass {
+    private interface _Class extends ObjCClass {
         NSActionCell alloc();
     }
 

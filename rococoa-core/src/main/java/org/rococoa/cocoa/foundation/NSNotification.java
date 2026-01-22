@@ -26,9 +26,15 @@ import org.rococoa.Selector;
 
 
 public abstract class NSNotification extends NSObject {
-    public static final _Class CLASS = Rococoa.createClass("NSNotification",  _Class.class);
-    public interface _Class extends ObjCClass {
+
+    private static final _Class CLASS = Rococoa.createClass("NSNotification",  _Class.class);
+
+    private interface _Class extends ObjCClass {
         NSNotification notificationWithName_object(String notificationName, NSObject object);
+    }
+
+    public static NSNotification notificationWithName_object(String notificationName, NSObject object) {
+        return CLASS.notificationWithName_object(notificationName, object);
     }
 
     public static NSNotification init(String name, String object) {

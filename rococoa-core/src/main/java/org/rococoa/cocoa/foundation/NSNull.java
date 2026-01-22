@@ -23,7 +23,7 @@ import org.rococoa.ObjCClass;
 import org.rococoa.Rococoa;
 
 public abstract class NSNull extends NSObject {
-    public static final _Class CLASS = Rococoa.createClass("NSNull", _Class.class);
-    public interface _Class extends ObjCClass {
+    private static final _Class CLASS = Rococoa.createClass("NSNull", _Class.class);
+    private interface _Class extends ObjCClass {
     }
 }

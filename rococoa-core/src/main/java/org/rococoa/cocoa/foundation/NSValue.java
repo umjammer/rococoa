@@ -26,8 +26,8 @@ import org.rococoa.internal.NSInvocationMapperLookup;
 
 public abstract class NSValue extends NSObject {
 
-    public static final _Class CLASS = Rococoa.createClass("NSValue", _Class.class);
-    public interface _Class extends ObjCClass {
+    private static final _Class CLASS = Rococoa.createClass("NSValue", _Class.class);
+    private interface _Class extends ObjCClass {
         NSValue valueWithSize(NSSize size);
         NSValue valueWithBytes_objCType(byte[] value, String type);
     }

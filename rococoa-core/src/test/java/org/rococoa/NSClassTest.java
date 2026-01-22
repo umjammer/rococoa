@@ -30,7 +30,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class NSClassTest extends RococoaTestCase {
 
     @Test void test() {
-        NSNumber fortyTwo = NSNumber.CLASS.numberWithInt(42);
+        NSNumber fortyTwo = NSNumber.numberWithInt(42);
         ID idOfNSNumber = Foundation.getClass("NSNumber");
         ID idOfNSString = Foundation.getClass("NSString");
         assertTrue(fortyTwo.isKindOfClass(idOfNSNumber));

@@ -23,9 +23,9 @@ public @RunOnMainThread abstract class NSSavePanel extends NSPanel {
     public static final int NSOKButton = 1;
     public static final int NSCancelButton = 0;
     
-    public static final _Class CLASS = Rococoa.createClass("NSSavePanel", _Class.class);
+    private static final _Class CLASS = Rococoa.createClass("NSSavePanel", _Class.class);
 
-    public static @RunOnMainThread abstract class _Class extends _class_ {
+    private static @RunOnMainThread abstract class _Class extends _class_ {
         public abstract NSSavePanel savePanel();
     }
 

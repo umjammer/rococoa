@@ -29,12 +29,19 @@ import org.rococoa.cocoa.foundation.NSUInteger;
  *
  */
 public abstract class NSOperationQueue extends NSObject {
-    public static final _Class CLASS = Rococoa.createClass(NSOperationQueue.class.getSimpleName(), _Class.class);
+
+    private static final _Class CLASS = Rococoa.createClass(NSOperationQueue.class.getSimpleName(), _Class.class);
+
     public static final int NSOperationQueueDefaultMaxConcurrentOperationCount = -1;
-    public interface _Class extends ObjCClass {
+
+    private interface _Class extends ObjCClass {
         NSOperationQueue alloc();
         NSOperationQueue currentQueue();
         NSOperationQueue mainQueue();
+    }
+
+    public static NSOperationQueue alloc() {
+        return CLASS.alloc();
     }
 
     public abstract NSOperationQueue init();

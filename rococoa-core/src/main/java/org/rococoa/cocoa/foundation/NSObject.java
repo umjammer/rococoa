@@ -29,9 +29,9 @@ import org.rococoa.cocoa.CFIndex;
 
 public abstract class NSObject implements ObjCObject {
 
-    public static _class_ CLASS = Rococoa.createClass("NSObject", _class_.class);
+    private static _class_ CLASS = Rococoa.createClass("NSObject", _class_.class);
 
-    public static abstract class _class_ implements ObjCClass {
+    protected static abstract class _class_ implements ObjCClass {
         public abstract NSObject alloc();
     }
 

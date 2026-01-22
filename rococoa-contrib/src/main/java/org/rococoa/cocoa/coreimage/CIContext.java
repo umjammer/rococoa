@@ -21,11 +21,15 @@ import org.rococoa.cocoa.foundation.NSObject;
  * @version 0.00 2022-09-04 nsano initial version <br>
  */
 public abstract class CIContext extends NSObject {
-    
-    public static final _Class CLASS = Rococoa.createClass("CIContext",  _Class.class);
 
-    public interface _Class extends ObjCClass {
+    private static final _Class CLASS = Rococoa.createClass("CIContext",  _Class.class);
+
+    private interface _Class extends ObjCClass {
         CIContext contextWithOptions(NSDictionary options);
+    }
+
+    public static CIContext contextWithOptions(NSDictionary options) {
+        return CLASS.contextWithOptions(options);
     }
 
     /** Creates a Quartz 2D image from a region of a CoreImage image object. */

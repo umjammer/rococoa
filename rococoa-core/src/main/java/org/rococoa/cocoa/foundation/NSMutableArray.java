@@ -22,16 +22,22 @@ package org.rococoa.cocoa.foundation;
 import org.rococoa.ObjCClass;
 import org.rococoa.Rococoa;
 
+
 public abstract class NSMutableArray extends NSArray {
 
-    public static final _Class CLASS = Rococoa.createClass("NSMutableArray", _Class.class);
-    public interface _Class extends ObjCClass {
+    private static final _Class CLASS = Rococoa.createClass("NSMutableArray", _Class.class);
+
+    private interface _Class extends ObjCClass {
         NSMutableArray array();
         NSMutableArray arrayWithCapacity(int numItems);
     }
 
     public static NSMutableArray array() {
         return CLASS.array();
+    }
+
+    public static NSMutableArray arrayWithCapacity(int numItems) {
+        return CLASS.arrayWithCapacity(numItems);
     }
 
     @Override

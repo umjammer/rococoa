@@ -24,9 +24,9 @@ public abstract class MLModelConfiguration extends NSObject {
         CoreMLLibrary.library.toString();
     }
 
-    public static final _Class CLASS = Rococoa.createClass("MLModelConfiguration", _Class.class);
+    private static final _Class CLASS = Rococoa.createClass("MLModelConfiguration", _Class.class);
 
-    public interface _Class extends ObjCClass {
+    private interface _Class extends ObjCClass {
         MLModelConfiguration alloc();
     }
 

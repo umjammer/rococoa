@@ -55,7 +55,7 @@ public class RococoaObjCObjectByReferenceTest extends RococoaTestCase {
 
     @Test
     public void testNSNumberFromInt() {
-        NSNumber nsNumber = NSNumber.CLASS.numberWithInt(42);
+        NSNumber nsNumber = NSNumber.numberWithInt(42);
         assertEquals(42, nsNumber.intValue());
     }
 

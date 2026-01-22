@@ -42,7 +42,7 @@ public abstract class NSToolbarItem extends NSObject implements NSCopying, NSVal
         return CLASS.alloc().initWithItemIdentifier(itemIdentifier);
     }
 
-    public interface _Class extends ObjCClass {
+    private interface _Class extends ObjCClass {
         NSToolbarItem alloc();
     }
 

@@ -76,7 +76,6 @@ public abstract class NSApplication extends NSObject {
 
     public abstract NSDockTile dockTile();
 
-
     public abstract ID delegate();
 
     public abstract void setDelegate(ID delegate);
@@ -113,6 +112,12 @@ public abstract class NSApplication extends NSObject {
     public abstract NSInteger requestUserAttention(int requestType);
 
     public abstract void cancelUserAttentionRequest(NSInteger request);
+
+    public abstract boolean setActivationPolicy(int /* NSApplicationActivationPolicy */ activationPolicy);
+
+    public abstract void activate();
+
+    public abstract void finishLaunching();
 
     /*
 

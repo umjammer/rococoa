@@ -86,7 +86,7 @@ Debug.println("cgImage: " + cgImage.getWidth() + "x" + cgImage.getHeight());
         CGRect r = new CGRect(10, 20, 200, 100);
 Debug.println("rect: " + r);
 
-        CIImage ciImage = CIImage.CLASS.imageWithCGImage(cgImage.pointer());
+        CIImage ciImage = CIImage.imageWithCGImage(cgImage.pointer());
 Debug.println("ciImage: " + ciImage);
 
         Pointer cgImage2 = library.CGImageCreateWithImageInRect(cgImage.pointer(), r);

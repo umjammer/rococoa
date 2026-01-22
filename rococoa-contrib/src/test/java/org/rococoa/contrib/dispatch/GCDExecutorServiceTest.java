@@ -39,12 +39,15 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Test the API of the GCDExecutorService.
+ *
  * @author Andrew Thompson (lordpixel@mac.com)
  */
 @EnabledIfEnvironmentVariable(named = "GITHUB_WORKFLOW", matches = ".*")
 public class GCDExecutorServiceTest {
-    /**The GCD Executor to test*/
+
+    /** The GCD Executor to test */
     ExecutorService fixture;
+
     public GCDExecutorServiceTest() {
     }
 
@@ -62,17 +65,18 @@ public class GCDExecutorServiceTest {
      */
     @Test
     public void testShutdown() {
-    	assertThrows(RejectedExecutionException.class, () -> {
-	        fixture.shutdown();
-	        assertTrue(fixture.isShutdown());
-	        assertTrue(fixture.isTerminated());
-	        fixture.execute(() -> {});
-    	});
+        assertThrows(RejectedExecutionException.class, () -> {
+            fixture.shutdown();
+            assertTrue(fixture.isShutdown());
+            assertTrue(fixture.isTerminated());
+            fixture.execute(() -> {
+            });
+        });
     }
 
     @Test
     public void testShutdown_TasksFinish() throws InterruptedException {
-        boolean[] finished = { false };
+        boolean[] finished = {false};
         fixture.execute(() -> finished[0] = true);
         fixture.shutdown();
         assertTrue(fixture.isShutdown());
@@ -92,17 +96,17 @@ public class GCDExecutorServiceTest {
         List<Runnable> outstandingTasks = fixture.shutdownNow();
         assertEquals(count, outstandingTasks.size());
         assertTrue(fixture.isShutdown());
-        synchronized(lock) {
+        synchronized (lock) {
             lock.notifyAll();
         }
         assertTrue(fixture.awaitTermination(10, TimeUnit.SECONDS));
     }
 
     private void queueUpSomeTasks(Object lock, int count) {
-        for (int i=0; i < count; i++) {
+        for (int i = 0; i < count; i++) {
             fixture.execute(() -> {
                 try {
-                    synchronized(lock) {
+                    synchronized (lock) {
                         lock.wait();
                     }
                 } catch (InterruptedException ignored) {
@@ -125,7 +129,7 @@ public class GCDExecutorServiceTest {
      */
     @Test
     public void testAwaitTermination() throws Exception {
-        int count=100;
+        int count = 100;
         Object lock = new Object();
         queueUpSomeTasks(lock, count);
         List<Runnable> outstandingTasks = fixture.shutdownNow();
@@ -143,7 +147,7 @@ public class GCDExecutorServiceTest {
      */
     @Test
     public void testExecute() throws InterruptedException {
-        boolean[] done = { false };
+        boolean[] done = {false};
         fixture.execute(() -> done[0] = true);
         Thread.sleep(1000);
         assertTrue(done[0]);
@@ -154,18 +158,20 @@ public class GCDExecutorServiceTest {
         Future<Boolean> result = fixture.submit(() -> true);
         assertTrue(result.get());
     }
+
     @Test
     public void testSubmit_Runnable() throws InterruptedException, ExecutionException {
-        boolean[] runCheck = { false };
+        boolean[] runCheck = {false};
         Future<?> result = fixture.submit(() -> {
             runCheck[0] = true;
         });
         assertNull(result.get());
         assertTrue(runCheck[0]);
     }
+
     @Test
     public void testSubmit_Runnable_WithResult() throws InterruptedException, ExecutionException {
-        boolean[] runCheck = { false };
+        boolean[] runCheck = {false};
         Future<Integer> result = fixture.submit(() -> runCheck[0] = true, 42);
         assertEquals(Integer.valueOf(42), result.get());
         assertTrue(runCheck[0]);

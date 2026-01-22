@@ -19,8 +19,8 @@ import org.rococoa.cocoa.coreanimation.CALayer;
  */
 public abstract class AVCaptureVideoPreviewLayer extends CALayer {
 
-    public static final _Class CLASS = Rococoa.createClass("AVCaptureVideoPreviewLayer", _Class.class);
+    private static final _Class CLASS = Rococoa.createClass("AVCaptureVideoPreviewLayer", _Class.class);
 
-    public interface _Class extends ObjCClass {
+    private interface _Class extends ObjCClass {
     }
 }

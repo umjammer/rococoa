@@ -50,7 +50,7 @@ public @RunOnMainThread abstract class QTMovie extends NSObject {
         Foundation.callOnMainThread(() -> Rococoa.wrap(Foundation.getClass("QTMovie"), _Class.class));
 
     // Creating instances has to happen on the main thread
-    public static @RunOnMainThread abstract class _Class implements org.rococoa.ObjCClass {//extends NSObject._class_ {
+    private static @RunOnMainThread abstract class _Class implements org.rococoa.ObjCClass {//extends NSObject._class_ {
         public abstract QTMovie movie();
         public abstract QTMovie movieWithFile_error(String fileName, ObjCObjectByReference errorReference);        
         public abstract QTMovie movieWithAttributes_error(NSDictionary attributes, ObjCObjectByReference errorReference);

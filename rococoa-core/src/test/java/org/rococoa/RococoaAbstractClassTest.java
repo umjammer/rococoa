@@ -32,9 +32,9 @@ public class RococoaAbstractClassTest extends RococoaTestCase {
 
 	public static abstract class NSNumberAsClass extends NSObject {
 
-	    public static final _Class CLASS = Rococoa.createClass("NSNumber", _Class.class);
+	    private static final _Class CLASS = Rococoa.createClass("NSNumber", _Class.class);
 
-	    public interface _Class extends ObjCClass {
+	    private interface _Class extends ObjCClass {
 	        NSNumberAsClass numberWithInt(int value);
 	    }
 
