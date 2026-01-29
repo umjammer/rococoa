@@ -24,7 +24,7 @@ import org.rococoa.ObjCClass;
 /// <i>native declaration : /System/Library/Frameworks/Foundation.framework/Headers/NSSet.h:13</i>
 public abstract class NSSet extends NSObject {
 
-    public interface _Class extends ObjCClass {
+    private interface _Class extends ObjCClass {
         /**
          * Original signature : <code>set()</code><br>
          * <i>from NSSetCreation native declaration : /System/Library/Frameworks/Foundation.framework/Headers/NSSet.h:43</i>

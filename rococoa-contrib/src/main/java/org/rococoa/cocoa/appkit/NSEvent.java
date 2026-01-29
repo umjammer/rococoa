@@ -281,9 +281,9 @@ public abstract class NSEvent extends NSObject implements NSCopying {
     public static final int NSHelpKeyMask = 1 << 22;
     public static final int NSFunctionKeyMask = 1 << 23;
 
-    public static _Class CLASS = Rococoa.createClass("NSEvent", _Class.class);
+    private static _Class CLASS = Rococoa.createClass("NSEvent", _Class.class);
 
-    public interface _Class extends ObjCClass {
+    private interface _Class extends ObjCClass {
         /**
          * +eventWithEventRef: returns an autoreleased NSEvent corresponding to the EventRef.  The EventRef is retained by the NSEvent and will be released when the NSEvent is freed.  If there is no NSEvent corresponding to the EventRef, +eventWithEventRef will return nil.<br>
          * Original signature : <code>NSEvent* eventWithEventRef(const void*)</code><br>
@@ -343,6 +343,10 @@ public abstract class NSEvent extends NSObject implements NSCopying {
          * <i>native declaration : :306</i><br>
          * Conversion Error : NSPoint
          */
+    }
+
+    public static NSEvent eventWithCGEvent(Pointer /* CGEventRef */ evetRef) {
+        return CLASS.eventWithCGEvent(evetRef);
     }
 
     /**

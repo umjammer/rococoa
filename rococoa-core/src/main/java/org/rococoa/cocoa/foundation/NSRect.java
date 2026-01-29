@@ -27,10 +27,11 @@ import java.util.List;
 
 import com.sun.jna.Pointer;
 import com.sun.jna.Structure;
+import com.sun.jna.Structure.ByValue;
 
 
 /**
- * ⚠ this is Structure.ByValue
+ * ⚠️ this is Structure.ByValue
  *
  * @author <a href="mailto:harald.kuhr@gmail.com">Harald Kuhr</a>
  */

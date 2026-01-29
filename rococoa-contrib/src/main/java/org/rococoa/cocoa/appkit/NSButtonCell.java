@@ -13,7 +13,7 @@ public abstract class NSButtonCell extends NSActionCell {
         return CLASS.alloc().init();
     }
 
-    public interface _Class extends ObjCClass {
+    private interface _Class extends ObjCClass {
         NSButtonCell alloc();
     }
 

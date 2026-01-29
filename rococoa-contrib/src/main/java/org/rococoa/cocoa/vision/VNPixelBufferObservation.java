@@ -22,9 +22,9 @@ import org.rococoa.cocoa.foundation.NSObject;
  */
 public abstract class VNPixelBufferObservation extends VNObservation {
 
-    public static final _Class CLASS = Rococoa.createClass("VNPixelBufferObservation", _Class.class);
+    private static final _Class CLASS = Rococoa.createClass("VNPixelBufferObservation", _Class.class);
 
-    public interface _Class extends ObjCClass {
+    private interface _Class extends ObjCClass {
         VNPixelBufferObservation alloc();
     }
 

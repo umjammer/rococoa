@@ -95,7 +95,7 @@ public class NSVoice extends AbstractPropertyDictionary<NSVoice.VoiceProperty> {
      */
     public NSVoice (String voiceIdentifier) throws IllegalArgumentException {
         super(NSMutableDictionary.dictionaryWithDictionary(
-              checkData(voiceIdentifier, NSSpeechSynthesizer.CLASS.attributesForVoice(voiceIdentifier))));
+              checkData(voiceIdentifier, NSSpeechSynthesizer.attributesForVoice(voiceIdentifier))));
     }
 
     NSVoice() {

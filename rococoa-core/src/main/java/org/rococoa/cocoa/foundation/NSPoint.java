@@ -30,6 +30,7 @@ import org.rococoa.cocoa.CGFloat;
  * @author <a href="mailto:harald.kuhr@gmail.com">Harald Kuhr</a>
  */
 public class NSPoint extends Structure implements Structure.ByValue {
+
     public CGFloat x;
     public CGFloat y;
 

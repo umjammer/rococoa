@@ -22,7 +22,7 @@ public abstract class NSScreen extends NSObject {
 
     private static final _Class CLASS = org.rococoa.Rococoa.createClass("NSScreen", _Class.class);
 
-    public interface _Class extends ObjCClass {
+    private interface _Class extends ObjCClass {
         /**
          * Original signature : <code>+(NSArray*)screens</code><br>
          * All screens; first one is "zero" screen<br>

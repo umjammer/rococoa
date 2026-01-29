@@ -24,9 +24,9 @@ public abstract class GCControllerElement extends NSObject {
         GameControllerLibrary.library.toString();
     }
 
-    public static final _Class CLASS = Rococoa.createClass("GCControllerElement", _Class.class);
+    private static final _Class CLASS = Rococoa.createClass("GCControllerElement", _Class.class);
 
-    public interface _Class extends ObjCClass {
+    private interface _Class extends ObjCClass {
         GCControllerElement alloc();
     }
 

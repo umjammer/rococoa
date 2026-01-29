@@ -40,23 +40,23 @@ public class RococoaObjectOwnershipTest extends RococoaTestCase {
 
     @Test
     public void directFactoryMethodsReturnsYieldsPooledObject2() {
-        check(shouldBeInPool, () -> Rococoa.create("NSArray", NSArray.class, "arrayWithObjects:", NSNumber.CLASS.numberWithInt(0)));
+        check(shouldBeInPool, () -> Rococoa.create("NSArray", NSArray.class, "arrayWithObjects:", NSNumber.numberWithInt(0)));
     }
 
     @Test
     public void factoryMethodOnClassYieldsPooledObject2() {
-        check(shouldBeInPool, () -> NSArray.arrayWithObjects(NSNumber.CLASS.numberWithInt(0)));
+        check(shouldBeInPool, () -> NSArray.arrayWithObjects(NSNumber.numberWithInt(0)));
     }
 
     @Test public void directFactoryMethodsReturnsYieldsPooledObject() {
         // TODO - I've seen this fail with a retain count of 3. I wonder whether
         // there is some aggressive instance sharing going on with NSDate
-        check(shouldBeInPool, () -> Rococoa.create("NSDate", NSDate.class, "dateWithTimeIntervalSince1970:", NSNumber.CLASS.numberWithInt(0)));
+        check(shouldBeInPool, () -> Rococoa.create("NSDate", NSDate.class, "dateWithTimeIntervalSince1970:", NSNumber.numberWithInt(0)));
     }
 
     @Test public void factoryMethodOnClassYieldsPooledObject() {
         // TODO - see above
-        check(shouldBeInPool, () -> NSDate.CLASS.dateWithTimeIntervalSince1970(0.0));
+        check(shouldBeInPool, () -> NSDate.dateWithTimeIntervalSince1970(0.0));
     }
 
     @Test public void createYieldsNonPooledObject() {

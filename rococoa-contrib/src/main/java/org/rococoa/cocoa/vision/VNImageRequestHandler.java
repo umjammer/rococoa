@@ -27,9 +27,9 @@ import org.rococoa.cocoa.foundation.NSURL;
  */
 public abstract class VNImageRequestHandler extends NSObject {
 
-    public static final _Class CLASS = Rococoa.createClass("VNImageRequestHandler", _Class.class);
+    private static final _Class CLASS = Rococoa.createClass("VNImageRequestHandler", _Class.class);
 
-    public interface _Class extends ObjCClass {
+    private interface _Class extends ObjCClass {
         VNImageRequestHandler alloc();
     }
 

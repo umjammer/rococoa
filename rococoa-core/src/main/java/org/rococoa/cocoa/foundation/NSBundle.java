@@ -50,7 +50,7 @@ public abstract class NSBundle extends NSObject {
     }
 
 
-    public interface _Class extends ObjCClass {
+    private interface _Class extends ObjCClass {
         /**
          * Original signature : <code>NSBundle* mainBundle)</code><br>
          * <i>native declaration : :24</i>

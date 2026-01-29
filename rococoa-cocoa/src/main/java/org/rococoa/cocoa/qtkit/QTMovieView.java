@@ -19,6 +19,8 @@
 
 package org.rococoa.cocoa.qtkit;
 
+import javax.swing.text.View;
+
 import org.rococoa.Foundation;
 import org.rococoa.Rococoa;
 import org.rococoa.RunOnMainThread;
@@ -28,12 +30,16 @@ import org.rococoa.cocoa.foundation.NSObject;
 @Deprecated
 public @RunOnMainThread abstract class QTMovieView extends NSObject {
 
-    public static final _Class CLASS = new _Class();
+    private static final _Class CLASS = new _Class();
 
-    public static class _Class {
+    private static class _Class {
         public QTMovieView create() {
             return Foundation.callOnMainThread(() -> Rococoa.create("QTMovieView", QTMovieView.class));
         }
+    }
+
+    public static QTMovieView create() {
+        return CLASS.create();
     }
 
     public abstract void setMovie(QTMovie movie);

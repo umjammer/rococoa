@@ -12,8 +12,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.System.Logger;
 import java.lang.System.Logger.Level;
-
 import com.sun.jna.Pointer;
+
 import org.rococoa.ObjCClass;
 import org.rococoa.Rococoa;
 import org.rococoa.cocoa.coregraphics.CGImage;
@@ -37,16 +37,26 @@ public abstract class CIImage extends NSObject {
 
     private static final Logger logger = getLogger(CIImage.class.getName());
 
-    public static final _Class CLASS = Rococoa.createClass("CIImage", _Class.class);
+    private static final _Class CLASS = Rococoa.createClass("CIImage", _Class.class);
 
-    public interface _Class extends ObjCClass {
+    private interface _Class extends ObjCClass {
+
         CIImage emptyImage();
+
         CIImage imageWithCGImage(Pointer /* CGImageRef */ image);
+
         CIImage imageWithContentsOfURL(NSURL url);
+
         CIImage imageWithData(NSData data);
+
         CIImage imageWithBitmapData_bytesPerRow_size_format_colorSpace(
                 NSData data, long bytesPerRowm, CGSize size, int /* CIFormat */ format, Pointer /* CGColorSpaceRef */ colorSpace);
+
         CIImage alloc();
+    }
+
+    public static CIImage imageWithCGImage(Pointer /* CGImageRef */ image) {
+        return CLASS.imageWithCGImage(image);
     }
 
     /** A rectangle that specifies the extent of the image. */
@@ -94,7 +104,7 @@ public abstract class CIImage extends NSObject {
         Pointer cgImage = CGImage();
 logger.log(Level.TRACE, "cgImage1: " + cgImage);
         if (cgImage == Pointer.NULL) {
-            CIContext context = CIContext.CLASS.contextWithOptions(null);
+            CIContext context = CIContext.contextWithOptions(null);
             cgImage = context.createCGImage_fromRect(this, extent());
 logger.log(Level.TRACE, "cgImage2: " + cgImage);
         }

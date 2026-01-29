@@ -54,7 +54,7 @@ public class CIFilterOp implements BufferedImageOp {
         try {
             CIImage ciImage = CIImage.newInstance(src);
 
-            CIFilter filter = CIFilter.of(filterName);
+            CIFilter filter = CIFilter.filterWithName(filterName);
 
             filter.setValue_forKey(ciImage, CIImage.kCIInputImageKey);
             logger.log(Level.DEBUG, "option: " + CIImage.kCIInputImageKey + " = " + ciImage);

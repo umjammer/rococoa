@@ -12,7 +12,7 @@ public abstract class NSTextFieldCell extends NSActionCell {
         return CLASS.alloc().init();
     }
 
-    public interface _Class extends ObjCClass {
+    private interface _Class extends ObjCClass {
         NSTextFieldCell alloc();
     }
 

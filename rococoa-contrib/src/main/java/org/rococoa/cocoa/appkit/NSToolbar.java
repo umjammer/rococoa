@@ -31,7 +31,7 @@ public abstract class NSToolbar extends NSObject {
         return CLASS.alloc().initWithIdentifier(identifier);
     }
 
-    public interface _Class extends ObjCClass {
+    private interface _Class extends ObjCClass {
         NSToolbar alloc();
     }
 

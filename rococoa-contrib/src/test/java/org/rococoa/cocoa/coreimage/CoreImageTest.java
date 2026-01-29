@@ -56,10 +56,10 @@ class CoreImageTest {
                 new CGFloat(0),
                 new CGFloat(255.0),
                 new CGFloat(255.0));
-        String colorString = CIColor.CLASS.colorWithCGColor(colorRef).stringRepresentation();
-        CIColor coreColor = CIColor.CLASS.colorWithString(colorString);
+        String colorString = CIColor.colorWithCGColor(colorRef).stringRepresentation();
+        CIColor coreColor = CIColor.colorWithString(colorString);
 
-        CIContext context = CIContext.CLASS.contextWithOptions(null);
+        CIContext context = CIContext.contextWithOptions(null);
 //Debug.println("context: " + context);
 
         CGImage cgImage = new CGImage(CoreImageTest.class.getResourceAsStream("/sample1.heic"));
@@ -70,7 +70,7 @@ Debug.println("cgImage: " + cgImage.getWidth() + "x" + cgImage.getHeight());
 Debug.println("ciImage: " + ciImage);
 
         //  Set values for CIColorMonochrome Filter
-        CIFilter filter = CIFilter.CLASS.filterWithName("CIColorMonochrome");
+        CIFilter filter = CIFilter.filterWithName("CIColorMonochrome");
         NSArray a = filter.inputKeys();
         for (int i = 0; i < a.count(); i++) {
 Debug.printf("[%d] %s%n", i, a.objectAtIndex(i));
@@ -202,8 +202,8 @@ Debug.println((System.currentTimeMillis() - t) + " ms");
 
 long t = System.currentTimeMillis();
         Map<String, NSObject> options = new HashMap<>();
-        options.put("inputIntensity", NSNumber.of(2.0));
-        options.put("inputRadius", NSNumber.of(1.0));
+        options.put("inputIntensity", NSNumber.numberWithDouble(2.0));
+        options.put("inputRadius", NSNumber.numberWithDouble(1.0));
 
         BufferedImage filteredImage = new CIFilterOp("CIUnsharpMask", options).filter(image, null);
 Debug.println((System.currentTimeMillis() - t) + " ms");

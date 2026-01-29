@@ -43,7 +43,7 @@ public abstract class NSView extends NSResponder {
         return CLASS.alloc().initWithFrame(frameRect);
     }
 
-    public interface _Class extends ObjCClass {
+    private interface _Class extends ObjCClass {
         NSView alloc();
 
         /**

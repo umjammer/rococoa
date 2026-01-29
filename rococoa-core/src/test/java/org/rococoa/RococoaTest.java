@@ -39,14 +39,14 @@ import static org.junit.jupiter.api.Assertions.fail;
 public class RococoaTest extends RococoaTestCase {
         
     @Test public void testCreate() {
-        NSNumber fortyTwo = NSNumber.CLASS.numberWithInt(42);
+        NSNumber fortyTwo = NSNumber.numberWithInt(42);
         assertEquals(42, fortyTwo.intValue());        
     }
     
     @Test public void testEqualsWithAliases() {
-        NSNumber fortyTwo = NSNumber.CLASS.numberWithInt(42);
+        NSNumber fortyTwo = NSNumber.numberWithInt(42);
         NSNumber fortyTwoAlias = Rococoa.wrap(fortyTwo.id(), NSNumber.class);
-        NSNumber fortyThree = NSNumber.CLASS.numberWithInt(43);
+        NSNumber fortyThree = NSNumber.numberWithInt(43);
         assertEquals(fortyTwo, fortyTwoAlias);
         assertEquals(fortyTwoAlias, fortyTwo);
         assertNotEquals(fortyTwo, fortyThree);
@@ -62,7 +62,7 @@ public class RococoaTest extends RococoaTestCase {
     }
    
     @Test public void testReturnTypes() {
-        NSNumber e = NSNumber.CLASS.numberWithDouble(Math.E);
+        NSNumber e = NSNumber.numberWithDouble(Math.E);
         assertEquals(2, e.intValue());
         assertEquals(2, e.longValue());
         assertEquals((float) Math.E, e.floatValue(), 0.001);
@@ -70,8 +70,8 @@ public class RococoaTest extends RococoaTestCase {
     }
     
     @Test public void testPassOCObject() {
-        NSNumber fortyTwo = NSNumber.CLASS.numberWithInt(42);    
-        NSNumber e = NSNumber.CLASS.numberWithDouble(Math.E);
+        NSNumber fortyTwo = NSNumber.numberWithInt(42);
+        NSNumber e = NSNumber.numberWithDouble(Math.E);
         
         assertEquals(-1, e.compare(fortyTwo));
         assertEquals(0, e.compare(e));
@@ -79,33 +79,28 @@ public class RococoaTest extends RococoaTestCase {
     }
     
     @Test public void testStringMarshalling() {
-        NSString string = NSString.CLASS.stringWithString("Hello world");
+        NSString string = NSString.stringWithString("Hello world");
         assertTrue(string.isEqualToString("Hello world"));
         assertFalse(string.isEqualToString("Hello worldy"));
     }
     
     @Test public void testKeywordMethod() {
         // TODO - this method doesn't actually test keyword methods any more
-        NSDate epoc = NSDate.CLASS.dateWithTimeIntervalSince1970(0);
+        NSDate epoc = NSDate.dateWithTimeIntervalSince1970(0);
         assertEquals(0, epoc.timeIntervalSince1970(), 0.000001);
-        NSDate anotherDate = NSDate.CLASS.dateWithTimeIntervalSince1970(40d);
+        NSDate anotherDate = NSDate.dateWithTimeIntervalSince1970(40d);
         assertEquals(40, anotherDate.timeIntervalSince1970(), 0.000001);
     }
 
     @Test public void testVarags() {
         NSArray array = NSArray.arrayWithObjects(
-                NSNumber.CLASS.numberWithBool(true),
-                NSNumber.CLASS.numberWithInt(42),
-                NSDate.CLASS.dateWithTimeIntervalSince1970(666),
+                NSNumber.numberWithBool(true),
+                NSNumber.numberWithInt(42),
+                NSDate.dateWithTimeIntervalSince1970(666),
                 null); // required by NSArray
         assertNotNull(array);
         assertFalse(array.id().isNull());
         assertEquals(3, array.count());
-    }
-    
-    @Test public void testFactory() {
-        NSNumber._Class nsNumberClass = Rococoa.createClass("NSNumber",  NSNumber._Class.class);
-        assertEquals(nsNumberClass.id(), Foundation.getClass("NSNumber"));
     }
     
     public interface OddClass extends ObjCClass {
@@ -114,7 +109,7 @@ public class RococoaTest extends RococoaTestCase {
 
     @Test public void testDownCast() {
         // this is OK
-        NSNumber numberAsObject = NSNumber.CLASS.numberWithInt(42);
+        NSNumber numberAsObject = NSNumber.numberWithInt(42);
         assertEquals(42, numberAsObject.intValue());
         
         // but when defined return type is NSObject, we can't cast Java objects
@@ -130,7 +125,7 @@ public class RococoaTest extends RococoaTestCase {
     }
     
     @Test public void testToString() {
-        NSNumber fortyTwo = NSNumber.CLASS.numberWithInt(42);
+        NSNumber fortyTwo = NSNumber.numberWithInt(42);
         assertEquals("42", fortyTwo.toString());        
     }
     

@@ -32,11 +32,15 @@ public @RunOnMainThread abstract class NSOpenPanel extends NSSavePanel {
     
     public static final int NSOKButton = 1;
     public static final int NSCancelButton = 0;
-    
-    public static final _Class CLASS = Rococoa.createClass("NSOpenPanel", _Class.class);
 
-    public static @RunOnMainThread abstract class _Class extends NSObject._class_ {
+    private static final _Class CLASS = Rococoa.createClass("NSOpenPanel", _Class.class);
+
+    private static @RunOnMainThread abstract class _Class extends NSObject._class_ {
         public abstract NSOpenPanel openPanel();
+    }
+
+    public static NSOpenPanel openPanel() {
+        return CLASS.openPanel();
     }
 
     public abstract int runModalForTypes(NSArray arrayOfTypeStrings);

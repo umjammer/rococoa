@@ -190,7 +190,7 @@ public abstract class NSCell extends NSObject implements NSCopying {
      */
     public static final int NSBackgroundStyleLowered = 3;
 
-    public interface _Class extends ObjCClass {
+    private interface _Class extends ObjCClass {
         /**
          * Original signature : <code>BOOL prefersTrackingUntilMouseUp()</code><br>
          * <i>native declaration : :175</i>

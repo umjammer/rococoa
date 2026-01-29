@@ -10,8 +10,8 @@ import java.lang.System.Logger;
 import java.lang.System.Logger.Level;
 import java.util.ArrayList;
 import java.util.List;
-
 import com.sun.jna.Pointer;
+
 import org.rococoa.ObjCClass;
 import org.rococoa.Rococoa;
 import org.rococoa.cocoa.foundation.NSArray;
@@ -35,9 +35,9 @@ public abstract class GCController extends NSObject {
 
     private static final Logger logger = getLogger(GCController.class.getName());
 
-    public static final _Class CLASS = Rococoa.createClass("GCController", _Class.class);
+    private static final _Class CLASS = Rococoa.createClass("GCController", _Class.class);
 
-    public interface _Class extends ObjCClass {
+    private interface _Class extends ObjCClass {
         GCController alloc();
         NSArray controllers();
         boolean supportsHIDDevice(Pointer /* IOHIDDeviceRef */ device);

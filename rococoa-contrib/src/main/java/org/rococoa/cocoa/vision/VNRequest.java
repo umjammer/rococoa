@@ -29,9 +29,9 @@ public abstract class VNRequest extends NSObject {
 
     private static final Logger logger = getLogger(VNRequest.class.getName());
 
-    public static final _Class CLASS = Rococoa.createClass("VNRequest", _Class.class);
+    private static final _Class CLASS = Rococoa.createClass("VNRequest", _Class.class);
 
-    public interface _Class extends ObjCClass {
+    private interface _Class extends ObjCClass {
         VNRequest alloc();
     }
 

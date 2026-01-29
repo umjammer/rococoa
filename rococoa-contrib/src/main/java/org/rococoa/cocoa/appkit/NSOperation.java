@@ -27,8 +27,8 @@ import org.rococoa.cocoa.foundation.NSObject;
  * NSOperation from Cocoa.
  */
 public abstract class NSOperation extends NSObject {
-    public static final _Class CLASS = Rococoa.createClass(NSOperation.class.getSimpleName(), _Class.class);
-    public interface _Class extends ObjCClass {
+    private static final _Class CLASS = Rococoa.createClass(NSOperation.class.getSimpleName(), _Class.class);
+    private interface _Class extends ObjCClass {
         NSOperation alloc();
     }
 

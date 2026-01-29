@@ -29,7 +29,7 @@ public abstract class NSThread extends NSObject {
         return CLASS.isMainThread();
     }
 
-    public interface _Class extends ObjCClass {
+    private interface _Class extends ObjCClass {
 
         /**
          * Returns a Boolean value that indicates whether the current thread is the main thread.

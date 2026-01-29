@@ -32,9 +32,9 @@ import org.rococoa.cocoa.foundation.NSObject;
  * @version $Id: NSDistributedNotificationCenter.java,v 1.0 Mar 26, 2009 5:47:51 PM haraldk Exp$
  */
 public abstract class NSDistributedNotificationCenter extends NSObject {
-    public static final _Class CLASS = Rococoa.createClass("NSDistributedNotificationCenter", _Class.class);
+    private static final _Class CLASS = Rococoa.createClass("NSDistributedNotificationCenter", _Class.class);
 
-    public interface _Class extends ObjCClass {
+    private interface _Class extends ObjCClass {
          NSDistributedNotificationCenter defaultCenter();
      }
 

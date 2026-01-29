@@ -28,9 +28,9 @@ public abstract class GCMotion extends GCControllerElement {
 
     private static final Logger logger = getLogger(GCMotion.class.getName());
 
-    public static final _Class CLASS = Rococoa.createClass("GCMotion", _Class.class);
+    private static final _Class CLASS = Rococoa.createClass("GCMotion", _Class.class);
 
-    public interface _Class extends ObjCClass {
+    private interface _Class extends ObjCClass {
         GCMotion alloc();
     }
 

@@ -22,9 +22,9 @@ public abstract class VNDetectHumanBodyPoseRequest extends VNImageBasedRequest {
         VisionLibrary.library.toString();
     }
 
-    public static final _Class CLASS = Rococoa.createClass("VNDetectHumanBodyPoseRequest", _Class.class);
+    private static final _Class CLASS = Rococoa.createClass("VNDetectHumanBodyPoseRequest", _Class.class);
 
-    public interface _Class extends ObjCClass {
+    private interface _Class extends ObjCClass {
         VNDetectHumanBodyPoseRequest alloc();
     }
 

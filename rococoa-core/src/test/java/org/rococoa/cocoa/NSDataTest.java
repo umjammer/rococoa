@@ -33,7 +33,7 @@ public class NSDataTest extends RococoaTestCase {
     public void testInitWithBytes() throws Exception {
         byte[] bytes = "Hello".getBytes();
 
-        NSData data = NSData.CLASS.dataWithBytes_length(bytes, bytes.length);
+        NSData data = NSData.dataWithBytes(bytes);
         assertEquals(bytes.length, data.length());
 
         byte[] resultBytes = new byte[bytes.length];

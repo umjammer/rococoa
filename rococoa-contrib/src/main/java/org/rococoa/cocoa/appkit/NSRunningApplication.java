@@ -22,9 +22,9 @@ import org.rococoa.cocoa.foundation.NSURL;
  */
 public abstract class NSRunningApplication extends NSObject {
 
-    public static final _Class CLASS = Rococoa.createClass("NSRunningApplication", _Class.class);
+    private static final _Class CLASS = Rococoa.createClass("NSRunningApplication", _Class.class);
 
-    public interface _Class extends ObjCClass {
+    private interface _Class extends ObjCClass {
 
         /** Returns the running application with the given process identifier, or nil if no application has that pid. */
         NSRunningApplication runningApplicationWithProcessIdentifier(NativeLong /* pid_t */ pid);

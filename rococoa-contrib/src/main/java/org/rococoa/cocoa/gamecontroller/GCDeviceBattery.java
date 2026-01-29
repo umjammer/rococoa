@@ -24,9 +24,9 @@ public abstract class GCDeviceBattery extends NSObject {
         GameControllerLibrary.library.toString();
     }
 
-    public static final _Class CLASS = Rococoa.createClass("GCDeviceBattery", _Class.class);
+    private static final _Class CLASS = Rococoa.createClass("GCDeviceBattery", _Class.class);
 
-    public interface _Class extends ObjCClass {
+    private interface _Class extends ObjCClass {
         GCDeviceBattery alloc();
     }
 

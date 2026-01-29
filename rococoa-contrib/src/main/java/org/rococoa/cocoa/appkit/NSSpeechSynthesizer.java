@@ -83,7 +83,7 @@ public abstract class NSSpeechSynthesizer extends NSObject {
     }
 
     /** Represents the Objective-C class for NSSpeechSynthesizer */
-    public static final _Class CLASS = Rococoa.createClass("NSSpeechSynthesizer", _Class.class);
+    private static final _Class CLASS = Rococoa.createClass("NSSpeechSynthesizer", _Class.class);
 
     /** Synthesizers have an associated delegate. This is the Objective-C delegate object acting as the delegate */
     private ObjCObject delegateProxy = null;
@@ -95,7 +95,7 @@ public abstract class NSSpeechSynthesizer extends NSObject {
     private NSSpeechSynthesizerDelegate delegate = null;
 
     /** Represents the Objective-C class of the speech synthesizer */
-    public static abstract class _Class implements ObjCClass {
+    private static abstract class _Class implements ObjCClass {
         public _Class() {
         }
 
@@ -137,6 +137,10 @@ public abstract class NSSpeechSynthesizer extends NSObject {
      */
     public static NSSpeechSynthesizer synthesizerWithVoiceIdentifier(String voiceIdentifier) throws IllegalArgumentException {
         return CLASS.alloc().initWithVoice(voiceIdentifier);
+    }
+
+    public static NSDictionary attributesForVoice(String voiceIdentifier) {
+        return CLASS.attributesForVoice(voiceIdentifier);
     }
 
     /**
@@ -512,7 +516,7 @@ logger.log(Level.TRACE, String.format("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ delegat
      * @param baselinePitch the baseline pitch to use
      */
     public void setPitchBase(float baselinePitch) {
-        setProperty(SpeechProperty.PitchBaseProperty, NSNumber.of((double) baselinePitch)); // TODO float bug?
+        setProperty(SpeechProperty.PitchBaseProperty, NSNumber.numberWithFloat(baselinePitch));
     }
 
     /**
@@ -533,7 +537,7 @@ logger.log(Level.TRACE, String.format("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ delegat
         if (modulation < 0.0f || modulation > 127.0f) {
             throw new IllegalArgumentException("Pitch modulation must be in the range 0.0 - 127.0");
         }
-        setProperty(SpeechProperty.PitchModProperty, NSNumber.of((double) modulation)); // TODO float bug?
+        setProperty(SpeechProperty.PitchModProperty, NSNumber.numberWithFloat(modulation));
     }
 
     /**

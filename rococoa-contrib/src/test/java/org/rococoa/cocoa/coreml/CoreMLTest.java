@@ -149,7 +149,7 @@ Debug.println("request: " + request);
         });
 
         try {
-            VNCoreMLRequest request = VNCoreMLRequest.CLASS.alloc().initWithModel_completionHandler(model, block);
+            VNCoreMLRequest request = VNCoreMLRequest.alloc().initWithModel_completionHandler(model, block);
             CGImage cgImage = new CGImage(Files.newInputStream(Paths.get(image)));
             VNImageRequestHandler handler = VNImageRequestHandler.initWithCGImage(cgImage.pointer());
             handler.performRequests(request);

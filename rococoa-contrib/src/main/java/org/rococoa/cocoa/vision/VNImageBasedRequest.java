@@ -18,8 +18,8 @@ import org.rococoa.Rococoa;
  */
 public abstract class VNImageBasedRequest extends VNRequest {
 
-    public static final _Class CLASS = Rococoa.createClass("VNImageBasedRequest", _Class.class);
+    private static final _Class CLASS = Rococoa.createClass("VNImageBasedRequest", _Class.class);
 
-    public interface _Class extends ObjCClass {
+    private interface _Class extends ObjCClass {
     }
 }

@@ -18,9 +18,9 @@ import org.rococoa.Rococoa;
  */
 public abstract class VNRecognizedPoint extends VNDetectedPoint {
 
-    public static final _Class CLASS = Rococoa.createClass("VNRecognizedPoint", _Class.class);
+    private static final _Class CLASS = Rococoa.createClass("VNRecognizedPoint", _Class.class);
 
-    public interface _Class extends ObjCClass {
+    private interface _Class extends ObjCClass {
         VNRecognizedPoint alloc();
     }
 

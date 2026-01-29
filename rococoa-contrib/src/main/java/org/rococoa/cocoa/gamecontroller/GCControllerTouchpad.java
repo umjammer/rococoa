@@ -23,9 +23,9 @@ public abstract class GCControllerTouchpad extends GCControllerElement {
         GameControllerLibrary.library.toString();
     }
 
-    public static final _Class CLASS = Rococoa.createClass("GCControllerTouchpad", _Class.class);
+    private static final _Class CLASS = Rococoa.createClass("GCControllerTouchpad", _Class.class);
 
-    public interface _Class extends ObjCClass {
+    private interface _Class extends ObjCClass {
 
         GCControllerTouchpad alloc();
     }

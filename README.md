@@ -75,7 +75,7 @@ implementation of Objective-C interfaces in Java.
 ## TODO
 
 * NSUrl tags (wip)
-* obj-block (wip)
+* ~~obj-block (wip)~~
   * how about panama?
 * ~~CIFilter~~ (done)
   * CGImage fails around density related 
@@ -105,6 +105,7 @@ implementation of Objective-C interfaces in Java.
 * ~~selector and java method binding for notification~~
 * exception in callback method cannot be shown as reason, shown as "Exception calling method for selector foo:"
   * `OCInvocationCallbacks.java:170`
+* ~~hide CLASS, _Class~~
 
 ----
 

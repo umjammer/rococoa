@@ -25,9 +25,9 @@ public abstract class GCControllerAxisInput extends GCControllerElement {
         GameControllerLibrary.library.toString();
     }
 
-    public static final _Class CLASS = Rococoa.createClass("GCControllerAxisInput", _Class.class);
+    private static final _Class CLASS = Rococoa.createClass("GCControllerAxisInput", _Class.class);
 
-    public interface _Class extends ObjCClass {
+    private interface _Class extends ObjCClass {
         GCControllerAxisInput alloc();
     }
 

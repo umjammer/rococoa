@@ -24,9 +24,9 @@ import org.rococoa.Rococoa;
 
 public abstract class NSError extends NSObject {
     
-    public static final _Class CLASS = Rococoa.createClass("NSError", _Class.class);
+    private static final _Class CLASS = Rococoa.createClass("NSError", _Class.class);
 
-    public interface _Class extends ObjCClass {
+    private interface _Class extends ObjCClass {
         NSError alloc();
         NSError errorWithDomain_code_userInfo(String domain, NSInteger code, NSDictionary userInfo);
     }

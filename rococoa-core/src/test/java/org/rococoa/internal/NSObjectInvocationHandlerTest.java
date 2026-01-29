@@ -38,15 +38,15 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  */
 public class NSObjectInvocationHandlerTest extends RococoaTestCase {
 
-public static abstract class NSImage extends NSObject {
-    private static final _Class CLASS = org.rococoa.Rococoa.createClass("NSImage", _Class.class);
-    public interface _Class extends org.rococoa.ObjCClass {
-        NSImage alloc();
+    public static abstract class NSImage extends NSObject {
+        private static final _Class CLASS = org.rococoa.Rococoa.createClass("NSImage", _Class.class);
+        private interface _Class extends org.rococoa.ObjCClass {
+            NSImage alloc();
+        }
+        public abstract NSImage initWithData(NSData data);
     }
-    public abstract NSImage initWithData(NSData data);
-}
 
-/**
+    /**
      * We test for the case when the init method is not able to complete the initialization
      * In such a case,, the init... method could free the receiver and return nil, indicating that
      * the requested object can’t be created.

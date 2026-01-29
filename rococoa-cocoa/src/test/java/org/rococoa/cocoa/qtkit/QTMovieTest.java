@@ -88,27 +88,27 @@ public class QTMovieTest extends RococoaTestCase {
         QTMovie movie = loadMovie(testMovieFile);
         NSObject attribute = movie.attributeForKey(QTMovie.QTMovieTimeScaleAttribute);
 
-        assertTrue(attribute.isKindOfClass(ObjCClass.CLASS.classWithName("NSNumber")));
-        assertFalse(attribute.isKindOfClass(ObjCClass.CLASS.classWithName("NSString")));
+        assertTrue(attribute.isKindOfClass(ObjCClass.classWithName("NSNumber")));
+        assertFalse(attribute.isKindOfClass(ObjCClass.classWithName("NSString")));
 
         //need to cast 'rococoa style'
         assertEquals(testMovieTimeScale, Rococoa.cast(attribute, NSNumber.class).intValue());
     }
 
     private static QTMovie loadMovie(String filename) {
-//        NSDictionary attributes = NSDictionary.CLASS.dictionaryWithObjectsAndKeys(
-//                NSString.CLASS.stringWithString(filename),
-//                NSString.CLASS.stringWithString(QTMovie.QTMovieFileNameAttribute),
+//        NSDictionary attributes = NSDictionary.dictionaryWithObjectsAndKeys(
+//                NSString.stringWithString(filename),
+//                NSString.stringWithString(QTMovie.QTMovieFileNameAttribute),
 //
-//                NSNumber.CLASS.numberWithBool(false),
-//                NSString.CLASS.stringWithString(QTMovie.QTMovieOpenAsyncOKAttribute),
+//                NSNumber.numberWithBool(false),
+//                NSString.stringWithString(QTMovie.QTMovieOpenAsyncOKAttribute),
 //
 //                null);
 
         NSMutableDictionary attributes = NSMutableDictionary.dictionaryWithCapacity(2);
-        attributes.setValue_forKey(NSString.CLASS.stringWithString(filename),
+        attributes.setValue_forKey(NSString.stringWithString(filename),
                 QTMovie.QTMovieFileNameAttribute);
-        attributes.setValue_forKey(NSNumber.CLASS.numberWithBool(false),
+        attributes.setValue_forKey(NSNumber.numberWithBool(false),
                 QTMovie.QTMovieOpenAsyncOKAttribute);
 
         QTMovie movie = QTMovie.movieWithAttributes_error(attributes, null);

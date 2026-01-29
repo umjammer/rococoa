@@ -64,7 +64,7 @@ public abstract class NSDictionary extends NSObject implements Map<NSObject, NSO
         return CLASS.dictionary();
     }
 
-    public interface _Class extends ObjCClass {
+    private interface _Class extends ObjCClass {
         /**
          * Original signature : <code>id dictionary()</code><br>
          * <i>from NSDictionaryCreation native declaration : :40</i>

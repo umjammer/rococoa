@@ -26,7 +26,7 @@ import org.rococoa.ObjCClass;
 public abstract class NSMutableDictionary extends NSDictionary {
     private static final _Class CLASS = org.rococoa.Rococoa.createClass("NSMutableDictionary", _Class.class);
 
-    public interface _Class extends ObjCClass {
+    private interface _Class extends ObjCClass {
         NSMutableDictionary dictionary();
         /**
          * Original signature : <code>id dictionaryWithCapacity(NSUInteger)</code><br>

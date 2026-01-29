@@ -9,7 +9,7 @@
   <parent>
     <groupId>org.rococoa</groupId>
     <artifactId>rococoa-parent</artifactId>
-    <version>0.8.14</version>
+    <version>0.8.15</version>
   </parent>
 
   <name>Rococoa Core</name>
@@ -111,6 +111,7 @@
       <build>
         <plugins>
           <plugin>
+            <!-- ⚠️ run the jitpack building after the github deploy action -->
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-antrun-plugin</artifactId>
             <version>3.1.0</version>

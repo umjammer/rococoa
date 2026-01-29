@@ -26,9 +26,9 @@ public abstract class VNCoreMLModel extends NSObject {
         VisionLibrary.library.toString();
     }
 
-    public static final _Class CLASS = Rococoa.createClass("VNCoreMLModel", _Class.class);
+    private static final _Class CLASS = Rococoa.createClass("VNCoreMLModel", _Class.class);
 
-    public interface _Class extends ObjCClass {
+    private interface _Class extends ObjCClass {
         /**
          * This method may fail if Vision does not support the created CoreML model.
          * For example, a model that does not accept an image as any of its inputs

@@ -25,7 +25,7 @@ import org.rococoa.ObjCObjectByReference;
 
 /// <i>native declaration : :27</i>
 public abstract class NSData extends NSObject {
-    public static final _Class CLASS = org.rococoa.Rococoa.createClass("NSData", _Class.class);
+    private static final _Class CLASS = org.rococoa.Rococoa.createClass("NSData", _Class.class);
 
     public static NSData dataWithContentsOfURL(NSURL url) {
         return CLASS.dataWithContentsOfURL(url);
@@ -35,7 +35,7 @@ public abstract class NSData extends NSObject {
         return CLASS.alloc().initWithBytes_length(bytes, bytes.length);
     }
 
-    public interface _Class extends ObjCClass {
+    private interface _Class extends ObjCClass {
         /**
          */
         NSData alloc();

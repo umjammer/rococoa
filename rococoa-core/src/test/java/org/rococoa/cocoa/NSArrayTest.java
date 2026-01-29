@@ -31,8 +31,8 @@ public class NSArrayTest extends RococoaTestCase {
 
     @Test public void test() {
         NSArray array = NSArray.arrayWithObjects(
-                NSNumber.CLASS.numberWithInt(42),
-                NSNumber.CLASS.numberWithInt(64)
+                NSNumber.numberWithInt(42),
+                NSNumber.numberWithInt(64)
         );
         assertEquals(2, array.count());
         NSNumber second = Rococoa.cast(array.objectAtIndex(1), NSNumber.class);

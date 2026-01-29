@@ -7,6 +7,10 @@
 package org.rococoa.cocoa.foundation;
 
 import org.junit.jupiter.api.Test;
+
+import org.rococoa.Foundation;
+import org.rococoa.ObjCClass;
+import org.rococoa.Rococoa;
 import vavi.util.Debug;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -19,6 +23,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * @version 0.00 2023-10-20 nsano initial version <br>
  */
 public class FoundationTest {
+
+    @Test public void testFactory() {
+        NSNumber._Class nsNumberClass = Rococoa.createClass("NSNumber",  NSNumber._Class.class);
+        assertEquals(nsNumberClass.id(), Foundation.getClass("NSNumber"));
+    }
 
     @Test
     void tes11() throws Exception {

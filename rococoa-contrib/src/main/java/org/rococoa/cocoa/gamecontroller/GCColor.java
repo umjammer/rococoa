@@ -23,9 +23,9 @@ public abstract class GCColor extends NSObject {
         GameControllerLibrary.library.toString();
     }
 
-    public static final _Class CLASS = Rococoa.createClass("GCDeviceLight", _Class.class);
+    private static final _Class CLASS = Rococoa.createClass("GCDeviceLight", _Class.class);
 
-    public interface _Class extends ObjCClass {
+    private interface _Class extends ObjCClass {
         GCColor alloc();
     }
 

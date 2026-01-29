@@ -327,7 +327,7 @@ public abstract class NSColor extends NSObject implements NSCopying {
         return CLASS.alternateSelectedControlTextColor();
     }
 
-    public interface _Class extends ObjCClass {
+    private interface _Class extends ObjCClass {
         /**
          * Create NSCalibratedWhiteColorSpace colors.<br>
          * Original signature : <code>NSColor* colorWithCalibratedWhite(CGFloat, CGFloat)</code><br>

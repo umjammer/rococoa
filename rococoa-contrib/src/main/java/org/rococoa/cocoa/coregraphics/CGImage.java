@@ -144,7 +144,7 @@ logger.log(Level.DEBUG, String.format("cgImage: %dx%d, cBits:%d, bits:%d, stride
 
     /** */
     public CIImage toCIImage() {
-        return CIImage.CLASS.imageWithCGImage(image);
+        return CIImage.imageWithCGImage(image);
     }
 
     /** */

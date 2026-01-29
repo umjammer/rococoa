@@ -19,9 +19,9 @@ import org.rococoa.cocoa.foundation.NSObject;
  */
 public @RunOnMainThread abstract class NSPanel extends NSObject {
     
-    public static final _Class CLASS = Rococoa.createClass("NSPanel", _Class.class);
+    private static final _Class CLASS = Rococoa.createClass("NSPanel", _Class.class);
 
-    public static @RunOnMainThread abstract class _Class extends _class_ {
+    private static @RunOnMainThread abstract class _Class extends _class_ {
     }
 
     /** A Boolean value that indicates whether the receiver is a floating panel. */

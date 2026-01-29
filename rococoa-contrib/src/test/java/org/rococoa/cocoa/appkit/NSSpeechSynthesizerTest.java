@@ -69,7 +69,7 @@ public class NSSpeechSynthesizerTest {
     @Test
     @Disabled("by vavi: depends on system settings")
     public void testDefaultVoice() {
-        assertNotNull(NSSpeechSynthesizer.CLASS.defaultVoice()); // System preference, so no way of knowing actual value
+        assertNotNull(NSSpeechSynthesizer.defaultVoice()); // System preference, so no way of knowing actual value
         assertNotNull(NSSpeechSynthesizer.defaultVoice().getName());
         assertNotNull(NSSpeechSynthesizer.synthesizerWithVoice(testVoice));
         assertEquals(NSSpeechSynthesizer.defaultVoice(), NSSpeechSynthesizer.synthesizerWithVoice(testVoice).getVoice());
@@ -77,7 +77,7 @@ public class NSSpeechSynthesizerTest {
 
     @Test
     public void testAvailableVoices() {
-        assertEquals(NSSpeechSynthesizer.CLASS.availableVoices().count(), NSSpeechSynthesizer.availableVoices().size());
+        assertEquals(NSSpeechSynthesizer.availableVoices().size(), NSSpeechSynthesizer.availableVoices().size());
         assertFalse(NSSpeechSynthesizer.availableVoices().isEmpty());
         assertNotNull(NSSpeechSynthesizer.availableVoices().get(0).getName());
         assertFalse(NSSpeechSynthesizer.availableVoices().get(0).getName().isEmpty());

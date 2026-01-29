@@ -31,7 +31,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class NSMutableArrayTest extends RococoaTestCase {
 
     @Test public void test() {
-        NSMutableArray array = NSMutableArray.CLASS.arrayWithCapacity(3);
+        NSMutableArray array = NSMutableArray.arrayWithCapacity(3);
         assertEquals(0, array.count());
         array.addObject(NSString.stringWithString("Hello"));
         array.addObject("Goodbye");

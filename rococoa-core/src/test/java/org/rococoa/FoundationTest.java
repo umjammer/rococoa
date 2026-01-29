@@ -138,11 +138,11 @@ class FoundationTest extends RococoaTestCase {
         assertEquals(1234, number.doubleValue());
         assertNotEquals(1235, number.floatValue());
 
-        NSNumber number3 = NSNumber.of(1.234d);
+        NSNumber number3 = NSNumber.numberWithDouble(1.234d);
         assertEquals(1.234f, number3.floatValue());
         assertEquals(1.234d, number3.doubleValue());
 
-        NSNumber number2 = NSNumber.of(1.234f);
+        NSNumber number2 = NSNumber.numberWithDouble(1.234f);
         logger.log(Level.INFO, StringUtil.toBits(Float.floatToIntBits(1.234f), 32));
         logger.log(Level.INFO, StringUtil.toBits(Float.floatToIntBits(number2.floatValue()), 32));
         assertEquals(1.234f, number2.floatValue()); // TODO error

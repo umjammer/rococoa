@@ -37,9 +37,9 @@ public abstract class VNHumanBodyPoseObservation extends VNRecognizedPointsObser
 
     private static final Logger logger = getLogger(VNHumanBodyPoseObservation.class.getName());
 
-    public static final _Class CLASS = Rococoa.createClass("VNHumanBodyPoseObservation", _Class.class);
+    private static final _Class CLASS = Rococoa.createClass("VNHumanBodyPoseObservation", _Class.class);
 
-    public interface _Class extends ObjCClass {
+    private interface _Class extends ObjCClass {
         VNHumanBodyPoseObservation alloc();
     }
 

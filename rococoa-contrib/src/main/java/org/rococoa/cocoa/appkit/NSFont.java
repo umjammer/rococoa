@@ -86,7 +86,7 @@ public abstract class NSFont extends NSObject implements NSCopying {
         return CLASS.labelFontSize().doubleValue();
     }
 
-    public interface _Class extends ObjCClass {
+    private interface _Class extends ObjCClass {
         /**
          * Factory ********<br>
          * Original signature : <code>NSFont* fontWithName(NSString*, CGFloat)</code><br>

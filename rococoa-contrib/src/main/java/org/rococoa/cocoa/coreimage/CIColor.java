@@ -23,22 +23,30 @@ import org.rococoa.cocoa.foundation.NSObject;
  */
 public abstract class CIColor extends NSObject {
     
-    public static final _Class CLASS = Rococoa.createClass("CIColor",  _Class.class);
+    private static final _Class CLASS = Rococoa.createClass("CIColor",  _Class.class);
 
-    public interface _Class extends ObjCClass {
-        CIColor colorWithCGColor(Pointer/*CGColorRef*/ c);
+    private interface _Class extends ObjCClass {
+        CIColor colorWithCGColor(Pointer /* CGColorRef */ c);
 
         CIColor colorWithString(String representation);
     }
 
-    public abstract Pointer/*CGImageRef*/ createCGImage_fromRect(CIImage image, CGRect fromRect);
+    public static CIColor colorWithCGColor(Pointer /* CGColorRef */ c) {
+        return CLASS.colorWithCGColor(c);
+    }
+
+    public static CIColor colorWithString(String representation) {
+        return CLASS.colorWithString(representation);
+    }
+
+    public abstract Pointer /* CGImageRef */ createCGImage_fromRect(CIImage image, CGRect fromRect);
 
     public abstract String stringRepresentation();
 
     public static CIColor newInstance(double r, double g, double b, double a) {
         Pointer colorRef = CoreGraphicsLibrary.library.CGColorCreateGenericRGB(
                 new CGFloat(r), new CGFloat(g), new CGFloat(b), new CGFloat(a));
-        String colorString = CIColor.CLASS.colorWithCGColor(colorRef).stringRepresentation();
-        return CIColor.CLASS.colorWithString(colorString);
+        String colorString = colorWithCGColor(colorRef).stringRepresentation();
+        return colorWithString(colorString);
     }
 }

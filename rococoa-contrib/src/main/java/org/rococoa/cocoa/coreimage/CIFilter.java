@@ -22,17 +22,17 @@ import org.rococoa.cocoa.foundation.NSObject;
  */
 public abstract class CIFilter extends NSObject {
     
-    public static final _Class CLASS = Rococoa.createClass("CIFilter",  _Class.class);
+    private static final _Class CLASS = Rococoa.createClass("CIFilter",  _Class.class);
 
-    public interface _Class extends ObjCClass {
+    private interface _Class extends ObjCClass {
         CIFilter filterWithName(String name);
         CIFilter filterWithName_withInputParameters(String name, NSDictionary params);
         @Deprecated(since = "aarch64")
         CIFilter filterWithName_keysAndValues(String name, ID... key0);
     }
 
-    public static CIFilter of(String filterName) {
-        return CIFilter.CLASS.filterWithName(filterName);
+    public static CIFilter filterWithName(String filterName) {
+        return CLASS.filterWithName(filterName);
     }
 
     public abstract void setValue_forKey(NSObject value, String key);

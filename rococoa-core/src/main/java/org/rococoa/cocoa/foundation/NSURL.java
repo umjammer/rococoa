@@ -36,7 +36,7 @@ public abstract class NSURL extends NSObject {
         return CLASS.fileURLWithPath(URLString);
     }
 
-    public interface _Class extends ObjCClass {
+    private interface _Class extends ObjCClass {
         /**
          * Original signature : <code>fileURLWithPath(NSString*, BOOL)</code><br>
          * <i>native declaration : :28</i>
