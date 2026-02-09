@@ -18,23 +18,26 @@ import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import com.sun.jna.Memory;
+import com.sun.jna.Native;
 import com.sun.jna.Pointer;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
+import org.rococoa.Foundation;
+import org.rococoa.Selector;
 import org.rococoa.cocoa.CGFloat;
 import org.rococoa.cocoa.appkit.NSScreen;
 import org.rococoa.cocoa.coregraphics.CGImage;
 import org.rococoa.cocoa.coregraphics.CGRect;
 import org.rococoa.cocoa.coregraphics.CoreGraphicsLibrary;
 import org.rococoa.cocoa.foundation.NSArray;
+import org.rococoa.cocoa.foundation.NSInvocation;
+import org.rococoa.cocoa.foundation.NSMethodSignature;
 import org.rococoa.cocoa.foundation.NSNumber;
 import org.rococoa.cocoa.foundation.NSObject;
 import org.rococoa.cocoa.foundation.NSRect;
 import vavi.util.Debug;
-
-import static org.rococoa.cocoa.foundation.FoundationKitFunctions.NSRectFromCGRect;
-import static org.rococoa.cocoa.foundation.FoundationKitFunctions.NSRectToCGRect;
 
 
 /**
@@ -51,7 +54,7 @@ class CoreImageTest {
     @EnabledIfSystemProperty(named = "vavi.test", matches = "ide")
     void test1() throws Exception {
 
-        Pointer/*CGColorRef*/ colorRef = CoreGraphicsLibrary.library.CGColorCreateGenericRGB(
+        Pointer /* CGColorRef */ colorRef = CoreGraphicsLibrary.library.CGColorCreateGenericRGB(
                 new CGFloat(255.0),
                 new CGFloat(0),
                 new CGFloat(255.0),
@@ -84,56 +87,52 @@ Debug.println("result: " + result);
 
         CGRect extent = result.extent();
 Debug.println("extent: " + extent.getPointer() + ", " + extent);
+Debug.println("extent values: " + extent.origin.x + ", " + extent.origin.y + ", " + extent.size.width + ", " + extent.size.height);
 
         NSScreen screen = NSScreen.mainScreen();
 Debug.println("screen: " + screen);
-//Debug.println("userSpaceScaleFactor: " + screen.userSpaceScaleFactor());
 
 Debug.println("------------------------------------------------------------");
 
-        //  it doesn't make sense
-
-//        NSRect nsRect1 = NSRectFromCGRect(extent);
-//Debug.println("nsRect1: " + nsRect1);
-////        NSRect nsRect2 = screen.convertRectToBacking(nsRect1);
-////        nsRect2.read();
-//        NSRect nsRect2 = convertRectToBacking(nsRect1);
-//Debug.println("nsRect2: " + nsRect2);
-//        CGRect extent2 = NSRectToCGRect(nsRect2);
-
-        CGRect extent2 = NSRectToCGRect(screen.convertRectToBacking(NSRectFromCGRect(extent))); // TODO wtf return value
-//        CGRect extent2 = NSRectToCGRect(convertRectToBacking(NSRectFromCGRect(extent)));
+        // workaround for convertRectToBacking returning wrong value
+        CGFloat scale = screen.backingScaleFactor();
+Debug.println("scale: " + scale);
+        CGRect extent2 = new CGRect();
+        extent2.origin.x = new CGFloat(extent.origin.x.doubleValue());
+        extent2.origin.y = new CGFloat(extent.origin.y.doubleValue());
+        extent2.size.width = new CGFloat(extent.size.width.doubleValue());
+        extent2.size.height = new CGFloat(extent.size.height.doubleValue());
+        extent2.write();
 Debug.println("extent2: " + extent2.getPointer() + ", " + extent2);
-        Pointer /* CGImageRef */ cgImage2 = context.createCGImage_fromRect(result, extent2); // TODO why returns nil
-Debug.println("createCGImage:fromRect: " + cgImage2);
+Debug.println("extent2 values: " + extent2.origin.x + ", " + extent2.origin.y + ", " + extent2.size.width + ", " + extent2.size.height);
 
-//        NSImage nsImage = NSImage.initWithCGImageSize(cgImage2, extent2.size.toNSSize());
-//Debug.println("nsImage: " + nsImage + ", " + nsImage.size().width.intValue() + "x" + nsImage.size().height.intValue());
-//        show(nsImage.toBufferedImage());
+        // Use NSInvocation to bypass potential JNA struct-by-value issues
+        // TODO too primitive, make it more abstract
+        Selector sel = Foundation.selector("createCGImage:fromRect:");
+        NSMethodSignature sig = context.methodSignatureForSelector(sel);
+        NSInvocation inv = NSInvocation.invocationWithMethodSignature(sig);
+        inv.setSelector(sel);
+        
+        Memory buffer = new Memory(Native.POINTER_SIZE);
+        buffer.setNativeLong(0, result.id());
+        inv.setArgument_atIndex(buffer, 2);
+        
+        inv.setArgument_atIndex(extent2.getPointer(), 3);
+        inv.invokeWithTarget(context.id());
+
+        Pointer resultPtr = new Memory(Native.POINTER_SIZE);
+        inv.getReturnValue(resultPtr);
+        Pointer /* CGImageRef */ cgImage2 = resultPtr.getPointer(0);
+
+Debug.println("createCGImage:fromRect: " + cgImage2);
 
         //
         CGImage cgImageX = new CGImage(cgImage2);
 Debug.println("cgImageX: " + cgImageX.getWidth() + ", " + cgImageX.getHeight());
 
-//        BufferedImage image = nsImage.toBufferedImage();
         BufferedImage image = cgImageX.toBufferedImage();
 
-        // *** NSImage ***
-//        CGImage cgImage3 = new CGImage(context.createCGImage_fromRect(result, extent));
-//Debug.println("cgImage3: " + cgImage3.getWidth() + ", " + cgImage3.getHeight());
-//        BufferedImage image3 = NSImage.initWithCGImageSize(cgImage3.pointer(), NSSize.NSZeroSize).toBufferedImage();
-
         show(image);
-    }
-
-    static NSRect convertRectToBacking(NSRect rect) { // TODO this doesn't help
-        NSRect rect2 = new NSRect();
-        rect2.origin.x = new CGFloat(10);
-        rect2.origin.y = new CGFloat(10 );
-        rect2.size.width = new CGFloat(200);
-        rect2.size.height = new CGFloat(200);
-        rect2.write();
-        return rect2;
     }
 
     /** using cdl cause junit stops awt thread suddenly */
@@ -154,6 +153,7 @@ Debug.println("cgImageX: " + cgImageX.getWidth() + ", " + cgImageX.getHeight());
         frame.setTitle("CoreImage");
         frame.pack();
         frame.setVisible(true);
+        frame.toFront();
         cdl.await();
     }
 

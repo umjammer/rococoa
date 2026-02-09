@@ -143,15 +143,23 @@ public interface FoundationKitFunctions extends Library {
 
     /** Returns a CGRect typecast from an NSRect. */
     static /* NS_INLINE */ CGRect NSRectToCGRect(NSRect rect) {
-        CGRect cgRect = new CGRect(rect.getPointer());
-        cgRect.read();
+        CGRect cgRect = new CGRect();
+        cgRect.origin.x = new CGFloat(rect.origin.x.doubleValue());
+        cgRect.origin.y = new CGFloat(rect.origin.y.doubleValue());
+        cgRect.size.width = new CGFloat(rect.size.width.doubleValue());
+        cgRect.size.height = new CGFloat(rect.size.height.doubleValue());
+        cgRect.write();
         return cgRect;
     }
 
     /** Returns an NSRect typecast from a CGRect. */
     static /* NS_INLINE */ NSRect NSRectFromCGRect(CGRect rect) {
-        NSRect nsRect = new NSRect(rect.getPointer());
-        nsRect.read();
+        NSRect nsRect = new NSRect();
+        nsRect.origin.x = new CGFloat(rect.origin.x.doubleValue());
+        nsRect.origin.y = new CGFloat(rect.origin.y.doubleValue());
+        nsRect.size.width = new CGFloat(rect.size.width.doubleValue());
+        nsRect.size.height = new CGFloat(rect.size.height.doubleValue());
+        nsRect.write();
         return nsRect;
     }
 

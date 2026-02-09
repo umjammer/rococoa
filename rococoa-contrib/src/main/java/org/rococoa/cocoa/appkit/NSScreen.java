@@ -102,6 +102,12 @@ public abstract class NSScreen extends NSObject {
     @Deprecated
     public abstract CGFloat userSpaceScaleFactor();
 
+    /**
+     * Original signature : <code>-(CGFloat)backingScaleFactor</code><br>
+     * <i>native declaration : /System/Library/Frameworks/AppKit.framework/Headers/NSScreen.h</i>
+     */
+    public abstract CGFloat backingScaleFactor();
+
     /** Converts the rectangle to the device pixel aligned coordinates system of a screen. */
     public abstract NSRect convertRectToBacking(NSRect rect);
 

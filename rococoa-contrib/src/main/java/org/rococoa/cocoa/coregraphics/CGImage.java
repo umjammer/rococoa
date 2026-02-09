@@ -15,9 +15,9 @@ import java.io.InputStream;
 import java.lang.System.Logger;
 import java.lang.System.Logger.Level;
 import javax.imageio.ImageIO;
-
 import com.sun.jna.NativeLong;
 import com.sun.jna.Pointer;
+
 import org.rococoa.cocoa.appkit.NSImage;
 import org.rococoa.cocoa.coreimage.CIImage;
 import org.rococoa.cocoa.foundation.NSData;
@@ -110,7 +110,8 @@ logger.log(Level.TRACE, String.format("cgImage: %dx%d, cb:%d, b:%d%n", getWidth(
         int stride = library.CGImageGetBytesPerRow(image);
         Pointer colorSpace = library.CGImageGetColorSpace(image);
         int colorModel = library.CGColorSpaceGetModel(colorSpace);
-logger.log(Level.DEBUG, String.format("cgImage: %dx%d, cBits:%d, bits:%d, stride:%d, cm:%d%n", width, height, cBits, bits, stride, colorModel));
+        int bitmapInfo = library.CGImageGetBitmapInfo(image);
+logger.log(Level.DEBUG, String.format("cgImage: %dx%d, cBits:%d, bits:%d, stride:%d, cm:%d, info:0x%x%n", width, height, cBits, bits, stride, colorModel, bitmapInfo));
 
         Pointer dataProvider = library.CGImageGetDataProvider(image);
         Pointer data = library.CGDataProviderCopyData(dataProvider);
@@ -131,8 +132,16 @@ logger.log(Level.DEBUG, String.format("cgImage: %dx%d, cBits:%d, bits:%d, stride
         for (int y = 0; y < height; y++) {
             int sP = y * stride;
             for (int x = 0; x < width; x++) {
-                for (int i = 0; i < cNum; i++) {
-                    dst[dP + i] = src[sP + (cNum - 1 - i)];
+                if (cNum == 4) {
+                    // ARGB -> ABGR
+                    dst[dP + 0] = src[sP + 3]; // A
+                    dst[dP + 1] = src[sP + 0]; // B
+                    dst[dP + 2] = src[sP + 1]; // G
+                    dst[dP + 3] = src[sP + 2]; // R
+                } else {
+                    for (int i = 0; i < cNum; i++) {
+                        dst[dP + i] = src[sP + (cNum - 1 - i)];
+                    }
                 }
                 dP += cNum;
                 sP += cNum;
