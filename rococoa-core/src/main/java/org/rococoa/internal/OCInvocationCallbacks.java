@@ -116,7 +116,7 @@ public class OCInvocationCallbacks {
                     }
                 }
             }
-            logger.log(Level.DEBUG, "No method " + methodName + " for selector:" + selectorName);
+            logger.log(Level.DEBUG, "No method " + methodName + " for selector: " + selectorName + " in: " + javaObject);
             return null;
         } catch (Exception e) {
             logger.log(Level.ERROR, "Exception finding methodForSelector", e);
