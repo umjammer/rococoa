@@ -200,7 +200,7 @@ Debug.println(rect);
         }
     }
 
-    CountDownLatch cdl = new CountDownLatch(1);
+    final CountDownLatch cdl = new CountDownLatch(1);
 
     static class MyObserver implements Callback {
 

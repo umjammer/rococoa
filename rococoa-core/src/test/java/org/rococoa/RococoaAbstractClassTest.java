@@ -26,6 +26,7 @@ import org.rococoa.test.RococoaTestCase;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
 public class RococoaAbstractClassTest extends RococoaTestCase {
@@ -47,12 +48,31 @@ public class RococoaAbstractClassTest extends RococoaTestCase {
 	    public int twice() {
 	        return 2 * intValue();
 	    }
+
+	    public int over(int limit) {
+	        int value = intValue();
+	        if (value > limit) {
+	            throw new IllegalArgumentException("over " + limit + ": " + value);
+	        }
+	        return value;
+	    }
     }
 
     @Test public void test() {
         NSNumberAsClass number = NSNumberAsClass.numberWithInt(42);
         assertEquals(42, number.intValue());
         assertEquals(84, number.twice());
+    }
+
+    /**
+     * A concrete method is reached through reflection, which wraps whatever it throws. The
+     * caller is calling the override though, not reflection, so it must see the exception the
+     * override declared.
+     */
+    @Test public void testConcreteMethodThrowsUnwrapped() {
+        NSNumberAsClass number = NSNumberAsClass.numberWithInt(42);
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class, () -> number.over(41));
+        assertEquals("over 41: 42", e.getMessage());
     }
 
 	@Disabled("currently ByteBuddy cannot cache classes")

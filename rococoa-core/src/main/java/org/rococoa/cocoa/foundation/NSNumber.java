@@ -25,9 +25,9 @@ import org.rococoa.Rococoa;
 
 public abstract class NSNumber extends NSObject {
 
-    static final _Class CLASS = Rococoa.createClass("NSNumber", _Class.class);
+    private static final _Class CLASS = Rococoa.createClass("NSNumber", _Class.class);
 
-    interface _Class extends ObjCClass {
+    private interface _Class extends ObjCClass {
         NSNumber numberWithBool(boolean value);
         NSNumber numberWithInt(int value);
         NSNumber numberWithDouble(double e);
@@ -68,5 +68,9 @@ public abstract class NSNumber extends NSObject {
     @Override
     public String toString() {
         return stringValue();
+    }
+
+    public static Class<? extends ObjCClass> objCClass() {
+        return _Class.class;
     }
 }

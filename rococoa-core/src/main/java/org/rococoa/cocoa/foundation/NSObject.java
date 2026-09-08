@@ -29,7 +29,7 @@ import org.rococoa.cocoa.CFIndex;
 
 public abstract class NSObject implements ObjCObject {
 
-    private static _class_ CLASS = Rococoa.createClass("NSObject", _class_.class);
+    private static final _class_ CLASS = Rococoa.createClass("NSObject", _class_.class);
 
     protected static abstract class _class_ implements ObjCClass {
         public abstract NSObject alloc();

@@ -7,10 +7,13 @@
 package org.rococoa.cocoa.coreimage;
 
 import com.sun.jna.Pointer;
+
 import org.rococoa.ObjCClass;
 import org.rococoa.Rococoa;
+import org.rococoa.Selector;
 import org.rococoa.cocoa.coregraphics.CGRect;
 import org.rococoa.cocoa.foundation.NSDictionary;
+import org.rococoa.cocoa.foundation.NSMethodSignature;
 import org.rococoa.cocoa.foundation.NSObject;
 
 
@@ -34,4 +37,6 @@ public abstract class CIContext extends NSObject {
 
     /** Creates a Quartz 2D image from a region of a CoreImage image object. */
     public abstract Pointer /* CGImageRef */ createCGImage_fromRect(CIImage image, CGRect fromRect);
+
+    public abstract NSMethodSignature methodSignatureForSelector(Selector aSelector);
 }

@@ -38,6 +38,7 @@ public abstract class NSArray extends NSEnumerator implements List<NSObject> {
     private interface _Class extends ObjCClass {
         /** Creates and returns an empty array. */
         NSArray array();
+        NSArray arrayWithObject(NSObject anObject);
         /**
          * @param objects Contents and then a trailing null
          */
@@ -121,5 +122,9 @@ public abstract class NSArray extends NSEnumerator implements List<NSObject> {
                 }
             }
         };
+    }
+
+    public static Class<? extends ObjCClass> objCClass() {
+        return CLASS.getClass();
     }
 }

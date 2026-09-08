@@ -20,6 +20,7 @@
 package org.rococoa;
 
 import java.lang.ref.WeakReference;
+import java.lang.reflect.Method;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -35,12 +36,25 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 @Disabled("by vavi because of error")
 public class RococoaObjectOwnershipTest extends RococoaTestCase {
 
-    public static boolean shouldBeInPool = true;
-    public static boolean shouldNotBeInPool = false;
+    public static final boolean shouldBeInPool = true;
+    public static final boolean shouldNotBeInPool = false;
+
+    static Method method(Class<?> clazz, String name, Class<?>... args) {
+        try {
+            return clazz.getMethod(name, args);
+        } catch (Exception e) {
+            throw new IllegalArgumentException(e);
+        }
+    }
 
     @Test
     public void directFactoryMethodsReturnsYieldsPooledObject2() {
-        check(shouldBeInPool, () -> Rococoa.create("NSArray", NSArray.class, "arrayWithObjects:", NSNumber.numberWithInt(0)));
+        check(shouldBeInPool, () -> Rococoa.create("NSArray", NSArray.class,
+                method(NSArray.objCClass(), "arrayWithObjects", NSObject[].class),
+                "arrayWithObjects:", NSNumber.numberWithInt(0)));
+        check(shouldBeInPool, () ->Rococoa.create("NSArray", NSArray.class,
+                method( NSArray.objCClass(), "arrayWithObject:", NSNumber.class),
+                "arrayWithObject:", NSNumber.numberWithInt(0)));
     }
 
     @Test

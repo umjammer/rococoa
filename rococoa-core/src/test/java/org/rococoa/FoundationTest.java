@@ -22,12 +22,13 @@ package org.rococoa;
 import java.lang.System.Logger;
 import java.lang.System.Logger.Level;
 
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
 import org.rococoa.cocoa.CGFloat;
 import org.rococoa.cocoa.foundation.NSNumber;
 import org.rococoa.test.RococoaTestCase;
 import vavi.util.StringUtil;
+
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 import static java.lang.System.getLogger;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -40,7 +41,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class FoundationTest extends RococoaTestCase {
 
-    private static final Logger logger = getLogger(RococoaTestCase.class.getName());
+    private static final Logger logger = getLogger(FoundationTest.class.getName());
 
     @Test
     void testCFString() {

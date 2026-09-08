@@ -116,7 +116,7 @@ public class OCInvocationCallbacks {
                     }
                 }
             }
-            logger.log(Level.DEBUG, "No method " + methodName + " for selector:" + selectorName);
+            logger.log(Level.DEBUG, "No method " + methodName + " for selector: " + selectorName + " in: " + javaObject);
             return null;
         } catch (Exception e) {
             logger.log(Level.ERROR, "Exception finding methodForSelector", e);
@@ -173,7 +173,7 @@ public class OCInvocationCallbacks {
     }
 
     private static String methodNameForSelector(String selectorName) {
-        String candidate =  selectorName.replaceAll(":", "_");
+        String candidate =  selectorName.replace(":", "_");
         return candidate.endsWith("_") ?
                 candidate.substring(0, candidate.length() - 1) :
                 candidate;

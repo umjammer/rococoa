@@ -22,17 +22,31 @@ package org.rococoa.cocoa.foundation;
 import com.sun.jna.Memory;
 import com.sun.jna.Pointer;
 import org.rococoa.ID;
+import org.rococoa.ObjCClass;
 import org.rococoa.ObjCObjectByReference;
+import org.rococoa.Rococoa;
 import org.rococoa.Selector;
 
 public abstract class NSInvocation extends NSObject {
+
+    private static final _Class CLASS = Rococoa.createClass("NSInvocation", _Class.class);
+
+    private interface _Class extends ObjCClass {
+        NSInvocation invocationWithMethodSignature(NSMethodSignature sig);
+    }
+
+    public static NSInvocation invocationWithMethodSignature(NSMethodSignature sig) {
+        return CLASS.invocationWithMethodSignature(sig);
+    }
 
     public abstract NSMethodSignature methodSignature();
     public abstract void getArgument_atIndex(Pointer receiver, int index);
     public abstract void setArgument_atIndex(Pointer receiver, int index);
     public abstract void setReturnValue(Memory buffer);
     public abstract void invoke();
+    public abstract void invokeWithTarget(ID target);
     public abstract void getReturnValue(ObjCObjectByReference retLoc);
+    public abstract void getReturnValue(Pointer retLoc);
     public abstract void setTarget(ID target);
     public abstract void setSelector(Selector selector);
 }

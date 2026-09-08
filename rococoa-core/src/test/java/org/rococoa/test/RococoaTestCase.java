@@ -48,7 +48,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 public abstract class RococoaTestCase {
 
     // stress our memory management
-    public static boolean gcAfterTest = true;
+    public static final boolean gcAfterTest = true;
 
     protected final static Logger logger;
 

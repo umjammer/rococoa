@@ -78,7 +78,7 @@ implementation of Objective-C interfaces in Java.
 * ~~obj-block (wip)~~
   * how about panama?
 * ~~CIFilter~~ (done)
-  * CGImage fails around density related 
+  * ~~CGImage fails around density related~~ ... because of jna arm64 gritch 
   * ~~tall free bridging?~~ none
 * ~~`cglib` is mostly [suspended](https://github.com/cglib/cglib#readme)~~
    * ~~`cglib` recommends [ByteBuddy](https://bytebuddy.net/) that is based on `asm` same as the `cglib`~~ (done)
@@ -97,7 +97,7 @@ implementation of Objective-C interfaces in Java.
 * CGController
   * https://stackoverflow.com/a/65999820
   * works on 14.3.1
-  * using block? avoidable?
+  * ~~using block? avoidable?~~
 * activate application
   * https://developer.apple.com/documentation/appkit/nsrunningapplication?language=objc
 * separate same parts of jna-platform (like jna-platform-extended)
@@ -105,7 +105,10 @@ implementation of Objective-C interfaces in Java.
 * ~~selector and java method binding for notification~~
 * exception in callback method cannot be shown as reason, shown as "Exception calling method for selector foo:"
   * `OCInvocationCallbacks.java:170`
+  * ~~\[upstream] git:0198612 Logging.~~
 * ~~hide CLASS, _Class~~
+* ~~\[upstream] Fix #50. Pass method to determine vararg call.~~
+* ~~rule changing -> add getObjcClass method~~
 
 ----
 

@@ -18,7 +18,6 @@ import org.rococoa.Selector;
 import org.rococoa.cocoa.foundation.NSBundle;
 import org.rococoa.cocoa.foundation.NSNotification;
 import org.rococoa.cocoa.foundation.NSNotificationCenter;
-import org.rococoa.cocoa.foundation.NSString;
 import vavi.util.Debug;
 
 import static org.junit.jupiter.api.Assertions.fail;
@@ -32,7 +31,7 @@ import static org.junit.jupiter.api.Assertions.fail;
  */
 class GCControllerTest {
 
-    CountDownLatch cdl = new CountDownLatch(1);
+    final CountDownLatch cdl = new CountDownLatch(1);
 
     class MyObserver implements Callback {
 

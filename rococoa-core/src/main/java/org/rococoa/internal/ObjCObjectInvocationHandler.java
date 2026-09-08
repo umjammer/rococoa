@@ -33,11 +33,9 @@ import java.util.concurrent.Callable;
 
 import com.sun.jna.Pointer;
 import net.bytebuddy.implementation.bind.annotation.AllArguments;
-import net.bytebuddy.implementation.bind.annotation.Empty;
 import net.bytebuddy.implementation.bind.annotation.Origin;
 import net.bytebuddy.implementation.bind.annotation.RuntimeType;
-import net.bytebuddy.implementation.bind.annotation.SuperMethod;
-import net.bytebuddy.implementation.bind.annotation.This;
+import net.bytebuddy.implementation.bind.annotation.SuperCall;
 import org.rococoa.Foundation;
 import org.rococoa.ID;
 import org.rococoa.IDByReference;
@@ -163,22 +161,23 @@ logger.log(Level.TRACE, String.format("JavaProxy:invoking [%s %s].%s(%s)", javaC
 
     /**
      * Callback from ByteBuddy proxy
+     *
+     * this method used at {@code Rococoa#createProxy}.
      */
     @RuntimeType
-    public Object intercept(@This Object proxy, @Origin Method method, @AllArguments Object[] args, @SuperMethod(nullIfImpossible = true) Method superMethod, @Empty Object defaultValue) throws Throwable {
+    public Object intercept(@Origin Method method, @AllArguments Object[] args, @SuperCall(nullIfImpossible = true) Callable<?> superCall) throws Throwable {
 logger.log(Level.TRACE, String.format("ByteBuddyProxy:invoking [%s %s].%s(%s)", javaClassName, ocInstance, method.getName(), new VarArgsUnpacker(args)));
         if (isSpecialMethod(method)) {
             return invokeSpecialMethod(method, args);
         }
         if (!Modifier.isAbstract(method.getModifiers())) {
-            // method is not abstract, so a Java override has been provided, which we call
-logger.log(Level.TRACE, String.format("superMethod.invoke [%s %s].%s(%s)", javaClassName, ocInstance, method.getName(), new VarArgsUnpacker(args)));
-            try {
-                return superMethod.invoke(proxy, args);
-            } catch (Throwable t) {
-logger.log(Level.WARNING, String.format("superMethod.invoke [%s %s].%s(%s) failure", javaClassName, ocInstance, method.getName(), new VarArgsUnpacker(args)), t);
-                throw t;
-            }
+            // method is not abstract, so a Java override has been provided, which we call.
+            // this is a plain super call, not reflection, so whatever the override throws
+            // reaches the caller as it was thrown, not wrapped in an InvocationTargetException.
+            // note that it is invoked with the arguments of the call site, so changing args
+            // above would have no effect here.
+logger.log(Level.TRACE, String.format("superCall.call [%s %s].%s(%s)", javaClassName, ocInstance, method.getName(), new VarArgsUnpacker(args)));
+            return superCall.call();
         }
         // normal case
         return invokeCocoa(method, args);
