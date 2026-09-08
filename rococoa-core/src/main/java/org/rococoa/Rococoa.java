@@ -184,7 +184,12 @@ logger.log(Level.TRACE, "createProxy: ByteBuddy: " + type);
                 return new ByteBuddy()
                         .subclass(type)
                         .name(type.getName() + "$$ByRococoa")
-                        .method(ElementMatchers.any()).intercept(MethodDelegation.to(invocationHandler))
+                        // name the target: the handler also has the java.lang.reflect
+                        // InvocationHandler#invoke, and without this both are candidates and
+                        // the winner is decided by which one happens to have more parameters
+                        .method(ElementMatchers.any()).intercept(MethodDelegation.withDefaultConfiguration()
+                                .filter(ElementMatchers.named("intercept"))
+                                .to(invocationHandler))
                         .make()
                         .load(type.getClassLoader())
                         .getLoaded().getDeclaredConstructor().newInstance();
