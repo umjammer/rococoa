@@ -23,6 +23,7 @@ import java.lang.System.Logger;
 import java.lang.System.Logger.Level;
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
@@ -175,9 +176,13 @@ logger.log(Level.TRACE, String.format("ByteBuddyProxy:invoking [%s %s].%s(%s)", 
 logger.log(Level.TRACE, String.format("superMethod.invoke [%s %s].%s(%s)", javaClassName, ocInstance, method.getName(), new VarArgsUnpacker(args)));
             try {
                 return superMethod.invoke(proxy, args);
-            } catch (Throwable t) {
-logger.log(Level.WARNING, String.format("superMethod.invoke [%s %s].%s(%s) failure", javaClassName, ocInstance, method.getName(), new VarArgsUnpacker(args)), t);
-                throw t;
+            } catch (InvocationTargetException e) {
+                // Method#invoke wraps whatever the override threw. the caller called the
+                // override, not reflection, so it has to see the exception the override
+                // declared, not an InvocationTargetException it has no way to expect.
+                Throwable cause = e.getCause();
+logger.log(Level.TRACE, String.format("superMethod.invoke [%s %s].%s(%s) threw", javaClassName, ocInstance, method.getName(), new VarArgsUnpacker(args)), cause);
+                throw cause;
             }
         }
         // normal case
