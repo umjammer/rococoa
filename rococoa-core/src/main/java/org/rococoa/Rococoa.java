@@ -22,6 +22,7 @@ package org.rococoa;
 import java.lang.System.Logger;
 import java.lang.System.Logger.Level;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
 import com.sun.jna.Pointer;
@@ -61,6 +62,10 @@ public abstract class Rococoa  {
      * factory method named ocMethodName, passing args.
      */
     public static <T extends ObjCObject> T create(String ocClassName, Class<T> javaClass, String ocMethodName, Object... args) {
+        return create(ocClassName, javaClass, null, ocMethodName, args);
+    }
+
+    public static <T extends ObjCObject> T create(String ocClassName, Class<T> javaClass, Method method, String ocMethodName, Object... args) {
         boolean weOwnObject = Foundation.selectorNameMeansWeOwnReturnedObject(ocMethodName);
 
         // If we don't own the object we know that it has been autorelease'd
@@ -69,7 +74,7 @@ public abstract class Rococoa  {
         // Objects that we own (because they were created with 'alloc' or 'new')
         // have not been autorelease'd, so we don't retain them.
         boolean retain = !weOwnObject;
-        return create(ocClassName, javaClass, ocMethodName, retain, args);
+        return create(ocClassName, javaClass, method, ocMethodName, retain, args);
     }
 
     /**
@@ -80,13 +85,13 @@ public abstract class Rococoa  {
         return create(ocClassName, javaClass, "new");
     }
 
-    private static <T extends ObjCObject> T create(String ocClassName, Class<T> javaClass,
+    private static <T extends ObjCObject> T create(String ocClassName, Class<T> javaClass, Method method,
             String ocFactoryName, 
             boolean retain,
             Object... args) {
 logger.log(Level.TRACE, String.format("creating [%s (%s)].%s(%s)", ocClassName, javaClass.getName(), ocFactoryName, new VarArgsUnpacker(args)));
         ID ocClass = Foundation.getClass(ocClassName);
-        ID ocInstance = Foundation.send(ocClass, ocFactoryName, ID.class, args);
+        ID ocInstance = Foundation.send(ocClass, ocFactoryName, ID.class, method, args);
         CFIndex initialRetainCount = Foundation.cfGetRetainCount(ocInstance);
         T result = wrap(ocInstance, javaClass, retain);
         checkRetainCount(ocInstance, retain ? initialRetainCount.intValue() + 1 : initialRetainCount.intValue());

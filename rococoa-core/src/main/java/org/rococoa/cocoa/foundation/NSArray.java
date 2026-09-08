@@ -35,9 +35,10 @@ public abstract class NSArray extends NSEnumerator implements List<NSObject> {
 
     private static final _Class CLASS = Rococoa.createClass("NSArray", _Class.class);
 
-    private interface _Class extends ObjCClass {
+    public interface _Class extends ObjCClass {
         /** Creates and returns an empty array. */
         NSArray array();
+        NSArray arrayWithObject(NSObject anObject);
         /**
          * @param objects Contents and then a trailing null
          */
