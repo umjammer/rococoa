@@ -121,7 +121,7 @@ public interface CoreFoundation extends Library {
         public CFDictionaryEqualCallBack equal;
         public CFDictionaryHashCallBack hash;
 
-        Memory memory;
+        final Memory memory;
 
         public CFDictionaryKeyCallBacks() {
             setAutoWrite(false);
@@ -154,7 +154,7 @@ public interface CoreFoundation extends Library {
         public CFDictionaryCopyDescriptionCallBack copyDescription;
         public CFDictionaryEqualCallBack equal;
 
-        Memory memory;
+        final Memory memory;
 
         public CFDictionaryValueCallBacks() {
             setAutoWrite(false);

@@ -281,7 +281,7 @@ public abstract class NSEvent extends NSObject implements NSCopying {
     public static final int NSHelpKeyMask = 1 << 22;
     public static final int NSFunctionKeyMask = 1 << 23;
 
-    private static _Class CLASS = Rococoa.createClass("NSEvent", _Class.class);
+    private static final _Class CLASS = Rococoa.createClass("NSEvent", _Class.class);
 
     private interface _Class extends ObjCClass {
         /**

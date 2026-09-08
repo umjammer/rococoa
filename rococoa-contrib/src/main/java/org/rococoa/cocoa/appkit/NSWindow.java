@@ -1,14 +1,11 @@
 package org.rococoa.cocoa.appkit;
 
-import com.sun.jna.platform.win32.WinDef.BOOL;
-
 import org.rococoa.Foundation;
 import org.rococoa.ID;
 import org.rococoa.ObjCClass;
 import org.rococoa.Rococoa;
 import org.rococoa.cocoa.CGFloat;
 import org.rococoa.cocoa.foundation.NSArray;
-import org.rococoa.cocoa.foundation.NSAutoreleasePool;
 import org.rococoa.cocoa.foundation.NSDate;
 import org.rococoa.cocoa.foundation.NSDictionary;
 import org.rococoa.cocoa.foundation.NSInteger;

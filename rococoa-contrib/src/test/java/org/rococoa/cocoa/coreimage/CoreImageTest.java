@@ -36,7 +36,6 @@ import org.rococoa.cocoa.foundation.NSInvocation;
 import org.rococoa.cocoa.foundation.NSMethodSignature;
 import org.rococoa.cocoa.foundation.NSNumber;
 import org.rococoa.cocoa.foundation.NSObject;
-import org.rococoa.cocoa.foundation.NSRect;
 import vavi.util.Debug;
 
 

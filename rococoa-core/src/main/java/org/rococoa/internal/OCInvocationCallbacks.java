@@ -173,7 +173,7 @@ public class OCInvocationCallbacks {
     }
 
     private static String methodNameForSelector(String selectorName) {
-        String candidate =  selectorName.replaceAll(":", "_");
+        String candidate =  selectorName.replace(":", "_");
         return candidate.endsWith("_") ?
                 candidate.substring(0, candidate.length() - 1) :
                 candidate;

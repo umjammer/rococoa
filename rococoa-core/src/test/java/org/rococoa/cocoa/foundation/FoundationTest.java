@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class FoundationTest {
 
     @Test public void testFactory() {
-        NSNumber._Class nsNumberClass = Rococoa.createClass("NSNumber",  NSNumber._Class.class);
+        ObjCClass nsNumberClass = Rococoa.createClass("NSNumber", NSNumber.objCClass());
         assertEquals(nsNumberClass.id(), Foundation.getClass("NSNumber"));
     }
 

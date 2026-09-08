@@ -21,7 +21,6 @@ package org.rococoa.internal;
 
 import com.sun.jna.FromNativeContext;
 import com.sun.jna.ToNativeContext;
-import com.sun.jna.ToNativeConverter;
 import com.sun.jna.TypeConverter;
 
 import org.rococoa.IDByReference;

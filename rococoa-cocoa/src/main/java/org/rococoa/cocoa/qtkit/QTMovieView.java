@@ -19,8 +19,6 @@
 
 package org.rococoa.cocoa.qtkit;
 
-import javax.swing.text.View;
-
 import org.rococoa.Foundation;
 import org.rococoa.Rococoa;
 import org.rococoa.RunOnMainThread;
